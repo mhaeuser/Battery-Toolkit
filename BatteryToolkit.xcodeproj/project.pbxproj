@@ -1,0 +1,1108 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CE00654128A989980049B17D /* IOPowerSourcesPrivateEx.h in Headers */ = {isa = PBXBuildFile; fileRef = CE00653528A989240049B17D /* IOPowerSourcesPrivateEx.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CE00654228A9899C0049B17D /* IOPowerSourcesPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC321B1284BBC93009B9A30 /* IOPowerSourcesPrivate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CE00654328A9899F0049B17D /* IOPMLibPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = CE2B96BD28A7CEFE00FE3DDB /* IOPMLibPrivate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CE00654528A989DD0049B17D /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE00654428A989DD0049B17D /* IOKit.framework */; };
+		CE00654728A989EB0049B17D /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE00654628A989EB0049B17D /* CoreFoundation.framework */; };
+		CE2B96C028A7E2BB00FE3DDB /* SleepKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2B96BF28A7E2BB00FE3DDB /* SleepKit.swift */; };
+		CE2B96C128A7E2BB00FE3DDB /* SleepKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2B96BF28A7E2BB00FE3DDB /* SleepKit.swift */; };
+		CE37DD09283F807C0060C43F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE37DD08283F807C0060C43F /* ViewController.swift */; };
+		CE37DD0C283F80960060C43F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE37DD0A283F80960060C43F /* Main.storyboard */; };
+		CE39745A285A2193002D0EC9 /* SMCKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE37DD0D283F86F90060C43F /* SMCKit.swift */; };
+		CE39745C285A2193002D0EC9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE37DD08283F807C0060C43F /* ViewController.swift */; };
+		CE397460285A2193002D0EC9 /* SMCPowerKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE37DD0F284164160060C43F /* SMCPowerKit.swift */; };
+		CE397461285A2193002D0EC9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE52868528298CA300860C7B /* AppDelegate.swift */; };
+		CE397464285A2193002D0EC9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE37DD0A283F80960060C43F /* Main.storyboard */; };
+		CE397465285A2193002D0EC9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE52867A28298B6E00860C7B /* Assets.xcassets */; };
+		CE39746E285A229F002D0EC9 /* BatteryToolkit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE39746D285A229F002D0EC9 /* BatteryToolkit.swift */; };
+		CE397470285A22BB002D0EC9 /* BatteryToolkit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE39746F285A22BB002D0EC9 /* BatteryToolkit.swift */; };
+		CE397472285A2396002D0EC9 /* HelperXPCServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE397471285A2396002D0EC9 /* HelperXPCServer.swift */; };
+		CE397478285A25A1002D0EC9 /* HelperXPCClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE397477285A25A1002D0EC9 /* HelperXPCClient.swift */; };
+		CE52867B28298B6E00860C7B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE52867A28298B6E00860C7B /* Assets.xcassets */; };
+		CE52868628298CA300860C7B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE52868528298CA300860C7B /* AppDelegate.swift */; };
+		CE6B75F828BC18EA008DF170 /* HelperCommProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA80FDA285A57030064ADEA /* HelperCommProtocol.swift */; };
+		CE6B75F928BC18EA008DF170 /* HelperCommProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA80FDA285A57030064ADEA /* HelperCommProtocol.swift */; };
+		CE6B75FA28BC1908008DF170 /* HelperCommProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA80FDA285A57030064ADEA /* HelperCommProtocol.swift */; };
+		CE6B75FB28BC190A008DF170 /* AppCommProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEECE32A28BB73BB00821A3B /* AppCommProtocol.swift */; };
+		CE6B75FC28BC196C008DF170 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6C06A028A8398600D76CC8 /* Foundation.framework */; };
+		CE6B75FD28BC1986008DF170 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6C06A028A8398600D76CC8 /* Foundation.framework */; };
+		CE6B75FE28BC198E008DF170 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6C06A028A8398600D76CC8 /* Foundation.framework */; };
+		CE6B760028BC1995008DF170 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6B75FF28BC1995008DF170 /* ServiceManagement.framework */; };
+		CE6B760128BC199F008DF170 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE00654428A989DD0049B17D /* IOKit.framework */; };
+		CE6B760228BC19B5008DF170 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE00654628A989EB0049B17D /* CoreFoundation.framework */; };
+		CE6B760428BC19C7008DF170 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6B760328BC19C7008DF170 /* Cocoa.framework */; };
+		CE6B760528BC1A7B008DF170 /* ClientCommProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE90920D28B81DC500DBAE4B /* ClientCommProtocol.swift */; };
+		CE6B760728BC1ABC008DF170 /* AppXPCClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6B760628BC1ABC008DF170 /* AppXPCClient.swift */; };
+		CE6B760928BC1D15008DF170 /* ServiceXPCServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6B760828BC1D15008DF170 /* ServiceXPCServer.swift */; };
+		CE7F623328B95A7300EF58F9 /* BTPreprocessor.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE387BD28A836AA00C2007C /* BTPreprocessor.m */; };
+		CE7F623428B95A7E00EF58F9 /* BTPreprocessor.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE387BD28A836AA00C2007C /* BTPreprocessor.m */; };
+		CE7F623528B95A8200EF58F9 /* BTPreprocessor.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE387BD28A836AA00C2007C /* BTPreprocessor.m */; };
+		CE8357D828A98B0F00D25675 /* IOPowerSourcesPrivateEx.m in Sources */ = {isa = PBXBuildFile; fileRef = CE00653428A989240049B17D /* IOPowerSourcesPrivateEx.m */; };
+		CE8357DB28A98C2E00D25675 /* libIOPMPrivate.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE00654028A989830049B17D /* libIOPMPrivate.a */; };
+		CE8357DE28A98C3800D25675 /* libIOPMPrivate.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE00654028A989830049B17D /* libIOPMPrivate.a */; };
+		CE90920E28B81DC500DBAE4B /* ClientCommProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE90920D28B81DC500DBAE4B /* ClientCommProtocol.swift */; };
+		CE90920F28B81DC500DBAE4B /* ClientCommProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE90920D28B81DC500DBAE4B /* ClientCommProtocol.swift */; };
+		CE90921228B81EE700DBAE4B /* ClientComm.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE90921128B81EE700DBAE4B /* ClientComm.swift */; };
+		CEA80FCB285A27CF0064ADEA /* SMCKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE37DD0D283F86F90060C43F /* SMCKit.swift */; };
+		CEA80FCC285A27D20064ADEA /* SMCPowerKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE37DD0F284164160060C43F /* SMCPowerKit.swift */; };
+		CEA80FD0285A27FB0064ADEA /* PowerEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC321AF284BAA2B009B9A30 /* PowerEvents.swift */; };
+		CEA80FD2285A28230064ADEA /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3A8F6C284D056D00A9E373 /* Preferences.swift */; };
+		CEA80FD6285A565C0064ADEA /* HelperComm.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA80FD5285A565C0064ADEA /* HelperComm.swift */; };
+		CEA80FD8285A56B60064ADEA /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA80FD7285A56B50064ADEA /* main.swift */; };
+		CEECE31128BAB12000821A3B /* PowerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEECE31028BAB12000821A3B /* PowerState.swift */; };
+		CEECE32328BB648F00821A3B /* BatteryToolkitXPC.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = CEECE31828BB648F00821A3B /* BatteryToolkitXPC.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		CEECE32828BB652400821A3B /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEECE32728BB652400821A3B /* main.swift */; };
+		CEECE32928BB6C3500821A3B /* BTPreprocessor.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE387BD28A836AA00C2007C /* BTPreprocessor.m */; };
+		CEECE32B28BB73BB00821A3B /* AppCommProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEECE32A28BB73BB00821A3B /* AppCommProtocol.swift */; };
+		CEECE32C28BB73BB00821A3B /* AppCommProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEECE32A28BB73BB00821A3B /* AppCommProtocol.swift */; };
+		CEECE33028BB742500821A3B /* ServiceCommProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEECE32F28BB742500821A3B /* ServiceCommProtocol.swift */; };
+		CEECE33128BB742500821A3B /* ServiceCommProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEECE32F28BB742500821A3B /* ServiceCommProtocol.swift */; };
+		CEECE33328BB745B00821A3B /* ServiceComm.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEECE33228BB745B00821A3B /* ServiceComm.swift */; };
+		CEECE33528BB82BD00821A3B /* me.mhaeuser.batterytoolkitd in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE39744B2859E6D3002D0EC9 /* me.mhaeuser.batterytoolkitd */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CE397450285A2100002D0EC9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE52866B28298B6D00860C7B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CE3974402859E518002D0EC9;
+			remoteInfo = batterytoolkitd;
+		};
+		CE8357D928A98C2B00D25675 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE52866B28298B6D00860C7B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CE00653628A989830049B17D;
+			remoteInfo = IOPMPrivate;
+		};
+		CE8357DC28A98C3200D25675 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE52866B28298B6D00860C7B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CE00653628A989830049B17D;
+			remoteInfo = IOPMPrivate;
+		};
+		CEECE32128BB648F00821A3B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE52866B28298B6D00860C7B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CEECE31728BB648F00821A3B;
+			remoteInfo = BatteryToolkitXPC;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		CE39743F2859E518002D0EC9 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		CE3D5ADC285DE59100705842 /* Embed XPC Services */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
+			dstSubfolderSpec = 16;
+			files = (
+				CEECE32328BB648F00821A3B /* BatteryToolkitXPC.xpc in Embed XPC Services */,
+			);
+			name = "Embed XPC Services";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CEECE33428BB82B600821A3B /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Contents/Library/LaunchServices;
+			dstSubfolderSpec = 1;
+			files = (
+				CEECE33528BB82BD00821A3B /* me.mhaeuser.batterytoolkitd in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		CE00653428A989240049B17D /* IOPowerSourcesPrivateEx.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IOPowerSourcesPrivateEx.m; sourceTree = "<group>"; };
+		CE00653528A989240049B17D /* IOPowerSourcesPrivateEx.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOPowerSourcesPrivateEx.h; sourceTree = "<group>"; };
+		CE00654028A989830049B17D /* libIOPMPrivate.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libIOPMPrivate.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE00654428A989DD0049B17D /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		CE00654628A989EB0049B17D /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		CE2B96BD28A7CEFE00FE3DDB /* IOPMLibPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOPMLibPrivate.h; sourceTree = "<group>"; };
+		CE2B96BF28A7E2BB00FE3DDB /* SleepKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepKit.swift; sourceTree = "<group>"; };
+		CE2B96C228A81C5100FE3DDB /* BTPreprocessor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BTPreprocessor.h; sourceTree = "<group>"; };
+		CE2B96C328A81CB900FE3DDB /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
+		CE37DD08283F807C0060C43F /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		CE37DD0B283F80960060C43F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		CE37DD0D283F86F90060C43F /* SMCKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMCKit.swift; sourceTree = "<group>"; };
+		CE37DD0F284164160060C43F /* SMCPowerKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMCPowerKit.swift; sourceTree = "<group>"; };
+		CE3974492859E685002D0EC9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CE39744A2859E690002D0EC9 /* launchd.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = launchd.plist; sourceTree = "<group>"; };
+		CE39744B2859E6D3002D0EC9 /* me.mhaeuser.batterytoolkitd */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = me.mhaeuser.batterytoolkitd; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE39744C285A1D35002D0EC9 /* BatteryToolkit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BatteryToolkit.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE39746D285A229F002D0EC9 /* BatteryToolkit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryToolkit.swift; sourceTree = "<group>"; };
+		CE39746F285A22BB002D0EC9 /* BatteryToolkit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryToolkit.swift; sourceTree = "<group>"; };
+		CE397471285A2396002D0EC9 /* HelperXPCServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperXPCServer.swift; sourceTree = "<group>"; };
+		CE397477285A25A1002D0EC9 /* HelperXPCClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperXPCClient.swift; sourceTree = "<group>"; };
+		CE3A8F6C284D056D00A9E373 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
+		CE52867A28298B6E00860C7B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CE52867F28298B6E00860C7B /* BatteryToolkit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BatteryToolkit.entitlements; sourceTree = "<group>"; };
+		CE52868528298CA300860C7B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		CE6B75FF28BC1995008DF170 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
+		CE6B760328BC19C7008DF170 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		CE6B760628BC1ABC008DF170 /* AppXPCClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppXPCClient.swift; sourceTree = "<group>"; };
+		CE6B760828BC1D15008DF170 /* ServiceXPCServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceXPCServer.swift; sourceTree = "<group>"; };
+		CE6C06A028A8398600D76CC8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		CE6C06A428A84AAB00D76CC8 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
+		CE90920D28B81DC500DBAE4B /* ClientCommProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientCommProtocol.swift; sourceTree = "<group>"; };
+		CE90921128B81EE700DBAE4B /* ClientComm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientComm.swift; sourceTree = "<group>"; };
+		CEA80FCA285A270F0064ADEA /* BatteryToolkitStandalone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BatteryToolkitStandalone.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CEA80FD3285A51600064ADEA /* NSXPCConnection+AuditToken.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSXPCConnection+AuditToken.h"; sourceTree = "<group>"; };
+		CEA80FD4285A51960064ADEA /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
+		CEA80FD5285A565C0064ADEA /* HelperComm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperComm.swift; sourceTree = "<group>"; };
+		CEA80FD7285A56B50064ADEA /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		CEA80FDA285A57030064ADEA /* HelperCommProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperCommProtocol.swift; sourceTree = "<group>"; };
+		CEB4671B2843BFA000D7CB01 /* SMCStructs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMCStructs.h; sourceTree = "<group>"; };
+		CEB4671D2843C87200D7CB01 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
+		CEC321AF284BAA2B009B9A30 /* PowerEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerEvents.swift; sourceTree = "<group>"; };
+		CEC321B1284BBC93009B9A30 /* IOPowerSourcesPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOPowerSourcesPrivate.h; sourceTree = "<group>"; };
+		CEE387BD28A836AA00C2007C /* BTPreprocessor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BTPreprocessor.m; sourceTree = "<group>"; };
+		CEE95015285BC3EF00FF60E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		CEE95016285BCBE200FF60E0 /* me.mhaeuser.batterytoolkitd.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = me.mhaeuser.batterytoolkitd.entitlements; sourceTree = "<group>"; };
+		CEECE31028BAB12000821A3B /* PowerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerState.swift; sourceTree = "<group>"; };
+		CEECE31828BB648F00821A3B /* BatteryToolkitXPC.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = BatteryToolkitXPC.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
+		CEECE32028BB648F00821A3B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CEECE32728BB652400821A3B /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		CEECE32A28BB73BB00821A3B /* AppCommProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCommProtocol.swift; sourceTree = "<group>"; };
+		CEECE32F28BB742500821A3B /* ServiceCommProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceCommProtocol.swift; sourceTree = "<group>"; };
+		CEECE33228BB745B00821A3B /* ServiceComm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceComm.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CE00653B28A989830049B17D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE00654728A989EB0049B17D /* CoreFoundation.framework in Frameworks */,
+				CE00654528A989DD0049B17D /* IOKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE39743E2859E518002D0EC9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE6B760228BC19B5008DF170 /* CoreFoundation.framework in Frameworks */,
+				CE8357DB28A98C2E00D25675 /* libIOPMPrivate.a in Frameworks */,
+				CE6B75FC28BC196C008DF170 /* Foundation.framework in Frameworks */,
+				CE6B760128BC199F008DF170 /* IOKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE397462285A2193002D0EC9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE8357DE28A98C3800D25675 /* libIOPMPrivate.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE52867028298B6D00860C7B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE6B760428BC19C7008DF170 /* Cocoa.framework in Frameworks */,
+				CE6B75FD28BC1986008DF170 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CEECE31528BB648F00821A3B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE6B75FE28BC198E008DF170 /* Foundation.framework in Frameworks */,
+				CE6B760028BC1995008DF170 /* ServiceManagement.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		CE3974422859E518002D0EC9 /* me.mhaeuser.batterytoolkitd */ = {
+			isa = PBXGroup;
+			children = (
+				CEECE31028BAB12000821A3B /* PowerState.swift */,
+				CE3A8F6C284D056D00A9E373 /* Preferences.swift */,
+				CEC321AF284BAA2B009B9A30 /* PowerEvents.swift */,
+				CEE95016285BCBE200FF60E0 /* me.mhaeuser.batterytoolkitd.entitlements */,
+				CE3974492859E685002D0EC9 /* Info.plist */,
+				CE39744A2859E690002D0EC9 /* launchd.plist */,
+				CE397471285A2396002D0EC9 /* HelperXPCServer.swift */,
+				CEA80FD3285A51600064ADEA /* NSXPCConnection+AuditToken.h */,
+				CEA80FD4285A51960064ADEA /* Bridging-Header.h */,
+				CEA80FD5285A565C0064ADEA /* HelperComm.swift */,
+				CEA80FD7285A56B50064ADEA /* main.swift */,
+			);
+			path = me.mhaeuser.batterytoolkitd;
+			sourceTree = "<group>";
+		};
+		CE3A8F6E284D26BA00A9E373 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CE6B760328BC19C7008DF170 /* Cocoa.framework */,
+				CE6B75FF28BC1995008DF170 /* ServiceManagement.framework */,
+				CE00654628A989EB0049B17D /* CoreFoundation.framework */,
+				CE00654428A989DD0049B17D /* IOKit.framework */,
+				CE6C06A028A8398600D76CC8 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CE3D5ADD285DE62600705842 /* BatteryToolkitStandalone */ = {
+			isa = PBXGroup;
+			children = (
+				CE39746F285A22BB002D0EC9 /* BatteryToolkit.swift */,
+			);
+			path = BatteryToolkitStandalone;
+			sourceTree = "<group>";
+		};
+		CE52866A28298B6D00860C7B = {
+			isa = PBXGroup;
+			children = (
+				CEECE31928BB648F00821A3B /* BatteryToolkitXPC */,
+				CE6B75F728BC18DD008DF170 /* Common */,
+				CE6C06B828A84C2400D76CC8 /* Preprocessor */,
+				CEB4671C2843C80D00D7CB01 /* SMCHeaders */,
+				CE6C06A328A84A9200D76CC8 /* IOPMPrivate */,
+				CE3D5ADD285DE62600705842 /* BatteryToolkitStandalone */,
+				CE555D89285D2A0B0031A6F9 /* Libraries */,
+				CE52867528298B6D00860C7B /* BatteryToolkit */,
+				CE3974422859E518002D0EC9 /* me.mhaeuser.batterytoolkitd */,
+				CE3A8F6E284D26BA00A9E373 /* Frameworks */,
+				CE39744B2859E6D3002D0EC9 /* me.mhaeuser.batterytoolkitd */,
+				CE39744C285A1D35002D0EC9 /* BatteryToolkit.app */,
+				CEA80FCA285A270F0064ADEA /* BatteryToolkitStandalone.app */,
+				CE00654028A989830049B17D /* libIOPMPrivate.a */,
+				CEECE31828BB648F00821A3B /* BatteryToolkitXPC.xpc */,
+			);
+			sourceTree = "<group>";
+		};
+		CE52867528298B6D00860C7B /* BatteryToolkit */ = {
+			isa = PBXGroup;
+			children = (
+				CEECE32A28BB73BB00821A3B /* AppCommProtocol.swift */,
+				CEE95015285BC3EF00FF60E0 /* Info.plist */,
+				CE52867A28298B6E00860C7B /* Assets.xcassets */,
+				CE52867F28298B6E00860C7B /* BatteryToolkit.entitlements */,
+				CE52868528298CA300860C7B /* AppDelegate.swift */,
+				CE37DD0A283F80960060C43F /* Main.storyboard */,
+				CE37DD08283F807C0060C43F /* ViewController.swift */,
+				CE39746D285A229F002D0EC9 /* BatteryToolkit.swift */,
+				CE397477285A25A1002D0EC9 /* HelperXPCClient.swift */,
+				CE90921128B81EE700DBAE4B /* ClientComm.swift */,
+				CE6B760628BC1ABC008DF170 /* AppXPCClient.swift */,
+			);
+			path = BatteryToolkit;
+			sourceTree = "<group>";
+		};
+		CE555D89285D2A0B0031A6F9 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				CE37DD0D283F86F90060C43F /* SMCKit.swift */,
+				CE37DD0F284164160060C43F /* SMCPowerKit.swift */,
+				CE2B96BF28A7E2BB00FE3DDB /* SleepKit.swift */,
+			);
+			path = Libraries;
+			sourceTree = "<group>";
+		};
+		CE6B75F728BC18DD008DF170 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				CE90920D28B81DC500DBAE4B /* ClientCommProtocol.swift */,
+				CEA80FDA285A57030064ADEA /* HelperCommProtocol.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		CE6C06A328A84A9200D76CC8 /* IOPMPrivate */ = {
+			isa = PBXGroup;
+			children = (
+				CE6C06A428A84AAB00D76CC8 /* module.modulemap */,
+				CE00653528A989240049B17D /* IOPowerSourcesPrivateEx.h */,
+				CE00653428A989240049B17D /* IOPowerSourcesPrivateEx.m */,
+				CEC321B1284BBC93009B9A30 /* IOPowerSourcesPrivate.h */,
+				CE2B96BD28A7CEFE00FE3DDB /* IOPMLibPrivate.h */,
+			);
+			path = IOPMPrivate;
+			sourceTree = "<group>";
+		};
+		CE6C06B828A84C2400D76CC8 /* Preprocessor */ = {
+			isa = PBXGroup;
+			children = (
+				CE2B96C328A81CB900FE3DDB /* module.modulemap */,
+				CE2B96C228A81C5100FE3DDB /* BTPreprocessor.h */,
+				CEE387BD28A836AA00C2007C /* BTPreprocessor.m */,
+			);
+			path = Preprocessor;
+			sourceTree = "<group>";
+		};
+		CEB4671C2843C80D00D7CB01 /* SMCHeaders */ = {
+			isa = PBXGroup;
+			children = (
+				CEB4671B2843BFA000D7CB01 /* SMCStructs.h */,
+				CEB4671D2843C87200D7CB01 /* module.modulemap */,
+			);
+			path = SMCHeaders;
+			sourceTree = "<group>";
+		};
+		CEECE31928BB648F00821A3B /* BatteryToolkitXPC */ = {
+			isa = PBXGroup;
+			children = (
+				CEECE32028BB648F00821A3B /* Info.plist */,
+				CEECE32728BB652400821A3B /* main.swift */,
+				CEECE32F28BB742500821A3B /* ServiceCommProtocol.swift */,
+				CEECE33228BB745B00821A3B /* ServiceComm.swift */,
+				CE6B760828BC1D15008DF170 /* ServiceXPCServer.swift */,
+			);
+			path = BatteryToolkitXPC;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		CE00653728A989830049B17D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE00654328A9899F0049B17D /* IOPMLibPrivate.h in Headers */,
+				CE00654228A9899C0049B17D /* IOPowerSourcesPrivate.h in Headers */,
+				CE00654128A989980049B17D /* IOPowerSourcesPrivateEx.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		CE00653628A989830049B17D /* IOPMPrivate */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CE00653D28A989830049B17D /* Build configuration list for PBXNativeTarget "IOPMPrivate" */;
+			buildPhases = (
+				CE00653728A989830049B17D /* Headers */,
+				CE00653928A989830049B17D /* Sources */,
+				CE00653B28A989830049B17D /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = IOPMPrivate;
+			productName = SMCHeaders;
+			productReference = CE00654028A989830049B17D /* libIOPMPrivate.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		CE3974402859E518002D0EC9 /* me.mhaeuser.batterytoolkitd */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CE3974452859E518002D0EC9 /* Build configuration list for PBXNativeTarget "me.mhaeuser.batterytoolkitd" */;
+			buildPhases = (
+				CE39743D2859E518002D0EC9 /* Sources */,
+				CE39743E2859E518002D0EC9 /* Frameworks */,
+				CE39743F2859E518002D0EC9 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CE8357DA28A98C2B00D25675 /* PBXTargetDependency */,
+			);
+			name = me.mhaeuser.batterytoolkitd;
+			productName = batterytoolkitd;
+			productReference = CE39744B2859E6D3002D0EC9 /* me.mhaeuser.batterytoolkitd */;
+			productType = "com.apple.product-type.tool";
+		};
+		CE397453285A2193002D0EC9 /* BatteryToolkitStandalone */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CE397468285A2193002D0EC9 /* Build configuration list for PBXNativeTarget "BatteryToolkitStandalone" */;
+			buildPhases = (
+				CE397458285A2193002D0EC9 /* Sources */,
+				CE397462285A2193002D0EC9 /* Frameworks */,
+				CE397463285A2193002D0EC9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CE8357DD28A98C3200D25675 /* PBXTargetDependency */,
+			);
+			name = BatteryToolkitStandalone;
+			productName = BatteryToolkit;
+			productReference = CEA80FCA285A270F0064ADEA /* BatteryToolkitStandalone.app */;
+			productType = "com.apple.product-type.application";
+		};
+		CE52867228298B6D00860C7B /* BatteryToolkit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CE52868228298B6E00860C7B /* Build configuration list for PBXNativeTarget "BatteryToolkit" */;
+			buildPhases = (
+				CE52866F28298B6D00860C7B /* Sources */,
+				CE52867028298B6D00860C7B /* Frameworks */,
+				CE52867128298B6D00860C7B /* Resources */,
+				CE3D5ADC285DE59100705842 /* Embed XPC Services */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CE397451285A2100002D0EC9 /* PBXTargetDependency */,
+				CEECE32228BB648F00821A3B /* PBXTargetDependency */,
+			);
+			name = BatteryToolkit;
+			productName = BatteryToolkit;
+			productReference = CE39744C285A1D35002D0EC9 /* BatteryToolkit.app */;
+			productType = "com.apple.product-type.application";
+		};
+		CEECE31728BB648F00821A3B /* BatteryToolkitXPC */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CEECE32428BB648F00821A3B /* Build configuration list for PBXNativeTarget "BatteryToolkitXPC" */;
+			buildPhases = (
+				CEECE31428BB648F00821A3B /* Sources */,
+				CEECE31528BB648F00821A3B /* Frameworks */,
+				CEECE31628BB648F00821A3B /* Resources */,
+				CEECE33428BB82B600821A3B /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BatteryToolkitXPC;
+			productName = BatteryToolkitXPC;
+			productReference = CEECE31828BB648F00821A3B /* BatteryToolkitXPC.xpc */;
+			productType = "com.apple.product-type.xpc-service";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CE52866B28298B6D00860C7B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1340;
+				LastUpgradeCheck = 1340;
+				TargetAttributes = {
+					CE3974402859E518002D0EC9 = {
+						CreatedOnToolsVersion = 13.4.1;
+						LastSwiftMigration = 1340;
+					};
+					CE52867228298B6D00860C7B = {
+						CreatedOnToolsVersion = 13.3.1;
+						LastSwiftMigration = 1340;
+					};
+					CEECE31728BB648F00821A3B = {
+						CreatedOnToolsVersion = 13.4.1;
+						LastSwiftMigration = 1340;
+					};
+				};
+			};
+			buildConfigurationList = CE52866E28298B6D00860C7B /* Build configuration list for PBXProject "BatteryToolkit" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = CE52866A28298B6D00860C7B;
+			productRefGroup = CE52866A28298B6D00860C7B;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CE52867228298B6D00860C7B /* BatteryToolkit */,
+				CE3974402859E518002D0EC9 /* me.mhaeuser.batterytoolkitd */,
+				CE397453285A2193002D0EC9 /* BatteryToolkitStandalone */,
+				CE00653628A989830049B17D /* IOPMPrivate */,
+				CEECE31728BB648F00821A3B /* BatteryToolkitXPC */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CE397463285A2193002D0EC9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE397464285A2193002D0EC9 /* Main.storyboard in Resources */,
+				CE397465285A2193002D0EC9 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE52867128298B6D00860C7B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE37DD0C283F80960060C43F /* Main.storyboard in Resources */,
+				CE52867B28298B6E00860C7B /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CEECE31628BB648F00821A3B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CE00653928A989830049B17D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE8357D828A98B0F00D25675 /* IOPowerSourcesPrivateEx.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE39743D2859E518002D0EC9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE6B75FB28BC190A008DF170 /* AppCommProtocol.swift in Sources */,
+				CE6B75FA28BC1908008DF170 /* HelperCommProtocol.swift in Sources */,
+				CE7F623428B95A7E00EF58F9 /* BTPreprocessor.m in Sources */,
+				CEA80FD2285A28230064ADEA /* Preferences.swift in Sources */,
+				CE2B96C028A7E2BB00FE3DDB /* SleepKit.swift in Sources */,
+				CEA80FD0285A27FB0064ADEA /* PowerEvents.swift in Sources */,
+				CEECE31128BAB12000821A3B /* PowerState.swift in Sources */,
+				CEA80FCC285A27D20064ADEA /* SMCPowerKit.swift in Sources */,
+				CEA80FD6285A565C0064ADEA /* HelperComm.swift in Sources */,
+				CEA80FD8285A56B60064ADEA /* main.swift in Sources */,
+				CEA80FCB285A27CF0064ADEA /* SMCKit.swift in Sources */,
+				CE90920F28B81DC500DBAE4B /* ClientCommProtocol.swift in Sources */,
+				CE397472285A2396002D0EC9 /* HelperXPCServer.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE397458285A2193002D0EC9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE7F623328B95A7300EF58F9 /* BTPreprocessor.m in Sources */,
+				CE39745A285A2193002D0EC9 /* SMCKit.swift in Sources */,
+				CE2B96C128A7E2BB00FE3DDB /* SleepKit.swift in Sources */,
+				CE39745C285A2193002D0EC9 /* ViewController.swift in Sources */,
+				CE397460285A2193002D0EC9 /* SMCPowerKit.swift in Sources */,
+				CE397470285A22BB002D0EC9 /* BatteryToolkit.swift in Sources */,
+				CE397461285A2193002D0EC9 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE52866F28298B6D00860C7B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE7F623528B95A8200EF58F9 /* BTPreprocessor.m in Sources */,
+				CE6B760728BC1ABC008DF170 /* AppXPCClient.swift in Sources */,
+				CE6B75F928BC18EA008DF170 /* HelperCommProtocol.swift in Sources */,
+				CE397478285A25A1002D0EC9 /* HelperXPCClient.swift in Sources */,
+				CE37DD09283F807C0060C43F /* ViewController.swift in Sources */,
+				CEECE32B28BB73BB00821A3B /* AppCommProtocol.swift in Sources */,
+				CE90921228B81EE700DBAE4B /* ClientComm.swift in Sources */,
+				CEECE33028BB742500821A3B /* ServiceCommProtocol.swift in Sources */,
+				CE39746E285A229F002D0EC9 /* BatteryToolkit.swift in Sources */,
+				CE90920E28B81DC500DBAE4B /* ClientCommProtocol.swift in Sources */,
+				CE52868628298CA300860C7B /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CEECE31428BB648F00821A3B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEECE32C28BB73BB00821A3B /* AppCommProtocol.swift in Sources */,
+				CEECE33128BB742500821A3B /* ServiceCommProtocol.swift in Sources */,
+				CEECE32928BB6C3500821A3B /* BTPreprocessor.m in Sources */,
+				CE6B75F828BC18EA008DF170 /* HelperCommProtocol.swift in Sources */,
+				CE6B760928BC1D15008DF170 /* ServiceXPCServer.swift in Sources */,
+				CEECE32828BB652400821A3B /* main.swift in Sources */,
+				CEECE33328BB745B00821A3B /* ServiceComm.swift in Sources */,
+				CE6B760528BC1A7B008DF170 /* ClientCommProtocol.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CE397451285A2100002D0EC9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CE3974402859E518002D0EC9 /* me.mhaeuser.batterytoolkitd */;
+			targetProxy = CE397450285A2100002D0EC9 /* PBXContainerItemProxy */;
+		};
+		CE8357DA28A98C2B00D25675 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CE00653628A989830049B17D /* IOPMPrivate */;
+			targetProxy = CE8357D928A98C2B00D25675 /* PBXContainerItemProxy */;
+		};
+		CE8357DD28A98C3200D25675 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CE00653628A989830049B17D /* IOPMPrivate */;
+			targetProxy = CE8357DC28A98C3200D25675 /* PBXContainerItemProxy */;
+		};
+		CEECE32228BB648F00821A3B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CEECE31728BB648F00821A3B /* BatteryToolkitXPC */;
+			targetProxy = CEECE32128BB648F00821A3B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		CE37DD0A283F80960060C43F /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE37DD0B283F80960060C43F /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		CE00653E28A989830049B17D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				EXECUTABLE_PREFIX = lib;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MODULEMAP_FILE = "$(TARGET_NAME)/module.modulemap";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		CE00653F28A989830049B17D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				EXECUTABLE_PREFIX = lib;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MODULEMAP_FILE = "$(TARGET_NAME)/module.modulemap";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		CE3974462859E518002D0EC9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = me.mhaeuser.batterytoolkitd/me.mhaeuser.batterytoolkitd.entitlements;
+				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/$(PRODUCT_NAME)/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"-sectcreate",
+					__TEXT,
+					__launchd_plist,
+					"$(SRCROOT)/$(PRODUCT_NAME)/launchd.plist",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "$(BT_HELPER_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/$(PRODUCT_NAME)/Bridging-Header.h";
+			};
+			name = Debug;
+		};
+		CE3974472859E518002D0EC9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = me.mhaeuser.batterytoolkitd/me.mhaeuser.batterytoolkitd.entitlements;
+				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/$(PRODUCT_NAME)/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"-sectcreate",
+					__TEXT,
+					__launchd_plist,
+					"$(SRCROOT)/$(PRODUCT_NAME)/launchd.plist",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "$(BT_HELPER_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/$(PRODUCT_NAME)/Bridging-Header.h";
+			};
+			name = Release;
+		};
+		CE397469285A2193002D0EC9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				BT_APP_NAME = me.mhaeuser.BatteryToolkitStandalone;
+				BT_HELPER_NAME = me.mhaeuser.BatteryToolkitStandalone;
+				CODE_SIGN_ENTITLEMENTS = BatteryToolkit/BatteryToolkit.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_PREVIEWS = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Battery Toolkit (Standalone)";
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = me.mhaeuser.BatteryToolkitStandalone;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/me.mhaeuser.batterytoolkitd/Bridging-Header.h";
+			};
+			name = Debug;
+		};
+		CE39746A285A2193002D0EC9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				BT_APP_NAME = me.mhaeuser.BatteryToolkitStandalone;
+				BT_HELPER_NAME = me.mhaeuser.BatteryToolkitStandalone;
+				CODE_SIGN_ENTITLEMENTS = BatteryToolkit/BatteryToolkit.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_PREVIEWS = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Battery Toolkit (Standalone)";
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = me.mhaeuser.BatteryToolkitStandalone;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/me.mhaeuser.batterytoolkitd/Bridging-Header.h";
+			};
+			name = Release;
+		};
+		CE52868028298B6E00860C7B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BT_APP_NAME = me.mhaeuser.BatteryToolkit;
+				BT_CODE_SIGN_CN = "Apple Development: mhaeuser@posteo.de (FK3MXHN3BX)";
+				BT_HELPER_NAME = me.mhaeuser.batterytoolkitd;
+				BT_SERVICE_NAME = me.mhaeuser.BatteryToolkitXPC;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = EMH49F8A2Y;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"\"BT_APP_NAME_=\\\"$(BT_APP_NAME)\\\"\"",
+					"\"BT_HELPER_NAME_=\\\"$(BT_HELPER_NAME)\\\"\"",
+					"\"BT_CODE_SIGN_CN_=\\\"$(BT_CODE_SIGN_CN)\\\"\"",
+					"\"BT_SERVICE_NAME_=\\\"$(BT_SERVICE_NAME)\\\"\"",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = .;
+				INFOPLIST_KEY_CFBundleDisplayName = "Battery Toolkit";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2022 Marvin Häuser. All rights reserved.";
+				LIBRARY_SEARCH_PATHS = "";
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_INCLUDE_PATHS = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		CE52868128298B6E00860C7B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BT_APP_NAME = me.mhaeuser.BatteryToolkit;
+				BT_CODE_SIGN_CN = "Apple Development: mhaeuser@posteo.de (FK3MXHN3BX)";
+				BT_HELPER_NAME = me.mhaeuser.batterytoolkitd;
+				BT_SERVICE_NAME = me.mhaeuser.BatteryToolkitXPC;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = EMH49F8A2Y;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"\"BT_APP_NAME_=\\\"$(BT_APP_NAME)\\\"\"",
+					"\"BT_HELPER_NAME_=\\\"$(BT_HELPER_NAME)\\\"\"",
+					"\"BT_CODE_SIGN_CN_=\\\"$(BT_CODE_SIGN_CN)\\\"\"",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = .;
+				INFOPLIST_KEY_CFBundleDisplayName = "Battery Toolkit";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2022 Marvin Häuser. All rights reserved.";
+				LIBRARY_SEARCH_PATHS = "";
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_INCLUDE_PATHS = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		CE52868328298B6E00860C7B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = BatteryToolkit/BatteryToolkit.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/$(TARGET_NAME)/Info.plist";
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				INFOPLIST_PREFIX_HEADER = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "$(BT_APP_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Debug;
+		};
+		CE52868428298B6E00860C7B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = BatteryToolkit/BatteryToolkit.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/$(TARGET_NAME)/Info.plist";
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				INFOPLIST_PREFIX_HEADER = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "$(BT_APP_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Release;
+		};
+		CEECE32528BB648F00821A3B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BatteryToolkitXPC/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = me.mhaeuser.BatteryToolkitXPC;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Debug;
+		};
+		CEECE32628BB648F00821A3B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BatteryToolkitXPC/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = me.mhaeuser.BatteryToolkitXPC;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CE00653D28A989830049B17D /* Build configuration list for PBXNativeTarget "IOPMPrivate" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CE00653E28A989830049B17D /* Debug */,
+				CE00653F28A989830049B17D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CE3974452859E518002D0EC9 /* Build configuration list for PBXNativeTarget "me.mhaeuser.batterytoolkitd" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CE3974462859E518002D0EC9 /* Debug */,
+				CE3974472859E518002D0EC9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CE397468285A2193002D0EC9 /* Build configuration list for PBXNativeTarget "BatteryToolkitStandalone" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CE397469285A2193002D0EC9 /* Debug */,
+				CE39746A285A2193002D0EC9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CE52866E28298B6D00860C7B /* Build configuration list for PBXProject "BatteryToolkit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CE52868028298B6E00860C7B /* Debug */,
+				CE52868128298B6E00860C7B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CE52868228298B6E00860C7B /* Build configuration list for PBXNativeTarget "BatteryToolkit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CE52868328298B6E00860C7B /* Debug */,
+				CE52868428298B6E00860C7B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CEECE32428BB648F00821A3B /* Build configuration list for PBXNativeTarget "BatteryToolkitXPC" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CEECE32528BB648F00821A3B /* Debug */,
+				CEECE32628BB648F00821A3B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = CE52866B28298B6D00860C7B /* Project object */;
+}
