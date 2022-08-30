@@ -22,4 +22,11 @@ class BTHelperComm: NSObject, BTHelperCommProtocol {
     func chargeToFull() -> Void {
         BTPowerEvents.chargeToFull()
     }
+    
+    func setChargeLimits(minCharge: UInt8, maxCharge: UInt8) {
+        BTPreferences.setChargeLimits(
+            minCharge: minCharge,
+            maxCharge: maxCharge
+            )
+    }
 }

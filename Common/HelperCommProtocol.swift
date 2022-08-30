@@ -6,4 +6,5 @@ import Foundation
     func disableExternalPower() -> Void
     func chargeToMaximum() -> Void
     func chargeToFull() -> Void
+    func setChargeLimits(minCharge: UInt8, maxCharge: UInt8)
 }

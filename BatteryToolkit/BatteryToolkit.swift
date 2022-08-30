@@ -33,4 +33,11 @@ public struct BatteryToolkit {
     public static func chargeToFull() {
         BTHelperXPCClient.chargeToFull()
     }
+
+    public static func setChargeLimits(minCharge: UInt8, maxCharge: UInt8) {
+        BTHelperXPCClient.setChargeLimits(
+            minCharge: minCharge,
+            maxCharge: maxCharge
+            )
+    }
 }

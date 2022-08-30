@@ -126,19 +126,21 @@ public struct BTPowerEvents {
     }
 
     fileprivate static func unregisterPercentChangedHandler() {
-        if BTPowerEvents.percentLoop != nil {
-            CFRunLoopRemoveSource(
-                CFRunLoopGetCurrent(),
-                BTPowerEvents.percentLoop,
-                CFRunLoopMode.defaultMode
-                )
-            BTPowerEvents.percentLoop = nil
-            //
-            // Disable charging to not have micro-charges happening when
-            // connecting to power.
-            //
-            BTPowerState.disableCharging()
+        if BTPowerEvents.percentLoop == nil {
+            return
         }
+        
+        CFRunLoopRemoveSource(
+            CFRunLoopGetCurrent(),
+            BTPowerEvents.percentLoop,
+            CFRunLoopMode.defaultMode
+            )
+        BTPowerEvents.percentLoop = nil
+        //
+        // Disable charging to not have micro-charges happening when
+        // connecting to power.
+        //
+        BTPowerState.disableCharging()
     }
     
     fileprivate static func handleChargeHysteresis() -> Int32 {
@@ -194,6 +196,8 @@ public struct BTPowerEvents {
             return false
         }
         
+        BTPreferences.read()
+        
         let registerResult = registerLimitedPowerHandler()
         if !registerResult {
             SMCKit.stop()
@@ -209,6 +213,12 @@ public struct BTPowerEvents {
         BTPowerEvents.restoreDefaults()
 
         SMCKit.stop()
+    }
+    
+    public static func preferencesChanged() {
+        if BTPowerEvents.percentLoop != nil {
+            _ = BTPowerEvents.handleChargeHysteresis()
+        }
     }
     
     private static func enableBelowThresholdMode(percent: UInt8) {

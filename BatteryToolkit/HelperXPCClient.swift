@@ -3,8 +3,8 @@ import Foundation
 import BTPreprocessor
 
 public struct BTHelperXPCClient {
-    private static var connect: NSXPCConnection? = nil
-    private static var helper: BTHelperCommProtocol?     = nil
+    private static var connect: NSXPCConnection?     = nil
+    private static var helper: BTHelperCommProtocol? = nil
 
     private static func interruptionHandler() {
         debugPrint("XPC client connection interrupted")
@@ -83,5 +83,12 @@ public struct BTHelperXPCClient {
 
     public static func chargeToFull() -> Void {
         BTHelperXPCClient.helper?.chargeToFull()
+    }
+    
+    public static func setChargeLimits(minCharge: UInt8, maxCharge: UInt8) -> Void {
+        BTHelperXPCClient.helper?.setChargeLimits(
+            minCharge: minCharge,
+            maxCharge: maxCharge
+            )
     }
 }

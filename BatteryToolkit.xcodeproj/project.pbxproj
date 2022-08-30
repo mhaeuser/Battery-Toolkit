@@ -67,6 +67,7 @@
 		CEECE33128BB742500821A3B /* ServiceCommProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEECE32F28BB742500821A3B /* ServiceCommProtocol.swift */; };
 		CEECE33328BB745B00821A3B /* ServiceComm.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEECE33228BB745B00821A3B /* ServiceComm.swift */; };
 		CEECE33528BB82BD00821A3B /* me.mhaeuser.batterytoolkitd in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE39744B2859E6D3002D0EC9 /* me.mhaeuser.batterytoolkitd */; };
+		CEED18AF28BCB24D005F06FC /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3A8F6C284D056D00A9E373 /* Preferences.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -592,6 +593,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEED18AF28BCB24D005F06FC /* Preferences.swift in Sources */,
 				CE7F623328B95A7300EF58F9 /* BTPreprocessor.m in Sources */,
 				CE39745A285A2193002D0EC9 /* SMCKit.swift in Sources */,
 				CE2B96C128A7E2BB00FE3DDB /* SleepKit.swift in Sources */,
@@ -722,7 +724,7 @@
 					__launchd_plist,
 					"$(SRCROOT)/$(PRODUCT_NAME)/launchd.plist",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "$(BT_HELPER_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = me.mhaeuser.batterytoolkitd;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/$(PRODUCT_NAME)/Bridging-Header.h";
@@ -746,7 +748,7 @@
 					__launchd_plist,
 					"$(SRCROOT)/$(PRODUCT_NAME)/launchd.plist",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "$(BT_HELPER_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = me.mhaeuser.batterytoolkitd;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/$(PRODUCT_NAME)/Bridging-Header.h";
@@ -760,6 +762,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				BT_APP_NAME = me.mhaeuser.BatteryToolkitStandalone;
 				BT_HELPER_NAME = me.mhaeuser.BatteryToolkitStandalone;
+				BT_SERVICE_NAME = me.mhaeuser.BatteryToolkitStandalone;
 				CODE_SIGN_ENTITLEMENTS = BatteryToolkit/BatteryToolkit.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				ENABLE_PREVIEWS = NO;
@@ -785,6 +788,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				BT_APP_NAME = me.mhaeuser.BatteryToolkitStandalone;
 				BT_HELPER_NAME = me.mhaeuser.BatteryToolkitStandalone;
+				BT_SERVICE_NAME = me.mhaeuser.BatteryToolkitStandalone;
 				CODE_SIGN_ENTITLEMENTS = BatteryToolkit/BatteryToolkit.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				ENABLE_PREVIEWS = NO;
@@ -934,6 +938,7 @@
 					"\"BT_APP_NAME_=\\\"$(BT_APP_NAME)\\\"\"",
 					"\"BT_HELPER_NAME_=\\\"$(BT_HELPER_NAME)\\\"\"",
 					"\"BT_CODE_SIGN_CN_=\\\"$(BT_CODE_SIGN_CN)\\\"\"",
+					"\"BT_SERVICE_NAME_=\\\"$(BT_SERVICE_NAME)\\\"\"",
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -976,7 +981,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "$(BT_APP_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = me.mhaeuser.BatteryToolkit;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 			};
@@ -999,7 +1004,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "$(BT_APP_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = me.mhaeuser.BatteryToolkit;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 			};
