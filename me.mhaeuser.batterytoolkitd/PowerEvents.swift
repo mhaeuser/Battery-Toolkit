@@ -109,15 +109,17 @@ public struct BTPowerEvents {
             )
         let percent = BTPowerEvents.handleChargeHysteresis()
         //
-        // In case charging to maximum was requested while the device was on
-        // battery, enable it now if appropriate.
+        // In case charging to maximum or full were requested while the device
+        // was on battery, enable it now if appropriate.
         //
         if BTPowerEvents.chargeMode == BTChargeMode.ToMaxLimit {
             if percent < BTPreferences.maxCharge {
                 BTPowerState.enableCharging()
             }
-
-            BTPowerEvents.chargeMode = BTChargeMode.Default
+        } else if BTPowerEvents.chargeMode == BTChargeMode.Full {
+            if percent < 100 {
+                BTPowerState.enableCharging()
+            }
         }
         
         return true
@@ -149,18 +151,23 @@ public struct BTPowerEvents {
             return 100;
         }
         //
-        // The hysteresis does not apply when starting the daemon, as micro-charges
-        // will already happen pre-boot and there is no point to not just charge all
-        // the way to the maximum then.
+        // The hysteresis does not apply when starting the daemon, as
+        // micro-charges will already happen pre-boot and there is no point to
+        // not just charge all the way to the maximum then.
         //
         if percent >= BTPreferences.maxCharge {
-            if BTPowerEvents.chargeMode == BTChargeMode.Full {
-                if (percent < 100) {
-                    return percent
-                }
-                
-                BTPowerEvents.chargeMode = BTChargeMode.Default
+            //
+            // Do not disable charging till 100 percent are reached when
+            // charging to full was requested. Charging to maximum is handled
+            // implicitly, as it only forces charging in [min, max).
+            //
+            if BTPowerEvents.chargeMode == BTChargeMode.Full && percent < 100 {
+                return percent
             }
+            //
+            // Charging modes are reset once we disable charging.
+            //
+            BTPowerEvents.chargeMode = BTChargeMode.Default
 
             BTPowerState.disableCharging()
         } else if percent < BTPreferences.minCharge {
@@ -204,15 +211,14 @@ public struct BTPowerEvents {
         SMCKit.stop()
     }
     
-    public static func chargeToMaximum() {
+    private static func enableBelowThresholdMode(percent: UInt8) {
         //
         // When the percent loop is inactive, this currently means that the
-        // device is not connected to power. In this case, do not disable
-        // sleep to not drain the battery. Sleep will be disabled once power
-        // is attached by the corresponding handler.
+        // device is not connected to power. In this case, do not enable
+        // charging to not disable sleep. The charging mode will be handled by
+        // power source handler when power is connected.
         //
         if BTPowerEvents.percentLoop == nil {
-            BTPowerEvents.chargeMode = BTChargeMode.ToMaxLimit
             return
         }
         
@@ -223,15 +229,18 @@ public struct BTPowerEvents {
             return;
         }
 
-        if percent < BTPreferences.maxCharge {
+        if percent < percent {
             BTPowerState.enableCharging()
         }
     }
     
+    public static func chargeToMaximum() {
+        BTPowerEvents.chargeMode = BTChargeMode.ToMaxLimit
+        BTPowerEvents.enableBelowThresholdMode(percent: BTPreferences.maxCharge)
+    }
+    
     public static func chargeToFull() {
         BTPowerEvents.chargeMode = BTChargeMode.Full
-        if BTPowerEvents.percentLoop != nil {
-            _ = BTPowerEvents.handleChargeHysteresis()
-        }
+        BTPowerEvents.enableBelowThresholdMode(percent: 100)
     }
 }
