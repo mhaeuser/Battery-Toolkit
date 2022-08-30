@@ -16,6 +16,12 @@ public struct BTPowerState {
         
         let powerEnabled = SMCPowerKit.isExternalPowerEnabled()
         BTPowerState.powerDisabled = !powerEnabled
+        if !powerEnabled {
+            //
+            // Sleep must always be disabled when external power is disabled.
+            //
+            SleepKit.disableSleep()
+        }
     }
 
     public static func disableCharging() {

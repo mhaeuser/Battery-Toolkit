@@ -4,7 +4,6 @@ import IOPMPrivate
 
 public struct SleepKit {
     private static var sleepDisabledCounter: UInt8 = 0
-    private static var sleepDisabled: Bool         = false
     private static var sleepRestore: Bool          = false
     
     private static func sleepDisabledIOPMValue() -> Bool {
@@ -23,7 +22,7 @@ public struct SleepKit {
         assert(SleepKit.sleepDisabledCounter > 0)
         SleepKit.sleepDisabledCounter -= 1
 
-        if !sleepDisabled || SleepKit.sleepDisabledCounter > 0 {
+        if SleepKit.sleepDisabledCounter > 0 {
             return
         }
 
@@ -31,13 +30,16 @@ public struct SleepKit {
             kIOPMSleepDisabledKey as CFString,
             SleepKit.sleepRestore ? kCFBooleanTrue : kCFBooleanFalse
             )
-        SleepKit.sleepDisabled = (result != kIOReturnSuccess)
+        if result != kIOReturnSuccess {
+            // FIXME: Handle error
+        }
     }
     
     public static func disableSleep() {
+        assert(SleepKit.sleepDisabledCounter >= 0)
         SleepKit.sleepDisabledCounter += 1
 
-        if sleepDisabled {
+        if SleepKit.sleepDisabledCounter > 1 {
             return
         }
         
@@ -47,6 +49,8 @@ public struct SleepKit {
             kIOPMSleepDisabledKey as CFString,
             kCFBooleanTrue
             )
-        SleepKit.sleepDisabled = (result == kIOReturnSuccess)
+        if result != kIOReturnSuccess {
+            // FIXME: Handle error
+        }
     }
 }
