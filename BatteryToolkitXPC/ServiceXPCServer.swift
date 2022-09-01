@@ -1,6 +1,6 @@
 import Foundation
 
-private class BTServiceXPCDelegate: NSObject, NSXPCListenerDelegate {
+private final class BTServiceXPCDelegate: NSObject, NSXPCListenerDelegate {
     fileprivate func listener(_ listener: NSXPCListener, shouldAcceptNewConnection newConnection: NSXPCConnection) -> Bool {
         return BTServiceXPCServer.acceptClient(newConnection: newConnection)
     }

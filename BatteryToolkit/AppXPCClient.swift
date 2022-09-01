@@ -1,7 +1,7 @@
 import Foundation
 import BTPreprocessor
 
-private class BTAppComm: BTAppCommProtocol {
+private final class BTAppComm: BTAppCommProtocol {
     func submitInstallHelper(success: Bool) -> Void {
         debugPrint("Helper install status: ", success)
         

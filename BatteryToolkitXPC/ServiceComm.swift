@@ -2,7 +2,7 @@ import Foundation
 import ServiceManagement
 import BTPreprocessor
 
-public class BTServiceComm: BTServiceCommProtocol {
+public final class BTServiceComm: BTServiceCommProtocol {
     private static func askAuthorization() -> AuthorizationRef? {
         var auth: AuthorizationRef? = nil
         let status: OSStatus = AuthorizationCreate(nil, nil, [], &auth)

@@ -1,7 +1,7 @@
 import Foundation
 import IOPMPrivate
 
-class BTHelperComm: NSObject, BTHelperCommProtocol {
+public final class BTHelperComm: NSObject, BTHelperCommProtocol {
     func queryExternalPowerEnabled() -> Void {
         let enabled = SMCPowerKit.isExternalPowerEnabled()
         BTHelperXPCServer.submitExternalPowerEnabled(enabled: enabled)

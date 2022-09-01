@@ -2,7 +2,7 @@ import Foundation
 
 import BTPreprocessor
 
-private class BTHelperXPCDelegate: NSObject, NSXPCListenerDelegate {
+private final class BTHelperXPCDelegate: NSObject, NSXPCListenerDelegate {
     private static func isValidClient(forConnection connection: NSXPCConnection) -> OSStatus {
         var token = connection.auditToken;
         let tokenData = Data(
