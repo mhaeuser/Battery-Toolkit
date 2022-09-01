@@ -8,14 +8,21 @@ public struct SleepKit {
     
     private static func sleepDisabledIOPMValue() -> Bool {
         guard let uSettings = IOPMCopySystemPowerSettings() else {
+            NSLog("System power settings could not be retrieved")
             return false
         }
         
         guard let settings = uSettings.takeUnretainedValue() as? [String: AnyObject] else {
+            NSLog("System power settings are malformed")
             return false
         }
 
-        return settings[kIOPMSleepDisabledKey] as? Bool ?? false
+        guard let sleepDisable = settings[kIOPMSleepDisabledKey] as? Bool else {
+            NSLog("Sleep disable setting is malformed")
+            return false
+        }
+
+        return sleepDisable
     }
     
     public static func restoreSleep() {
@@ -31,7 +38,7 @@ public struct SleepKit {
             SleepKit.sleepRestore ? kCFBooleanTrue : kCFBooleanFalse
             )
         if result != kIOReturnSuccess {
-            // FIXME: Handle error
+            NSLog("Failed to restore sleep disable to %d", SleepKit.sleepRestore)
         }
     }
     
@@ -50,7 +57,7 @@ public struct SleepKit {
             kCFBooleanTrue
             )
         if result != kIOReturnSuccess {
-            // FIXME: Handle error
+            NSLog("Failed to disable sleep")
         }
     }
 }
