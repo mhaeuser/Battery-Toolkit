@@ -1,8 +1,8 @@
 import Foundation
 
 public struct BTPreferences {
-    public static var minCharge: UInt8 = 70
-    public static var maxCharge: UInt8 = 80
+    public static var minCharge: UInt8 = BTPreferencesInfo.minChargeDefault
+    public static var maxCharge: UInt8 = BTPreferencesInfo.maxChargeDefault
 
     private static let defaultsMinChargeName = "MinCharge"
     private static let defaultsMaxChargeName = "MaxCharge"
@@ -12,11 +12,11 @@ public struct BTPreferences {
             return false
         }
         
-        if minCharge < 10 || minCharge > 100 {
+        if minCharge < BTPreferencesInfo.minChargeMin || minCharge > 100 {
             return false
         }
         
-        if maxCharge < 30 || maxCharge > 100 {
+        if maxCharge < BTPreferencesInfo.maxChargeMin || maxCharge > 100 {
             return false
         }
         
@@ -49,7 +49,7 @@ public struct BTPreferences {
             forKey: BTPreferences.defaultsMaxChargeName
             )
         if !BTPreferences.limitsValid(minCharge: minCharge, maxCharge: maxCharge) {
-            NSLog("Charge limits malformed, restore current values.")
+            NSLog("Charge limits malformed, restore current values")
             BTPreferences.write()
             return
         }
@@ -60,7 +60,7 @@ public struct BTPreferences {
     
     public static func setChargeLimits(minCharge: UInt8, maxCharge: UInt8) {
         if !BTPreferences.limitsValid(minCharge: Int(minCharge), maxCharge: Int(maxCharge)) {
-            NSLog("Client charge limits malformed, preserve current values.")
+            NSLog("Client charge limits malformed, preserve current values")
             return
         }
         
