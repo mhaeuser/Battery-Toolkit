@@ -221,7 +221,7 @@ public struct BTPowerEvents {
         }
     }
     
-    private static func enableBelowThresholdMode(percent: UInt8) {
+    private static func enableBelowThresholdMode(threshold: UInt8) {
         //
         // When the percent loop is inactive, this currently means that the
         // device is not connected to power. In this case, do not enable
@@ -239,18 +239,18 @@ public struct BTPowerEvents {
             return;
         }
 
-        if percent < percent {
+        if percent < threshold {
             BTPowerState.enableCharging()
         }
     }
     
     public static func chargeToMaximum() {
         BTPowerEvents.chargeMode = BTChargeMode.ToMaxLimit
-        BTPowerEvents.enableBelowThresholdMode(percent: BTPreferences.maxCharge)
+        BTPowerEvents.enableBelowThresholdMode(threshold: BTPreferences.maxCharge)
     }
     
     public static func chargeToFull() {
         BTPowerEvents.chargeMode = BTChargeMode.Full
-        BTPowerEvents.enableBelowThresholdMode(percent: 100)
+        BTPowerEvents.enableBelowThresholdMode(threshold: 100)
     }
 }
