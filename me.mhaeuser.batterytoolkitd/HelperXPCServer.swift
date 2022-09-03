@@ -96,11 +96,15 @@ public struct BTHelperXPCServer {
         //
         // REF: https://blog.obdev.at/what-we-have-learned-from-a-vulnerability/index.html
         // forceHard, forceKill: Do not allow late loading of (malicious) code.
+        // restrict:             Disallow unrestricted DTrace.
+        // enforcement:          Enforce code signing for all executable memory.
         // libraryValidation:    Do not allow loading of third-party libraries.
         // runtime:              Enforce Hardened Runtime.
         //
         let reqFlags: SecCodeSignatureFlags = [
                 .forceHard, .forceKill,
+                .restrict,
+                .enforcement,
                 .libraryValidation,
                 .runtime
             ]
@@ -129,6 +133,11 @@ public struct BTHelperXPCServer {
                 #endif
 
                 NSLog("Client declares security entitlement \(entitlement.key)")
+                return false
+            }
+            
+            if entitlement.key.starts(with: "com.apple.security.private.") {
+                NSLog("Client declares private entitlement \(entitlement.key)")
                 return false
             }
         }
