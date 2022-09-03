@@ -1,57 +1,10 @@
 import Foundation
 
 import BTPreprocessor
+import Security
 
 private final class BTHelperXPCDelegate: NSObject, NSXPCListenerDelegate {
-    private static func isValidClient(forConnection connection: NSXPCConnection) -> OSStatus {
-        var token = connection.auditToken;
-        let tokenData = Data(
-            bytes: &token,
-            count: MemoryLayout.size(ofValue: token)
-            )
-        let attributes = [kSecGuestAttributeAudit: tokenData]
-
-        let flags: SecCSFlags = []
-        var uCode: SecCode?   = nil
-        let codeStatus = SecCodeCopyGuestWithAttributes(
-            nil,
-            attributes as CFDictionary,
-            flags,
-            &uCode
-            )
-        if codeStatus != errSecSuccess {
-            return codeStatus
-        }
-        
-        assert(uCode != nil);
-        let code = uCode!
-
-        let entitlements = "identifier \"" + BT_APP_NAME +
-            "\" and anchor apple generic and certificate leaf[subject.CN] = \"" +
-            BT_CODE_SIGN_CN +
-            "\" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */"
-        var requirement: SecRequirement? = nil
-        
-        let reqStatus = SecRequirementCreateWithString(
-            entitlements as CFString,
-            flags,
-            &requirement
-            )
-        if reqStatus != errSecSuccess {
-            return reqStatus
-        }
-        
-        assert(requirement != nil);
-        
-        return SecCodeCheckValidity(code, flags, requirement)
-    }
-    
     fileprivate func listener(_ listener: NSXPCListener, shouldAcceptNewConnection newConnection: NSXPCConnection) -> Bool {
-        if (BTHelperXPCDelegate.isValidClient(forConnection: newConnection) != errSecSuccess) {
-            NSLog("XPC server connection by invalid client")
-            return false
-        }
-
         return BTHelperXPCServer.accept(newConnection: newConnection)
     }
 }
@@ -106,10 +59,146 @@ public struct BTHelperXPCServer {
         NSLog("XPC server connection invalidated")
     }
     
+    private static func verifySignFlags(code: SecCode) -> Bool {
+        var uStaticCode: SecStaticCode? = nil
+        let status = SecCodeCopyStaticCode(code, SecCSFlags(rawValue: 0), &uStaticCode)
+        if status != errSecSuccess {
+            NSLog("Failed to retrieve SecStaticCode")
+            return false
+        }
+        
+        assert(uStaticCode != nil)
+        let staticCode = uStaticCode!
+
+        var uSignInfo: CFDictionary? = nil
+        let infoStatus = SecCodeCopySigningInformation(
+            staticCode,
+            SecCSFlags(rawValue: kSecCSDynamicInformation),
+            &uSignInfo
+            )
+        if infoStatus != errSecSuccess {
+            NSLog("Failed to retrieve signing information")
+            return false
+        }
+        
+        guard let signInfo = uSignInfo as? [String: AnyObject] else {
+            NSLog("Signing information is nil")
+            return false
+        }
+        
+        guard let signingFlags = signInfo["flags"] as? UInt32 else {
+            NSLog("Failed to retrieve signature flags")
+            return false
+        }
+        
+        let codeFlags = SecCodeSignatureFlags(rawValue: signingFlags)
+        //
+        // REF: https://blog.obdev.at/what-we-have-learned-from-a-vulnerability/index.html
+        // forceHard, forceKill: Do not allow late loading of (malicious) code.
+        // libraryValidation:    Do not allow loading of third-party libraries.
+        // runtime:              Enforce Hardened Runtime.
+        //
+        let reqFlags: SecCodeSignatureFlags = [
+                .forceHard, .forceKill,
+                .libraryValidation,
+                .runtime
+            ]
+        if (!codeFlags.contains(reqFlags)) {
+            NSLog("Signature flags constraints violated: \(signingFlags)")
+            return false
+        }
+
+        guard let entitlements = signInfo["entitlements-dict"] as? [String: AnyObject] else {
+            NSLog("Failed to retrieve entitlements")
+            return false
+        }
+        
+        for entitlement in entitlements {
+            if entitlement.key.starts(with: "com.apple.security.") {
+                if entitlement.key == "com.apple.security.app-sandbox" ||
+                    entitlement.key == "com.apple.security.application-groups" {
+                    continue
+                }
+                
+                #if DEBUG
+                if entitlement.key == "com.apple.security.get-task-allow" {
+                    NSLog("Allowing get-task-allow in DEBUG mode")
+                    continue
+                }
+                #endif
+
+                NSLog("Client declares security entitlement \(entitlement.key)")
+                return false
+            }
+        }
+
+        return true
+    }
+    
+    private static func isValidClient(forConnection connection: NSXPCConnection) -> Bool {
+        var token = connection.auditToken;
+        let tokenData = Data(
+            bytes: &token,
+            count: MemoryLayout.size(ofValue: token)
+            )
+        let attributes = [kSecGuestAttributeAudit: tokenData]
+
+        var uCode: SecCode? = nil
+        let codeStatus = SecCodeCopyGuestWithAttributes(
+            nil,
+            attributes as CFDictionary,
+            [],
+            &uCode
+            )
+        if codeStatus != errSecSuccess {
+            return false
+        }
+        
+        assert(uCode != nil);
+        let code = uCode!
+
+        let entitlements = "identifier \"" + BT_APP_NAME +
+            "\" and anchor apple generic and certificate leaf[subject.CN] = \"" +
+            BT_CODE_SIGN_CN +
+            "\" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */"
+
+        var requirement: SecRequirement? = nil
+        let reqStatus = SecRequirementCreateWithString(
+            entitlements as CFString,
+            [],
+            &requirement
+            )
+        if reqStatus != errSecSuccess {
+            return false
+        }
+        
+        assert(requirement != nil);
+        
+        if !BTHelperXPCServer.verifySignFlags(code: code) {
+            return false
+        }
+        
+        let validStatus = SecCodeCheckValidity(
+            code,
+            [
+                SecCSFlags.enforceRevocationChecks,
+                SecCSFlags(rawValue: kSecCSRestrictSidebandData),
+                SecCSFlags(rawValue: kSecCSStrictValidate)
+            ],
+            requirement
+            )
+        return validStatus == errSecSuccess
+    }
+    
     fileprivate static func accept(newConnection: NSXPCConnection) -> Bool {
         if (connect != nil) {
             NSLog("XPC server ignored due to existing connection")
             assert(client != nil)
+            return false
+        }
+        
+        if !BTHelperXPCServer.isValidClient(forConnection: newConnection) {
+            NSLog("XPC server connection by invalid client")
             return false
         }
 
