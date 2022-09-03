@@ -14,7 +14,7 @@ public struct BTPowerState {
             SleepKit.disableSleep()
         }
         
-        let powerEnabled = SMCPowerKit.isExternalPowerEnabled()
+        let powerEnabled = SMCPowerKit.isPowerAdapterEnabled()
         BTPowerState.powerDisabled = !powerEnabled
         if !powerEnabled {
             //
@@ -56,14 +56,14 @@ public struct BTPowerState {
         BTPowerState.chargingDisabled = false
     }
 
-    public static func disableExternalPower() {
+    public static func disablePowerAdapter() {
         if BTPowerState.powerDisabled {
             return
         }
 
         SleepKit.disableSleep()
 
-        let result = SMCPowerKit.disableExternalPower()
+        let result = SMCPowerKit.disablePowerAdapter()
         if !result {
             SleepKit.restoreSleep()
             // TODO: Handle error
@@ -73,12 +73,12 @@ public struct BTPowerState {
         BTPowerState.powerDisabled = true
     }
 
-    public static func enableExternalPower() {
+    public static func enablePowerAdapter() {
         if !BTPowerState.powerDisabled {
             return
         }
 
-        let result = SMCPowerKit.enableExternalPower()
+        let result = SMCPowerKit.enablePowerAdapter()
         if !result {
             // TODO: Handle error
             return

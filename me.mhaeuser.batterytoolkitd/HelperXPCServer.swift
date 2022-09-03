@@ -235,7 +235,7 @@ public struct BTHelperXPCServer {
         return true
     }
     
-    public static func submitExternalPowerEnabled(enabled: Bool) -> Void {
-        client?.submitExternalPowerEnabled(enabled: enabled)
+    public static func submitPowerAdapterEnabled(enabled: Bool) -> Void {
+        client?.submitPowerAdapterEnabled(enabled: enabled)
     }
 }

@@ -71,7 +71,7 @@ public struct SMCPowerKit {
         }
     }
     
-    public static func enableExternalPower() -> Bool {
+    public static func enablePowerAdapter() -> Bool {
         do {
             try SMCKit.WriteKeyUI8(key: SMCPowerKitKeys.CH0J, value: 0x00)
             return true
@@ -80,7 +80,7 @@ public struct SMCPowerKit {
         }
     }
     
-    public static func disableExternalPower() -> Bool {
+    public static func disablePowerAdapter() -> Bool {
         do {
             try SMCKit.WriteKeyUI8(key: SMCPowerKitKeys.CH0J, value: 0x20)
             return true
@@ -89,7 +89,7 @@ public struct SMCPowerKit {
         }
     }
     
-    public static func isExternalPowerEnabled() -> Bool {
+    public static func isPowerAdapterEnabled() -> Bool {
         do {
             let value = try SMCKit.ReadKeyUI8(key: SMCPowerKitKeys.CH0J)
             return value == 0x00

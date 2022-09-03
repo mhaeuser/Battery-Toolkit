@@ -18,12 +18,12 @@ public struct BatteryToolkit {
         BTHelperXPCClient.stop()
     }
     
-    public static func disableExternalPower() {
-        BTHelperXPCClient.disableExternalPower()
+    public static func disablePowerAdapter() {
+        BTHelperXPCClient.disablePowerAdapter()
     }
 
-    public static func enableExternalPower() {
-        BTHelperXPCClient.enableExternalPower()
+    public static func enablePowerAdapter() {
+        BTHelperXPCClient.enablePowerAdapter()
     }
 
     public static func chargeToMaximum() {

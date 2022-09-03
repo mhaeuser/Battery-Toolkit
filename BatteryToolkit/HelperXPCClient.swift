@@ -65,16 +65,16 @@ public struct BTHelperXPCClient {
         lConnect.invalidate()
     }
     
-    public static func queryExternalPowerEnabled() -> Void {
-        BTHelperXPCClient.helper?.queryExternalPowerEnabled()
+    public static func queryPowerAdapterEnabled() -> Void {
+        BTHelperXPCClient.helper?.queryPowerAdapterEnabled()
     }
 
-    public static func disableExternalPower() -> Void {
-        BTHelperXPCClient.helper?.disableExternalPower()
+    public static func disablePowerAdapter() -> Void {
+        BTHelperXPCClient.helper?.disablePowerAdapter()
     }
 
-    public static func enableExternalPower() -> Void {
-        BTHelperXPCClient.helper?.enableExternalPower()
+    public static func enablePowerAdapter() -> Void {
+        BTHelperXPCClient.helper?.enablePowerAdapter()
     }
 
     public static func chargeToMaximum() -> Void {

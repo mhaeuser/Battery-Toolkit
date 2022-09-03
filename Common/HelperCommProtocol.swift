@@ -1,9 +1,9 @@
 import Foundation
 
 @objc protocol BTHelperCommProtocol {
-    func queryExternalPowerEnabled() -> Void
-    func enableExternalPower() -> Void
-    func disableExternalPower() -> Void
+    func queryPowerAdapterEnabled() -> Void
+    func enablePowerAdapter() -> Void
+    func disablePowerAdapter() -> Void
     func chargeToMaximum() -> Void
     func chargeToFull() -> Void
     func setChargeLimits(minCharge: UInt8, maxCharge: UInt8)

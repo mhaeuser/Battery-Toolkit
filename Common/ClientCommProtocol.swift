@@ -1,5 +1,5 @@
 import Foundation
 
 @objc protocol BTClientCommProtocol {
-    func submitExternalPowerEnabled(enabled: Bool) -> Void
+    func submitPowerAdapterEnabled(enabled: Bool) -> Void
 }

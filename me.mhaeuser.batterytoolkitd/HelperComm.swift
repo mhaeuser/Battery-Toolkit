@@ -2,17 +2,17 @@ import Foundation
 import IOPMPrivate
 
 public final class BTHelperComm: NSObject, BTHelperCommProtocol {
-    func queryExternalPowerEnabled() -> Void {
-        let enabled = SMCPowerKit.isExternalPowerEnabled()
-        BTHelperXPCServer.submitExternalPowerEnabled(enabled: enabled)
+    func queryPowerAdapterEnabled() -> Void {
+        let enabled = SMCPowerKit.isPowerAdapterEnabled()
+        BTHelperXPCServer.submitPowerAdapterEnabled(enabled: enabled)
     }
     
-    func enableExternalPower() -> Void {
-        BTPowerState.enableExternalPower()
+    func enablePowerAdapter() -> Void {
+        BTPowerState.enablePowerAdapter()
     }
     
-    func disableExternalPower() -> Void {
-        BTPowerState.disableExternalPower()
+    func disablePowerAdapter() -> Void {
+        BTPowerState.disablePowerAdapter()
     }
     
     func chargeToMaximum() -> Void {

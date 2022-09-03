@@ -162,7 +162,7 @@ public struct BTPowerEvents {
     fileprivate static func restoreDefaults() {
         // FIXME: Enable!
         //BTPowerState.enableCharging()
-        BTPowerState.enableExternalPower()
+        BTPowerState.enablePowerAdapter()
     }
 
     public static func start() -> Bool {
