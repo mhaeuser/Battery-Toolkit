@@ -29,4 +29,8 @@ public final class BTHelperComm: NSObject, BTHelperCommProtocol {
             maxCharge: maxCharge
             )
     }
+    
+    func setAdapterSleep(enabled: Bool) {
+        BTPreferences.setAdapterSleep(enabled: enabled)
+    }
 }

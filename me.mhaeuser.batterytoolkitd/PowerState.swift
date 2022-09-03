@@ -24,6 +24,19 @@ public struct BTPowerState {
         }
     }
 
+    public static func adapterSleepPreferenceToggled() {
+        //
+        // If power is disabled, toggle sleep.
+        //
+        if BTPowerState.powerDisabled {
+            if !BTPreferences.adapterSleep {
+                SleepKit.disableSleep()
+            } else {
+                SleepKit.restoreSleep()
+            }
+        }
+    }
+
     public static func disableCharging() {
         if BTPowerState.chargingDisabled {
             return
@@ -61,11 +74,15 @@ public struct BTPowerState {
             return
         }
 
-        SleepKit.disableSleep()
+        if !BTPreferences.adapterSleep {
+            SleepKit.disableSleep()
+        }
 
         let result = SMCPowerKit.disablePowerAdapter()
         if !result {
-            SleepKit.restoreSleep()
+            if !BTPreferences.adapterSleep {
+                SleepKit.restoreSleep()
+            }
             // TODO: Handle error
             return
         }
@@ -84,7 +101,9 @@ public struct BTPowerState {
             return
         }
         
-        SleepKit.restoreSleep()
+        if !BTPreferences.adapterSleep {
+            SleepKit.restoreSleep()
+        }
 
         BTPowerState.powerDisabled = false
     }

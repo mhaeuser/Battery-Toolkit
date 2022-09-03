@@ -1,6 +1,6 @@
 import Foundation
 
-func main() -> Never {
+private func main() -> Never {
     let powerResult = BTPowerEvents.start()
     if !powerResult {
         NSLog("Power events start failed")

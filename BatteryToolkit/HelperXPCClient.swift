@@ -91,4 +91,8 @@ public struct BTHelperXPCClient {
             maxCharge: maxCharge
             )
     }
+    
+    public static func setAdapterSleep(enabled: Bool) {
+        BTHelperXPCClient.helper?.setAdapterSleep(enabled: enabled)
+    }
 }

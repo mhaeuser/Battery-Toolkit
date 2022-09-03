@@ -40,4 +40,8 @@ public struct BatteryToolkit {
             maxCharge: maxCharge
             )
     }
+    
+    public static func setAdapterSleep(enabled: Bool) {
+        BTHelperXPCClient.setAdapterSleep(enabled: enabled)
+    }
 }

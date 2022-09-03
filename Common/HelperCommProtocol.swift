@@ -7,4 +7,5 @@ import Foundation
     func chargeToMaximum() -> Void
     func chargeToFull() -> Void
     func setChargeLimits(minCharge: UInt8, maxCharge: UInt8)
+    func setAdapterSleep(enabled: Bool) 
 }
