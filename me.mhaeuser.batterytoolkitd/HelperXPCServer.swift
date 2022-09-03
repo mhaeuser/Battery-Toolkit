@@ -1,6 +1,7 @@
 import Foundation
 
 import BTPreprocessor
+import NSXPCConnectionAuditToken
 import Security
 
 private final class BTHelperXPCDelegate: NSObject, NSXPCListenerDelegate {

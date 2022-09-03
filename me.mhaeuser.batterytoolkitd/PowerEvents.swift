@@ -1,5 +1,5 @@
+import Foundation
 import IOKit.ps
-import CoreFoundation
 import IOPMPrivate
 
 private enum BTChargeMode {

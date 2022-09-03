@@ -1,0 +1,3 @@
+module NSXPCConnectionAuditToken {
+    header "NSXPCConnectionAuditToken.h"
+}
