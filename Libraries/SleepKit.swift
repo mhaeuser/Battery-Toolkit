@@ -25,6 +25,27 @@ public struct SleepKit {
         return sleepDisable
     }
     
+    private static func restorePreviousSleepState() {
+        let result = IOPMSetSystemPowerSetting(
+            kIOPMSleepDisabledKey as CFString,
+            SleepKit.sleepRestore ? kCFBooleanTrue : kCFBooleanFalse
+            )
+        if result != kIOReturnSuccess {
+            NSLog("Failed to restore sleep disable to %d", SleepKit.sleepRestore)
+        }
+        
+        SleepKit.sleepRestore = false
+    }
+    
+    public static func forceRestoreSleep() {
+        if SleepKit.sleepDisabledCounter <= 0 {
+            return
+        }
+
+        SleepKit.sleepDisabledCounter = 0
+        SleepKit.restorePreviousSleepState()
+    }
+    
     public static func restoreSleep() {
         assert(SleepKit.sleepDisabledCounter > 0)
         SleepKit.sleepDisabledCounter -= 1
@@ -33,13 +54,7 @@ public struct SleepKit {
             return
         }
 
-        let result = IOPMSetSystemPowerSetting(
-            kIOPMSleepDisabledKey as CFString,
-            SleepKit.sleepRestore ? kCFBooleanTrue : kCFBooleanFalse
-            )
-        if result != kIOReturnSuccess {
-            NSLog("Failed to restore sleep disable to %d", SleepKit.sleepRestore)
-        }
+        SleepKit.restorePreviousSleepState()
     }
     
     public static func disableSleep() {

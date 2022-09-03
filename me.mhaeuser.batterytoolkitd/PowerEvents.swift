@@ -161,7 +161,7 @@ public struct BTPowerEvents {
 
     fileprivate static func restoreDefaults() {
         // FIXME: Enable!
-        BTPowerState.disableCharging()
+        //BTPowerState.enableCharging()
         BTPowerState.enableExternalPower()
     }
 
@@ -193,6 +193,8 @@ public struct BTPowerEvents {
         BTPowerEvents.restoreDefaults()
 
         SMCKit.stop()
+        
+        SleepKit.forceRestoreSleep()
     }
     
     public static func preferencesChanged() {
