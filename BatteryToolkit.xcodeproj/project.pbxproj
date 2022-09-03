@@ -7,11 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CE00654128A989980049B17D /* IOPowerSourcesPrivateEx.h in Headers */ = {isa = PBXBuildFile; fileRef = CE00653528A989240049B17D /* IOPowerSourcesPrivateEx.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CE00654228A9899C0049B17D /* IOPowerSourcesPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC321B1284BBC93009B9A30 /* IOPowerSourcesPrivate.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CE00654328A9899F0049B17D /* IOPMLibPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = CE2B96BD28A7CEFE00FE3DDB /* IOPMLibPrivate.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CE00654528A989DD0049B17D /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE00654428A989DD0049B17D /* IOKit.framework */; };
-		CE00654728A989EB0049B17D /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE00654628A989EB0049B17D /* CoreFoundation.framework */; };
 		CE0DB56328BEB4E600B8FC4C /* BTPreferencesInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0DB56228BEB4E600B8FC4C /* BTPreferencesInfo.swift */; };
 		CE0DB56428BEB4E600B8FC4C /* BTPreferencesInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0DB56228BEB4E600B8FC4C /* BTPreferencesInfo.swift */; };
 		CE0DB56528BEB4E600B8FC4C /* BTPreferencesInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0DB56228BEB4E600B8FC4C /* BTPreferencesInfo.swift */; };
@@ -46,9 +41,10 @@
 		CE7F623328B95A7300EF58F9 /* BTPreprocessor.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE387BD28A836AA00C2007C /* BTPreprocessor.m */; };
 		CE7F623428B95A7E00EF58F9 /* BTPreprocessor.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE387BD28A836AA00C2007C /* BTPreprocessor.m */; };
 		CE7F623528B95A8200EF58F9 /* BTPreprocessor.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE387BD28A836AA00C2007C /* BTPreprocessor.m */; };
-		CE8357D828A98B0F00D25675 /* IOPowerSourcesPrivateEx.m in Sources */ = {isa = PBXBuildFile; fileRef = CE00653428A989240049B17D /* IOPowerSourcesPrivateEx.m */; };
-		CE8357DB28A98C2E00D25675 /* libIOPMPrivate.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE00654028A989830049B17D /* libIOPMPrivate.a */; };
-		CE8357DE28A98C3800D25675 /* libIOPMPrivate.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE00654028A989830049B17D /* libIOPMPrivate.a */; };
+		CE8ED7F428C144EE00398581 /* Dispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8ED7F328C144EE00398581 /* Dispatcher.swift */; };
+		CE8ED7F528C16A5800398581 /* PowerEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC321AF284BAA2B009B9A30 /* PowerEvents.swift */; };
+		CE8ED7F628C16A6500398581 /* PowerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEECE31028BAB12000821A3B /* PowerState.swift */; };
+		CE8ED7F728C16AA200398581 /* Dispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8ED7F328C144EE00398581 /* Dispatcher.swift */; };
 		CE90920E28B81DC500DBAE4B /* ClientCommProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE90920D28B81DC500DBAE4B /* ClientCommProtocol.swift */; };
 		CE90920F28B81DC500DBAE4B /* ClientCommProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE90920D28B81DC500DBAE4B /* ClientCommProtocol.swift */; };
 		CE90921228B81EE700DBAE4B /* ClientComm.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE90921128B81EE700DBAE4B /* ClientComm.swift */; };
@@ -78,20 +74,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = CE3974402859E518002D0EC9;
 			remoteInfo = batterytoolkitd;
-		};
-		CE8357D928A98C2B00D25675 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CE52866B28298B6D00860C7B /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CE00653628A989830049B17D;
-			remoteInfo = IOPMPrivate;
-		};
-		CE8357DC28A98C3200D25675 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CE52866B28298B6D00860C7B /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CE00653628A989830049B17D;
-			remoteInfo = IOPMPrivate;
 		};
 		CEECE32128BB648F00821A3B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -136,9 +118,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		CE00653428A989240049B17D /* IOPowerSourcesPrivateEx.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IOPowerSourcesPrivateEx.m; sourceTree = "<group>"; };
-		CE00653528A989240049B17D /* IOPowerSourcesPrivateEx.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOPowerSourcesPrivateEx.h; sourceTree = "<group>"; };
-		CE00654028A989830049B17D /* libIOPMPrivate.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libIOPMPrivate.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE00654428A989DD0049B17D /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		CE00654628A989EB0049B17D /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		CE0DB56228BEB4E600B8FC4C /* BTPreferencesInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTPreferencesInfo.swift; sourceTree = "<group>"; };
@@ -169,6 +148,7 @@
 		CE6C06A028A8398600D76CC8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		CE6C06A428A84AAB00D76CC8 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		CE8718FA28BE9D560023D250 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
+		CE8ED7F328C144EE00398581 /* Dispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dispatcher.swift; sourceTree = "<group>"; };
 		CE90920D28B81DC500DBAE4B /* ClientCommProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientCommProtocol.swift; sourceTree = "<group>"; };
 		CE90921128B81EE700DBAE4B /* ClientComm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientComm.swift; sourceTree = "<group>"; };
 		CEA80FCA285A270F0064ADEA /* BatteryToolkitStandalone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BatteryToolkitStandalone.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -194,21 +174,11 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		CE00653B28A989830049B17D /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CE00654728A989EB0049B17D /* CoreFoundation.framework in Frameworks */,
-				CE00654528A989DD0049B17D /* IOKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		CE39743E2859E518002D0EC9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				CE6B760228BC19B5008DF170 /* CoreFoundation.framework in Frameworks */,
-				CE8357DB28A98C2E00D25675 /* libIOPMPrivate.a in Frameworks */,
 				CE6B75FC28BC196C008DF170 /* Foundation.framework in Frameworks */,
 				CE6B760128BC199F008DF170 /* IOKit.framework in Frameworks */,
 			);
@@ -218,7 +188,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE8357DE28A98C3800D25675 /* libIOPMPrivate.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -257,6 +226,7 @@
 				CEA80FD4285A51960064ADEA /* Bridging-Header.h */,
 				CEA80FD5285A565C0064ADEA /* HelperComm.swift */,
 				CEA80FD7285A56B50064ADEA /* main.swift */,
+				CE8ED7F328C144EE00398581 /* Dispatcher.swift */,
 			);
 			path = me.mhaeuser.batterytoolkitd;
 			sourceTree = "<group>";
@@ -297,7 +267,6 @@
 				CE39744B2859E6D3002D0EC9 /* me.mhaeuser.batterytoolkitd */,
 				CE39744C285A1D35002D0EC9 /* BatteryToolkit.app */,
 				CEA80FCA285A270F0064ADEA /* BatteryToolkitStandalone.app */,
-				CE00654028A989830049B17D /* libIOPMPrivate.a */,
 				CEECE31828BB648F00821A3B /* BatteryToolkitXPC.xpc */,
 			);
 			sourceTree = "<group>";
@@ -344,8 +313,6 @@
 			isa = PBXGroup;
 			children = (
 				CE6C06A428A84AAB00D76CC8 /* module.modulemap */,
-				CE00653528A989240049B17D /* IOPowerSourcesPrivateEx.h */,
-				CE00653428A989240049B17D /* IOPowerSourcesPrivateEx.m */,
 				CEC321B1284BBC93009B9A30 /* IOPowerSourcesPrivate.h */,
 				CE2B96BD28A7CEFE00FE3DDB /* IOPMLibPrivate.h */,
 			);
@@ -385,37 +352,7 @@
 		};
 /* End PBXGroup section */
 
-/* Begin PBXHeadersBuildPhase section */
-		CE00653728A989830049B17D /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CE00654328A9899F0049B17D /* IOPMLibPrivate.h in Headers */,
-				CE00654228A9899C0049B17D /* IOPowerSourcesPrivate.h in Headers */,
-				CE00654128A989980049B17D /* IOPowerSourcesPrivateEx.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXHeadersBuildPhase section */
-
 /* Begin PBXNativeTarget section */
-		CE00653628A989830049B17D /* IOPMPrivate */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = CE00653D28A989830049B17D /* Build configuration list for PBXNativeTarget "IOPMPrivate" */;
-			buildPhases = (
-				CE00653728A989830049B17D /* Headers */,
-				CE00653928A989830049B17D /* Sources */,
-				CE00653B28A989830049B17D /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = IOPMPrivate;
-			productName = SMCHeaders;
-			productReference = CE00654028A989830049B17D /* libIOPMPrivate.a */;
-			productType = "com.apple.product-type.library.static";
-		};
 		CE3974402859E518002D0EC9 /* me.mhaeuser.batterytoolkitd */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CE3974452859E518002D0EC9 /* Build configuration list for PBXNativeTarget "me.mhaeuser.batterytoolkitd" */;
@@ -427,7 +364,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				CE8357DA28A98C2B00D25675 /* PBXTargetDependency */,
 			);
 			name = me.mhaeuser.batterytoolkitd;
 			productName = batterytoolkitd;
@@ -445,7 +381,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				CE8357DD28A98C3200D25675 /* PBXTargetDependency */,
 			);
 			name = BatteryToolkitStandalone;
 			productName = BatteryToolkit;
@@ -531,7 +466,6 @@
 				CE52867228298B6D00860C7B /* BatteryToolkit */,
 				CE3974402859E518002D0EC9 /* me.mhaeuser.batterytoolkitd */,
 				CE397453285A2193002D0EC9 /* BatteryToolkitStandalone */,
-				CE00653628A989830049B17D /* IOPMPrivate */,
 				CEECE31728BB648F00821A3B /* BatteryToolkitXPC */,
 			);
 		};
@@ -566,14 +500,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		CE00653928A989830049B17D /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CE8357D828A98B0F00D25675 /* IOPowerSourcesPrivateEx.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		CE39743D2859E518002D0EC9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -583,6 +509,7 @@
 				CEA80FD2285A28230064ADEA /* Preferences.swift in Sources */,
 				CE2B96C028A7E2BB00FE3DDB /* SleepKit.swift in Sources */,
 				CEA80FD0285A27FB0064ADEA /* PowerEvents.swift in Sources */,
+				CE8ED7F428C144EE00398581 /* Dispatcher.swift in Sources */,
 				CEECE31128BAB12000821A3B /* PowerState.swift in Sources */,
 				CEA80FCC285A27D20064ADEA /* SMCPowerKit.swift in Sources */,
 				CEA80FD6285A565C0064ADEA /* HelperComm.swift in Sources */,
@@ -600,8 +527,11 @@
 			files = (
 				CEED18AF28BCB24D005F06FC /* Preferences.swift in Sources */,
 				CE7F623328B95A7300EF58F9 /* BTPreprocessor.m in Sources */,
+				CE8ED7F528C16A5800398581 /* PowerEvents.swift in Sources */,
+				CE8ED7F728C16AA200398581 /* Dispatcher.swift in Sources */,
 				CE0DB56528BEB4E600B8FC4C /* BTPreferencesInfo.swift in Sources */,
 				CE39745A285A2193002D0EC9 /* SMCKit.swift in Sources */,
+				CE8ED7F628C16A6500398581 /* PowerState.swift in Sources */,
 				CE2B96C128A7E2BB00FE3DDB /* SleepKit.swift in Sources */,
 				CE39745C285A2193002D0EC9 /* ViewController.swift in Sources */,
 				CE397460285A2193002D0EC9 /* SMCPowerKit.swift in Sources */,
@@ -651,16 +581,6 @@
 			target = CE3974402859E518002D0EC9 /* me.mhaeuser.batterytoolkitd */;
 			targetProxy = CE397450285A2100002D0EC9 /* PBXContainerItemProxy */;
 		};
-		CE8357DA28A98C2B00D25675 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = CE00653628A989830049B17D /* IOPMPrivate */;
-			targetProxy = CE8357D928A98C2B00D25675 /* PBXContainerItemProxy */;
-		};
-		CE8357DD28A98C3200D25675 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = CE00653628A989830049B17D /* IOPMPrivate */;
-			targetProxy = CE8357DC28A98C3200D25675 /* PBXContainerItemProxy */;
-		};
 		CEECE32228BB648F00821A3B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = CEECE31728BB648F00821A3B /* BatteryToolkitXPC */;
@@ -681,39 +601,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		CE00653E28A989830049B17D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DEFINES_MODULE = YES;
-				EXECUTABLE_PREFIX = lib;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				MODULEMAP_FILE = "$(TARGET_NAME)/module.modulemap";
-				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-			};
-			name = Debug;
-		};
-		CE00653F28A989830049B17D /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DEFINES_MODULE = YES;
-				EXECUTABLE_PREFIX = lib;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				MODULEMAP_FILE = "$(TARGET_NAME)/module.modulemap";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-			};
-			name = Release;
-		};
 		CE3974462859E518002D0EC9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1062,15 +949,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		CE00653D28A989830049B17D /* Build configuration list for PBXNativeTarget "IOPMPrivate" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CE00653E28A989830049B17D /* Debug */,
-				CE00653F28A989830049B17D /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		CE3974452859E518002D0EC9 /* Build configuration list for PBXNativeTarget "me.mhaeuser.batterytoolkitd" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

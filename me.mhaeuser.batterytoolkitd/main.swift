@@ -11,7 +11,7 @@ if powerResult {
         BTPowerEvents.stop()
     }
 
-    CFRunLoopRun()
+    dispatchMain()
 }
 
 NSLog("Power events start failed")

@@ -8,39 +8,22 @@ private enum BTChargeMode {
     case Full
 }
 
-private func LimitedPowerHandler(context: UnsafeMutableRawPointer?) {
-    //
-    // Immediately disable sleep to not interrupt the setup phase. It will be
-    // restored when the maximum charge is reached or the charging handler is
-    // uninstalled, whichever happens first.
-    //
-    SleepKit.disableSleep()
-
-    if IOPSDrawingUnlimitedPower() {
-        let result = BTPowerEvents.registerPercentChangedHandler()
-        if !result {
-            BTPowerEvents.restoreDefaults()
-            // FIXME: Handle error
-        }
-    } else {
-        BTPowerEvents.unregisterPercentChangedHandler()
-    }
-
-    SleepKit.restoreSleep()
+private func LimitedPowerHandler(token: Int32) {
+    BTPowerEvents.handleLimitedPower()
 }
 
-private func PercentChangeHandler(context: UnsafeMutableRawPointer?) {
+private func PercentChangeHandler(token: Int32) {
     _ = BTPowerEvents.handleChargeHysteresis()
 }
 
 public struct BTPowerEvents {
     fileprivate static var chargeMode: BTChargeMode = BTChargeMode.Default
     
-    private static var powerLoop: CFRunLoopSource?   = nil
-    private static var percentLoop: CFRunLoopSource? = nil
+    private static var powerCreated: Bool   = false
+    private static var percentCreated: Bool = false
 
     fileprivate static func registerLimitedPowerHandler() -> Bool {
-        if BTPowerEvents.powerLoop != nil {
+        if BTPowerEvents.powerCreated {
             return true
         }
         //
@@ -58,55 +41,35 @@ public struct BTPowerEvents {
         //
         BTPowerState.initPowerState()
 
-        BTPowerEvents.powerLoop = IOPSCreateLimitedPowerNotification(
-            LimitedPowerHandler,
-            nil
-            ).takeRetainedValue() as CFRunLoopSource?
-        if BTPowerEvents.powerLoop == nil {
+        BTPowerEvents.powerCreated = BTDispatcher.registerLimitedPowerNotification(LimitedPowerHandler)
+        if !BTPowerEvents.powerCreated {
             return false
         }
 
-        CFRunLoopAddSource(
-            CFRunLoopGetCurrent(),
-            BTPowerEvents.powerLoop,
-            CFRunLoopMode.defaultMode
-            )
-        LimitedPowerHandler(context: nil)
+        BTPowerEvents.handleLimitedPower()
         
         return true
     }
     
     fileprivate static func unregisterLimitedPowerHandler() {
-        if BTPowerEvents.powerLoop == nil {
+        if !BTPowerEvents.powerCreated {
             return
         }
 
-        CFRunLoopRemoveSource(
-            CFRunLoopGetCurrent(),
-            BTPowerEvents.powerLoop,
-            CFRunLoopMode.defaultMode
-            )
-        BTPowerEvents.powerLoop = nil
+        BTDispatcher.unregisterLimitedPowerNotification()
+        BTPowerEvents.powerCreated = false
     }
 
     fileprivate static func registerPercentChangedHandler() -> Bool {
-        if BTPowerEvents.percentLoop != nil {
+        if BTPowerEvents.percentCreated {
             return true
         }
 
-        BTPowerEvents.percentLoop = IOPSCreatePercentChangeNotification(
-            PercentChangeHandler,
-            nil
-            ).takeRetainedValue() as CFRunLoopSource?
-        if BTPowerEvents.percentLoop == nil {
+        BTPowerEvents.percentCreated = BTDispatcher.registerPercentChangeNotification(PercentChangeHandler)
+        if !BTPowerEvents.percentCreated {
             return false
         }
 
-        CFRunLoopAddSource(
-            CFRunLoopGetCurrent(),
-            BTPowerEvents.percentLoop,
-            CFRunLoopMode.defaultMode
-            )
         let percent = BTPowerEvents.handleChargeHysteresis()
         //
         // In case charging to maximum or full were requested while the device
@@ -126,16 +89,12 @@ public struct BTPowerEvents {
     }
 
     fileprivate static func unregisterPercentChangedHandler() {
-        if BTPowerEvents.percentLoop == nil {
+        if !BTPowerEvents.percentCreated {
             return
         }
         
-        CFRunLoopRemoveSource(
-            CFRunLoopGetCurrent(),
-            BTPowerEvents.percentLoop,
-            CFRunLoopMode.defaultMode
-            )
-        BTPowerEvents.percentLoop = nil
+        BTDispatcher.unregisterPercentChangeNotification()
+        BTPowerEvents.percentCreated = false
         //
         // Disable charging to not have micro-charges happening when
         // connecting to power.
@@ -144,7 +103,7 @@ public struct BTPowerEvents {
     }
     
     fileprivate static func handleChargeHysteresis() -> Int32 {
-        assert(BTPowerEvents.percentLoop != nil)
+        assert(BTPowerEvents.percentCreated)
 
         var percent: Int32 = 100
         let result = IOPSGetPercentRemaining(&percent, nil, nil)
@@ -177,6 +136,27 @@ public struct BTPowerEvents {
         }
         
         return percent
+    }
+    
+    fileprivate static func handleLimitedPower() {
+        //
+        // Immediately disable sleep to not interrupt the setup phase. It will be
+        // restored when the maximum charge is reached or the charging handler is
+        // uninstalled, whichever happens first.
+        //
+        SleepKit.disableSleep()
+
+        if IOPSDrawingUnlimitedPower() {
+            let result = BTPowerEvents.registerPercentChangedHandler()
+            if !result {
+                BTPowerEvents.restoreDefaults()
+                // FIXME: Handle error
+            }
+        } else {
+            BTPowerEvents.unregisterPercentChangedHandler()
+        }
+
+        SleepKit.restoreSleep()
     }
 
     fileprivate static func restoreDefaults() {
@@ -216,7 +196,7 @@ public struct BTPowerEvents {
     }
     
     public static func preferencesChanged() {
-        if BTPowerEvents.percentLoop != nil {
+        if BTPowerEvents.percentCreated {
             _ = BTPowerEvents.handleChargeHysteresis()
         }
     }
@@ -228,7 +208,7 @@ public struct BTPowerEvents {
         // charging to not disable sleep. The charging mode will be handled by
         // power source handler when power is connected.
         //
-        if BTPowerEvents.percentLoop == nil {
+        if !BTPowerEvents.percentCreated {
             return
         }
         
