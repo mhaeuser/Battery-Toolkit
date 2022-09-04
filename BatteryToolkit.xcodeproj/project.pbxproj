@@ -12,10 +12,10 @@
 		CE0DB56528BEB4E600B8FC4C /* BTPreferencesInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0DB56228BEB4E600B8FC4C /* BTPreferencesInfo.swift */; };
 		CE2B96C028A7E2BB00FE3DDB /* SleepKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2B96BF28A7E2BB00FE3DDB /* SleepKit.swift */; };
 		CE2B96C128A7E2BB00FE3DDB /* SleepKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2B96BF28A7E2BB00FE3DDB /* SleepKit.swift */; };
-		CE37DD09283F807C0060C43F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE37DD08283F807C0060C43F /* ViewController.swift */; };
+		CE30CB9F28C4865C001E2AC6 /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE30CB9E28C4865C001E2AC6 /* Preferences.storyboard */; };
+		CE30CBA128C48995001E2AC6 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE30CBA028C48995001E2AC6 /* PreferencesViewController.swift */; };
 		CE37DD0C283F80960060C43F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE37DD0A283F80960060C43F /* Main.storyboard */; };
 		CE39745A285A2193002D0EC9 /* SMCKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE37DD0D283F86F90060C43F /* SMCKit.swift */; };
-		CE39745C285A2193002D0EC9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE37DD08283F807C0060C43F /* ViewController.swift */; };
 		CE397460285A2193002D0EC9 /* SMCPowerKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE37DD0F284164160060C43F /* SMCPowerKit.swift */; };
 		CE397461285A2193002D0EC9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE52868528298CA300860C7B /* AppDelegate.swift */; };
 		CE397464285A2193002D0EC9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE37DD0A283F80960060C43F /* Main.storyboard */; };
@@ -126,7 +126,8 @@
 		CE2B96BF28A7E2BB00FE3DDB /* SleepKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepKit.swift; sourceTree = "<group>"; };
 		CE2B96C228A81C5100FE3DDB /* BTPreprocessor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BTPreprocessor.h; sourceTree = "<group>"; };
 		CE2B96C328A81CB900FE3DDB /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
-		CE37DD08283F807C0060C43F /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		CE30CB9E28C4865C001E2AC6 /* Preferences.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Preferences.storyboard; sourceTree = "<group>"; };
+		CE30CBA028C48995001E2AC6 /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		CE37DD0B283F80960060C43F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CE37DD0D283F86F90060C43F /* SMCKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMCKit.swift; sourceTree = "<group>"; };
 		CE37DD0F284164160060C43F /* SMCPowerKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMCPowerKit.swift; sourceTree = "<group>"; };
@@ -148,7 +149,6 @@
 		CE6B760828BC1D15008DF170 /* ServiceXPCServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceXPCServer.swift; sourceTree = "<group>"; };
 		CE6C06A028A8398600D76CC8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		CE6C06A428A84AAB00D76CC8 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
-		CE8718FA28BE9D560023D250 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
 		CE8ED7F328C144EE00398581 /* Dispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dispatcher.swift; sourceTree = "<group>"; };
 		CE90920D28B81DC500DBAE4B /* ClientCommProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientCommProtocol.swift; sourceTree = "<group>"; };
 		CE90921128B81EE700DBAE4B /* ClientComm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientComm.swift; sourceTree = "<group>"; };
@@ -283,11 +283,12 @@
 				CE52867F28298B6E00860C7B /* BatteryToolkit.entitlements */,
 				CE52868528298CA300860C7B /* AppDelegate.swift */,
 				CE37DD0A283F80960060C43F /* Main.storyboard */,
-				CE37DD08283F807C0060C43F /* ViewController.swift */,
 				CE39746D285A229F002D0EC9 /* BatteryToolkit.swift */,
 				CE397477285A25A1002D0EC9 /* HelperXPCClient.swift */,
 				CE90921128B81EE700DBAE4B /* ClientComm.swift */,
 				CE6B760628BC1ABC008DF170 /* AppXPCClient.swift */,
+				CE30CB9E28C4865C001E2AC6 /* Preferences.storyboard */,
+				CE30CBA028C48995001E2AC6 /* PreferencesViewController.swift */,
 			);
 			path = BatteryToolkit;
 			sourceTree = "<group>";
@@ -497,6 +498,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE30CB9F28C4865C001E2AC6 /* Preferences.storyboard in Resources */,
 				CE37DD0C283F80960060C43F /* Main.storyboard in Resources */,
 				CE52867B28298B6E00860C7B /* Assets.xcassets in Resources */,
 			);
@@ -545,7 +547,6 @@
 				CE39745A285A2193002D0EC9 /* SMCKit.swift in Sources */,
 				CE8ED7F628C16A6500398581 /* PowerState.swift in Sources */,
 				CE2B96C128A7E2BB00FE3DDB /* SleepKit.swift in Sources */,
-				CE39745C285A2193002D0EC9 /* ViewController.swift in Sources */,
 				CE397460285A2193002D0EC9 /* SMCPowerKit.swift in Sources */,
 				CE397470285A22BB002D0EC9 /* BatteryToolkit.swift in Sources */,
 				CE397461285A2193002D0EC9 /* AppDelegate.swift in Sources */,
@@ -560,10 +561,10 @@
 				CE6B760728BC1ABC008DF170 /* AppXPCClient.swift in Sources */,
 				CE6B75F928BC18EA008DF170 /* HelperCommProtocol.swift in Sources */,
 				CE397478285A25A1002D0EC9 /* HelperXPCClient.swift in Sources */,
-				CE37DD09283F807C0060C43F /* ViewController.swift in Sources */,
 				CE0DB56328BEB4E600B8FC4C /* BTPreferencesInfo.swift in Sources */,
 				CEECE32B28BB73BB00821A3B /* AppCommProtocol.swift in Sources */,
 				CE90921228B81EE700DBAE4B /* ClientComm.swift in Sources */,
+				CE30CBA128C48995001E2AC6 /* PreferencesViewController.swift in Sources */,
 				CEECE33028BB742500821A3B /* ServiceCommProtocol.swift in Sources */,
 				CE39746E285A229F002D0EC9 /* BatteryToolkit.swift in Sources */,
 				CE90920E28B81DC500DBAE4B /* ClientCommProtocol.swift in Sources */,
@@ -605,7 +606,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				CE37DD0B283F80960060C43F /* Base */,
-				CE8718FA28BE9D560023D250 /* de */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
