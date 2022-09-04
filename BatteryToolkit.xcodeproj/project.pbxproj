@@ -133,7 +133,7 @@
 		CE3974492859E685002D0EC9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE39744A2859E690002D0EC9 /* launchd.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = launchd.plist; sourceTree = "<group>"; };
 		CE39744B2859E6D3002D0EC9 /* me.mhaeuser.batterytoolkitd */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = me.mhaeuser.batterytoolkitd; sourceTree = BUILT_PRODUCTS_DIR; };
-		CE39744C285A1D35002D0EC9 /* BatteryToolkit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BatteryToolkit.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE39744C285A1D35002D0EC9 /* Battery Toolkit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Battery Toolkit.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE39746D285A229F002D0EC9 /* BatteryToolkit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryToolkit.swift; sourceTree = "<group>"; };
 		CE39746F285A22BB002D0EC9 /* BatteryToolkit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryToolkit.swift; sourceTree = "<group>"; };
 		CE397471285A2396002D0EC9 /* HelperXPCServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperXPCServer.swift; sourceTree = "<group>"; };
@@ -268,7 +268,7 @@
 				CE3974422859E518002D0EC9 /* me.mhaeuser.batterytoolkitd */,
 				CE3A8F6E284D26BA00A9E373 /* Frameworks */,
 				CE39744B2859E6D3002D0EC9 /* me.mhaeuser.batterytoolkitd */,
-				CE39744C285A1D35002D0EC9 /* BatteryToolkit.app */,
+				CE39744C285A1D35002D0EC9 /* Battery Toolkit.app */,
 				CEA80FCA285A270F0064ADEA /* BatteryToolkitStandalone.app */,
 				CEECE31828BB648F00821A3B /* BatteryToolkitXPC.xpc */,
 			);
@@ -399,9 +399,9 @@
 			productReference = CEA80FCA285A270F0064ADEA /* BatteryToolkitStandalone.app */;
 			productType = "com.apple.product-type.application";
 		};
-		CE52867228298B6D00860C7B /* BatteryToolkit */ = {
+		CE52867228298B6D00860C7B /* Battery Toolkit */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CE52868228298B6E00860C7B /* Build configuration list for PBXNativeTarget "BatteryToolkit" */;
+			buildConfigurationList = CE52868228298B6E00860C7B /* Build configuration list for PBXNativeTarget "Battery Toolkit" */;
 			buildPhases = (
 				CE52866F28298B6D00860C7B /* Sources */,
 				CE52867028298B6D00860C7B /* Frameworks */,
@@ -414,9 +414,9 @@
 				CE397451285A2100002D0EC9 /* PBXTargetDependency */,
 				CEECE32228BB648F00821A3B /* PBXTargetDependency */,
 			);
-			name = BatteryToolkit;
+			name = "Battery Toolkit";
 			productName = BatteryToolkit;
-			productReference = CE39744C285A1D35002D0EC9 /* BatteryToolkit.app */;
+			productReference = CE39744C285A1D35002D0EC9 /* Battery Toolkit.app */;
 			productType = "com.apple.product-type.application";
 		};
 		CEECE31728BB648F00821A3B /* BatteryToolkitXPC */ = {
@@ -475,7 +475,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				CE52867228298B6D00860C7B /* BatteryToolkit */,
+				CE52867228298B6D00860C7B /* Battery Toolkit */,
 				CE3974402859E518002D0EC9 /* me.mhaeuser.batterytoolkitd */,
 				CE397453285A2193002D0EC9 /* BatteryToolkitStandalone */,
 				CEECE31728BB648F00821A3B /* BatteryToolkitXPC */,
@@ -881,7 +881,7 @@
 				CODE_SIGN_ENTITLEMENTS = BatteryToolkit/BatteryToolkit.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "$(SRCROOT)/$(TARGET_NAME)/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/BatteryToolkit/Info.plist";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				INFOPLIST_PREFIX_HEADER = "";
@@ -904,7 +904,7 @@
 				CODE_SIGN_ENTITLEMENTS = BatteryToolkit/BatteryToolkit.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "$(SRCROOT)/$(TARGET_NAME)/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/BatteryToolkit/Info.plist";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				INFOPLIST_PREFIX_HEADER = "";
@@ -988,7 +988,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CE52868228298B6E00860C7B /* Build configuration list for PBXNativeTarget "BatteryToolkit" */ = {
+		CE52868228298B6E00860C7B /* Build configuration list for PBXNativeTarget "Battery Toolkit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CE52868328298B6E00860C7B /* Debug */,
