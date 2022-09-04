@@ -15,7 +15,6 @@ public struct BTAppXPCClient {
             debugPrint("XPC client remote object error: ", error)
         }) as? BTServiceCommProtocol else {
             debugPrint("XPC client remote object is malfored")
-            lConnect.suspend()
             lConnect.invalidate()
             return false
         }
@@ -38,7 +37,6 @@ public struct BTAppXPCClient {
     fileprivate static func stop() {
         assert(connect != nil)
         connect!.invalidate()
-        connect!.suspend()
         connect = nil
     }
 }

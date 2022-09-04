@@ -36,7 +36,6 @@ public struct BTHelperXPCClient {
             debugPrint("XPC client remote object error: ", error)
         }) as? BTHelperCommProtocol else {
             debugPrint("XPC client remote object is malfored")
-            lConnect.suspend()
             lConnect.invalidate()
             return false
         }
@@ -57,8 +56,7 @@ public struct BTHelperXPCClient {
 
         BTHelperXPCClient.connect = nil
         BTHelperXPCClient.helper  = nil
-        
-        lConnect.suspend()
+
         lConnect.invalidate()
     }
     
