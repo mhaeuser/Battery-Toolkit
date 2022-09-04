@@ -25,9 +25,6 @@ public struct BTHelperXPCClient {
             options: .privileged
             )
 
-        lConnect.exportedInterface = NSXPCInterface(with: BTClientCommProtocol.self)
-        lConnect.exportedObject    = BTCClientComm()
-
         lConnect.remoteObjectInterface = NSXPCInterface(with: BTHelperCommProtocol.self)
         
         lConnect.invalidationHandler = BTHelperXPCClient.invalidationHandler
@@ -65,8 +62,8 @@ public struct BTHelperXPCClient {
         lConnect.invalidate()
     }
     
-    public static func queryPowerAdapterEnabled() -> Void {
-        BTHelperXPCClient.helper?.queryPowerAdapterEnabled()
+    public static func queryPowerAdapterEnabled(reply: @escaping ((Bool) -> Void)) -> Void {
+        BTHelperXPCClient.helper?.queryPowerAdapterEnabled(reply: reply)
     }
 
     public static func disablePowerAdapter() -> Void {

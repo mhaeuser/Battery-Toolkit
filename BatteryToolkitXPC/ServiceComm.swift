@@ -13,7 +13,7 @@ public final class BTServiceComm: BTServiceCommProtocol {
         return auth
     }
     
-    func installHelper() -> Void {
+    func installHelper(reply: ((Bool) -> Void)) -> Void {
         guard let auth = BTServiceComm.askAuthorization() else {
             fatalError("Authorization not acquired.")
         }
@@ -25,6 +25,6 @@ public final class BTServiceComm: BTServiceCommProtocol {
             auth,
             &error
             )
-        BTServiceXPCServer.submitInstallHelper(success: result)
+        reply(result)
     }
 }

@@ -35,7 +35,6 @@
 		CE6B760128BC199F008DF170 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE00654428A989DD0049B17D /* IOKit.framework */; };
 		CE6B760228BC19B5008DF170 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE00654628A989EB0049B17D /* CoreFoundation.framework */; };
 		CE6B760428BC19C7008DF170 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6B760328BC19C7008DF170 /* Cocoa.framework */; };
-		CE6B760528BC1A7B008DF170 /* ClientCommProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE90920D28B81DC500DBAE4B /* ClientCommProtocol.swift */; };
 		CE6B760728BC1ABC008DF170 /* AppXPCClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6B760628BC1ABC008DF170 /* AppXPCClient.swift */; };
 		CE6B760928BC1D15008DF170 /* ServiceXPCServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6B760828BC1D15008DF170 /* ServiceXPCServer.swift */; };
 		CE7F623328B95A7300EF58F9 /* BTPreprocessor.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE387BD28A836AA00C2007C /* BTPreprocessor.m */; };
@@ -45,9 +44,6 @@
 		CE8ED7F528C16A5800398581 /* PowerEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC321AF284BAA2B009B9A30 /* PowerEvents.swift */; };
 		CE8ED7F628C16A6500398581 /* PowerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEECE31028BAB12000821A3B /* PowerState.swift */; };
 		CE8ED7F728C16AA200398581 /* Dispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8ED7F328C144EE00398581 /* Dispatcher.swift */; };
-		CE90920E28B81DC500DBAE4B /* ClientCommProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE90920D28B81DC500DBAE4B /* ClientCommProtocol.swift */; };
-		CE90920F28B81DC500DBAE4B /* ClientCommProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE90920D28B81DC500DBAE4B /* ClientCommProtocol.swift */; };
-		CE90921228B81EE700DBAE4B /* ClientComm.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE90921128B81EE700DBAE4B /* ClientComm.swift */; };
 		CEA80FCB285A27CF0064ADEA /* SMCKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE37DD0D283F86F90060C43F /* SMCKit.swift */; };
 		CEA80FCC285A27D20064ADEA /* SMCPowerKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE37DD0F284164160060C43F /* SMCPowerKit.swift */; };
 		CEA80FD0285A27FB0064ADEA /* PowerEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC321AF284BAA2B009B9A30 /* PowerEvents.swift */; };
@@ -59,8 +55,6 @@
 		CEECE32328BB648F00821A3B /* BatteryToolkitXPC.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = CEECE31828BB648F00821A3B /* BatteryToolkitXPC.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		CEECE32828BB652400821A3B /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEECE32728BB652400821A3B /* main.swift */; };
 		CEECE32928BB6C3500821A3B /* BTPreprocessor.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE387BD28A836AA00C2007C /* BTPreprocessor.m */; };
-		CEECE32B28BB73BB00821A3B /* AppCommProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEECE32A28BB73BB00821A3B /* AppCommProtocol.swift */; };
-		CEECE32C28BB73BB00821A3B /* AppCommProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEECE32A28BB73BB00821A3B /* AppCommProtocol.swift */; };
 		CEECE33028BB742500821A3B /* ServiceCommProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEECE32F28BB742500821A3B /* ServiceCommProtocol.swift */; };
 		CEECE33128BB742500821A3B /* ServiceCommProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEECE32F28BB742500821A3B /* ServiceCommProtocol.swift */; };
 		CEECE33328BB745B00821A3B /* ServiceComm.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEECE33228BB745B00821A3B /* ServiceComm.swift */; };
@@ -150,8 +144,6 @@
 		CE6C06A028A8398600D76CC8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		CE6C06A428A84AAB00D76CC8 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		CE8ED7F328C144EE00398581 /* Dispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dispatcher.swift; sourceTree = "<group>"; };
-		CE90920D28B81DC500DBAE4B /* ClientCommProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientCommProtocol.swift; sourceTree = "<group>"; };
-		CE90921128B81EE700DBAE4B /* ClientComm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientComm.swift; sourceTree = "<group>"; };
 		CEA80FCA285A270F0064ADEA /* BatteryToolkitStandalone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BatteryToolkitStandalone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEA80FD3285A51600064ADEA /* NSXPCConnectionAuditToken.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSXPCConnectionAuditToken.h; sourceTree = "<group>"; };
 		CEA80FD5285A565C0064ADEA /* HelperComm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperComm.swift; sourceTree = "<group>"; };
@@ -170,7 +162,6 @@
 		CEECE31828BB648F00821A3B /* BatteryToolkitXPC.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = BatteryToolkitXPC.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEECE32028BB648F00821A3B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CEECE32728BB652400821A3B /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		CEECE32A28BB73BB00821A3B /* AppCommProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCommProtocol.swift; sourceTree = "<group>"; };
 		CEECE32F28BB742500821A3B /* ServiceCommProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceCommProtocol.swift; sourceTree = "<group>"; };
 		CEECE33228BB745B00821A3B /* ServiceComm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceComm.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -277,7 +268,6 @@
 		CE52867528298B6D00860C7B /* BatteryToolkit */ = {
 			isa = PBXGroup;
 			children = (
-				CEECE32A28BB73BB00821A3B /* AppCommProtocol.swift */,
 				CEE95015285BC3EF00FF60E0 /* Info.plist */,
 				CE52867A28298B6E00860C7B /* Assets.xcassets */,
 				CE52867F28298B6E00860C7B /* BatteryToolkit.entitlements */,
@@ -285,7 +275,6 @@
 				CE37DD0A283F80960060C43F /* Main.storyboard */,
 				CE39746D285A229F002D0EC9 /* BatteryToolkit.swift */,
 				CE397477285A25A1002D0EC9 /* HelperXPCClient.swift */,
-				CE90921128B81EE700DBAE4B /* ClientComm.swift */,
 				CE6B760628BC1ABC008DF170 /* AppXPCClient.swift */,
 				CE30CB9E28C4865C001E2AC6 /* Preferences.storyboard */,
 				CE30CBA028C48995001E2AC6 /* PreferencesViewController.swift */,
@@ -306,7 +295,6 @@
 		CE6B75F728BC18DD008DF170 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				CE90920D28B81DC500DBAE4B /* ClientCommProtocol.swift */,
 				CEA80FDA285A57030064ADEA /* HelperCommProtocol.swift */,
 				CE0DB56228BEB4E600B8FC4C /* BTPreferencesInfo.swift */,
 			);
@@ -530,7 +518,6 @@
 				CE0DB56428BEB4E600B8FC4C /* BTPreferencesInfo.swift in Sources */,
 				CEA80FD8285A56B60064ADEA /* main.swift in Sources */,
 				CEA80FCB285A27CF0064ADEA /* SMCKit.swift in Sources */,
-				CE90920F28B81DC500DBAE4B /* ClientCommProtocol.swift in Sources */,
 				CE397472285A2396002D0EC9 /* HelperXPCServer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -562,12 +549,9 @@
 				CE6B75F928BC18EA008DF170 /* HelperCommProtocol.swift in Sources */,
 				CE397478285A25A1002D0EC9 /* HelperXPCClient.swift in Sources */,
 				CE0DB56328BEB4E600B8FC4C /* BTPreferencesInfo.swift in Sources */,
-				CEECE32B28BB73BB00821A3B /* AppCommProtocol.swift in Sources */,
-				CE90921228B81EE700DBAE4B /* ClientComm.swift in Sources */,
 				CE30CBA128C48995001E2AC6 /* PreferencesViewController.swift in Sources */,
 				CEECE33028BB742500821A3B /* ServiceCommProtocol.swift in Sources */,
 				CE39746E285A229F002D0EC9 /* BatteryToolkit.swift in Sources */,
-				CE90920E28B81DC500DBAE4B /* ClientCommProtocol.swift in Sources */,
 				CE52868628298CA300860C7B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -576,13 +560,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEECE32C28BB73BB00821A3B /* AppCommProtocol.swift in Sources */,
 				CEECE33128BB742500821A3B /* ServiceCommProtocol.swift in Sources */,
 				CEECE32928BB6C3500821A3B /* BTPreprocessor.m in Sources */,
 				CE6B760928BC1D15008DF170 /* ServiceXPCServer.swift in Sources */,
 				CEECE32828BB652400821A3B /* main.swift in Sources */,
 				CEECE33328BB745B00821A3B /* ServiceComm.swift in Sources */,
-				CE6B760528BC1A7B008DF170 /* ClientCommProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

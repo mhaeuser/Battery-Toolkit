@@ -1,26 +1,11 @@
 import Foundation
 import BTPreprocessor
 
-private final class BTAppComm: BTAppCommProtocol {
-    func submitInstallHelper(success: Bool) -> Void {
-        debugPrint("Helper install status: ", success)
-        
-        BTAppXPCClient.stop()
-        
-        if success {
-            _ = BatteryToolkit.startXpcClient()
-        }
-    }
-}
-
 public struct BTAppXPCClient {
     private static var connect: NSXPCConnection? = nil
     
     public static func installHelper() -> Bool {
         let lConnect = NSXPCConnection(serviceName: BT_SERVICE_NAME)
-
-        lConnect.exportedInterface = NSXPCInterface(with: BTAppCommProtocol.self)
-        lConnect.exportedObject    = BTAppComm()
 
         lConnect.remoteObjectInterface = NSXPCInterface(with: BTServiceCommProtocol.self)
         
@@ -37,7 +22,15 @@ public struct BTAppXPCClient {
         
         connect = lConnect
 
-        service.installHelper()
+        service.installHelper() { (success) -> Void in
+            debugPrint("Helper install status: ", success)
+            
+            BTAppXPCClient.stop()
+            
+            if success {
+                _ = BatteryToolkit.startXpcClient()
+            }
+        }
         
         return true
     }

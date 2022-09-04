@@ -2,9 +2,8 @@ import Foundation
 import IOPMPrivate
 
 public final class BTHelperComm: NSObject, BTHelperCommProtocol {
-    func queryPowerAdapterEnabled() -> Void {
-        let enabled = SMCPowerKit.isPowerAdapterEnabled()
-        BTHelperXPCServer.submitPowerAdapterEnabled(enabled: enabled)
+    func queryPowerAdapterEnabled(reply: @escaping ((Bool) -> Void)) -> Void {
+        reply(SMCPowerKit.isPowerAdapterEnabled())
     }
     
     func enablePowerAdapter() -> Void {

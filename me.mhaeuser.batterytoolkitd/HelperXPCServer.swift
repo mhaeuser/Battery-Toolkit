@@ -13,9 +13,6 @@ private final class BTHelperXPCDelegate: NSObject, NSXPCListenerDelegate {
 public struct BTHelperXPCServer {
     private static var listener: NSXPCListener? = nil
 
-    private static var connect: NSXPCConnection?     = nil
-    private static var client: BTClientCommProtocol? = nil
-    
     private static let delegate: NSXPCListenerDelegate = BTHelperXPCDelegate()
     
     public static func start() -> Bool {
@@ -27,37 +24,6 @@ public struct BTHelperXPCServer {
         lListener.resume()
         
         return true
-    }
-    
-    public static func stop() {
-        guard let lListener = listener else {
-            return
-        }
-        
-        listener = nil
-        
-        lListener.suspend()
-        lListener.invalidate()
-        
-        guard let lConnect = connect else {
-            return
-        }
-        
-        assert(client != nil)
-
-        connect = nil
-        client  = nil
-        
-        lConnect.suspend()
-        lConnect.invalidate()
-    }
-    
-    private static func interruptionHandler() {
-        NSLog("XPC server connection interrupted")
-    }
-    
-    private static func invalidationHandler() {
-        NSLog("XPC server connection invalidated")
     }
     
     private static func verifySignFlags(code: SecCode) -> Bool {
@@ -201,12 +167,6 @@ public struct BTHelperXPCServer {
     }
     
     fileprivate static func accept(newConnection: NSXPCConnection) -> Bool {
-        if (connect != nil) {
-            NSLog("XPC server ignored due to existing connection")
-            assert(client != nil)
-            return false
-        }
-        
         if !BTHelperXPCServer.isValidClient(forConnection: newConnection) {
             NSLog("XPC server connection by invalid client")
             return false
@@ -215,27 +175,8 @@ public struct BTHelperXPCServer {
         newConnection.exportedInterface = NSXPCInterface(with: BTHelperCommProtocol.self)
         newConnection.exportedObject    = BTHelperComm()
         
-        newConnection.remoteObjectInterface = NSXPCInterface(with: BTClientCommProtocol.self)
-        
-        newConnection.interruptionHandler = interruptionHandler
-        newConnection.invalidationHandler = invalidationHandler
-        
         newConnection.resume()
         
-        guard let lClient = newConnection.remoteObjectProxy as? BTClientCommProtocol else {
-            NSLog("XPC server remote object is malfored")
-            newConnection.suspend()
-            newConnection.invalidate()
-            return false
-        }
-        
-        connect = newConnection
-        client  = lClient
-        
         return true
-    }
-    
-    public static func submitPowerAdapterEnabled(enabled: Bool) -> Void {
-        client?.submitPowerAdapterEnabled(enabled: enabled)
     }
 }
