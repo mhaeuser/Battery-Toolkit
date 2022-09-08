@@ -76,7 +76,7 @@ public struct BTPowerEvents {
         // was on battery, enable it now if appropriate.
         //
         if BTPowerEvents.chargeMode == BTChargeMode.ToMaxLimit {
-            if percent < BTPreferences.maxCharge {
+            if percent < BTSettings.maxCharge {
                 BTPowerState.enableCharging()
             }
         } else if BTPowerEvents.chargeMode == BTChargeMode.Full {
@@ -116,7 +116,7 @@ public struct BTPowerEvents {
         // micro-charges will already happen pre-boot and there is no point to
         // not just charge all the way to the maximum then.
         //
-        if percent >= BTPreferences.maxCharge {
+        if percent >= BTSettings.maxCharge {
             //
             // Do not disable charging till 100 percent are reached when
             // charging to full was requested. Charging to maximum is handled
@@ -131,7 +131,7 @@ public struct BTPowerEvents {
             BTPowerEvents.chargeMode = BTChargeMode.Default
 
             BTPowerState.disableCharging()
-        } else if percent < BTPreferences.minCharge {
+        } else if percent < BTSettings.minCharge {
             BTPowerState.enableCharging()
         }
         
@@ -176,7 +176,7 @@ public struct BTPowerEvents {
             return false
         }
         
-        BTPreferences.read()
+        BTSettings.read()
         
         let registerResult = registerLimitedPowerHandler()
         if !registerResult {
@@ -197,7 +197,7 @@ public struct BTPowerEvents {
         SleepKit.forceRestoreSleep()
     }
     
-    public static func preferencesChanged() {
+    public static func settingsChanged() {
         if BTPowerEvents.percentCreated {
             _ = BTPowerEvents.handleChargeHysteresis()
         }
@@ -228,7 +228,7 @@ public struct BTPowerEvents {
     
     public static func chargeToMaximum() {
         BTPowerEvents.chargeMode = BTChargeMode.ToMaxLimit
-        BTPowerEvents.enableBelowThresholdMode(threshold: BTPreferences.maxCharge)
+        BTPowerEvents.enableBelowThresholdMode(threshold: BTSettings.maxCharge)
     }
     
     public static func chargeToFull() {

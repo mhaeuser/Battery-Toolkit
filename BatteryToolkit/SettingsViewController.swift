@@ -1,6 +1,6 @@
 import Cocoa
 
-final class PreferencesViewController: NSViewController {
+final class SettingsViewController: NSViewController {
     @IBOutlet weak var minChargeTextField: NSTextField!
     @IBOutlet weak var minChargeSlider: NSSlider!
     
@@ -9,7 +9,7 @@ final class PreferencesViewController: NSViewController {
     
     @IBOutlet weak var adapterSleepButton: NSButton!
 
-    private var minChargeVal = BTPreferencesInfo.minChargeDefault
+    private var minChargeVal = BTSettingsInfo.minChargeDefault
     @objc dynamic var minChargeNum: NSNumber {
         get {
             return NSNumber(value: self.minChargeVal)
@@ -23,10 +23,10 @@ final class PreferencesViewController: NSViewController {
             // change the values of the UI controls directly, because this
             // caues the NSSlider to sometimes visually desync with its value.
             //
-            if value < BTPreferencesInfo.minChargeMin {
+            if value < BTSettingsInfo.minChargeMin {
                 DispatchQueue.main.async {
                     self.minChargeNum = NSNumber(
-                        value: BTPreferencesInfo.minChargeMin
+                        value: BTSettingsInfo.minChargeMin
                         )
                 }
                 
@@ -46,7 +46,7 @@ final class PreferencesViewController: NSViewController {
         }
     }
     
-    private var maxChargeVal = BTPreferencesInfo.maxChargeDefault
+    private var maxChargeVal = BTSettingsInfo.maxChargeDefault
     @objc dynamic var maxChargeNum: NSNumber {
         get {
             return NSNumber(value: self.maxChargeVal)
@@ -57,10 +57,10 @@ final class PreferencesViewController: NSViewController {
             //
             // See minChargeNum for an explanation.
             //
-            if value < BTPreferencesInfo.maxChargeMin {
+            if value < BTSettingsInfo.maxChargeMin {
                 DispatchQueue.main.async {
                     self.maxChargeNum = NSNumber(
-                        value: BTPreferencesInfo.maxChargeMin
+                        value: BTSettingsInfo.maxChargeMin
                         )
                 }
             } else if value > 100 {
@@ -80,14 +80,14 @@ final class PreferencesViewController: NSViewController {
     }
     
     private func initAdapterSleepState() {
-        self.adapterSleepButton.state = BTPreferencesInfo.adapterSleep ?
+        self.adapterSleepButton.state = BTSettingsInfo.adapterSleep ?
             NSControl.StateValue.off :
             NSControl.StateValue.on
     }
     
     @IBAction func restoreDefaultsButtonAction(_ sender: NSButton) {
-        self.minChargeNum = NSNumber(value: BTPreferencesInfo.minChargeDefault)
-        self.maxChargeNum = NSNumber(value: BTPreferencesInfo.maxChargeDefault)
+        self.minChargeNum = NSNumber(value: BTSettingsInfo.minChargeDefault)
+        self.maxChargeNum = NSNumber(value: BTSettingsInfo.maxChargeDefault)
         self.initAdapterSleepState()
     }
     

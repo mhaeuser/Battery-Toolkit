@@ -3,7 +3,7 @@ import ServiceManagement
 import BTPreprocessor
 
 public struct BTDaemonManagement {
-    private static let daemonServicePlist = "me.mhaeuser.batterytoolkitd.plist"
+    private static let daemonServicePlist = "\(BT_DAEMON_NAME).plist"
     
     public enum Status: UInt8 {
         case notRegistered    = 0
@@ -120,26 +120,29 @@ public struct BTDaemonManagement {
 
     @available(macOS 13.0, *)
     private static func registerDaemonService(appService: SMAppService, reply: @escaping ((BTDaemonManagement.Status) -> Void)) {
-        BTDaemonManagement.registerDaemonServiceSync(appService: appService)
-        reply(BTDaemonManagement.Status.init(fromSMStatus: appService.status))
+        DispatchQueue.global(qos: .userInitiated).async {
+            BTDaemonManagement.registerDaemonServiceSync(appService: appService)
+            reply(BTDaemonManagement.Status.init(fromSMStatus: appService.status))
+        }
     }
     
     @available(macOS 13.0, *)
     private static func unregisterDaemonService(appService: SMAppService, reply: @escaping ((Bool) -> Void)) {
         debugPrint("Unregistering daemon service")
-        
-        if !BTDaemonManagement.daemonServiceRegistered(status: appService.status) {
+        //
+        // Any other status code makes unregister() loop indefinitely.
+        //
+        if appService.status != SMAppService.Status.enabled {
             reply(true)
             return
         }
         
         appService.unregister() { (error) -> Void in
-            guard let error = error else {
-                reply(true)
-                return
+            if error != nil {
+                debugPrint("Daemon service unregistering failed, error: \(error!), status: \(appService.status)")
             }
             
-            debugPrint("Daemon service unregistering failed, error: \(error), status: \(appService.status)")
+            reply(error != nil)
         }
     }
     
@@ -166,16 +169,8 @@ public struct BTDaemonManagement {
     @available(macOS 13.0, *)
     private static func updateDaemonService(appService: SMAppService, reply: @escaping ((BTDaemonManagement.Status) -> Void)) {
         debugPrint("Updating daemon service")
-        //
-        // Any other status code makes unregister() loop indefinitely.
-        //
-        if appService.status != SMAppService.Status.enabled {
-            BTDaemonManagement.registerDaemonServiceSync(appService: appService)
-            reply(BTDaemonManagement.Status(fromSMStatus: appService.status))
-            return
-        }
 
-        appService.unregister() { _ in
+        BTDaemonManagement.unregisterDaemon() { _ in
             for _ in 0...2 {
                 BTDaemonManagement.registerDaemonServiceSync(appService: appService)
                 if BTDaemonManagement.daemonServiceRegistered(status: appService.status) {
@@ -215,6 +210,14 @@ public struct BTDaemonManagement {
         } else {
             assert(false)
         }
+    }
+    
+    public static func presentUnregisterDaemon() -> Bool {
+        if #available(macOS 13.0, *) {
+            return false
+        }
+        
+        return true
     }
     
     public static func unregisterDaemon(reply: @escaping ((Bool) -> Void)) {

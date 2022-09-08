@@ -1,8 +1,8 @@
 import Foundation
 
-public struct BTPreferences {
-    public private(set) static var minCharge: UInt8 = BTPreferencesInfo.minChargeDefault
-    public private(set) static var maxCharge: UInt8 = BTPreferencesInfo.maxChargeDefault
+public struct BTSettings {
+    public private(set) static var minCharge: UInt8 = BTSettingsInfo.minChargeDefault
+    public private(set) static var maxCharge: UInt8 = BTSettingsInfo.maxChargeDefault
     
     public private(set) static var adapterSleep = false
 
@@ -15,11 +15,11 @@ public struct BTPreferences {
             return false
         }
         
-        if minCharge < BTPreferencesInfo.minChargeMin || minCharge > 100 {
+        if minCharge < BTSettingsInfo.minChargeMin || minCharge > 100 {
             return false
         }
         
-        if maxCharge < BTPreferencesInfo.maxChargeMin || maxCharge > 100 {
+        if maxCharge < BTSettingsInfo.maxChargeMin || maxCharge > 100 {
             return false
         }
         
@@ -28,71 +28,71 @@ public struct BTPreferences {
     
     private static func writeChargeLimits() {
         assert(
-            BTPreferences.limitsValid(
-                minCharge: Int(BTPreferences.minCharge),
-                maxCharge: Int(BTPreferences.maxCharge)
+            BTSettings.limitsValid(
+                minCharge: Int(BTSettings.minCharge),
+                maxCharge: Int(BTSettings.maxCharge)
                 )
             )
 
         UserDefaults.standard.set(
-            BTPreferences.minCharge,
-            forKey: BTPreferences.defaultsMinChargeName
+            BTSettings.minCharge,
+            forKey: BTSettings.defaultsMinChargeName
             )
         UserDefaults.standard.set(
-            BTPreferences.maxCharge,
-            forKey: BTPreferences.defaultsMaxChargeName
+            BTSettings.maxCharge,
+            forKey: BTSettings.defaultsMaxChargeName
             )
     }
     
     private static func writeAdapterSleep() {
         UserDefaults.standard.set(
-            BTPreferences.adapterSleep,
-            forKey: BTPreferences.defaultsAdapterSleep
+            BTSettings.adapterSleep,
+            forKey: BTSettings.defaultsAdapterSleep
             )
     }
     
     public static func read() {
         let minCharge = UserDefaults.standard.integer(
-            forKey: BTPreferences.defaultsMinChargeName
+            forKey: BTSettings.defaultsMinChargeName
             )
         let maxCharge = UserDefaults.standard.integer(
-            forKey: BTPreferences.defaultsMaxChargeName
+            forKey: BTSettings.defaultsMaxChargeName
             )
-        if !BTPreferences.limitsValid(minCharge: minCharge, maxCharge: maxCharge) {
+        if !BTSettings.limitsValid(minCharge: minCharge, maxCharge: maxCharge) {
             NSLog("Charge limits malformed, restore current values")
-            BTPreferences.writeChargeLimits()
+            BTSettings.writeChargeLimits()
             return
         }
         
-        BTPreferences.minCharge    = UInt8(minCharge)
-        BTPreferences.maxCharge    = UInt8(maxCharge)
-        BTPreferences.adapterSleep = UserDefaults.standard.bool(
-            forKey: BTPreferences.defaultsAdapterSleep
+        BTSettings.minCharge    = UInt8(minCharge)
+        BTSettings.maxCharge    = UInt8(maxCharge)
+        BTSettings.adapterSleep = UserDefaults.standard.bool(
+            forKey: BTSettings.defaultsAdapterSleep
             )
     }
     
     public static func setChargeLimits(minCharge: UInt8, maxCharge: UInt8) {
-        if !BTPreferences.limitsValid(minCharge: Int(minCharge), maxCharge: Int(maxCharge)) {
+        if !BTSettings.limitsValid(minCharge: Int(minCharge), maxCharge: Int(maxCharge)) {
             NSLog("Client charge limits malformed, preserve current values")
             return
         }
         
-        BTPreferences.minCharge = minCharge
-        BTPreferences.maxCharge = maxCharge
+        BTSettings.minCharge = minCharge
+        BTSettings.maxCharge = maxCharge
         
-        BTPreferences.writeChargeLimits()
+        BTSettings.writeChargeLimits()
         
-        BTPowerEvents.preferencesChanged()
+        BTPowerEvents.settingsChanged()
     }
     
     public static func setAdapterSleep(enabled: Bool) {
-        if BTPreferences.adapterSleep == enabled {
+        if BTSettings.adapterSleep == enabled {
             return
         }
 
-        BTPreferences.adapterSleep = enabled
+        BTSettings.adapterSleep = enabled
         
-        BTPreferences.writeAdapterSleep()
+        BTSettings.writeAdapterSleep()
         
         BTPowerState.adapterSleepPreferenceToggled()
     }

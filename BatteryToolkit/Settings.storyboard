@@ -6,12 +6,12 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--PreferencesWindowController-->
+        <!--SettingsWindowController-->
         <scene sceneID="SPA-xe-0ME">
             <objects>
-                <windowController storyboardIdentifier="PreferencesWindowController" showSeguePresentationStyle="single" id="Svp-Rd-cF3" userLabel="PreferencesWindowController" sceneMemberID="viewController">
-                    <window key="window" title="Battery Toolkit" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="utilityWindow" tabbingMode="disallowed" titlebarAppearsTransparent="YES" id="zbj-Ah-uH1">
-                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
+                <windowController storyboardIdentifier="SettingsWindowController" showSeguePresentationStyle="single" id="Svp-Rd-cF3" userLabel="SettingsWindowController" sceneMemberID="viewController">
+                    <window key="window" title="Battery Toolkit Settings" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="utilityWindow" tabbingMode="disallowed" titlebarAppearsTransparent="YES" id="zbj-Ah-uH1">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
                         <windowCollectionBehavior key="collectionBehavior" fullScreenNone="YES" fullScreenDisallowsTiling="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="480" height="270"/>
@@ -32,10 +32,10 @@
             </objects>
             <point key="canvasLocation" x="75" y="250"/>
         </scene>
-        <!--PreferencesViewController-->
+        <!--SettingsViewController-->
         <scene sceneID="vWP-bX-OzO">
             <objects>
-                <viewController storyboardIdentifier="PreferencesViewController" showSeguePresentationStyle="single" id="qK6-EM-YZH" userLabel="PreferencesViewController" customClass="PreferencesViewController" customModule="Battery_Toolkit" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SettingsViewController" showSeguePresentationStyle="single" id="qK6-EM-YZH" userLabel="SettingsViewController" customClass="SettingsViewController" customModule="BatteryToolkitStandalone" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="IvC-q3-fvl">
                         <rect key="frame" x="0.0" y="0.0" width="475" height="208"/>
                         <autoresizingMask key="autoresizingMask"/>

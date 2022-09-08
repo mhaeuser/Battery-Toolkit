@@ -22,15 +22,15 @@
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="VOq-y0-SEH"/>
-                                        <menuItem title="Preferences…" keyEquivalent="," id="BOF-NM-1cW">
+                                        <menuItem title="Settings…" keyEquivalent="," id="BOF-NM-1cW">
                                             <connections>
                                                 <segue destination="Lf9-ud-Dh4" kind="show" id="xhQ-qx-DMZ"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Uninstall Daemon" id="oaJ-hp-PXw">
+                                        <menuItem title="Disable Background Activity" id="oaJ-hp-PXw">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="unregisterDaemonWithSender:" target="Voe-Tx-rLC" id="op0-U1-2YE"/>
+                                                <action selector="unregisterDaemonHandlerWithSender:" target="Voe-Tx-rLC" id="op0-U1-2YE"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="wFC-TO-SCJ"/>
@@ -149,8 +149,9 @@
                 </application>
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="BatteryToolkitStandalone" customModuleProvider="target">
                     <connections>
-                        <outlet property="chargingMenuItem" destination="nWm-0d-xw6" id="ZSI-gy-ltG"/>
-                        <outlet property="powerAdapterMenuItem" destination="SUV-eg-AcA" id="pNU-ZO-8wU"/>
+                        <outlet property="chargingExtraItem" destination="nWm-0d-xw6" id="ZSI-gy-ltG"/>
+                        <outlet property="disableBackgroundMenuItem" destination="oaJ-hp-PXw" id="CAR-aQ-V7Y"/>
+                        <outlet property="powerAdapterExtraItem" destination="SUV-eg-AcA" id="pNU-ZO-8wU"/>
                         <outlet property="statusBarMenu" destination="95L-Hg-MpQ" id="qx9-JK-hzr"/>
                     </connections>
                 </customObject>
@@ -167,28 +168,28 @@
                         <menuItem isSeparatorItem="YES" id="VJd-te-iRz"/>
                         <menuItem title="Disable Power Adapter" keyEquivalent="p" id="ter-ZE-C7E">
                             <connections>
-                                <action selector="disablePowerAdapterWithSender:" target="Voe-Tx-rLC" id="aJL-wE-WMO"/>
+                                <action selector="disablePowerAdapterHandlerWithSender:" target="Voe-Tx-rLC" id="aJL-wE-WMO"/>
                             </connections>
                         </menuItem>
                         <menuItem title="Enable Power Adapter" alternate="YES" keyEquivalent="p" id="aEW-fU-9yN">
                             <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                             <connections>
-                                <action selector="enablePowerAdapterWithSender:" target="Voe-Tx-rLC" id="fIz-Mn-7dy"/>
+                                <action selector="enablePowerAdapterHandlerWithSender:" target="Voe-Tx-rLC" id="fIz-Mn-7dy"/>
                             </connections>
                         </menuItem>
                         <menuItem title="Charge To Full Now" keyEquivalent="c" id="llC-Rh-DUh">
                             <connections>
-                                <action selector="chargeToFullWithSender:" target="Voe-Tx-rLC" id="nwq-WN-O55"/>
+                                <action selector="chargeToFullHandlerWithSender:" target="Voe-Tx-rLC" id="nwq-WN-O55"/>
                             </connections>
                         </menuItem>
                         <menuItem title="Charge To Maximum Now" alternate="YES" keyEquivalent="c" id="TNZ-j8-gVs">
                             <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                             <connections>
-                                <action selector="chargeToMaximumWithSender:" target="Voe-Tx-rLC" id="yXs-eu-stM"/>
+                                <action selector="chargeToMaximumHandlerWithSender:" target="Voe-Tx-rLC" id="yXs-eu-stM"/>
                             </connections>
                         </menuItem>
                         <menuItem isSeparatorItem="YES" id="sGg-wU-dOW"/>
-                        <menuItem title="Preferences..." keyEquivalent="," id="78l-zk-UHb">
+                        <menuItem title="Settings..." keyEquivalent="," id="78l-zk-UHb">
                             <connections>
                                 <segue destination="Lf9-ud-Dh4" kind="show" id="UU8-oN-xdh"/>
                             </connections>
@@ -204,10 +205,10 @@
             </objects>
             <point key="canvasLocation" x="75" y="0.0"/>
         </scene>
-        <!--PreferencesWindowController-->
+        <!--SettingsWindowController-->
         <scene sceneID="iqX-k6-nal">
             <objects>
-                <controllerPlaceholder storyboardIdentifier="PreferencesWindowController" storyboardName="Preferences" id="Lf9-ud-Dh4" userLabel="PreferencesWindowController" sceneMemberID="viewController"/>
+                <controllerPlaceholder storyboardIdentifier="SettingsWindowController" storyboardName="Settings" id="Lf9-ud-Dh4" userLabel="SettingsWindowController" sceneMemberID="viewController"/>
                 <customObject id="R4e-Bb-3A9" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-137" y="-141"/>

@@ -1,6 +1,6 @@
 import Foundation
 
-public struct BTPreferencesInfo {
+public struct BTSettingsInfo {
     public static let minChargeDefault: UInt8 = 70
     public static let maxChargeDefault: UInt8 = 80
     public static let adapterSleep: Bool      = false

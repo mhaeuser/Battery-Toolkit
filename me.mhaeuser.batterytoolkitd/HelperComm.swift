@@ -28,14 +28,14 @@ public final class BTHelperComm: NSObject, BTHelperCommProtocol {
     }
     
     func setChargeLimits(minCharge: UInt8, maxCharge: UInt8) {
-        BTPreferences.setChargeLimits(
+        BTSettings.setChargeLimits(
             minCharge: minCharge,
             maxCharge: maxCharge
             )
     }
     
     func setAdapterSleep(enabled: Bool) {
-        BTPreferences.setAdapterSleep(enabled: enabled)
+        BTSettings.setAdapterSleep(enabled: enabled)
     }
     
     func removeHelperFiles() -> Void {

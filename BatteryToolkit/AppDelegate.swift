@@ -5,10 +5,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var statusBarMenu: NSMenu!
     private var statusBarItem : NSStatusItem!
     
-    @IBOutlet weak var powerAdapterMenuItem: NSMenuItem!
-    @IBOutlet weak var chargingMenuItem: NSMenuItem!
+    @IBOutlet weak var powerAdapterExtraItem: NSMenuItem!
+    @IBOutlet weak var chargingExtraItem: NSMenuItem!
+    
+    @IBOutlet weak var disableBackgroundMenuItem: NSMenuItem!
+    
+    private static let backgroundActivityRequiredStr = "To manage the power state of your Mac, Battery Toolkit needs to run in the background."
 
-    func applicationDidFinishLaunching(_ aNotification: Notification) {
+    private static func startDaemon() {
         BatteryToolkit.startDaemon() { (status) -> Void in
             switch status {
                 case BTDaemonManagement.Status.enabled:
@@ -18,29 +22,57 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 case BTDaemonManagement.Status.requiresApproval:
                     debugPrint("Daemon requires approval")
                     
-                    let alert = NSAlert()
-                    alert.messageText = "Allow background activity?"
-                    alert.informativeText = "To manage the power state of your Mac, Battery Toolkit must be allowed to run in the background.\n\nDo you want to approve the Battery Toolkit Login Item in System Settings?"
-                    alert.alertStyle = NSAlert.Style.warning
-                    alert.addButton(withTitle: "Approve")
-                    alert.addButton(withTitle: "Quit")
-                    let response = alert.runModal()
-                    switch response {
-                        case NSApplication.ModalResponse.alertFirstButtonReturn:
-                            BTDaemonManagement.approveDaemon()
-                            
-                        case NSApplication.ModalResponse.alertSecondButtonReturn:
-                            NSApplication.shared.terminate(self)
-                            
-                        default:
-                            assert(false)
+                    DispatchQueue.main.async {
+                        let alert = NSAlert()
+                        alert.messageText = "Allow background activity?"
+                        alert.informativeText = AppDelegate.backgroundActivityRequiredStr + "\n\nDo you want to approve the Battery Toolkit Login Item in System Settings?"
+                        alert.alertStyle = NSAlert.Style.warning
+                        alert.addButton(withTitle: "Approve")
+                        alert.addButton(withTitle: "Quit")
+                        let response = alert.runModal()
+                        switch response {
+                            case NSApplication.ModalResponse.alertFirstButtonReturn:
+                                BTDaemonManagement.approveDaemon()
+                                
+                            case NSApplication.ModalResponse.alertSecondButtonReturn:
+                                NSApplication.shared.terminate(self)
+                                
+                            default:
+                                assert(false)
+                        }
                     }
 
                 case BTDaemonManagement.Status.notRegistered:
                     debugPrint("Daemon not registered")
-                    // FIXME: Show GUI error
-                    break
+                    
+                    DispatchQueue.main.async {
+                        let alert = NSAlert()
+                        alert.messageText = "Failed to enable background activity."
+                        alert.informativeText = AppDelegate.backgroundActivityRequiredStr
+                        alert.alertStyle = NSAlert.Style.critical
+                        alert.addButton(withTitle: "Retry")
+                        alert.addButton(withTitle: "Quit")
+                        let response = alert.runModal()
+                        switch response {
+                            case NSApplication.ModalResponse.alertFirstButtonReturn:
+                                AppDelegate.startDaemon()
+                                
+                            case NSApplication.ModalResponse.alertSecondButtonReturn:
+                                NSApplication.shared.terminate(self)
+                                
+                            default:
+                                assert(false)
+                        }
+                    }
             }
+        }
+    }
+
+    func applicationDidFinishLaunching(_ aNotification: Notification) {
+        AppDelegate.startDaemon()
+        
+        if !BTDaemonManagement.presentUnregisterDaemon() {
+            //self.disableBackgroundMenuItem.isHidden = true
         }
 
         self.statusBarItem = NSStatusBar.system.statusItem(
@@ -54,41 +86,60 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         BatteryToolkit.stop()
     }
 
-    @IBAction private func disablePowerAdapter(sender: NSMenuItem) {
+    @IBAction private func disablePowerAdapterHandler(sender: NSMenuItem) {
         BatteryToolkit.disablePowerAdapter()
     }
     
-    @IBAction private func enablePowerAdapter(sender: NSMenuItem) {
+    @IBAction private func enablePowerAdapterHandler(sender: NSMenuItem) {
         BatteryToolkit.enablePowerAdapter()
     }
 
-    @IBAction private func chargeToMaximum(sender: NSMenuItem) {
+    @IBAction private func chargeToMaximumHandler(sender: NSMenuItem) {
         BatteryToolkit.chargeToMaximum()
     }
 
-    @IBAction private func chargeToFull(sender: NSMenuItem) {
+    @IBAction private func chargeToFullHandler(sender: NSMenuItem) {
         BatteryToolkit.chargeToFull()
     }
     
-    private static func unregisterDaemonHelper() {
+    private static func unregisterDaemon() {
         BatteryToolkit.unregisterDaemon() { (success) -> Void in
             if success {
+                DispatchQueue.main.async {
+                    NSApplication.shared.terminate(self)
+                }
+
                 return
             }
 
-            let alert = NSAlert()
-            alert.messageText = "An error occured uninstalling the daemon."
-            alert.alertStyle = NSAlert.Style.critical
-            alert.addButton(withTitle: "OK")
-            alert.addButton(withTitle: "Retry")
-            let response = alert.runModal()
-            if response == NSApplication.ModalResponse.alertSecondButtonReturn {
-                AppDelegate.unregisterDaemonHelper()
+            DispatchQueue.main.async {
+                let alert = NSAlert()
+                alert.messageText = "An error occured disabling background activity."
+                alert.alertStyle = NSAlert.Style.critical
+                alert.addButton(withTitle: "OK")
+                alert.addButton(withTitle: "Retry")
+                let response = alert.runModal()
+                if response == NSApplication.ModalResponse.alertSecondButtonReturn {
+                    AppDelegate.unregisterDaemon()
+                }
             }
         }
     }
     
-    @IBAction private func unregisterDaemon(sender: NSMenuItem) {
-        AppDelegate.unregisterDaemonHelper()
+    private static func promptUnregisterDaemon() {
+        let alert = NSAlert()
+        alert.messageText = "Disable background activity?"
+        alert.informativeText = AppDelegate.backgroundActivityRequiredStr + "\n\nDo you want to disable the Battery Toolkit background activity?"
+        alert.alertStyle = NSAlert.Style.warning
+        alert.addButton(withTitle: "Disable and Quit")
+        alert.addButton(withTitle: "Cancel")
+        let response = alert.runModal()
+        if response == NSApplication.ModalResponse.alertFirstButtonReturn {
+            AppDelegate.unregisterDaemon()
+        }
+    }
+    
+    @IBAction private func unregisterDaemonHandler(sender: NSMenuItem) {
+        AppDelegate.promptUnregisterDaemon()
     }
 }

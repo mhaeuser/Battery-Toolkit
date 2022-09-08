@@ -12,8 +12,8 @@
 		CE0DB56528BEB4E600B8FC4C /* PreferencesInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0DB56228BEB4E600B8FC4C /* PreferencesInfo.swift */; };
 		CE2B96C028A7E2BB00FE3DDB /* SleepKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2B96BF28A7E2BB00FE3DDB /* SleepKit.swift */; };
 		CE2B96C128A7E2BB00FE3DDB /* SleepKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2B96BF28A7E2BB00FE3DDB /* SleepKit.swift */; };
-		CE30CB9F28C4865C001E2AC6 /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE30CB9E28C4865C001E2AC6 /* Preferences.storyboard */; };
-		CE30CBA128C48995001E2AC6 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE30CBA028C48995001E2AC6 /* PreferencesViewController.swift */; };
+		CE30CB9F28C4865C001E2AC6 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE30CB9E28C4865C001E2AC6 /* Settings.storyboard */; };
+		CE30CBA128C48995001E2AC6 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE30CBA028C48995001E2AC6 /* SettingsViewController.swift */; };
 		CE37DD0C283F80960060C43F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE37DD0A283F80960060C43F /* Main.storyboard */; };
 		CE39745A285A2193002D0EC9 /* SMCKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE37DD0D283F86F90060C43F /* SMCKit.swift */; };
 		CE397460285A2193002D0EC9 /* SMCPowerKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE37DD0F284164160060C43F /* SMCPowerKit.swift */; };
@@ -30,7 +30,7 @@
 		CE3C1DA528CA2FF5008A0F7D /* AuthorizationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3C1DA428CA2FF5008A0F7D /* AuthorizationService.swift */; };
 		CE3C1DA728CA33FD008A0F7D /* LegacyHelperInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3C1DA628CA33FD008A0F7D /* LegacyHelperInfo.swift */; };
 		CE3C1DA828CA33FD008A0F7D /* LegacyHelperInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3C1DA628CA33FD008A0F7D /* LegacyHelperInfo.swift */; };
-		CE3C1DA928CA3702008A0F7D /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE30CB9E28C4865C001E2AC6 /* Preferences.storyboard */; };
+		CE3C1DA928CA3702008A0F7D /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE30CB9E28C4865C001E2AC6 /* Settings.storyboard */; };
 		CE52867B28298B6E00860C7B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE52867A28298B6E00860C7B /* Assets.xcassets */; };
 		CE52868628298CA300860C7B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE52868528298CA300860C7B /* AppDelegate.swift */; };
 		CE6B75F928BC18EA008DF170 /* HelperCommProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA80FDA285A57030064ADEA /* HelperCommProtocol.swift */; };
@@ -138,8 +138,8 @@
 		CE2B96BF28A7E2BB00FE3DDB /* SleepKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepKit.swift; sourceTree = "<group>"; };
 		CE2B96C228A81C5100FE3DDB /* BTPreprocessor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BTPreprocessor.h; sourceTree = "<group>"; };
 		CE2B96C328A81CB900FE3DDB /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
-		CE30CB9E28C4865C001E2AC6 /* Preferences.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Preferences.storyboard; sourceTree = "<group>"; };
-		CE30CBA028C48995001E2AC6 /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
+		CE30CB9E28C4865C001E2AC6 /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
+		CE30CBA028C48995001E2AC6 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		CE37DD0B283F80960060C43F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CE37DD0D283F86F90060C43F /* SMCKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMCKit.swift; sourceTree = "<group>"; };
 		CE37DD0F284164160060C43F /* SMCPowerKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMCPowerKit.swift; sourceTree = "<group>"; };
@@ -301,8 +301,8 @@
 				CE39746D285A229F002D0EC9 /* BatteryToolkit.swift */,
 				CE397477285A25A1002D0EC9 /* HelperXPCClient.swift */,
 				CE6B760628BC1ABC008DF170 /* AppXPCClient.swift */,
-				CE30CB9E28C4865C001E2AC6 /* Preferences.storyboard */,
-				CE30CBA028C48995001E2AC6 /* PreferencesViewController.swift */,
+				CE30CB9E28C4865C001E2AC6 /* Settings.storyboard */,
+				CE30CBA028C48995001E2AC6 /* SettingsViewController.swift */,
 				CE3C1DA228C9329F008A0F7D /* DaemonManagement.swift */,
 				CE3C1DA428CA2FF5008A0F7D /* AuthorizationService.swift */,
 			);
@@ -506,7 +506,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE3C1DA928CA3702008A0F7D /* Preferences.storyboard in Resources */,
+				CE3C1DA928CA3702008A0F7D /* Settings.storyboard in Resources */,
 				CE397464285A2193002D0EC9 /* Main.storyboard in Resources */,
 				CE397465285A2193002D0EC9 /* Assets.xcassets in Resources */,
 			);
@@ -516,7 +516,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE30CB9F28C4865C001E2AC6 /* Preferences.storyboard in Resources */,
+				CE30CB9F28C4865C001E2AC6 /* Settings.storyboard in Resources */,
 				CE37DD0C283F80960060C43F /* Main.storyboard in Resources */,
 				CE52867B28298B6E00860C7B /* Assets.xcassets in Resources */,
 			);
@@ -582,7 +582,7 @@
 				CE6B75F928BC18EA008DF170 /* HelperCommProtocol.swift in Sources */,
 				CE397478285A25A1002D0EC9 /* HelperXPCClient.swift in Sources */,
 				CE0DB56328BEB4E600B8FC4C /* PreferencesInfo.swift in Sources */,
-				CE30CBA128C48995001E2AC6 /* PreferencesViewController.swift in Sources */,
+				CE30CBA128C48995001E2AC6 /* SettingsViewController.swift in Sources */,
 				CEECE33028BB742500821A3B /* ServiceCommProtocol.swift in Sources */,
 				CE39746E285A229F002D0EC9 /* BatteryToolkit.swift in Sources */,
 				CE52868628298CA300860C7B /* AppDelegate.swift in Sources */,
