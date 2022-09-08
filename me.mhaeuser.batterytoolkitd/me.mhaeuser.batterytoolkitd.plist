@@ -6,8 +6,8 @@
 	<string>Adaptive</string>
 	<key>KeepAlive</key>
 	<true/>
-	<key>AssociatedBundleIdentifiers</key>
-	<string>me.mhaeuser.BatteryToolkit</string>
+	<key>BundleProgram</key>
+	<string>Contents/XPCServices/BatteryToolkitXPC.xpc/Contents/Library/LaunchServices/me.mhaeuser.batterytoolkitd</string>
 	<key>Label</key>
 	<string>me.mhaeuser.batterytoolkitd</string>
 	<key>RunAtLoad</key>

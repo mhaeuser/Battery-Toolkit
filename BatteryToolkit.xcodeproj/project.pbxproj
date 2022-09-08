@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CE0DB56328BEB4E600B8FC4C /* BTPreferencesInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0DB56228BEB4E600B8FC4C /* BTPreferencesInfo.swift */; };
-		CE0DB56428BEB4E600B8FC4C /* BTPreferencesInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0DB56228BEB4E600B8FC4C /* BTPreferencesInfo.swift */; };
-		CE0DB56528BEB4E600B8FC4C /* BTPreferencesInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0DB56228BEB4E600B8FC4C /* BTPreferencesInfo.swift */; };
+		CE0DB56328BEB4E600B8FC4C /* PreferencesInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0DB56228BEB4E600B8FC4C /* PreferencesInfo.swift */; };
+		CE0DB56428BEB4E600B8FC4C /* PreferencesInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0DB56228BEB4E600B8FC4C /* PreferencesInfo.swift */; };
+		CE0DB56528BEB4E600B8FC4C /* PreferencesInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0DB56228BEB4E600B8FC4C /* PreferencesInfo.swift */; };
 		CE2B96C028A7E2BB00FE3DDB /* SleepKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2B96BF28A7E2BB00FE3DDB /* SleepKit.swift */; };
 		CE2B96C128A7E2BB00FE3DDB /* SleepKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2B96BF28A7E2BB00FE3DDB /* SleepKit.swift */; };
 		CE30CB9F28C4865C001E2AC6 /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE30CB9E28C4865C001E2AC6 /* Preferences.storyboard */; };
@@ -24,6 +24,13 @@
 		CE397470285A22BB002D0EC9 /* BatteryToolkit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE39746F285A22BB002D0EC9 /* BatteryToolkit.swift */; };
 		CE397472285A2396002D0EC9 /* HelperXPCServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE397471285A2396002D0EC9 /* HelperXPCServer.swift */; };
 		CE397478285A25A1002D0EC9 /* HelperXPCClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE397477285A25A1002D0EC9 /* HelperXPCClient.swift */; };
+		CE3C1D8528C7FB15008A0F7D /* me.mhaeuser.batterytoolkitd.plist in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE675D9528C7E81600F05929 /* me.mhaeuser.batterytoolkitd.plist */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE3C1DA128C92A42008A0F7D /* me.mhaeuser.batterytoolkitd in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE39744B2859E6D3002D0EC9 /* me.mhaeuser.batterytoolkitd */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE3C1DA328C9329F008A0F7D /* DaemonManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3C1DA228C9329F008A0F7D /* DaemonManagement.swift */; };
+		CE3C1DA528CA2FF5008A0F7D /* AuthorizationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3C1DA428CA2FF5008A0F7D /* AuthorizationService.swift */; };
+		CE3C1DA728CA33FD008A0F7D /* LegacyHelperInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3C1DA628CA33FD008A0F7D /* LegacyHelperInfo.swift */; };
+		CE3C1DA828CA33FD008A0F7D /* LegacyHelperInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3C1DA628CA33FD008A0F7D /* LegacyHelperInfo.swift */; };
+		CE3C1DA928CA3702008A0F7D /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE30CB9E28C4865C001E2AC6 /* Preferences.storyboard */; };
 		CE52867B28298B6E00860C7B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE52867A28298B6E00860C7B /* Assets.xcassets */; };
 		CE52868628298CA300860C7B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE52868528298CA300860C7B /* AppDelegate.swift */; };
 		CE6B75F928BC18EA008DF170 /* HelperCommProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA80FDA285A57030064ADEA /* HelperCommProtocol.swift */; };
@@ -58,7 +65,7 @@
 		CEECE33028BB742500821A3B /* ServiceCommProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEECE32F28BB742500821A3B /* ServiceCommProtocol.swift */; };
 		CEECE33128BB742500821A3B /* ServiceCommProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEECE32F28BB742500821A3B /* ServiceCommProtocol.swift */; };
 		CEECE33328BB745B00821A3B /* ServiceComm.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEECE33228BB745B00821A3B /* ServiceComm.swift */; };
-		CEECE33528BB82BD00821A3B /* me.mhaeuser.batterytoolkitd in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE39744B2859E6D3002D0EC9 /* me.mhaeuser.batterytoolkitd */; };
+		CEECE33528BB82BD00821A3B /* me.mhaeuser.batterytoolkitd in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE39744B2859E6D3002D0EC9 /* me.mhaeuser.batterytoolkitd */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		CEED18AF28BCB24D005F06FC /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3A8F6C284D056D00A9E373 /* Preferences.swift */; };
 /* End PBXBuildFile section */
 
@@ -80,14 +87,25 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		CE39743F2859E518002D0EC9 /* CopyFiles */ = {
+		CE3C1D8428C7FB09008A0F7D /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
+			dstPath = Contents/Library/LaunchDaemons;
+			dstSubfolderSpec = 1;
 			files = (
+				CE3C1D8528C7FB15008A0F7D /* me.mhaeuser.batterytoolkitd.plist in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE3C1DA028C92A3A008A0F7D /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Contents/Library/LaunchServices;
+			dstSubfolderSpec = 1;
+			files = (
+				CE3C1DA128C92A42008A0F7D /* me.mhaeuser.batterytoolkitd in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		CE3D5ADC285DE59100705842 /* Embed XPC Services */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -115,7 +133,7 @@
 /* Begin PBXFileReference section */
 		CE00654428A989DD0049B17D /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		CE00654628A989EB0049B17D /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
-		CE0DB56228BEB4E600B8FC4C /* BTPreferencesInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTPreferencesInfo.swift; sourceTree = "<group>"; };
+		CE0DB56228BEB4E600B8FC4C /* PreferencesInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesInfo.swift; sourceTree = "<group>"; };
 		CE2B96BD28A7CEFE00FE3DDB /* IOPMLibPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOPMLibPrivate.h; sourceTree = "<group>"; };
 		CE2B96BF28A7E2BB00FE3DDB /* SleepKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepKit.swift; sourceTree = "<group>"; };
 		CE2B96C228A81C5100FE3DDB /* BTPreprocessor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BTPreprocessor.h; sourceTree = "<group>"; };
@@ -125,8 +143,6 @@
 		CE37DD0B283F80960060C43F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CE37DD0D283F86F90060C43F /* SMCKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMCKit.swift; sourceTree = "<group>"; };
 		CE37DD0F284164160060C43F /* SMCPowerKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMCPowerKit.swift; sourceTree = "<group>"; };
-		CE3974492859E685002D0EC9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CE39744A2859E690002D0EC9 /* launchd.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = launchd.plist; sourceTree = "<group>"; };
 		CE39744B2859E6D3002D0EC9 /* me.mhaeuser.batterytoolkitd */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = me.mhaeuser.batterytoolkitd; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE39744C285A1D35002D0EC9 /* Battery Toolkit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Battery Toolkit.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE39746D285A229F002D0EC9 /* BatteryToolkit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryToolkit.swift; sourceTree = "<group>"; };
@@ -134,9 +150,16 @@
 		CE397471285A2396002D0EC9 /* HelperXPCServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperXPCServer.swift; sourceTree = "<group>"; };
 		CE397477285A25A1002D0EC9 /* HelperXPCClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperXPCClient.swift; sourceTree = "<group>"; };
 		CE3A8F6C284D056D00A9E373 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
+		CE3C1D8028C7F622008A0F7D /* launchd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = launchd.plist; sourceTree = "<group>"; };
+		CE3C1D8128C7F950008A0F7D /* uninstall_legacy.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = uninstall_legacy.sh; sourceTree = "<group>"; };
+		CE3C1DA228C9329F008A0F7D /* DaemonManagement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaemonManagement.swift; sourceTree = "<group>"; };
+		CE3C1DA428CA2FF5008A0F7D /* AuthorizationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationService.swift; sourceTree = "<group>"; };
+		CE3C1DA628CA33FD008A0F7D /* LegacyHelperInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyHelperInfo.swift; sourceTree = "<group>"; };
 		CE52867A28298B6E00860C7B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CE52867F28298B6E00860C7B /* BatteryToolkit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BatteryToolkit.entitlements; sourceTree = "<group>"; };
 		CE52868528298CA300860C7B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		CE675D9528C7E81600F05929 /* me.mhaeuser.batterytoolkitd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = me.mhaeuser.batterytoolkitd.plist; sourceTree = "<group>"; };
+		CE675D9628C7E82E00F05929 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE6B75FF28BC1995008DF170 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
 		CE6B760328BC19C7008DF170 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		CE6B760628BC1ABC008DF170 /* AppXPCClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppXPCClient.swift; sourceTree = "<group>"; };
@@ -213,8 +236,9 @@
 				CE3A8F6C284D056D00A9E373 /* Preferences.swift */,
 				CEC321AF284BAA2B009B9A30 /* PowerEvents.swift */,
 				CEE95016285BCBE200FF60E0 /* me.mhaeuser.batterytoolkitd.entitlements */,
-				CE3974492859E685002D0EC9 /* Info.plist */,
-				CE39744A2859E690002D0EC9 /* launchd.plist */,
+				CE3C1D8028C7F622008A0F7D /* launchd.plist */,
+				CE675D9528C7E81600F05929 /* me.mhaeuser.batterytoolkitd.plist */,
+				CE675D9628C7E82E00F05929 /* Info.plist */,
 				CE397471285A2396002D0EC9 /* HelperXPCServer.swift */,
 				CEA80FD5285A565C0064ADEA /* HelperComm.swift */,
 				CEA80FD7285A56B50064ADEA /* main.swift */,
@@ -247,6 +271,7 @@
 		CE52866A28298B6D00860C7B = {
 			isa = PBXGroup;
 			children = (
+				CE3C1D8128C7F950008A0F7D /* uninstall_legacy.sh */,
 				CED8DD3628C364D60082C02A /* NSXPCConnectionAuditToken */,
 				CEECE31928BB648F00821A3B /* BatteryToolkitXPC */,
 				CE6B75F728BC18DD008DF170 /* Common */,
@@ -278,6 +303,8 @@
 				CE6B760628BC1ABC008DF170 /* AppXPCClient.swift */,
 				CE30CB9E28C4865C001E2AC6 /* Preferences.storyboard */,
 				CE30CBA028C48995001E2AC6 /* PreferencesViewController.swift */,
+				CE3C1DA228C9329F008A0F7D /* DaemonManagement.swift */,
+				CE3C1DA428CA2FF5008A0F7D /* AuthorizationService.swift */,
 			);
 			path = BatteryToolkit;
 			sourceTree = "<group>";
@@ -296,7 +323,8 @@
 			isa = PBXGroup;
 			children = (
 				CEA80FDA285A57030064ADEA /* HelperCommProtocol.swift */,
-				CE0DB56228BEB4E600B8FC4C /* BTPreferencesInfo.swift */,
+				CE0DB56228BEB4E600B8FC4C /* PreferencesInfo.swift */,
+				CE3C1DA628CA33FD008A0F7D /* LegacyHelperInfo.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -360,7 +388,6 @@
 			buildPhases = (
 				CE39743D2859E518002D0EC9 /* Sources */,
 				CE39743E2859E518002D0EC9 /* Frameworks */,
-				CE39743F2859E518002D0EC9 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -396,6 +423,8 @@
 				CE52867028298B6D00860C7B /* Frameworks */,
 				CE52867128298B6D00860C7B /* Resources */,
 				CE3D5ADC285DE59100705842 /* Embed XPC Services */,
+				CE3C1D8428C7FB09008A0F7D /* CopyFiles */,
+				CE3C1DA028C92A3A008A0F7D /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -477,6 +506,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE3C1DA928CA3702008A0F7D /* Preferences.storyboard in Resources */,
 				CE397464285A2193002D0EC9 /* Main.storyboard in Resources */,
 				CE397465285A2193002D0EC9 /* Assets.xcassets in Resources */,
 			);
@@ -511,11 +541,12 @@
 				CEA80FD2285A28230064ADEA /* Preferences.swift in Sources */,
 				CE2B96C028A7E2BB00FE3DDB /* SleepKit.swift in Sources */,
 				CEA80FD0285A27FB0064ADEA /* PowerEvents.swift in Sources */,
+				CE3C1DA828CA33FD008A0F7D /* LegacyHelperInfo.swift in Sources */,
 				CE8ED7F428C144EE00398581 /* Dispatcher.swift in Sources */,
 				CEECE31128BAB12000821A3B /* PowerState.swift in Sources */,
 				CEA80FCC285A27D20064ADEA /* SMCPowerKit.swift in Sources */,
 				CEA80FD6285A565C0064ADEA /* HelperComm.swift in Sources */,
-				CE0DB56428BEB4E600B8FC4C /* BTPreferencesInfo.swift in Sources */,
+				CE0DB56428BEB4E600B8FC4C /* PreferencesInfo.swift in Sources */,
 				CEA80FD8285A56B60064ADEA /* main.swift in Sources */,
 				CEA80FCB285A27CF0064ADEA /* SMCKit.swift in Sources */,
 				CE397472285A2396002D0EC9 /* HelperXPCServer.swift in Sources */,
@@ -530,7 +561,7 @@
 				CE7F623328B95A7300EF58F9 /* BTPreprocessor.m in Sources */,
 				CE8ED7F528C16A5800398581 /* PowerEvents.swift in Sources */,
 				CE8ED7F728C16AA200398581 /* Dispatcher.swift in Sources */,
-				CE0DB56528BEB4E600B8FC4C /* BTPreferencesInfo.swift in Sources */,
+				CE0DB56528BEB4E600B8FC4C /* PreferencesInfo.swift in Sources */,
 				CE39745A285A2193002D0EC9 /* SMCKit.swift in Sources */,
 				CE8ED7F628C16A6500398581 /* PowerState.swift in Sources */,
 				CE2B96C128A7E2BB00FE3DDB /* SleepKit.swift in Sources */,
@@ -545,14 +576,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE7F623528B95A8200EF58F9 /* BTPreprocessor.m in Sources */,
+				CE3C1DA528CA2FF5008A0F7D /* AuthorizationService.swift in Sources */,
 				CE6B760728BC1ABC008DF170 /* AppXPCClient.swift in Sources */,
+				CE3C1DA328C9329F008A0F7D /* DaemonManagement.swift in Sources */,
 				CE6B75F928BC18EA008DF170 /* HelperCommProtocol.swift in Sources */,
 				CE397478285A25A1002D0EC9 /* HelperXPCClient.swift in Sources */,
-				CE0DB56328BEB4E600B8FC4C /* BTPreferencesInfo.swift in Sources */,
+				CE0DB56328BEB4E600B8FC4C /* PreferencesInfo.swift in Sources */,
 				CE30CBA128C48995001E2AC6 /* PreferencesViewController.swift in Sources */,
 				CEECE33028BB742500821A3B /* ServiceCommProtocol.swift in Sources */,
 				CE39746E285A229F002D0EC9 /* BatteryToolkit.swift in Sources */,
 				CE52868628298CA300860C7B /* AppDelegate.swift in Sources */,
+				CE3C1DA728CA33FD008A0F7D /* LegacyHelperInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -647,7 +681,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				BT_APP_NAME = me.mhaeuser.BatteryToolkitStandalone;
-				BT_HELPER_NAME = me.mhaeuser.BatteryToolkitStandalone;
+				BT_DAEMON_NAME = me.mhaeuser.BatteryToolkitStandalone;
 				BT_SERVICE_NAME = me.mhaeuser.BatteryToolkitStandalone;
 				CODE_SIGN_ENTITLEMENTS = BatteryToolkit/BatteryToolkit.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -663,7 +697,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = me.mhaeuser.BatteryToolkitStandalone;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/me.mhaeuser.batterytoolkitd/Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -673,7 +706,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				BT_APP_NAME = me.mhaeuser.BatteryToolkitStandalone;
-				BT_HELPER_NAME = me.mhaeuser.BatteryToolkitStandalone;
+				BT_DAEMON_NAME = me.mhaeuser.BatteryToolkitStandalone;
 				BT_SERVICE_NAME = me.mhaeuser.BatteryToolkitStandalone;
 				CODE_SIGN_ENTITLEMENTS = BatteryToolkit/BatteryToolkit.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -689,7 +722,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = me.mhaeuser.BatteryToolkitStandalone;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/me.mhaeuser.batterytoolkitd/Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -699,7 +731,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				BT_APP_NAME = me.mhaeuser.BatteryToolkit;
 				BT_CODE_SIGN_CN = "Apple Development: mhaeuser@posteo.de (FK3MXHN3BX)";
-				BT_HELPER_NAME = me.mhaeuser.batterytoolkitd;
+				BT_DAEMON_NAME = me.mhaeuser.batterytoolkitd;
 				BT_SERVICE_NAME = me.mhaeuser.BatteryToolkitXPC;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -746,7 +778,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"\"BT_APP_NAME_=\\\"$(BT_APP_NAME)\\\"\"",
-					"\"BT_HELPER_NAME_=\\\"$(BT_HELPER_NAME)\\\"\"",
+					"\"BT_DAEMON_NAME_=\\\"$(BT_DAEMON_NAME)\\\"\"",
 					"\"BT_CODE_SIGN_CN_=\\\"$(BT_CODE_SIGN_CN)\\\"\"",
 					"\"BT_SERVICE_NAME_=\\\"$(BT_SERVICE_NAME)\\\"\"",
 				);
@@ -782,7 +814,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				BT_APP_NAME = me.mhaeuser.BatteryToolkit;
 				BT_CODE_SIGN_CN = "Apple Development: mhaeuser@posteo.de (FK3MXHN3BX)";
-				BT_HELPER_NAME = me.mhaeuser.batterytoolkitd;
+				BT_DAEMON_NAME = me.mhaeuser.batterytoolkitd;
 				BT_SERVICE_NAME = me.mhaeuser.BatteryToolkitXPC;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -827,7 +859,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"\"BT_APP_NAME_=\\\"$(BT_APP_NAME)\\\"\"",
-					"\"BT_HELPER_NAME_=\\\"$(BT_HELPER_NAME)\\\"\"",
+					"\"BT_DAEMON_NAME_=\\\"$(BT_DAEMON_NAME)\\\"\"",
 					"\"BT_CODE_SIGN_CN_=\\\"$(BT_CODE_SIGN_CN)\\\"\"",
 					"\"BT_SERVICE_NAME_=\\\"$(BT_SERVICE_NAME)\\\"\"",
 				);
@@ -911,7 +943,6 @@
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BatteryToolkitXPC/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -929,7 +960,6 @@
 			buildSettings = {
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BatteryToolkitXPC/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",

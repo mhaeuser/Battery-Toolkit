@@ -24,4 +24,8 @@ public struct BatteryToolkit {
     public static func chargeToFull() {
         BTPowerEvents.chargeToFull()
     }
+    
+    public static func unregisterDaemon(reply: @escaping ((Bool) -> Void)) {
+        
+    }
 }

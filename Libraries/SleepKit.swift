@@ -31,7 +31,7 @@ public struct SleepKit {
             SleepKit.sleepRestore ? kCFBooleanTrue : kCFBooleanFalse
             )
         if result != kIOReturnSuccess {
-            NSLog("Failed to restore sleep disable to %d", SleepKit.sleepRestore)
+            NSLog("Failed to restore sleep disable to \(SleepKit.sleepRestore)")
         }
         
         SleepKit.sleepRestore = false

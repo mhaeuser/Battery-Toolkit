@@ -18,7 +18,7 @@ public struct BTHelperXPCServer {
     public static func start() -> Bool {
         assert(listener == nil)
 
-        let lListener      = NSXPCListener(machServiceName: BT_HELPER_NAME)
+        let lListener      = NSXPCListener(machServiceName: BT_DAEMON_NAME)
         lListener.delegate = delegate
         listener           = lListener
         lListener.resume()

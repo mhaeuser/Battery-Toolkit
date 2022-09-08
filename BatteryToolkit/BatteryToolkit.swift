@@ -1,17 +1,17 @@
 import Foundation
-import ServiceManagement
+import BTPreprocessor
 
 public struct BatteryToolkit {
     public static func startXpcClient() -> Bool {
         let result = BTHelperXPCClient.start()
         
-        debugPrint("XPC client start: ", result)
+        debugPrint("XPC client start: \(result)")
         
         return result
     }
     
-    public static func start() -> Bool {
-        return BTAppXPCClient.installHelper()
+    public static func startDaemon(reply: @escaping ((BTDaemonManagement.Status) -> Void)) {
+        BTDaemonManagement.startDaemon(reply: reply)
     }
     
     public static func stop() {
@@ -43,5 +43,9 @@ public struct BatteryToolkit {
     
     public static func setAdapterSleep(enabled: Bool) {
         BTHelperXPCClient.setAdapterSleep(enabled: enabled)
+    }
+    
+    public static func unregisterDaemon(reply: @escaping ((Bool) -> Void)) {
+        BTDaemonManagement.unregisterDaemon(reply: reply)
     }
 }

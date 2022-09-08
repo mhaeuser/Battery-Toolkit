@@ -21,7 +21,7 @@ public struct BTHelperXPCClient {
         assert(helper == nil)
 
         let lConnect = NSXPCConnection(
-            machServiceName: BT_HELPER_NAME,
+            machServiceName: BT_DAEMON_NAME,
             options: .privileged
             )
 
@@ -33,7 +33,7 @@ public struct BTHelperXPCClient {
         lConnect.resume()
         
         guard let lHelper = lConnect.remoteObjectProxyWithErrorHandler({ error in
-            debugPrint("XPC client remote object error: ", error)
+            debugPrint("XPC client remote object error: \(error)")
         }) as? BTHelperCommProtocol else {
             debugPrint("XPC client remote object is malfored")
             lConnect.invalidate()
@@ -89,5 +89,9 @@ public struct BTHelperXPCClient {
     
     public static func setAdapterSleep(enabled: Bool) {
         BTHelperXPCClient.helper?.setAdapterSleep(enabled: enabled)
+    }
+    
+    public static func removeHelperFiles() {
+        BTHelperXPCClient.helper?.removeHelperFiles()
     }
 }

@@ -2,29 +2,22 @@ import Foundation
 import ServiceManagement
 import BTPreprocessor
 
-public final class BTServiceComm: BTServiceCommProtocol {
-    private static func askAuthorization() -> AuthorizationRef? {
+public final class BTServiceComm: NSObject, BTServiceCommProtocol {
+    func askAuthorization(reply: @escaping ((NSData?) -> Void)) -> Void {
         var auth: AuthorizationRef? = nil
-        let status: OSStatus = AuthorizationCreate(nil, nil, [], &auth)
-        if status != errAuthorizationSuccess {
-            return nil
+        let status = AuthorizationCreate(nil, nil, [], &auth)
+        guard status == errAuthorizationSuccess, let auth = auth else {
+            reply(nil)
+            return
         }
         
-        return auth
-    }
-    
-    func installHelper(reply: ((Bool) -> Void)) -> Void {
-        guard let auth = BTServiceComm.askAuthorization() else {
-            fatalError("Authorization not acquired.")
+        var extAuth = AuthorizationExternalForm()
+        let extStatus = AuthorizationMakeExternalForm(auth, &extAuth)
+        if extStatus != errAuthorizationSuccess {
+            reply(nil)
+            return
         }
         
-        var error: Unmanaged<CFError>?
-        let result = SMJobBless(
-            kSMDomainSystemLaunchd,
-            BT_HELPER_NAME as CFString,
-            auth,
-            &error
-            )
-        reply(result)
+        reply(NSData(bytes: &extAuth.bytes, length: Int(kAuthorizationExternalFormLength)))
     }
 }
