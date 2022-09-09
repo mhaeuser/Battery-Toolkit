@@ -1,6 +1,4 @@
 import Foundation
-import ServiceManagement
-import BTPreprocessor
 
 public final class BTServiceComm: NSObject, BTServiceCommProtocol {
     func askAuthorization(reply: @escaping ((NSData?) -> Void)) -> Void {

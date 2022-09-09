@@ -9,7 +9,7 @@
 	<key>AssociatedBundleIdentifiers</key>
 	<string>me.mhaeuser.BatteryToolkit</string>
 	<key>Label</key>
-	<string>me.mhaeuser.batterytoolkitd</string>
+	<string>me.mhaeuser.batterytoolkitlegacyd</string>
 	<key>RunAtLoad</key>
 	<true/>
 	<key>MachServices</key>

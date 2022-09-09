@@ -3,7 +3,7 @@ import IOPMPrivate
 
 public final class BTHelperComm: NSObject, BTHelperCommProtocol {
     private static let helperFiles = [
-        "/Library/PrivilegedHelperTools/me.mhaeuser.batterytoolkitd",
+        BTLegacyHelperInfo.legacyHelperExec,
         BTLegacyHelperInfo.legacyHelperPlist
         ]
 

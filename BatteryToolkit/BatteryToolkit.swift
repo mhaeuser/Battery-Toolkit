@@ -2,14 +2,6 @@ import Foundation
 import BTPreprocessor
 
 public struct BatteryToolkit {
-    public static func startXpcClient() -> Bool {
-        let result = BTHelperXPCClient.start()
-        
-        debugPrint("XPC client start: \(result)")
-        
-        return result
-    }
-    
     public static func startDaemon(reply: @escaping ((BTDaemonManagement.Status) -> Void)) {
         BTDaemonManagement.startDaemon(reply: reply)
     }

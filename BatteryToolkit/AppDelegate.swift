@@ -16,8 +16,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         BatteryToolkit.startDaemon() { (status) -> Void in
             switch status {
                 case BTDaemonManagement.Status.enabled:
-                    debugPrint("Daemon is enabled, start XPC connection")
-                    _ = BatteryToolkit.startXpcClient()
+                    debugPrint("Daemon is enabled")
                     
                 case BTDaemonManagement.Status.requiresApproval:
                     debugPrint("Daemon requires approval")
@@ -70,10 +69,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         AppDelegate.startDaemon()
-        
-        if !BTDaemonManagement.presentUnregisterDaemon() {
-            //self.disableBackgroundMenuItem.isHidden = true
-        }
 
         self.statusBarItem = NSStatusBar.system.statusItem(
             withLength: NSStatusItem.squareLength
@@ -114,7 +109,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
             DispatchQueue.main.async {
                 let alert = NSAlert()
-                alert.messageText = "An error occured disabling background activity."
+                alert.messageText = "An error occurred disabling background activity."
                 alert.alertStyle = NSAlert.Style.critical
                 alert.addButton(withTitle: "OK")
                 alert.addButton(withTitle: "Retry")
