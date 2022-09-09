@@ -7,12 +7,12 @@ public struct SleepKit {
     private static var sleepRestore: Bool          = false
     
     private static func sleepDisabledIOPMValue() -> Bool {
-        guard let uSettings = IOPMCopySystemPowerSettings() else {
+        guard let settingsRef = IOPMCopySystemPowerSettings() else {
             NSLog("System power settings could not be retrieved")
             return false
         }
         
-        guard let settings = uSettings.takeUnretainedValue() as? [String: AnyObject] else {
+        guard let settings = settingsRef.takeUnretainedValue() as? [String: AnyObject] else {
             NSLog("System power settings are malformed")
             return false
         }

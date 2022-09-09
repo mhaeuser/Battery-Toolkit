@@ -27,28 +27,25 @@ public struct BTHelperXPCServer {
     }
     
     private static func verifySignFlags(code: SecCode) -> Bool {
-        var uStaticCode: SecStaticCode? = nil
-        let status = SecCodeCopyStaticCode(code, SecCSFlags(rawValue: 0), &uStaticCode)
-        if status != errSecSuccess {
+        var staticCode: SecStaticCode? = nil
+        let status = SecCodeCopyStaticCode(code, SecCSFlags(rawValue: 0), &staticCode)
+        guard status == errSecSuccess, let staticCode = staticCode else {
             NSLog("Failed to retrieve SecStaticCode")
             return false
         }
-        
-        assert(uStaticCode != nil)
-        let staticCode = uStaticCode!
 
-        var uSignInfo: CFDictionary? = nil
+        var signInfo: CFDictionary? = nil
         let infoStatus = SecCodeCopySigningInformation(
             staticCode,
             SecCSFlags(rawValue: kSecCSDynamicInformation),
-            &uSignInfo
+            &signInfo
             )
         if infoStatus != errSecSuccess {
             NSLog("Failed to retrieve signing information")
             return false
         }
         
-        guard let signInfo = uSignInfo as? [String: AnyObject] else {
+        guard let signInfo = signInfo as? [String: AnyObject] else {
             NSLog("Signing information is nil")
             return false
         }
@@ -119,19 +116,16 @@ public struct BTHelperXPCServer {
             )
         let attributes = [kSecGuestAttributeAudit: tokenData]
 
-        var uCode: SecCode? = nil
+        var code: SecCode? = nil
         let codeStatus = SecCodeCopyGuestWithAttributes(
             nil,
             attributes as CFDictionary,
             [],
-            &uCode
+            &code
             )
-        if codeStatus != errSecSuccess {
+        guard codeStatus == errSecSuccess, let code = code else {
             return false
         }
-        
-        assert(uCode != nil);
-        let code = uCode!
 
         let entitlements = "identifier \"" + BT_APP_NAME +
             "\" and anchor apple generic and certificate leaf[subject.CN] = \"" +
