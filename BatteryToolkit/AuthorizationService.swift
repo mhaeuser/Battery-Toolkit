@@ -17,6 +17,8 @@ public struct BTAuthorizationService {
         }
 
         service.askAuthorization() { (authData) -> Void in
+            lConnect.invalidate()
+
             guard let authData = authData, authData.count == kAuthorizationExternalFormLength else {
                 reply(nil)
                 return
@@ -33,8 +35,6 @@ public struct BTAuthorizationService {
             }
 
             reply(auth)
-
-            lConnect.invalidate()
         }
     }
 }
