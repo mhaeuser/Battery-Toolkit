@@ -1,4 +1,5 @@
 import Cocoa
+import os.log
 
 @main
 final class AppDelegate: NSObject, NSApplicationDelegate {
@@ -16,10 +17,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         BatteryToolkit.startDaemon() { (status) -> Void in
             switch status {
                 case BTDaemonManagement.Status.enabled:
-                    debugPrint("Daemon is enabled")
+                    os_log("Daemon is enabled")
                     
                 case BTDaemonManagement.Status.requiresApproval:
-                    debugPrint("Daemon requires approval")
+                    os_log("Daemon requires approval")
                     
                     DispatchQueue.main.async {
                         let alert = NSAlert()
@@ -42,7 +43,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                     }
 
                 case BTDaemonManagement.Status.notRegistered:
-                    debugPrint("Daemon not registered")
+                    os_log("Daemon not registered")
                     
                     DispatchQueue.main.async {
                         let alert = NSAlert()

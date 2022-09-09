@@ -1,4 +1,5 @@
 import Foundation
+import os.log
 
 public struct BTSettings {
     public private(set) static var minCharge: UInt8 = BTSettingsInfo.minChargeDefault
@@ -59,7 +60,7 @@ public struct BTSettings {
             forKey: BTSettings.defaultsMaxChargeName
             )
         if !BTSettings.limitsValid(minCharge: minCharge, maxCharge: maxCharge) {
-            NSLog("Charge limits malformed, restore current values")
+            os_log("Charge limits malformed, restore current values")
             BTSettings.writeChargeLimits()
             return
         }
@@ -73,7 +74,7 @@ public struct BTSettings {
     
     public static func setChargeLimits(minCharge: UInt8, maxCharge: UInt8) {
         if !BTSettings.limitsValid(minCharge: Int(minCharge), maxCharge: Int(maxCharge)) {
-            NSLog("Client charge limits malformed, preserve current values")
+            os_log("Client charge limits malformed, preserve current values")
             return
         }
         

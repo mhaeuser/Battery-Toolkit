@@ -1,4 +1,5 @@
 import Foundation
+import os.log
 
 import BTPreprocessor
 import NSXPCConnectionAuditToken
@@ -30,7 +31,7 @@ public struct BTHelperXPCServer {
         var staticCode: SecStaticCode? = nil
         let status = SecCodeCopyStaticCode(code, SecCSFlags(rawValue: 0), &staticCode)
         guard status == errSecSuccess, let staticCode = staticCode else {
-            NSLog("Failed to retrieve SecStaticCode")
+            os_log("Failed to retrieve SecStaticCode")
             return false
         }
 
@@ -41,17 +42,17 @@ public struct BTHelperXPCServer {
             &signInfo
             )
         if infoStatus != errSecSuccess {
-            NSLog("Failed to retrieve signing information")
+            os_log("Failed to retrieve signing information")
             return false
         }
         
         guard let signInfo = signInfo as? [String: AnyObject] else {
-            NSLog("Signing information is nil")
+            os_log("Signing information is nil")
             return false
         }
         
         guard let signingFlags = signInfo["flags"] as? UInt32 else {
-            NSLog("Failed to retrieve signature flags")
+            os_log("Failed to retrieve signature flags")
             return false
         }
         
@@ -72,12 +73,12 @@ public struct BTHelperXPCServer {
                 .runtime
             ]
         if (!codeFlags.contains(reqFlags)) {
-            NSLog("Signature flags constraints violated: \(signingFlags)")
+            os_log("Signature flags constraints violated: \(signingFlags)")
             return false
         }
 
         guard let entitlements = signInfo["entitlements-dict"] as? [String: AnyObject] else {
-            NSLog("Failed to retrieve entitlements")
+            os_log("Failed to retrieve entitlements")
             return false
         }
         
@@ -90,17 +91,17 @@ public struct BTHelperXPCServer {
                 
                 #if DEBUG
                 if entitlement.key == "com.apple.security.get-task-allow" {
-                    NSLog("Allowing get-task-allow in DEBUG mode")
+                    os_log("Allowing get-task-allow in DEBUG mode")
                     continue
                 }
                 #endif
 
-                NSLog("Client declares security entitlement \(entitlement.key)")
+                os_log("Client declares security entitlement \(entitlement.key)")
                 return false
             }
             
             if entitlement.key.starts(with: "com.apple.security.private.") {
-                NSLog("Client declares private entitlement \(entitlement.key)")
+                os_log("Client declares private entitlement \(entitlement.key)")
                 return false
             }
         }
@@ -162,7 +163,7 @@ public struct BTHelperXPCServer {
     
     fileprivate static func accept(newConnection: NSXPCConnection) -> Bool {
         if !BTHelperXPCServer.isValidClient(forConnection: newConnection) {
-            NSLog("XPC server connection by invalid client")
+            os_log("XPC server connection by invalid client")
             return false
         }
 

@@ -1,4 +1,5 @@
 import Foundation
+import os.log
 import BTPreprocessor
 
 public struct BTAuthorizationService {
@@ -8,9 +9,9 @@ public struct BTAuthorizationService {
         lConnect.resume()
         
         guard let service = lConnect.remoteObjectProxyWithErrorHandler({ error in
-            debugPrint("XPC client remote object error: \(error)")
+            os_log("XPC client remote object error: \(error)")
         }) as? BTServiceCommProtocol else {
-            debugPrint("XPC client remote object is malfored")
+            os_log("XPC client remote object is malfored")
             lConnect.invalidate()
             reply(nil)
             return

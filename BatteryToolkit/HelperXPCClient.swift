@@ -1,5 +1,5 @@
 import Foundation
-
+import os.log
 import BTPreprocessor
 
 public struct BTHelperXPCClient {
@@ -7,11 +7,11 @@ public struct BTHelperXPCClient {
     private static var helper: BTHelperCommProtocol? = nil
 
     private static func interruptionHandler() {
-        debugPrint("XPC client connection interrupted")
+        os_log("XPC client connection interrupted")
     }
     
     private static func invalidationHandler() {
-        debugPrint("XPC client connection invalidated")
+        os_log("XPC client connection invalidated")
         BTHelperXPCClient.connect = nil
         BTHelperXPCClient.helper  = nil
     }
@@ -37,14 +37,14 @@ public struct BTHelperXPCClient {
         lConnect.resume()
         
         guard let lHelper = lConnect.remoteObjectProxyWithErrorHandler({ error in
-            debugPrint("XPC client remote object error: \(error)")
+            os_log("XPC client remote object error: \(error)")
         }) as? BTHelperCommProtocol else {
-            debugPrint("XPC client remote object is malfored")
+            os_log("XPC client remote object is malfored")
             lConnect.invalidate()
             return
         }
         
-        debugPrint("XPC client connected")
+        os_log("XPC client connected")
         
         connect = lConnect
         helper  = lHelper

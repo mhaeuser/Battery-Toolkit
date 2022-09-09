@@ -1,15 +1,16 @@
 import Foundation
+import os.log
 
 private func main() -> Never {
     let powerResult = BTPowerEvents.start()
     if !powerResult {
-        NSLog("Power events start failed")
+        os_log("Power events start failed")
         exit(-1)
     }
 
     let xpcResult = BTHelperXPCServer.start()
     if !xpcResult {
-        NSLog("XPC server start failed")
+        os_log("XPC server start failed")
     }
 
     let termSource = DispatchSource.makeSignalSource(signal: SIGTERM)

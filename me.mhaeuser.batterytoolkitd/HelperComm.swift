@@ -1,4 +1,5 @@
 import Foundation
+import os.log
 import IOPMPrivate
 
 public final class BTHelperComm: NSObject, BTHelperCommProtocol {
@@ -40,12 +41,12 @@ public final class BTHelperComm: NSObject, BTHelperCommProtocol {
     
     func removeHelperFiles() -> Void {
         if CommandLine.arguments.count <= 0 {
-            NSLog("No command line arguments provided")
+            os_log("No command line arguments provided")
             return
         }
         
         if CommandLine.arguments[0] != BTHelperComm.helperFiles[0] {
-            NSLog("Helper launched from unexpected location: \(CommandLine.arguments[0])")
+            os_log("Helper launched from unexpected location: \(CommandLine.arguments[0])")
             return
         }
 
@@ -53,8 +54,8 @@ public final class BTHelperComm: NSObject, BTHelperCommProtocol {
             for path in BTHelperComm.helperFiles {
                 try FileManager.default.removeItem(atPath: path)
             }
-        } catch let error as NSError {
-            print("An error took place: \(error)")
+        } catch {
+            os_log("An error took place: \(error)")
         }
     }
 }
