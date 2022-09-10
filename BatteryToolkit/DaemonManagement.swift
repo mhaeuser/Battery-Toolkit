@@ -157,18 +157,21 @@ public struct BTDaemonManagement {
     private static func updateDaemonService(appService: SMAppService, reply: @escaping ((BTDaemonManagement.Status) -> Void)) {
         os_log("Updating daemon service")
 
-        BTDaemonManagement.unregisterDaemon() { _ in
-            for _ in 0...2 {
-                BTDaemonManagement.registerDaemonServiceSync(appService: appService)
-                if BTDaemonManagement.daemonServiceRegistered(status: appService.status) {
-                    reply(BTDaemonManagement.Status(fromSMStatus: appService.status))
-                    return
+        BTDaemonManagement.unregisterDaemonService(appService: appService) { _ in
+            DispatchQueue.global(qos: .userInitiated).async {
+                for _ in 0...2 {
+                    BTDaemonManagement.registerDaemonServiceSync(appService: appService)
+                    if BTDaemonManagement.daemonServiceRegistered(status: appService.status) {
+                        reply(BTDaemonManagement.Status(fromSMStatus: appService.status))
+                        return
+                    }
+                    
+                    // FIXME: Replace sleep() with DispatchQueue.asyncAfter()
+                    sleep(1)
                 }
                 
-                sleep(1)
+                reply(BTDaemonManagement.Status.notRegistered)
             }
-            
-            reply(BTDaemonManagement.Status.notRegistered)
         }
     }
     
