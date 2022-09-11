@@ -33,6 +33,8 @@ internal struct BTDaemonManagement {
     @available(macOS, deprecated: 13.0)
     private static func registerLegacyHelper(reply: @escaping ((BTDaemonManagement.Status) -> Void)) {
         BTAuthorizationService.createEmptyAuthorization() { (auth) -> Void in
+            assert(!Thread.isMainThread)
+
             guard let auth = auth else {
                 reply(BTDaemonManagement.Status.notRegistered)
                 return
@@ -68,12 +70,13 @@ internal struct BTDaemonManagement {
         os_log("Unregistering legacy helper")
         
         BTAuthorizationService.createEmptyAuthorization() { (auth) -> Void in
+            assert(!Thread.isMainThread)
+
             guard let auth = auth else {
                 reply(false)
                 return
             }
-            
-            // FIXME: Client may not be started at this point
+
             BTHelperXPCClient.removeHelperFiles()
 
             var error: Unmanaged<CFError>? = nil
@@ -105,6 +108,8 @@ internal struct BTDaemonManagement {
     @available(macOS 13.0, *)
     private static func registerDaemonServiceSync(appService: SMAppService) {
         os_log("Registering daemon service")
+
+        assert(!Thread.isMainThread)
         
         /*if BTDaemonManagement.daemonServiceRegistered(status: appService.status) {
             os_log("Daemon already registered: \(appService.status)")
@@ -125,7 +130,10 @@ internal struct BTDaemonManagement {
         // Any other status code makes unregister() loop indefinitely.
         //
         if appService.status != SMAppService.Status.enabled {
-            reply(true)
+            DispatchQueue.global(qos: .userInitiated).async {
+                reply(true)
+            }
+
             return
         }
         
@@ -158,20 +166,20 @@ internal struct BTDaemonManagement {
         os_log("Updating daemon service")
 
         BTDaemonManagement.unregisterDaemonService(appService: appService) { _ in
-            DispatchQueue.global(qos: .userInitiated).async {
-                for _ in 0...2 {
-                    BTDaemonManagement.registerDaemonServiceSync(appService: appService)
-                    if BTDaemonManagement.daemonServiceRegistered(status: appService.status) {
-                        reply(BTDaemonManagement.Status(fromSMStatus: appService.status))
-                        return
-                    }
-                    
-                    // FIXME: Replace sleep() with DispatchQueue.asyncAfter()
-                    sleep(1)
+            assert(!Thread.isMainThread)
+
+            for _ in 0...2 {
+                BTDaemonManagement.registerDaemonServiceSync(appService: appService)
+                if BTDaemonManagement.daemonServiceRegistered(status: appService.status) {
+                    reply(BTDaemonManagement.Status(fromSMStatus: appService.status))
+                    return
                 }
-                
-                reply(BTDaemonManagement.Status.notRegistered)
+
+                // FIXME: Replace sleep() with DispatchQueue.asyncAfter()
+                sleep(1)
             }
+
+            reply(BTDaemonManagement.Status.notRegistered)
         }
     }
     
