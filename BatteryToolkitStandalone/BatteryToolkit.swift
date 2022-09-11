@@ -1,31 +1,31 @@
 import Foundation
 
-public struct BatteryToolkit {
-    public static func start() -> Bool {
+internal struct BatteryToolkit {
+    internal static func start() -> Bool {
         return BTPowerEvents.start()
     }
 
-    public static func stop() {
+    internal static func stop() {
         BTPowerEvents.stop()
     }
 
-    public static func disablePowerAdapter() {
+    internal static func disablePowerAdapter() {
         BTPowerState.disablePowerAdapter()
     }
 
-    public static func enablePowerAdapter() {
+    internal static func enablePowerAdapter() {
         BTPowerState.enablePowerAdapter()
     }
 
-    public static func chargeToMaximum() {
+    internal static func chargeToMaximum() {
         BTPowerEvents.chargeToMaximum()
     }
 
-    public static func chargeToFull() {
+    internal static func chargeToFull() {
         BTPowerEvents.chargeToFull()
     }
     
-    public static func unregisterDaemon(reply: @escaping ((Bool) -> Void)) {
+    internal static func unregisterDaemon(reply: @escaping ((Bool) -> Void)) {
         
     }
 }

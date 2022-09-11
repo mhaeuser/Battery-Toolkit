@@ -1,5 +1,5 @@
 import Foundation
 
-@objc protocol BTServiceCommProtocol {
+@objc public protocol BTServiceCommProtocol {
     func askAuthorization(reply: @escaping ((NSData?) -> Void)) -> Void
 }

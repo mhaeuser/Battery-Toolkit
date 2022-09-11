@@ -3,7 +3,7 @@ import notify
 import Dispatch
 import IOPMPrivate
 
-public struct BTDispatcher {
+internal struct BTDispatcher {
     private static var percentToken: Int32 = 0
     private static var powerToken: Int32   = 0
 
@@ -22,7 +22,7 @@ public struct BTDispatcher {
         return notify_cancel(token) == NOTIFY_STATUS_OK
     }
     
-    public static func registerLimitedPowerNotification(_ handler: notify_handler_t!) -> Bool {
+    internal static func registerLimitedPowerNotification(_ handler: notify_handler_t!) -> Bool {
         assert(BTDispatcher.powerToken == 0)
         BTDispatcher.powerToken = BTDispatcher.registerDispatch(
             kIOPSNotifyPowerSource,
@@ -31,7 +31,7 @@ public struct BTDispatcher {
         return BTDispatcher.powerToken != 0
     }
     
-    public static func registerPercentChangeNotification(_ handler: notify_handler_t!) -> Bool {
+    internal static func registerPercentChangeNotification(_ handler: notify_handler_t!) -> Bool {
         assert(BTDispatcher.percentToken == 0)
 
         BTDispatcher.percentToken = BTDispatcher.registerDispatch(
@@ -41,7 +41,7 @@ public struct BTDispatcher {
         return BTDispatcher.percentToken != 0
     }
     
-    public static func unregisterPercentChangeNotification() {
+    internal static func unregisterPercentChangeNotification() {
         assert(BTDispatcher.percentToken != 0)
 
         let result = BTDispatcher.unregisterDispatch(token: BTDispatcher.percentToken)
@@ -52,7 +52,7 @@ public struct BTDispatcher {
         BTDispatcher.percentToken = 0
     }
     
-    public static func unregisterLimitedPowerNotification() {
+    internal static func unregisterLimitedPowerNotification() {
         assert(BTDispatcher.powerToken != 0)
 
         let result = BTDispatcher.unregisterDispatch(token: BTDispatcher.powerToken)

@@ -2,8 +2,8 @@ import Foundation
 import os.log
 import BTPreprocessor
 
-public struct BTAuthorizationService {
-    public static func createEmptyAuthorization(reply: @escaping ((AuthorizationRef?) -> Void)) {
+internal struct BTAuthorizationService {
+    internal static func createEmptyAuthorization(reply: @escaping ((AuthorizationRef?) -> Void)) {
         let lConnect = NSXPCConnection(serviceName: BT_SERVICE_NAME)
         lConnect.remoteObjectInterface = NSXPCInterface(with: BTServiceCommProtocol.self)
         lConnect.resume()

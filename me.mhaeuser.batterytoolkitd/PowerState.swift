@@ -1,10 +1,10 @@
 import Foundation
 
-public struct BTPowerState {
+internal struct BTPowerState {
     private static var chargingDisabled = false
     private static var powerDisabled    = false
 
-    public static func initSleepState() {
+    internal static func initSleepState() {
         let chargeEnabled = SMCPowerKit.isChargingEnabled()
         BTPowerState.chargingDisabled = !chargeEnabled
         if chargeEnabled {
@@ -24,7 +24,7 @@ public struct BTPowerState {
         }
     }
 
-    public static func adapterSleepPreferenceToggled() {
+    internal static func adapterSleepPreferenceToggled() {
         //
         // If power is disabled, toggle sleep.
         //
@@ -39,7 +39,7 @@ public struct BTPowerState {
         }
     }
 
-    public static func disableCharging() {
+    internal static func disableCharging() {
         if BTPowerState.chargingDisabled {
             return
         }
@@ -55,7 +55,7 @@ public struct BTPowerState {
         BTPowerState.chargingDisabled = true
     }
     
-    public static func enableCharging() {
+    internal static func enableCharging() {
         if !BTPowerState.chargingDisabled {
             return
         }
@@ -71,7 +71,7 @@ public struct BTPowerState {
         BTPowerState.chargingDisabled = false
     }
 
-    public static func disablePowerAdapter() {
+    internal static func disablePowerAdapter() {
         if BTPowerState.powerDisabled {
             return
         }
@@ -92,7 +92,7 @@ public struct BTPowerState {
         BTPowerState.powerDisabled = true
     }
 
-    public static func enablePowerAdapter() {
+    internal static func enablePowerAdapter() {
         if !BTPowerState.powerDisabled {
             return
         }

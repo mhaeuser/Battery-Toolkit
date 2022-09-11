@@ -2,7 +2,7 @@ import Foundation
 import os.log
 import BTPreprocessor
 
-public struct BTHelperXPCClient {
+internal struct BTHelperXPCClient {
     private static var connect: NSXPCConnection?     = nil
     private static var helper: BTHelperCommProtocol? = nil
 
@@ -16,7 +16,7 @@ public struct BTHelperXPCClient {
         BTHelperXPCClient.helper  = nil
     }
 
-    public static func connectDaemon() {
+    internal static func connectDaemon() {
         if BTHelperXPCClient.connect != nil {
             assert(BTHelperXPCClient.helper != nil)
             return
@@ -50,7 +50,7 @@ public struct BTHelperXPCClient {
         helper  = lHelper
     }
     
-    public static func stop() {
+    internal static func stop() {
         guard let lConnect = BTHelperXPCClient.connect else {
             assert(BTHelperXPCClient.helper == nil)
             return
@@ -64,32 +64,32 @@ public struct BTHelperXPCClient {
         lConnect.invalidate()
     }
     
-    public static func queryPowerAdapterEnabled(reply: @escaping ((Bool) -> Void)) -> Void {
+    internal static func queryPowerAdapterEnabled(reply: @escaping ((Bool) -> Void)) -> Void {
         BTHelperXPCClient.connectDaemon()
         BTHelperXPCClient.helper?.queryPowerAdapterEnabled(reply: reply)
     }
 
-    public static func disablePowerAdapter() -> Void {
+    internal static func disablePowerAdapter() -> Void {
         BTHelperXPCClient.connectDaemon()
         BTHelperXPCClient.helper?.disablePowerAdapter()
     }
 
-    public static func enablePowerAdapter() -> Void {
+    internal static func enablePowerAdapter() -> Void {
         BTHelperXPCClient.connectDaemon()
         BTHelperXPCClient.helper?.enablePowerAdapter()
     }
 
-    public static func chargeToMaximum() -> Void {
+    internal static func chargeToMaximum() -> Void {
         BTHelperXPCClient.connectDaemon()
         BTHelperXPCClient.helper?.chargeToMaximum()
     }
 
-    public static func chargeToFull() -> Void {
+    internal static func chargeToFull() -> Void {
         BTHelperXPCClient.connectDaemon()
         BTHelperXPCClient.helper?.chargeToFull()
     }
     
-    public static func setChargeLimits(minCharge: UInt8, maxCharge: UInt8) -> Void {
+    internal static func setChargeLimits(minCharge: UInt8, maxCharge: UInt8) -> Void {
         BTHelperXPCClient.connectDaemon()
         BTHelperXPCClient.helper?.setChargeLimits(
             minCharge: minCharge,
@@ -97,12 +97,12 @@ public struct BTHelperXPCClient {
             )
     }
     
-    public static func setAdapterSleep(enabled: Bool) {
+    internal static func setAdapterSleep(enabled: Bool) {
         BTHelperXPCClient.connectDaemon()
         BTHelperXPCClient.helper?.setAdapterSleep(enabled: enabled)
     }
     
-    public static func removeHelperFiles() {
+    internal static func removeHelperFiles() {
         BTHelperXPCClient.connectDaemon()
         BTHelperXPCClient.helper?.removeHelperFiles()
     }

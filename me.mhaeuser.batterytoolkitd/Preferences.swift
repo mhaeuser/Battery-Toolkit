@@ -1,11 +1,11 @@
 import Foundation
 import os.log
 
-public struct BTSettings {
-    public private(set) static var minCharge: UInt8 = BTSettingsInfo.minChargeDefault
-    public private(set) static var maxCharge: UInt8 = BTSettingsInfo.maxChargeDefault
+internal struct BTSettings {
+    internal private(set) static var minCharge: UInt8 = BTSettingsInfo.minChargeDefault
+    internal private(set) static var maxCharge: UInt8 = BTSettingsInfo.maxChargeDefault
     
-    public private(set) static var adapterSleep = false
+    internal private(set) static var adapterSleep = false
 
     private static let defaultsMinChargeName = "MinCharge"
     private static let defaultsMaxChargeName = "MaxCharge"
@@ -52,7 +52,7 @@ public struct BTSettings {
             )
     }
     
-    public static func read() {
+    internal static func read() {
         let minCharge = UserDefaults.standard.integer(
             forKey: BTSettings.defaultsMinChargeName
             )
@@ -72,7 +72,7 @@ public struct BTSettings {
             )
     }
     
-    public static func setChargeLimits(minCharge: UInt8, maxCharge: UInt8) {
+    internal static func setChargeLimits(minCharge: UInt8, maxCharge: UInt8) {
         if !BTSettings.limitsValid(minCharge: Int(minCharge), maxCharge: Int(maxCharge)) {
             os_log("Client charge limits malformed, preserve current values")
             return
@@ -86,7 +86,7 @@ public struct BTSettings {
         BTPowerEvents.settingsChanged()
     }
     
-    public static func setAdapterSleep(enabled: Bool) {
+    internal static func setAdapterSleep(enabled: Bool) {
         if BTSettings.adapterSleep == enabled {
             return
         }

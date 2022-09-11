@@ -1,43 +1,43 @@
 import Foundation
 import BTPreprocessor
 
-public struct BatteryToolkit {
-    public static func startDaemon(reply: @escaping ((BTDaemonManagement.Status) -> Void)) {
+internal struct BatteryToolkit {
+    internal static func startDaemon(reply: @escaping ((BTDaemonManagement.Status) -> Void)) {
         BTDaemonManagement.startDaemon(reply: reply)
     }
     
-    public static func stop() {
+    internal static func stop() {
         BTHelperXPCClient.stop()
     }
     
-    public static func disablePowerAdapter() {
+    internal static func disablePowerAdapter() {
         BTHelperXPCClient.disablePowerAdapter()
     }
 
-    public static func enablePowerAdapter() {
+    internal static func enablePowerAdapter() {
         BTHelperXPCClient.enablePowerAdapter()
     }
 
-    public static func chargeToMaximum() {
+    internal static func chargeToMaximum() {
         BTHelperXPCClient.chargeToMaximum()
     }
 
-    public static func chargeToFull() {
+    internal static func chargeToFull() {
         BTHelperXPCClient.chargeToFull()
     }
 
-    public static func setChargeLimits(minCharge: UInt8, maxCharge: UInt8) {
+    internal static func setChargeLimits(minCharge: UInt8, maxCharge: UInt8) {
         BTHelperXPCClient.setChargeLimits(
             minCharge: minCharge,
             maxCharge: maxCharge
             )
     }
     
-    public static func setAdapterSleep(enabled: Bool) {
+    internal static func setAdapterSleep(enabled: Bool) {
         BTHelperXPCClient.setAdapterSleep(enabled: enabled)
     }
     
-    public static func unregisterDaemon(reply: @escaping ((Bool) -> Void)) {
+    internal static func unregisterDaemon(reply: @escaping ((Bool) -> Void)) {
         BTDaemonManagement.unregisterDaemon(reply: reply)
     }
 }

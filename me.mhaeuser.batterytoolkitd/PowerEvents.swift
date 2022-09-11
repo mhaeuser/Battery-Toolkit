@@ -8,26 +8,28 @@ private enum BTChargeMode {
     case Full
 }
 
-private func LimitedPowerHandler(token: Int32) {
-    BTPowerEvents.handleLimitedPower()
-}
-
-private func PercentChangeHandler(token: Int32) {
-    _ = BTPowerEvents.handleChargeHysteresis()
-}
-
-public struct BTPowerEvents {
-    fileprivate static var chargeMode: BTChargeMode = BTChargeMode.Default
+internal struct BTPowerEvents {
+    private static var chargeMode: BTChargeMode = BTChargeMode.Default
     
     private static var powerCreated: Bool   = false
     private static var percentCreated: Bool = false
 
-    fileprivate static func registerLimitedPowerHandler() -> Bool {
+    private static func LimitedPowerHandler(token: Int32) {
+        BTPowerEvents.handleLimitedPower()
+    }
+
+    private static func PercentChangeHandler(token: Int32) {
+        _ = BTPowerEvents.handleChargeHysteresis()
+    }
+
+    private static func registerLimitedPowerHandler() -> Bool {
         if BTPowerEvents.powerCreated {
             return true
         }
 
-        BTPowerEvents.powerCreated = BTDispatcher.registerLimitedPowerNotification(LimitedPowerHandler)
+        BTPowerEvents.powerCreated = BTDispatcher.registerLimitedPowerNotification(
+            BTPowerEvents.LimitedPowerHandler
+            )
         if !BTPowerEvents.powerCreated {
             return false
         }
@@ -37,7 +39,7 @@ public struct BTPowerEvents {
         return true
     }
     
-    fileprivate static func unregisterLimitedPowerHandler() {
+    private static func unregisterLimitedPowerHandler() {
         if !BTPowerEvents.powerCreated {
             return
         }
@@ -46,12 +48,14 @@ public struct BTPowerEvents {
         BTPowerEvents.powerCreated = false
     }
 
-    fileprivate static func registerPercentChangedHandler() -> Bool {
+    private static func registerPercentChangedHandler() -> Bool {
         if BTPowerEvents.percentCreated {
             return true
         }
 
-        BTPowerEvents.percentCreated = BTDispatcher.registerPercentChangeNotification(PercentChangeHandler)
+        BTPowerEvents.percentCreated = BTDispatcher.registerPercentChangeNotification(
+            BTPowerEvents.PercentChangeHandler
+            )
         if !BTPowerEvents.percentCreated {
             return false
         }
@@ -74,7 +78,7 @@ public struct BTPowerEvents {
         return true
     }
 
-    fileprivate static func unregisterPercentChangedHandler() {
+    private static func unregisterPercentChangedHandler() {
         if !BTPowerEvents.percentCreated {
             return
         }
@@ -88,7 +92,7 @@ public struct BTPowerEvents {
         BTPowerState.disableCharging()
     }
     
-    fileprivate static func handleChargeHysteresis() -> Int32 {
+    private static func handleChargeHysteresis() -> Int32 {
         assert(BTPowerEvents.percentCreated)
 
         var percent: Int32 = 100
@@ -122,7 +126,7 @@ public struct BTPowerEvents {
         return percent
     }
     
-    fileprivate static func handleLimitedPower() {
+    private static func handleLimitedPower() {
         //
         // Immediately disable sleep to not interrupt the setup phase.
         //
@@ -162,13 +166,13 @@ public struct BTPowerEvents {
         }
     }
 
-    fileprivate static func restoreDefaults() {
+    private static func restoreDefaults() {
         // FIXME: Enable!
         //BTPowerState.enableCharging()
         BTPowerState.enablePowerAdapter()
     }
 
-    public static func start() -> Bool {
+    internal static func start() -> Bool {
         let smcResult = SMCKit.start()
         if !smcResult {
             return false
@@ -190,7 +194,7 @@ public struct BTPowerEvents {
         return true
     }
     
-    public static func stop() {
+    internal static func stop() {
         BTPowerEvents.unregisterLimitedPowerHandler()
         BTPowerEvents.unregisterPercentChangedHandler()
         BTPowerEvents.restoreDefaults()
@@ -200,7 +204,7 @@ public struct BTPowerEvents {
         SleepKit.forceRestoreSleep()
     }
     
-    public static func settingsChanged() {
+    internal static func settingsChanged() {
         if !BTPowerEvents.percentCreated {
             return
         }
@@ -231,12 +235,12 @@ public struct BTPowerEvents {
         }
     }
     
-    public static func chargeToMaximum() {
+    internal static func chargeToMaximum() {
         BTPowerEvents.chargeMode = BTChargeMode.ToMaxLimit
         BTPowerEvents.enableBelowThresholdMode(threshold: BTSettings.maxCharge)
     }
     
-    public static func chargeToFull() {
+    internal static func chargeToFull() {
         BTPowerEvents.chargeMode = BTChargeMode.Full
         BTPowerEvents.enableBelowThresholdMode(threshold: 100)
     }

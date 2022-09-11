@@ -2,44 +2,44 @@ import Foundation
 import os.log
 import IOPMPrivate
 
-public final class BTHelperComm: NSObject, BTHelperCommProtocol {
+internal final class BTHelperComm: NSObject, BTHelperCommProtocol {
     private static let helperFiles = [
         BTLegacyHelperInfo.legacyHelperExec,
         BTLegacyHelperInfo.legacyHelperPlist
         ]
 
-    func queryPowerAdapterEnabled(reply: @escaping ((Bool) -> Void)) -> Void {
+    internal func queryPowerAdapterEnabled(reply: @escaping ((Bool) -> Void)) -> Void {
         reply(SMCPowerKit.isPowerAdapterEnabled())
     }
     
-    func enablePowerAdapter() -> Void {
+    internal func enablePowerAdapter() -> Void {
         BTPowerState.enablePowerAdapter()
     }
     
-    func disablePowerAdapter() -> Void {
+    internal func disablePowerAdapter() -> Void {
         BTPowerState.disablePowerAdapter()
     }
     
-    func chargeToMaximum() -> Void {
+    internal func chargeToMaximum() -> Void {
         BTPowerEvents.chargeToMaximum()
     }
 
-    func chargeToFull() -> Void {
+    internal func chargeToFull() -> Void {
         BTPowerEvents.chargeToFull()
     }
     
-    func setChargeLimits(minCharge: UInt8, maxCharge: UInt8) {
+    internal func setChargeLimits(minCharge: UInt8, maxCharge: UInt8) {
         BTSettings.setChargeLimits(
             minCharge: minCharge,
             maxCharge: maxCharge
             )
     }
     
-    func setAdapterSleep(enabled: Bool) {
+    internal func setAdapterSleep(enabled: Bool) {
         BTSettings.setAdapterSleep(enabled: enabled)
     }
     
-    func removeHelperFiles() -> Void {
+    internal func removeHelperFiles() -> Void {
         if CommandLine.arguments.count <= 0 {
             os_log("No command line arguments provided")
             return

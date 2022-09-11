@@ -5,18 +5,18 @@ import BTPreprocessor
 import NSXPCConnectionAuditToken
 import Security
 
-private final class BTHelperXPCDelegate: NSObject, NSXPCListenerDelegate {
-    fileprivate func listener(_ listener: NSXPCListener, shouldAcceptNewConnection newConnection: NSXPCConnection) -> Bool {
-        return BTHelperXPCServer.accept(newConnection: newConnection)
+internal struct BTHelperXPCServer {
+    private final class Delegate: NSObject, NSXPCListenerDelegate {
+        fileprivate func listener(_ listener: NSXPCListener, shouldAcceptNewConnection newConnection: NSXPCConnection) -> Bool {
+            return BTHelperXPCServer.accept(newConnection: newConnection)
+        }
     }
-}
 
-public struct BTHelperXPCServer {
     private static var listener: NSXPCListener? = nil
 
-    private static let delegate: NSXPCListenerDelegate = BTHelperXPCDelegate()
+    private static let delegate: NSXPCListenerDelegate = BTHelperXPCServer.Delegate()
     
-    public static func start() -> Bool {
+    internal static func start() -> Bool {
         assert(listener == nil)
 
         let lListener      = NSXPCListener(machServiceName: BT_DAEMON_NAME)
@@ -161,7 +161,7 @@ public struct BTHelperXPCServer {
         return validStatus == errSecSuccess
     }
     
-    fileprivate static func accept(newConnection: NSXPCConnection) -> Bool {
+    private static func accept(newConnection: NSXPCConnection) -> Bool {
         if !BTHelperXPCServer.isValidClient(forConnection: newConnection) {
             os_log("XPC server connection by invalid client")
             return false

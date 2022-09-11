@@ -3,10 +3,10 @@ import os.log
 import ServiceManagement
 import BTPreprocessor
 
-public struct BTDaemonManagement {
+internal struct BTDaemonManagement {
     private static let daemonServicePlist = "\(BT_DAEMON_NAME).plist"
     
-    public enum Status: UInt8 {
+    internal enum Status: UInt8 {
         case notRegistered    = 0
         case enabled          = 1
         case requiresApproval = 2
@@ -191,7 +191,7 @@ public struct BTDaemonManagement {
         }
     }
     
-    public static func startDaemon(reply: @escaping ((BTDaemonManagement.Status) -> Void)) {
+    internal static func startDaemon(reply: @escaping ((BTDaemonManagement.Status) -> Void)) {
         if #available(macOS 13.0, *) {
             BTDaemonManagement.startDaemonService(reply: reply)
         } else {
@@ -199,7 +199,7 @@ public struct BTDaemonManagement {
         }
     }
     
-    public static func approveDaemon() {
+    internal static func approveDaemon() {
         if #available(macOS 13.0, *) {
             SMAppService.openSystemSettingsLoginItems()
         } else {
@@ -207,7 +207,7 @@ public struct BTDaemonManagement {
         }
     }
     
-    public static func unregisterDaemon(reply: @escaping ((Bool) -> Void)) {
+    internal static func unregisterDaemon(reply: @escaping ((Bool) -> Void)) {
         if #available(macOS 13.0, *) {
             let appService = SMAppService.daemon(plistName: BTDaemonManagement.daemonServicePlist)
             BTDaemonManagement.unregisterDaemonService(appService: appService, reply: reply)
