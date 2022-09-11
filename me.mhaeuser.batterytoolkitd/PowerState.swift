@@ -4,7 +4,7 @@ public struct BTPowerState {
     private static var chargingDisabled = false
     private static var powerDisabled    = false
 
-    public static func initPowerState() {
+    public static func initSleepState() {
         let chargeEnabled = SMCPowerKit.isChargingEnabled()
         BTPowerState.chargingDisabled = !chargeEnabled
         if chargeEnabled {
@@ -28,12 +28,14 @@ public struct BTPowerState {
         //
         // If power is disabled, toggle sleep.
         //
-        if BTPowerState.powerDisabled {
-            if !BTSettings.adapterSleep {
-                SleepKit.disableSleep()
-            } else {
-                SleepKit.restoreSleep()
-            }
+        if !BTPowerState.powerDisabled {
+            return
+        }
+
+        if !BTSettings.adapterSleep {
+            SleepKit.disableSleep()
+        } else {
+            SleepKit.restoreSleep()
         }
     }
 

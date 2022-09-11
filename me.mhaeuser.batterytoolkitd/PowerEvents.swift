@@ -26,20 +26,6 @@ public struct BTPowerEvents {
         if BTPowerEvents.powerCreated {
             return true
         }
-        //
-        // The charging state has no default value when starting the daemon.
-        // We do not want to default to enabled, because this may cause many
-        // micro-charges when continuously updating the daemon.
-        // We do not want to default to disabled, because this may cause
-        // micro-charges when starting the service after a fresh boot (e.g., on
-        // Apple Silicon devices, where the SMC state is reset to defaults when
-        // resetting the platform).
-        //
-        // Initialize the charging state based on the current platform state.
-        // This is especially important to properly set the sleep state when no
-        // case of the hysteresis set it according to the charging state.
-        //
-        BTPowerState.initPowerState()
 
         BTPowerEvents.powerCreated = BTDispatcher.registerLimitedPowerNotification(LimitedPowerHandler)
         if !BTPowerEvents.powerCreated {
@@ -122,15 +108,13 @@ public struct BTPowerEvents {
             // charging to full was requested. Charging to maximum is handled
             // implicitly, as it only forces charging in [min, max).
             //
-            if BTPowerEvents.chargeMode == BTChargeMode.Full && percent < 100 {
-                return percent
+            if BTPowerEvents.chargeMode != BTChargeMode.Full || percent >= 100 {
+                //
+                // Charging modes are reset once we disable charging.
+                //
+                BTPowerEvents.chargeMode = BTChargeMode.Default
+                BTPowerState.disableCharging()
             }
-            //
-            // Charging modes are reset once we disable charging.
-            //
-            BTPowerEvents.chargeMode = BTChargeMode.Default
-
-            BTPowerState.disableCharging()
         } else if percent < BTSettings.minCharge {
             BTPowerState.enableCharging()
         }
@@ -140,23 +124,42 @@ public struct BTPowerEvents {
     
     fileprivate static func handleLimitedPower() {
         //
-        // Immediately disable sleep to not interrupt the setup phase. It will be
-        // restored when the maximum charge is reached or the charging handler is
-        // uninstalled, whichever happens first.
+        // Immediately disable sleep to not interrupt the setup phase.
         //
         SleepKit.disableSleep()
 
         if IOPSDrawingUnlimitedPower() {
+            //
+            // The charging state has no default value when starting the daemon.
+            // We do not want to default to enabled, because this may cause many
+            // micro-charges when continuously updating the daemon.
+            // We do not want to default to disabled, because this may cause
+            // micro-charges when starting the service after a fresh boot (e.g.,
+            // on Apple Silicon devices, where the SMC state is reset to
+            // defaults when resetting the platform).
+            //
+            // Initialize the sleep state based on the current platform state.
+            //
+            BTPowerState.initSleepState()
+            
             let result = BTPowerEvents.registerPercentChangedHandler()
             if !result {
                 BTPowerEvents.restoreDefaults()
                 // FIXME: Handle error
             }
+            //
+            // Restore sleep from the setup phase.
+            //
+            SleepKit.restoreSleep()
         } else {
             BTPowerEvents.unregisterPercentChangedHandler()
+            //
+            // Force restoring sleep to not ever disable sleep when not
+            // connected to power. This call implicitly restores sleep from the
+            // setup phase.
+            //
+            SleepKit.forceRestoreSleep()
         }
-
-        SleepKit.restoreSleep()
     }
 
     fileprivate static func restoreDefaults() {
@@ -198,9 +201,11 @@ public struct BTPowerEvents {
     }
     
     public static func settingsChanged() {
-        if BTPowerEvents.percentCreated {
-            _ = BTPowerEvents.handleChargeHysteresis()
+        if !BTPowerEvents.percentCreated {
+            return
         }
+
+        _ = BTPowerEvents.handleChargeHysteresis()
     }
     
     private static func enableBelowThresholdMode(threshold: UInt8) {
