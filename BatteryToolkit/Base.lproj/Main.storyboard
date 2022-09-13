@@ -65,6 +65,18 @@
                                     </items>
                                 </menu>
                             </menuItem>
+                            <menuItem title="File" id="usR-Tg-EZv">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="File" id="Z4m-k5-YnW">
+                                    <items>
+                                        <menuItem title="Close" keyEquivalent="w" id="4co-eu-OrS">
+                                            <connections>
+                                                <action selector="performClose:" target="Ady-hI-5gd" id="Dy1-a8-ovF"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
                             <menuItem title="Edit" id="5QF-Oa-p0T">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Edit" id="W48-6f-4Dl">
@@ -128,6 +140,10 @@
                                         </menuItem>
                                     </items>
                                 </menu>
+                            </menuItem>
+                            <menuItem title="Window" id="WKU-5I-F3D">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Window" systemMenu="window" id="vc5-Ja-Aou"/>
                             </menuItem>
                             <menuItem title="Help" id="wpr-3q-Mcd">
                                 <modifierMask key="keyEquivalentModifierMask"/>
