@@ -71,22 +71,30 @@ internal struct BTHelperXPCClient {
 
     internal static func disablePowerAdapter() -> Void {
         BTHelperXPCClient.connectDaemon()
-        BTHelperXPCClient.helper?.disablePowerAdapter()
+        BTHelperXPCClient.helper?.execute(
+            command: BTHelperCommProtocolCommands.disablePowerAdapter.rawValue
+            )
     }
 
     internal static func enablePowerAdapter() -> Void {
         BTHelperXPCClient.connectDaemon()
-        BTHelperXPCClient.helper?.enablePowerAdapter()
+        BTHelperXPCClient.helper?.execute(
+            command: BTHelperCommProtocolCommands.enablePowerAdapter.rawValue
+            )
     }
 
     internal static func chargeToMaximum() -> Void {
         BTHelperXPCClient.connectDaemon()
-        BTHelperXPCClient.helper?.chargeToMaximum()
+        BTHelperXPCClient.helper?.execute(
+            command: BTHelperCommProtocolCommands.chargeToMaximum.rawValue
+            )
     }
 
     internal static func chargeToFull() -> Void {
         BTHelperXPCClient.connectDaemon()
-        BTHelperXPCClient.helper?.chargeToFull()
+        BTHelperXPCClient.helper?.execute(
+            command: BTHelperCommProtocolCommands.chargeToFull.rawValue
+            )
     }
 
     internal static func getSettings(reply: @escaping (([String: AnyObject]) -> Void)) {
@@ -101,6 +109,8 @@ internal struct BTHelperXPCClient {
 
     internal static func removeHelperFiles() {
         BTHelperXPCClient.connectDaemon()
-        BTHelperXPCClient.helper?.removeHelperFiles()
+        BTHelperXPCClient.helper?.execute(
+            command: BTHelperCommProtocolCommands.removeHelperFiles.rawValue
+            )
     }
 }

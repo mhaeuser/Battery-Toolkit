@@ -8,27 +8,33 @@ internal final class BTHelperComm: NSObject, BTHelperCommProtocol {
         BTLegacyHelperInfo.legacyHelperPlist
     ]
 
+    internal func execute(command: UInt8) -> Void {
+        switch command {
+            case BTHelperCommProtocolCommands.chargeToFull.rawValue:
+                BTPowerEvents.chargeToFull()
+
+            case BTHelperCommProtocolCommands.chargeToMaximum.rawValue:
+                BTPowerEvents.chargeToMaximum()
+
+            case BTHelperCommProtocolCommands.disablePowerAdapter.rawValue:
+                BTPowerState.disablePowerAdapter()
+
+            case BTHelperCommProtocolCommands.enablePowerAdapter.rawValue:
+                BTPowerState.enablePowerAdapter()
+
+            case BTHelperCommProtocolCommands.removeHelperFiles.rawValue:
+                BTHelperComm.removeHelperFiles()
+
+            default:
+                os_log("Unknown command: \(command)")
+        }
+    }
+
     internal func getState(reply: @escaping (([String: AnyObject]) -> Void)) -> Void {
         let state = [
             "Adapter": NSNumber(value: SMCPowerKit.isPowerAdapterEnabled())
         ]
         reply(state)
-    }
-    
-    internal func enablePowerAdapter() -> Void {
-        BTPowerState.enablePowerAdapter()
-    }
-    
-    internal func disablePowerAdapter() -> Void {
-        BTPowerState.disablePowerAdapter()
-    }
-    
-    internal func chargeToMaximum() -> Void {
-        BTPowerEvents.chargeToMaximum()
-    }
-
-    internal func chargeToFull() -> Void {
-        BTPowerEvents.chargeToFull()
     }
 
     internal func getSettings(reply: @escaping (([String: AnyObject]) -> Void)) {
@@ -40,7 +46,7 @@ internal final class BTHelperComm: NSObject, BTHelperCommProtocol {
         BTSettings.setSettings(settings: settings)
     }
     
-    internal func removeHelperFiles() -> Void {
+    private static func removeHelperFiles() -> Void {
         if CommandLine.arguments.count <= 0 {
             os_log("No command line arguments provided")
             return
