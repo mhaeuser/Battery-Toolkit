@@ -88,6 +88,11 @@ internal struct BTHelperXPCClient {
         BTHelperXPCClient.connectDaemon()
         BTHelperXPCClient.helper?.chargeToFull()
     }
+
+    internal static func getSettings(reply: @escaping (([String: AnyObject]) -> Void)) {
+        BTHelperXPCClient.connectDaemon()
+        BTHelperXPCClient.helper?.getSettings(reply: reply)
+    }
     
     internal static func setSettings(settings: [String: AnyObject]) -> Void {
         BTHelperXPCClient.connectDaemon()

@@ -77,17 +77,41 @@ final class SettingsViewController: NSViewController {
             }
         }
     }
-    
-    private func initAdapterSleepState() {
-        self.adapterSleepButton.state = BTSettingsInfo.Defaults.adapterSleep ?
+
+    private func setMinCharge(value: Int) {
+        self.minChargeNum = NSNumber(value: value)
+    }
+
+    private func setMaxCharge(value: Int) {
+        self.maxChargeNum = NSNumber(value: value)
+    }
+
+    private func setAdapterSleep(value: Bool) {
+        self.adapterSleepButton.state = value ?
             NSControl.StateValue.off :
             NSControl.StateValue.on
     }
     
+    private func initSettingsState() {
+        BatteryToolkit.getSettings { (settings) -> Void in
+            let minChargeNum   = settings[BTSettingsInfo.Keys.minCharge] as? NSNumber
+            let maxChargeNum   = settings[BTSettingsInfo.Keys.maxCharge] as? NSNumber
+            let adapterInfoNum = settings[BTSettingsInfo.Keys.adapterSleep] as? NSNumber
+
+            let minCharge    = minChargeNum?.intValue    ?? Int(BTSettingsInfo.Defaults.minCharge)
+            let maxCharge    = maxChargeNum?.intValue    ?? Int(BTSettingsInfo.Defaults.maxCharge)
+            let adapterSleep = adapterInfoNum?.boolValue ?? BTSettingsInfo.Defaults.adapterSleep
+
+            self.setMinCharge(value: minCharge)
+            self.setMaxCharge(value: maxCharge)
+            self.setAdapterSleep(value: adapterSleep)
+        }
+    }
+    
     @IBAction func restoreDefaultsButtonAction(_ sender: NSButton) {
-        self.minChargeNum = NSNumber(value: BTSettingsInfo.Defaults.minCharge)
-        self.maxChargeNum = NSNumber(value: BTSettingsInfo.Defaults.maxCharge)
-        self.initAdapterSleepState()
+        self.setMinCharge(value: Int(BTSettingsInfo.Defaults.minCharge))
+        self.setMaxCharge(value: Int(BTSettingsInfo.Defaults.maxCharge))
+        self.setAdapterSleep(value: BTSettingsInfo.Defaults.adapterSleep)
     }
     
     @IBAction func cancelButtonAction(_ sender: NSButton) {
@@ -108,6 +132,6 @@ final class SettingsViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.initAdapterSleepState()
+        self.initSettingsState()
     }
 }

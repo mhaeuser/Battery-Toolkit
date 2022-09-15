@@ -6,6 +6,7 @@ import Foundation
     func disablePowerAdapter() -> Void
     func chargeToMaximum() -> Void
     func chargeToFull() -> Void
+    func getSettings(reply: @escaping (([String: AnyObject]) -> Void)) -> Void
     func setSettings(settings: [String: AnyObject]) -> Void
     func removeHelperFiles() -> Void
 }

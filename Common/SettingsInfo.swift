@@ -17,4 +17,20 @@ public struct BTSettingsInfo {
         public static let maxCharge    = "MaxCharge"
         public static let adapterSleep = "AdapterSleep"
     }
+
+    public static func chargeLimitsValid(minCharge: Int, maxCharge: Int) -> Bool {
+        if minCharge > maxCharge {
+            return false
+        }
+
+        if minCharge < BTSettingsInfo.Bounds.minChargeMin || minCharge > 100 {
+            return false
+        }
+
+        if maxCharge < BTSettingsInfo.Bounds.maxChargeMin || maxCharge > 100 {
+            return false
+        }
+
+        return true
+    }
 }

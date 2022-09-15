@@ -6,25 +6,9 @@ internal struct BTSettings {
     internal private(set) static var maxCharge    = BTSettingsInfo.Defaults.maxCharge
     internal private(set) static var adapterSleep = BTSettingsInfo.Defaults.adapterSleep
     
-    private static func limitsValid(minCharge: Int, maxCharge: Int) -> Bool {
-        if minCharge > maxCharge {
-            return false
-        }
-        
-        if minCharge < BTSettingsInfo.Bounds.minChargeMin || minCharge > 100 {
-            return false
-        }
-        
-        if maxCharge < BTSettingsInfo.Bounds.maxChargeMin || maxCharge > 100 {
-            return false
-        }
-        
-        return true
-    }
-    
     private static func write() {
         assert(
-            BTSettings.limitsValid(
+            BTSettingsInfo.chargeLimitsValid(
                 minCharge: Int(BTSettings.minCharge),
                 maxCharge: Int(BTSettings.maxCharge)
                 )
@@ -55,7 +39,7 @@ internal struct BTSettings {
         let maxCharge = UserDefaults.standard.integer(
             forKey: BTSettingsInfo.Keys.maxCharge
             )
-        if !BTSettings.limitsValid(minCharge: minCharge, maxCharge: maxCharge) {
+        if !BTSettingsInfo.chargeLimitsValid(minCharge: minCharge, maxCharge: maxCharge) {
             os_log("Charge limits malformed, restore current values")
             BTSettings.write()
             return
@@ -66,7 +50,7 @@ internal struct BTSettings {
     }
     
     private static func setChargeLimits(minCharge: Int, maxCharge: Int) {
-        if !BTSettings.limitsValid(minCharge: minCharge, maxCharge: maxCharge) {
+        if !BTSettingsInfo.chargeLimitsValid(minCharge: minCharge, maxCharge: maxCharge) {
             os_log("Client charge limits malformed, preserve current values")
             return
         }
@@ -85,6 +69,19 @@ internal struct BTSettings {
         BTSettings.adapterSleep = enabled
         
         BTPowerState.adapterSleepPreferenceToggled()
+    }
+
+    internal static func getSettings() -> [String: AnyObject] {
+        let minCharge    = NSNumber(value: BTSettings.minCharge)
+        let maxCharge    = NSNumber(value: BTSettings.maxCharge)
+        let adapterSleep = NSNumber(value: BTSettings.adapterSleep)
+        let settings: [String : AnyObject] = [
+            BTSettingsInfo.Keys.minCharge: minCharge,
+            BTSettingsInfo.Keys.maxCharge: maxCharge,
+            BTSettingsInfo.Keys.adapterSleep: adapterSleep
+        ]
+
+        return settings
     }
 
     internal static func setSettings(settings: [String: AnyObject]) {

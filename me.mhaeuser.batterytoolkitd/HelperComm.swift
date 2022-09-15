@@ -30,7 +30,12 @@ internal final class BTHelperComm: NSObject, BTHelperCommProtocol {
     internal func chargeToFull() -> Void {
         BTPowerEvents.chargeToFull()
     }
-    
+
+    internal func getSettings(reply: @escaping (([String: AnyObject]) -> Void)) {
+        let settings = BTSettings.getSettings()
+        reply(settings)
+    }
+
     internal func setSettings(settings: [String: AnyObject]) -> Void {
         BTSettings.setSettings(settings: settings)
     }
