@@ -3,32 +3,28 @@ import os.log
 import ServiceManagement
 import BTPreprocessor
 
-internal struct BTDaemonManagement {
-    private static let daemonServicePlist = "\(BT_DAEMON_NAME).plist"
-    
-    internal enum Status: UInt8 {
-        case notRegistered    = 0
-        case enabled          = 1
-        case requiresApproval = 2
-        
-        init(fromLegacySuccess: Bool) {
-            self = fromLegacySuccess ? BTDaemonManagement.Status.enabled : BTDaemonManagement.Status.notRegistered
-        }
-        
-        @available(macOS 13.0, *)
-        init(fromSMStatus: SMAppService.Status) {
-            switch fromSMStatus {
-                case SMAppService.Status.enabled:
-                    self = BTDaemonManagement.Status.enabled
-                    
-                case SMAppService.Status.requiresApproval:
-                    self = BTDaemonManagement.Status.requiresApproval
-                    
-                default:
-                    self = BTDaemonManagement.Status.notRegistered
-            }
+extension BTDaemonManagement.Status {
+    init(fromLegacySuccess: Bool) {
+        self = fromLegacySuccess ? BTDaemonManagement.Status.enabled : BTDaemonManagement.Status.notRegistered
+    }
+
+    @available(macOS 13.0, *)
+    init(fromSMStatus: SMAppService.Status) {
+        switch fromSMStatus {
+            case SMAppService.Status.enabled:
+                self = BTDaemonManagement.Status.enabled
+
+            case SMAppService.Status.requiresApproval:
+                self = BTDaemonManagement.Status.requiresApproval
+
+            default:
+                self = BTDaemonManagement.Status.notRegistered
         }
     }
+}
+
+internal struct BTDaemonManagement {
+    private static let daemonServicePlist = "\(BT_DAEMON_NAME).plist"
 
     @available(macOS, deprecated: 13.0)
     private static func registerLegacyHelper(reply: @escaping ((BTDaemonManagement.Status) -> Void)) {

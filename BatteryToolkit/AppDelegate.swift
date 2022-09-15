@@ -32,7 +32,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                         let response = alert.runModal()
                         switch response {
                             case NSApplication.ModalResponse.alertFirstButtonReturn:
-                                BTDaemonManagement.approveDaemon()
+                                BatteryToolkit.approveDaemon()
                                 
                             case NSApplication.ModalResponse.alertSecondButtonReturn:
                                 NSApplication.shared.terminate(self)

@@ -5,6 +5,10 @@ internal struct BatteryToolkit {
     internal static func startDaemon(reply: @escaping ((BTDaemonManagement.Status) -> Void)) {
         BTDaemonManagement.startDaemon(reply: reply)
     }
+
+    internal static func approveDaemon() {
+        BTDaemonManagement.approveDaemon()
+    }
     
     internal static func stop() {
         BTHelperXPCClient.stop()

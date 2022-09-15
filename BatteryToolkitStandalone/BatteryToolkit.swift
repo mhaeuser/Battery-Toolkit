@@ -1,8 +1,17 @@
 import Foundation
 
+internal struct BTDaemonManagement {
+
+}
+
 internal struct BatteryToolkit {
-    internal static func start() -> Bool {
-        return BTPowerEvents.start()
+    internal static func startDaemon(reply: @escaping ((BTDaemonManagement.Status) -> Void)) {
+        let result = BTPowerEvents.start()
+        reply(result ? BTDaemonManagement.Status.enabled : BTDaemonManagement.Status.notRegistered)
+    }
+
+    internal static func approveDaemon() {
+
     }
 
     internal static func stop() {
