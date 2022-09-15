@@ -2,14 +2,8 @@ import Foundation
 import IOKit.ps
 import IOPMPrivate
 
-private enum BTChargeMode {
-    case Default
-    case ToMaxLimit
-    case Full
-}
-
 internal struct BTPowerEvents {
-    private static var chargeMode: BTChargeMode = BTChargeMode.Default
+    internal private(set) static var chargeMode: BTStateInfo.ChargingMode = BTStateInfo.ChargingMode.standard
     
     private static var powerCreated: Bool   = false
     private static var percentCreated: Bool = false
@@ -65,14 +59,19 @@ internal struct BTPowerEvents {
         // In case charging to maximum or full were requested while the device
         // was on battery, enable it now if appropriate.
         //
-        if BTPowerEvents.chargeMode == BTChargeMode.ToMaxLimit {
-            if percent < BTSettings.maxCharge {
-                BTPowerState.enableCharging()
-            }
-        } else if BTPowerEvents.chargeMode == BTChargeMode.Full {
-            if percent < 100 {
-                BTPowerState.enableCharging()
-            }
+        switch BTPowerEvents.chargeMode {
+            case BTStateInfo.ChargingMode.toMaximum:
+                if percent < BTSettings.maxCharge {
+                    BTPowerState.enableCharging()
+                }
+
+            case BTStateInfo.ChargingMode.toFull:
+                if percent < 100 {
+                    BTPowerState.enableCharging()
+                }
+
+            case BTStateInfo.ChargingMode.standard:
+                break
         }
         
         return true
@@ -112,11 +111,11 @@ internal struct BTPowerEvents {
             // charging to full was requested. Charging to maximum is handled
             // implicitly, as it only forces charging in [min, max).
             //
-            if BTPowerEvents.chargeMode != BTChargeMode.Full || percent >= 100 {
+            if BTPowerEvents.chargeMode != BTStateInfo.ChargingMode.toFull || percent >= 100 {
                 //
                 // Charging modes are reset once we disable charging.
                 //
-                BTPowerEvents.chargeMode = BTChargeMode.Default
+                BTPowerEvents.chargeMode = BTStateInfo.ChargingMode.standard
                 BTPowerState.disableCharging()
             }
         } else if percent < BTSettings.minCharge {
@@ -236,12 +235,12 @@ internal struct BTPowerEvents {
     }
     
     internal static func chargeToMaximum() {
-        BTPowerEvents.chargeMode = BTChargeMode.ToMaxLimit
+        BTPowerEvents.chargeMode = BTStateInfo.ChargingMode.toMaximum
         BTPowerEvents.enableBelowThresholdMode(threshold: BTSettings.maxCharge)
     }
     
     internal static func chargeToFull() {
-        BTPowerEvents.chargeMode = BTChargeMode.Full
+        BTPowerEvents.chargeMode = BTStateInfo.ChargingMode.toFull
         BTPowerEvents.enableBelowThresholdMode(threshold: 100)
     }
 }

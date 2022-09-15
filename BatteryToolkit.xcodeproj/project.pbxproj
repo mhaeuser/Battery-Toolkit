@@ -60,6 +60,9 @@
 		CEA80FD8285A56B60064ADEA /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA80FD7285A56B50064ADEA /* main.swift */; };
 		CEB4A42428D39ECE004FA277 /* DaemonManagementStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4A42328D39ECE004FA277 /* DaemonManagementStatus.swift */; };
 		CEB4A42528D39ECE004FA277 /* DaemonManagementStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4A42328D39ECE004FA277 /* DaemonManagementStatus.swift */; };
+		CEB4A42828D3B184004FA277 /* StateInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4A42728D3B184004FA277 /* StateInfo.swift */; };
+		CEB4A42928D3B184004FA277 /* StateInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4A42728D3B184004FA277 /* StateInfo.swift */; };
+		CEB4A42A28D3B184004FA277 /* StateInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4A42728D3B184004FA277 /* StateInfo.swift */; };
 		CED8DD3928C365790082C02A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CED8DD3828C365790082C02A /* Security.framework */; };
 		CEECE31128BAB12000821A3B /* PowerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEECE31028BAB12000821A3B /* PowerState.swift */; };
 		CEECE32328BB648F00821A3B /* BatteryToolkitXPC.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = CEECE31828BB648F00821A3B /* BatteryToolkitXPC.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -168,6 +171,7 @@
 		CEB4671B2843BFA000D7CB01 /* SMCStructs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMCStructs.h; sourceTree = "<group>"; };
 		CEB4671D2843C87200D7CB01 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		CEB4A42328D39ECE004FA277 /* DaemonManagementStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaemonManagementStatus.swift; sourceTree = "<group>"; };
+		CEB4A42728D3B184004FA277 /* StateInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateInfo.swift; sourceTree = "<group>"; };
 		CEC321AF284BAA2B009B9A30 /* PowerEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerEvents.swift; sourceTree = "<group>"; };
 		CEC321B1284BBC93009B9A30 /* IOPowerSourcesPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOPowerSourcesPrivate.h; sourceTree = "<group>"; };
 		CED8DD3728C364FA0082C02A /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
@@ -321,6 +325,7 @@
 				CEA80FDA285A57030064ADEA /* HelperCommProtocol.swift */,
 				CE0DB56228BEB4E600B8FC4C /* SettingsInfo.swift */,
 				CE3C1DA628CA33FD008A0F7D /* LegacyHelperInfo.swift */,
+				CEB4A42728D3B184004FA277 /* StateInfo.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -556,6 +561,7 @@
 				CE6B75FA28BC1908008DF170 /* HelperCommProtocol.swift in Sources */,
 				CE7F623428B95A7E00EF58F9 /* BTPreprocessor.m in Sources */,
 				CEA80FD2285A28230064ADEA /* Settings.swift in Sources */,
+				CEB4A42928D3B184004FA277 /* StateInfo.swift in Sources */,
 				CE2B96C028A7E2BB00FE3DDB /* SleepKit.swift in Sources */,
 				CEA80FD0285A27FB0064ADEA /* PowerEvents.swift in Sources */,
 				CE3C1DA828CA33FD008A0F7D /* LegacyHelperInfo.swift in Sources */,
@@ -584,6 +590,7 @@
 				CE8ED7F628C16A6500398581 /* PowerState.swift in Sources */,
 				CE2B96C128A7E2BB00FE3DDB /* SleepKit.swift in Sources */,
 				CE397460285A2193002D0EC9 /* SMCPowerKit.swift in Sources */,
+				CEB4A42A28D3B184004FA277 /* StateInfo.swift in Sources */,
 				CE397470285A22BB002D0EC9 /* BatteryToolkit.swift in Sources */,
 				CE397461285A2193002D0EC9 /* AppDelegate.swift in Sources */,
 			);
@@ -606,6 +613,7 @@
 				CE39746E285A229F002D0EC9 /* BatteryToolkit.swift in Sources */,
 				CE52868628298CA300860C7B /* AppDelegate.swift in Sources */,
 				CE3C1DA728CA33FD008A0F7D /* LegacyHelperInfo.swift in Sources */,
+				CEB4A42828D3B184004FA277 /* StateInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

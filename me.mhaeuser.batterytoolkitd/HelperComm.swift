@@ -31,8 +31,14 @@ internal final class BTHelperComm: NSObject, BTHelperCommProtocol {
     }
 
     internal func getState(reply: @escaping (([String: AnyObject]) -> Void)) -> Void {
+        let charging = SMCPowerKit.isChargingEnabled()
+        let power    = SMCPowerKit.isPowerAdapterEnabled()
+        let mode     = BTPowerEvents.chargeMode
+
         let state = [
-            "Adapter": NSNumber(value: SMCPowerKit.isPowerAdapterEnabled())
+            BTStateInfo.Keys.power: NSNumber(value: power),
+            BTStateInfo.Keys.charging: NSNumber(value: charging),
+            BTStateInfo.Keys.chargingMode: NSNumber(value: mode.rawValue)
         ]
         reply(state)
     }
