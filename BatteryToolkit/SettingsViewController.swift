@@ -29,7 +29,6 @@ final class SettingsViewController: NSViewController {
                         value: BTSettingsInfo.Bounds.minChargeMin
                         )
                 }
-                
             } else if value > 100 {
                 DispatchQueue.main.async {
                     self.minChargeNum = NSNumber(value: 100)
@@ -102,7 +101,7 @@ final class SettingsViewController: NSViewController {
             BTSettingsInfo.Keys.adapterSleep: NSNumber(
                 value: self.adapterSleepButton.state == NSControl.StateValue.off
                 )
-            ]
+        ]
         BTHelperXPCClient.setSettings(settings: settings)
         self.view.window?.windowController?.close()
     }

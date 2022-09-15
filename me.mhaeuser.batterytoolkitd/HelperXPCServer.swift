@@ -66,12 +66,12 @@ internal struct BTHelperXPCServer {
         // runtime:              Enforce Hardened Runtime.
         //
         let reqFlags: SecCodeSignatureFlags = [
-                .forceHard, .forceKill,
-                .restrict,
-                .enforcement,
-                .libraryValidation,
-                .runtime
-            ]
+            .forceHard, .forceKill,
+            .restrict,
+            .enforcement,
+            .libraryValidation,
+            .runtime
+        ]
         if (!codeFlags.contains(reqFlags)) {
             os_log("Signature flags constraints violated: \(signingFlags)")
             return false

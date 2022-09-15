@@ -1,7 +1,7 @@
 import Foundation
 
 @objc public protocol BTHelperCommProtocol {
-    func queryPowerAdapterEnabled(reply: @escaping ((Bool) -> Void)) -> Void
+    func getState(reply: @escaping (([String: AnyObject]) -> Void)) -> Void
     func enablePowerAdapter() -> Void
     func disablePowerAdapter() -> Void
     func chargeToMaximum() -> Void

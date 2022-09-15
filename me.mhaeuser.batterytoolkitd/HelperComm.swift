@@ -6,10 +6,13 @@ internal final class BTHelperComm: NSObject, BTHelperCommProtocol {
     private static let helperFiles = [
         BTLegacyHelperInfo.legacyHelperExec,
         BTLegacyHelperInfo.legacyHelperPlist
-        ]
+    ]
 
-    internal func queryPowerAdapterEnabled(reply: @escaping ((Bool) -> Void)) -> Void {
-        reply(SMCPowerKit.isPowerAdapterEnabled())
+    internal func getState(reply: @escaping (([String: AnyObject]) -> Void)) -> Void {
+        let state = [
+            "Adapter": NSNumber(value: SMCPowerKit.isPowerAdapterEnabled())
+        ]
+        reply(state)
     }
     
     internal func enablePowerAdapter() -> Void {

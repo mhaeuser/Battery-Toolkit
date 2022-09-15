@@ -64,9 +64,9 @@ internal struct BTHelperXPCClient {
         lConnect.invalidate()
     }
     
-    internal static func queryPowerAdapterEnabled(reply: @escaping ((Bool) -> Void)) -> Void {
+    internal static func getState(reply: @escaping (([String: AnyObject]) -> Void)) -> Void {
         BTHelperXPCClient.connectDaemon()
-        BTHelperXPCClient.helper?.queryPowerAdapterEnabled(reply: reply)
+        BTHelperXPCClient.helper?.getState(reply: reply)
     }
 
     internal static func disablePowerAdapter() -> Void {
