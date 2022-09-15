@@ -41,7 +41,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SDG-Je-dsF">
-                                <rect key="frame" x="18" y="138" width="378" height="28"/>
+                                <rect key="frame" x="18" y="138" width="365" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="100" doubleValue="70" tickMarkPosition="above" sliderType="linear" id="whK-Bc-jaa"/>
                                 <connections>
@@ -49,7 +49,7 @@
                                 </connections>
                             </slider>
                             <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xty-jA-1OE">
-                                <rect key="frame" x="18" y="85" width="378" height="28"/>
+                                <rect key="frame" x="18" y="85" width="365" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="100" doubleValue="80" tickMarkPosition="above" sliderType="linear" id="JV9-YM-QNo"/>
                                 <connections>
@@ -108,7 +108,7 @@ DQ
                                 </connections>
                             </button>
                             <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uFA-ER-wv7">
-                                <rect key="frame" x="402" y="143" width="31" height="21"/>
+                                <rect key="frame" x="389" y="143" width="31" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="70" drawsBackground="YES" id="elh-5S-Rel">
                                     <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="2zy-eb-0h8"/>
@@ -121,7 +121,7 @@ DQ
                                 </connections>
                             </textField>
                             <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bax-qM-FEc">
-                                <rect key="frame" x="402" y="90" width="31" height="21"/>
+                                <rect key="frame" x="389" y="90" width="31" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="80" drawsBackground="YES" id="GKW-RL-L6O">
                                     <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="mBa-Eo-6ty"/>
@@ -165,6 +165,22 @@ Gw
                                     <action selector="cancelButtonAction:" target="qK6-EM-YZH" id="F6p-jt-Y8b"/>
                                 </connections>
                             </button>
+                            <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qn3-Ik-Lg8">
+                                <rect key="frame" x="417" y="139" width="19" height="28"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <stepperCell key="cell" continuous="YES" alignment="left" maxValue="100" id="UPW-Ne-FAB"/>
+                                <connections>
+                                    <binding destination="qK6-EM-YZH" name="value" keyPath="self.minChargeNum" id="sos-Wr-Rcf"/>
+                                </connections>
+                            </stepper>
+                            <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hlb-sP-3Ne">
+                                <rect key="frame" x="417" y="87" width="19" height="28"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <stepperCell key="cell" continuous="YES" alignment="left" maxValue="100" id="9Dp-2r-guY"/>
+                                <connections>
+                                    <binding destination="qK6-EM-YZH" name="value" keyPath="self.maxChargeNum" id="bGF-la-1FQ"/>
+                                </connections>
+                            </stepper>
                         </subviews>
                     </view>
                     <connections>
