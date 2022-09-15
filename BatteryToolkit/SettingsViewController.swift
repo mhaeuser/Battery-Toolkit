@@ -94,15 +94,15 @@ final class SettingsViewController: NSViewController {
     
     private func initSettingsState() {
         BatteryToolkit.getSettings { (settings) -> Void in
-            let minChargeNum   = settings[BTSettingsInfo.Keys.minCharge] as? NSNumber
-            let maxChargeNum   = settings[BTSettingsInfo.Keys.maxCharge] as? NSNumber
-            let adapterInfoNum = settings[BTSettingsInfo.Keys.adapterSleep] as? NSNumber
-
-            let minCharge    = minChargeNum?.intValue    ?? Int(BTSettingsInfo.Defaults.minCharge)
-            let maxCharge    = maxChargeNum?.intValue    ?? Int(BTSettingsInfo.Defaults.maxCharge)
-            let adapterSleep = adapterInfoNum?.boolValue ?? BTSettingsInfo.Defaults.adapterSleep
-
             DispatchQueue.main.async {
+                let minChargeNum   = settings[BTSettingsInfo.Keys.minCharge] as? NSNumber
+                let maxChargeNum   = settings[BTSettingsInfo.Keys.maxCharge] as? NSNumber
+                let adapterInfoNum = settings[BTSettingsInfo.Keys.adapterSleep] as? NSNumber
+
+                let minCharge    = minChargeNum?.intValue    ?? Int(BTSettingsInfo.Defaults.minCharge)
+                let maxCharge    = maxChargeNum?.intValue    ?? Int(BTSettingsInfo.Defaults.maxCharge)
+                let adapterSleep = adapterInfoNum?.boolValue ?? BTSettingsInfo.Defaults.adapterSleep
+
                 self.setMinCharge(value: minCharge)
                 self.setMaxCharge(value: maxCharge)
                 self.setAdapterSleep(value: adapterSleep)
