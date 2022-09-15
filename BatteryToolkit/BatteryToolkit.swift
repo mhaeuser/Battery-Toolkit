@@ -30,6 +30,10 @@ internal struct BatteryToolkit {
         BTHelperXPCClient.chargeToFull()
     }
 
+    internal static func getState(reply: @escaping (([String: AnyObject]) -> Void)) {
+        BTHelperXPCClient.getState(reply: reply)
+    }
+
     internal static func getSettings(reply: @escaping (([String: AnyObject]) -> Void)) {
         BTHelperXPCClient.getSettings(reply: reply)
     }

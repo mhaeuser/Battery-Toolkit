@@ -63,6 +63,8 @@
 		CEB4A42828D3B184004FA277 /* StateInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4A42728D3B184004FA277 /* StateInfo.swift */; };
 		CEB4A42928D3B184004FA277 /* StateInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4A42728D3B184004FA277 /* StateInfo.swift */; };
 		CEB4A42A28D3B184004FA277 /* StateInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4A42728D3B184004FA277 /* StateInfo.swift */; };
+		CEB4A42C28D3B97A004FA277 /* MenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4A42B28D3B97A004FA277 /* MenuDelegate.swift */; };
+		CEB4A42D28D3B97A004FA277 /* MenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4A42B28D3B97A004FA277 /* MenuDelegate.swift */; };
 		CED8DD3928C365790082C02A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CED8DD3828C365790082C02A /* Security.framework */; };
 		CEECE31128BAB12000821A3B /* PowerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEECE31028BAB12000821A3B /* PowerState.swift */; };
 		CEECE32328BB648F00821A3B /* BatteryToolkitXPC.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = CEECE31828BB648F00821A3B /* BatteryToolkitXPC.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -172,6 +174,7 @@
 		CEB4671D2843C87200D7CB01 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		CEB4A42328D39ECE004FA277 /* DaemonManagementStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaemonManagementStatus.swift; sourceTree = "<group>"; };
 		CEB4A42728D3B184004FA277 /* StateInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateInfo.swift; sourceTree = "<group>"; };
+		CEB4A42B28D3B97A004FA277 /* MenuDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDelegate.swift; sourceTree = "<group>"; };
 		CEC321AF284BAA2B009B9A30 /* PowerEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerEvents.swift; sourceTree = "<group>"; };
 		CEC321B1284BBC93009B9A30 /* IOPowerSourcesPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOPowerSourcesPrivate.h; sourceTree = "<group>"; };
 		CED8DD3728C364FA0082C02A /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
@@ -305,6 +308,7 @@
 				CE3C1DA228C9329F008A0F7D /* DaemonManagement.swift */,
 				CE3C1DA428CA2FF5008A0F7D /* AuthorizationService.swift */,
 				CEB4A42328D39ECE004FA277 /* DaemonManagementStatus.swift */,
+				CEB4A42B28D3B97A004FA277 /* MenuDelegate.swift */,
 			);
 			path = BatteryToolkit;
 			sourceTree = "<group>";
@@ -593,6 +597,7 @@
 				CEB4A42A28D3B184004FA277 /* StateInfo.swift in Sources */,
 				CE397470285A22BB002D0EC9 /* BatteryToolkit.swift in Sources */,
 				CE397461285A2193002D0EC9 /* AppDelegate.swift in Sources */,
+				CEB4A42D28D3B97A004FA277 /* MenuDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -614,6 +619,7 @@
 				CE52868628298CA300860C7B /* AppDelegate.swift in Sources */,
 				CE3C1DA728CA33FD008A0F7D /* LegacyHelperInfo.swift in Sources */,
 				CEB4A42828D3B184004FA277 /* StateInfo.swift in Sources */,
+				CEB4A42C28D3B97A004FA277 /* MenuDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

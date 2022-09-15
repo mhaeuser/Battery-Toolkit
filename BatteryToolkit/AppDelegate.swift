@@ -6,9 +6,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var statusBarMenu: NSMenu!
     private var statusBarItem : NSStatusItem!
     
-    @IBOutlet weak var powerAdapterExtraItem: NSMenuItem!
-    @IBOutlet weak var chargingExtraItem: NSMenuItem!
-    
     @IBOutlet weak var disableBackgroundMenuItem: NSMenuItem!
     
     private static let backgroundActivityRequiredStr = "To manage the power state of your Mac, Battery Toolkit needs to run in the background."
@@ -80,22 +77,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     
     func applicationWillTerminate(_ aNotification: Notification) {
         BatteryToolkit.stop()
-    }
-
-    @IBAction private func disablePowerAdapterHandler(sender: NSMenuItem) {
-        BatteryToolkit.disablePowerAdapter()
-    }
-    
-    @IBAction private func enablePowerAdapterHandler(sender: NSMenuItem) {
-        BatteryToolkit.enablePowerAdapter()
-    }
-
-    @IBAction private func chargeToMaximumHandler(sender: NSMenuItem) {
-        BatteryToolkit.chargeToMaximum()
-    }
-
-    @IBAction private func chargeToFullHandler(sender: NSMenuItem) {
-        BatteryToolkit.chargeToFull()
     }
     
     private static func unregisterDaemon() {
