@@ -102,9 +102,11 @@ final class SettingsViewController: NSViewController {
             let maxCharge    = maxChargeNum?.intValue    ?? Int(BTSettingsInfo.Defaults.maxCharge)
             let adapterSleep = adapterInfoNum?.boolValue ?? BTSettingsInfo.Defaults.adapterSleep
 
-            self.setMinCharge(value: minCharge)
-            self.setMaxCharge(value: maxCharge)
-            self.setAdapterSleep(value: adapterSleep)
+            DispatchQueue.main.async {
+                self.setMinCharge(value: minCharge)
+                self.setMaxCharge(value: maxCharge)
+                self.setAdapterSleep(value: adapterSleep)
+            }
         }
     }
     
