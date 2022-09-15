@@ -28,15 +28,8 @@ internal final class BTHelperComm: NSObject, BTHelperCommProtocol {
         BTPowerEvents.chargeToFull()
     }
     
-    internal func setChargeLimits(minCharge: UInt8, maxCharge: UInt8) {
-        BTSettings.setChargeLimits(
-            minCharge: minCharge,
-            maxCharge: maxCharge
-            )
-    }
-    
-    internal func setAdapterSleep(enabled: Bool) {
-        BTSettings.setAdapterSleep(enabled: enabled)
+    internal func setSettings(settings: [String: AnyObject]) -> Void {
+        BTSettings.setSettings(settings: settings)
     }
     
     internal func removeHelperFiles() -> Void {

@@ -6,7 +6,6 @@ import Foundation
     func disablePowerAdapter() -> Void
     func chargeToMaximum() -> Void
     func chargeToFull() -> Void
-    func setChargeLimits(minCharge: UInt8, maxCharge: UInt8)
-    func setAdapterSleep(enabled: Bool)
+    func setSettings(settings: [String: AnyObject]) -> Void
     func removeHelperFiles() -> Void
 }

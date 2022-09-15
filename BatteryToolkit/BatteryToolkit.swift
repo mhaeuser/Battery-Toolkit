@@ -26,15 +26,8 @@ internal struct BatteryToolkit {
         BTHelperXPCClient.chargeToFull()
     }
 
-    internal static func setChargeLimits(minCharge: UInt8, maxCharge: UInt8) {
-        BTHelperXPCClient.setChargeLimits(
-            minCharge: minCharge,
-            maxCharge: maxCharge
-            )
-    }
-    
-    internal static func setAdapterSleep(enabled: Bool) {
-        BTHelperXPCClient.setAdapterSleep(enabled: enabled)
+    internal static func setSettings(settings: [String: AnyObject]) {
+        BTHelperXPCClient.setSettings(settings: settings)
     }
     
     internal static func unregisterDaemon(reply: @escaping ((Bool) -> Void)) {

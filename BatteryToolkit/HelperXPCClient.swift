@@ -89,19 +89,11 @@ internal struct BTHelperXPCClient {
         BTHelperXPCClient.helper?.chargeToFull()
     }
     
-    internal static func setChargeLimits(minCharge: UInt8, maxCharge: UInt8) -> Void {
+    internal static func setSettings(settings: [String: AnyObject]) -> Void {
         BTHelperXPCClient.connectDaemon()
-        BTHelperXPCClient.helper?.setChargeLimits(
-            minCharge: minCharge,
-            maxCharge: maxCharge
-            )
+        BTHelperXPCClient.helper?.setSettings(settings: settings)
     }
-    
-    internal static func setAdapterSleep(enabled: Bool) {
-        BTHelperXPCClient.connectDaemon()
-        BTHelperXPCClient.helper?.setAdapterSleep(enabled: enabled)
-    }
-    
+
     internal static func removeHelperFiles() {
         BTHelperXPCClient.connectDaemon()
         BTHelperXPCClient.helper?.removeHelperFiles()

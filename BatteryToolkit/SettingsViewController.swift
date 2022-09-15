@@ -9,7 +9,7 @@ final class SettingsViewController: NSViewController {
     
     @IBOutlet weak var adapterSleepButton: NSButton!
 
-    private var minChargeVal = BTSettingsInfo.minChargeDefault
+    private var minChargeVal = BTSettingsInfo.Defaults.minCharge
     @objc dynamic var minChargeNum: NSNumber {
         get {
             return NSNumber(value: self.minChargeVal)
@@ -23,10 +23,10 @@ final class SettingsViewController: NSViewController {
             // change the values of the UI controls directly, because this
             // caues the NSSlider to sometimes visually desync with its value.
             //
-            if value < BTSettingsInfo.minChargeMin {
+            if value < BTSettingsInfo.Bounds.minChargeMin {
                 DispatchQueue.main.async {
                     self.minChargeNum = NSNumber(
-                        value: BTSettingsInfo.minChargeMin
+                        value: BTSettingsInfo.Bounds.minChargeMin
                         )
                 }
                 
@@ -46,7 +46,7 @@ final class SettingsViewController: NSViewController {
         }
     }
     
-    private var maxChargeVal = BTSettingsInfo.maxChargeDefault
+    private var maxChargeVal = BTSettingsInfo.Defaults.maxCharge
     @objc dynamic var maxChargeNum: NSNumber {
         get {
             return NSNumber(value: self.maxChargeVal)
@@ -57,10 +57,10 @@ final class SettingsViewController: NSViewController {
             //
             // See minChargeNum for an explanation.
             //
-            if value < BTSettingsInfo.maxChargeMin {
+            if value < BTSettingsInfo.Bounds.maxChargeMin {
                 DispatchQueue.main.async {
                     self.maxChargeNum = NSNumber(
-                        value: BTSettingsInfo.maxChargeMin
+                        value: BTSettingsInfo.Bounds.maxChargeMin
                         )
                 }
             } else if value > 100 {
@@ -80,14 +80,14 @@ final class SettingsViewController: NSViewController {
     }
     
     private func initAdapterSleepState() {
-        self.adapterSleepButton.state = BTSettingsInfo.adapterSleep ?
+        self.adapterSleepButton.state = BTSettingsInfo.Defaults.adapterSleep ?
             NSControl.StateValue.off :
             NSControl.StateValue.on
     }
     
     @IBAction func restoreDefaultsButtonAction(_ sender: NSButton) {
-        self.minChargeNum = NSNumber(value: BTSettingsInfo.minChargeDefault)
-        self.maxChargeNum = NSNumber(value: BTSettingsInfo.maxChargeDefault)
+        self.minChargeNum = NSNumber(value: BTSettingsInfo.Defaults.minCharge)
+        self.maxChargeNum = NSNumber(value: BTSettingsInfo.Defaults.maxCharge)
         self.initAdapterSleepState()
     }
     
@@ -96,13 +96,14 @@ final class SettingsViewController: NSViewController {
     }
     
     @IBAction func okButtonAction(_ sender: NSButton) {
-        BTHelperXPCClient.setChargeLimits(
-            minCharge: self.minChargeVal,
-            maxCharge: self.maxChargeVal
-            )
-        BTHelperXPCClient.setAdapterSleep(
-            enabled: self.adapterSleepButton.state == NSControl.StateValue.off
-            )
+        let settings: [String : AnyObject] = [
+            BTSettingsInfo.Keys.minCharge: self.minChargeNum,
+            BTSettingsInfo.Keys.maxCharge: self.maxChargeNum,
+            BTSettingsInfo.Keys.adapterSleep: NSNumber(
+                value: self.adapterSleepButton.state == NSControl.StateValue.off
+                )
+            ]
+        BTHelperXPCClient.setSettings(settings: settings)
         self.view.window?.windowController?.close()
     }
     
