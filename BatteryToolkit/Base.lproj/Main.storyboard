@@ -181,6 +181,8 @@
                         <outlet property="infoRequestedChargingToFullItem" destination="A7t-cy-HPp" id="QO7-Nx-W0k"/>
                         <outlet property="infoRequestedChargingToMaximumItem" destination="dq4-4h-B2m" id="6B1-31-zzF"/>
                         <outlet property="infoUnknownStateItem" destination="ASg-q2-OT9" id="xwu-6H-eMl"/>
+                        <outlet property="preferencesItem" destination="krX-UJ-eQy" id="AZo-q5-yH9"/>
+                        <outlet property="settingsItem" destination="78l-zk-UHb" id="HhR-Lu-T4X"/>
                     </connections>
                 </customObject>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
@@ -244,6 +246,11 @@
                         <menuItem title="Settings..." keyEquivalent="," id="78l-zk-UHb">
                             <connections>
                                 <segue destination="Lf9-ud-Dh4" kind="show" id="UU8-oN-xdh"/>
+                            </connections>
+                        </menuItem>
+                        <menuItem title="Preferences..." hidden="YES" keyEquivalent="," id="krX-UJ-eQy">
+                            <connections>
+                                <segue destination="Lf9-ud-Dh4" kind="show" id="D4m-rb-f3E"/>
                             </connections>
                         </menuItem>
                         <menuItem isSeparatorItem="YES" id="9fM-fx-Sxj"/>

@@ -9,7 +9,7 @@
         <!--SettingsWindowController-->
         <scene sceneID="SPA-xe-0ME">
             <objects>
-                <windowController storyboardIdentifier="SettingsWindowController" showSeguePresentationStyle="single" id="Svp-Rd-cF3" userLabel="SettingsWindowController" sceneMemberID="viewController">
+                <windowController storyboardIdentifier="SettingsWindowController" showSeguePresentationStyle="single" id="Svp-Rd-cF3" userLabel="SettingsWindowController" customClass="SettingsWindowController" customModule="BatteryToolkitStandalone" customModuleProvider="target" sceneMemberID="viewController">
                     <window key="window" title="Battery Toolkit Settings" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="utilityWindow" tabbingMode="disallowed" titlebarAppearsTransparent="YES" id="zbj-Ah-uH1">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
                         <windowCollectionBehavior key="collectionBehavior" fullScreenNone="YES" fullScreenDisallowsTiling="YES"/>

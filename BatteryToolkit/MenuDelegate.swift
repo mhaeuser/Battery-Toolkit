@@ -16,6 +16,9 @@ final class MenuDelegate: NSObject, NSMenuDelegate {
     @IBOutlet weak var infoRequestedChargingToFullItem: NSMenuItem!
     @IBOutlet weak var infoNotChargingUnknownModeItem: NSMenuItem!
 
+    @IBOutlet weak var settingsItem: NSMenuItem!
+    @IBOutlet weak var preferencesItem: NSMenuItem!
+
     func menuWillOpen(_ menu: NSMenu) {
         BatteryToolkit.getState { (state) -> Void in
             DispatchQueue.main.async {
@@ -106,6 +109,11 @@ final class MenuDelegate: NSObject, NSMenuDelegate {
                     }
                 }
             }
+        }
+
+        if #unavailable(macOS 13.0) {
+            self.settingsItem.isHidden    = true
+            self.preferencesItem.isHidden = false
         }
     }
 
