@@ -46,7 +46,7 @@ internal struct BTDaemonManagement {
 
             os_log("Legacy helper registering result: \(success), error: \(String(describing: error))")
             
-            let status = AuthorizationFree(auth, [])
+            let status = AuthorizationFree(auth, [.destroyRights])
             if status != errSecSuccess {
                 os_log("Freeing authorization error: \(status)")
             }
@@ -86,7 +86,7 @@ internal struct BTDaemonManagement {
             
             os_log("Legacy helper unregistering result: \(success), error: \(String(describing: error))")
             
-            let status = AuthorizationFree(auth, [])
+            let status = AuthorizationFree(auth, [.destroyRights])
             if status != errSecSuccess {
                 os_log("Freeing authorization error: \(status)")
             }
