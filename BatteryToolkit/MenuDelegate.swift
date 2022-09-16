@@ -16,6 +16,18 @@ final class MenuDelegate: NSObject, NSMenuDelegate {
     @IBOutlet weak var infoRequestedChargingToFullItem: NSMenuItem!
     @IBOutlet weak var infoNotChargingUnknownModeItem: NSMenuItem!
 
+    @IBOutlet weak var disablePowerAdapterItem: NSMenuItem!
+    @IBOutlet weak var enablePowerAdapterItem: NSMenuItem!
+
+    @IBOutlet weak var chargeToFullNowItem: NSMenuItem!
+    @IBOutlet weak var chargeToMaximumNowItem: NSMenuItem!
+    @IBOutlet weak var disableChargingItem: NSMenuItem!
+
+    @IBOutlet weak var requestChargingToFullItem: NSMenuItem!
+    @IBOutlet weak var requestChargingToMaximumItem: NSMenuItem!
+    @IBOutlet weak var cancelChargingRequestItem: NSMenuItem!
+    @IBOutlet weak var commandsSeparatorItem: NSMenuItem!
+
     @IBOutlet weak var settingsItem: NSMenuItem!
     @IBOutlet weak var preferencesItem: NSMenuItem!
 
@@ -39,17 +51,35 @@ final class MenuDelegate: NSObject, NSMenuDelegate {
                     self.infoRequestedChargingToFullItem.isHidden    = true
                     self.infoNotChargingUnknownModeItem.isHidden     = true
                     self.infoUnknownStateItem.isHidden               = false
+
+                    self.disablePowerAdapterItem.isHidden      = true
+                    self.enablePowerAdapterItem.isHidden       = true
+                    self.chargeToFullNowItem.isHidden          = true
+                    self.chargeToMaximumNowItem.isHidden       = true
+                    self.requestChargingToFullItem.isHidden    = true
+                    self.requestChargingToMaximumItem.isHidden = true
+                    self.disableChargingItem.isHidden          = true
+                    self.cancelChargingRequestItem.isHidden    = true
+                    self.commandsSeparatorItem.isHidden        = true
+
                     return
                 }
 
-                self.infoUnknownStateItem.isHidden = true
+                self.infoUnknownStateItem.isHidden  = true
+                self.commandsSeparatorItem.isHidden = false
 
                 if power {
                     self.infoPowerAdapterDisabledItem.isHidden = true
                     self.infoPowerAdapterEnabledItem.isHidden  = false
+
+                    self.enablePowerAdapterItem.isHidden  = true
+                    self.disablePowerAdapterItem.isHidden = false
                 } else {
                     self.infoPowerAdapterEnabledItem.isHidden  = true
                     self.infoPowerAdapterDisabledItem.isHidden = false
+
+                    self.disablePowerAdapterItem.isHidden = true
+                    self.enablePowerAdapterItem.isHidden  = false
                 }
 
                 if charging {
@@ -58,6 +88,11 @@ final class MenuDelegate: NSObject, NSMenuDelegate {
                     self.infoRequestedChargingToFullItem.isHidden    = true
                     self.infoNotChargingUnknownModeItem.isHidden     = true
 
+                    self.requestChargingToFullItem.isHidden    = true
+                    self.requestChargingToMaximumItem.isHidden = true
+                    self.cancelChargingRequestItem.isHidden    = true
+                    self.disableChargingItem.isHidden          = false
+
                     switch chargingMode {
                         case Int(BTStateInfo.ChargingMode.standard.rawValue),
                             Int(BTStateInfo.ChargingMode.toMaximum.rawValue):
@@ -65,21 +100,33 @@ final class MenuDelegate: NSObject, NSMenuDelegate {
                             self.infoChargingUnknownModeItem.isHidden = true
                             self.infoChargingToMaximumItem.isHidden   = false
 
+                            self.chargeToMaximumNowItem.isHidden = true
+                            self.chargeToFullNowItem.isHidden    = false
+
                         case Int(BTStateInfo.ChargingMode.toFull.rawValue):
                             self.infoChargingToMaximumItem.isHidden   = true
                             self.infoChargingUnknownModeItem.isHidden = true
                             self.infoChargingToFullItem.isHidden      = false
+
+                            self.chargeToFullNowItem.isHidden    = true
+                            self.chargeToMaximumNowItem.isHidden = false
 
                         default:
                             os_log("Unknown charging mode: \(chargingMode)")
                             self.infoChargingToMaximumItem.isHidden   = true
                             self.infoChargingToFullItem.isHidden      = true
                             self.infoChargingUnknownModeItem.isHidden = false
+
+                            self.chargeToFullNowItem.isHidden    = false
+                            self.chargeToMaximumNowItem.isHidden = false
                     }
                 } else {
                     self.infoChargingToMaximumItem.isHidden   = true
                     self.infoChargingToFullItem.isHidden      = true
                     self.infoChargingUnknownModeItem.isHidden = true
+
+                    self.chargeToFullNowItem.isHidden    = true
+                    self.chargeToMaximumNowItem.isHidden = true
 
                     switch chargingMode {
                         case Int(BTStateInfo.ChargingMode.standard.rawValue):
@@ -88,11 +135,19 @@ final class MenuDelegate: NSObject, NSMenuDelegate {
                             self.infoNotChargingUnknownModeItem.isHidden     = true
                             self.infoNotChargingItem.isHidden                = false
 
+                            self.cancelChargingRequestItem.isHidden    = true
+                            self.requestChargingToFullItem.isHidden    = false
+                            self.requestChargingToMaximumItem.isHidden = false
+
                         case Int(BTStateInfo.ChargingMode.toMaximum.rawValue):
                             self.infoNotChargingItem.isHidden                = true
                             self.infoRequestedChargingToFullItem.isHidden    = true
                             self.infoNotChargingUnknownModeItem.isHidden     = true
                             self.infoRequestedChargingToMaximumItem.isHidden = false
+
+                            self.requestChargingToMaximumItem.isHidden = true
+                            self.requestChargingToFullItem.isHidden    = false
+                            self.cancelChargingRequestItem.isHidden    = false
 
                         case Int(BTStateInfo.ChargingMode.toFull.rawValue):
                             self.infoNotChargingItem.isHidden                = true
@@ -100,12 +155,20 @@ final class MenuDelegate: NSObject, NSMenuDelegate {
                             self.infoNotChargingUnknownModeItem.isHidden     = true
                             self.infoRequestedChargingToFullItem.isHidden    = false
 
+                            self.requestChargingToFullItem.isHidden    = true
+                            self.requestChargingToMaximumItem.isHidden = false
+                            self.cancelChargingRequestItem.isHidden    = false
+
                         default:
                             os_log("Unknown charging mode: \(chargingMode)")
                             self.infoNotChargingItem.isHidden                = true
                             self.infoRequestedChargingToMaximumItem.isHidden = true
                             self.infoRequestedChargingToFullItem.isHidden    = true
                             self.infoNotChargingUnknownModeItem.isHidden     = false
+
+                            self.requestChargingToFullItem.isHidden    = false
+                            self.requestChargingToMaximumItem.isHidden = false
+                            self.cancelChargingRequestItem.isHidden    = false
                     }
                 }
             }
@@ -131,5 +194,9 @@ final class MenuDelegate: NSObject, NSMenuDelegate {
 
     @IBAction private func chargeToFullHandler(sender: NSMenuItem) {
         BatteryToolkit.chargeToFull()
+    }
+
+    @IBAction private func disableChargingHandler(sender: NSMenuItem) {
+        BatteryToolkit.disableCharging()
     }
 }

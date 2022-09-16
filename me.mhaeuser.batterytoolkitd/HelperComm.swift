@@ -10,17 +10,20 @@ internal final class BTHelperComm: NSObject, BTHelperCommProtocol {
 
     internal func execute(command: UInt8) -> Void {
         switch command {
+            case BTHelperCommProtocolCommands.disablePowerAdapter.rawValue:
+                BTPowerState.disablePowerAdapter()
+
+            case BTHelperCommProtocolCommands.enablePowerAdapter.rawValue:
+                BTPowerState.enablePowerAdapter()
+
             case BTHelperCommProtocolCommands.chargeToFull.rawValue:
                 BTPowerEvents.chargeToFull()
 
             case BTHelperCommProtocolCommands.chargeToMaximum.rawValue:
                 BTPowerEvents.chargeToMaximum()
 
-            case BTHelperCommProtocolCommands.disablePowerAdapter.rawValue:
-                BTPowerState.disablePowerAdapter()
-
-            case BTHelperCommProtocolCommands.enablePowerAdapter.rawValue:
-                BTPowerState.enablePowerAdapter()
+            case BTHelperCommProtocolCommands.disableCharging.rawValue:
+                BTPowerEvents.disableCharging()
 
             case BTHelperCommProtocolCommands.removeHelperFiles.rawValue:
                 BTHelperComm.removeHelperFiles()

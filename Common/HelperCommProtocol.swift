@@ -1,10 +1,11 @@
 import Foundation
 
 enum BTHelperCommProtocolCommands: UInt8 {
-    case chargeToFull
-    case chargeToMaximum
     case disablePowerAdapter
     case enablePowerAdapter
+    case chargeToFull
+    case chargeToMaximum
+    case disableCharging
     case removeHelperFiles
 }
 

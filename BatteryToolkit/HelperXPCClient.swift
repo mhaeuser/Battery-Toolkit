@@ -97,6 +97,13 @@ internal struct BTHelperXPCClient {
             )
     }
 
+    internal static func disableCharging() -> Void {
+        BTHelperXPCClient.connectDaemon()
+        BTHelperXPCClient.helper?.execute(
+            command: BTHelperCommProtocolCommands.disableCharging.rawValue
+        )
+    }
+
     internal static func getSettings(reply: @escaping (([String: AnyObject]) -> Void)) {
         BTHelperXPCClient.connectDaemon()
         BTHelperXPCClient.helper?.getSettings(reply: reply)

@@ -238,6 +238,11 @@ internal struct BTPowerEvents {
         BTPowerEvents.chargeMode = BTStateInfo.ChargingMode.toMaximum
         BTPowerEvents.enableBelowThresholdMode(threshold: BTSettings.maxCharge)
     }
+
+    internal static func disableCharging() {
+        BTPowerEvents.chargeMode = BTStateInfo.ChargingMode.standard
+        BTPowerState.disableCharging()
+    }
     
     internal static func chargeToFull() {
         BTPowerEvents.chargeMode = BTStateInfo.ChargingMode.toFull
