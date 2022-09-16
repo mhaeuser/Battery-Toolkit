@@ -1,3 +1,8 @@
+/*@file
+  Copyright (C) 2022 Marvin Häuser. All rights reserved.
+  SPDX-License-Identifier: BSD-3-Clause
+*/
+
 @import Foundation;
 
 //
@@ -6,7 +11,6 @@
 
 @interface NSXPCConnection (AuditToken)
 
-// This property exists, but it's private. Make it available:
 @property (nonatomic, readonly) audit_token_t auditToken;
 
 @end
