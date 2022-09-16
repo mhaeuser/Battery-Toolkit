@@ -248,4 +248,22 @@ internal struct BTPowerEvents {
         BTPowerEvents.chargeMode = BTStateInfo.ChargingMode.toFull
         BTPowerEvents.enableBelowThresholdMode(threshold: 100)
     }
+
+    internal static func getChargingProgress() -> BTStateInfo.ChargingProgress {
+        var percent: Int32 = 100
+        let result = IOPSGetPercentRemaining(&percent, nil, nil)
+        if result != kIOReturnSuccess {
+            return BTStateInfo.ChargingProgress.full;
+        }
+
+        if percent < BTSettings.maxCharge {
+            return BTStateInfo.ChargingProgress.belowMax
+        }
+
+        if percent < 100 {
+            return BTStateInfo.ChargingProgress.belowFull
+        }
+
+        return BTStateInfo.ChargingProgress.full
+    }
 }
