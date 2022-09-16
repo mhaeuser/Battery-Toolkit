@@ -1,7 +1,7 @@
 import Cocoa
 import os.log
 
-final class MenuDelegate: NSObject, NSMenuDelegate {
+final class MenuBarExtraMenuDelegate: NSObject, NSMenuDelegate {
     @IBOutlet weak var infoUnknownStateItem: NSMenuItem!
 
     @IBOutlet weak var infoPowerAdapterEnabledItem: NSMenuItem!

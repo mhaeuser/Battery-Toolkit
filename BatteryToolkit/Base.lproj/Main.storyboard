@@ -166,10 +166,10 @@
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="BatteryToolkitStandalone" customModuleProvider="target">
                     <connections>
                         <outlet property="disableBackgroundMenuItem" destination="oaJ-hp-PXw" id="CAR-aQ-V7Y"/>
-                        <outlet property="statusBarMenu" destination="95L-Hg-MpQ" id="qx9-JK-hzr"/>
+                        <outlet property="menuBarExtraMenu" destination="95L-Hg-MpQ" id="qx9-JK-hzr"/>
                     </connections>
                 </customObject>
-                <customObject id="Yoz-Et-jXW" userLabel="Menu Delegate" customClass="MenuDelegate" customModule="BatteryToolkitStandalone" customModuleProvider="target">
+                <customObject id="Yoz-Et-jXW" userLabel="Menu Bar Extra Menu Delegate" customClass="MenuBarExtraMenuDelegate" customModule="BatteryToolkitStandalone" customModuleProvider="target">
                     <connections>
                         <outlet property="cancelChargingRequestItem" destination="ULK-Wm-406" id="gUt-eR-btZ"/>
                         <outlet property="chargeToFullNowItem" destination="llC-Rh-DUh" id="RH6-GM-Smb"/>

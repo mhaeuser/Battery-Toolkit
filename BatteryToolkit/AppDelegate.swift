@@ -3,8 +3,8 @@ import os.log
 
 @main
 final class AppDelegate: NSObject, NSApplicationDelegate {
-    @IBOutlet weak var statusBarMenu: NSMenu!
-    private var statusBarItem : NSStatusItem!
+    private var menuBarExtraItem: NSStatusItem!
+    @IBOutlet weak var menuBarExtraMenu: NSMenu!
     
     @IBOutlet weak var disableBackgroundMenuItem: NSMenuItem!
     
@@ -68,11 +68,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         AppDelegate.startDaemon()
 
-        self.statusBarItem = NSStatusBar.system.statusItem(
+        self.menuBarExtraItem = NSStatusBar.system.statusItem(
             withLength: NSStatusItem.squareLength
             )
-        self.statusBarItem.button?.image = NSImage(named: NSImage.Name("StatusItemIcon"))
-        self.statusBarItem.menu = self.statusBarMenu
+        self.menuBarExtraItem.button?.image = NSImage(named: NSImage.Name("StatusItemIcon"))
+        self.menuBarExtraItem.menu = self.menuBarExtraMenu
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {
