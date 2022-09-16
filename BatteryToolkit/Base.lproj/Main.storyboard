@@ -171,18 +171,50 @@
                 </customObject>
                 <customObject id="Yoz-Et-jXW" userLabel="Menu Delegate" customClass="MenuDelegate" customModule="BatteryToolkitStandalone" customModuleProvider="target">
                     <connections>
-                        <outlet property="chargingExtraItem" destination="nWm-0d-xw6" id="UYa-eB-sfN"/>
-                        <outlet property="powerAdapterExtraItem" destination="SUV-eg-AcA" id="94e-ZH-itc"/>
+                        <outlet property="infoChargingToFullItem" destination="F8E-0n-LBJ" id="mor-ef-cIF"/>
+                        <outlet property="infoChargingToMaximumItem" destination="nWm-0d-xw6" id="8gP-z0-yth"/>
+                        <outlet property="infoChargingUnknownModeItem" destination="tXk-Dr-ZCO" id="993-kf-WOn"/>
+                        <outlet property="infoNotChargingItem" destination="QRX-If-BNP" id="pws-tg-vIR"/>
+                        <outlet property="infoNotChargingUnknownModeItem" destination="K5N-g3-QcY" id="W5T-N2-cV8"/>
+                        <outlet property="infoPowerAdapterDisabledItem" destination="PTV-ys-cbR" id="x1b-VP-jsO"/>
+                        <outlet property="infoPowerAdapterEnabledItem" destination="SUV-eg-AcA" id="aF7-Cc-TXn"/>
+                        <outlet property="infoRequestedChargingToFullItem" destination="A7t-cy-HPp" id="QO7-Nx-W0k"/>
+                        <outlet property="infoRequestedChargingToMaximumItem" destination="dq4-4h-B2m" id="6B1-31-zzF"/>
+                        <outlet property="infoUnknownStateItem" destination="ASg-q2-OT9" id="xwu-6H-eMl"/>
                     </connections>
                 </customObject>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <menu id="95L-Hg-MpQ" userLabel="MenuBarMenu">
                     <items>
-                        <menuItem title="Power Adapter: Enabled" enabled="NO" id="SUV-eg-AcA">
+                        <menuItem title="Unknown State" enabled="NO" id="ASg-q2-OT9">
                             <modifierMask key="keyEquivalentModifierMask"/>
                         </menuItem>
-                        <menuItem title="Charging To Maximum" enabled="NO" id="nWm-0d-xw6">
+                        <menuItem title="Power Adapter: Enabled" hidden="YES" enabled="NO" id="SUV-eg-AcA">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                        </menuItem>
+                        <menuItem title="Power Adapter: Disabled" hidden="YES" enabled="NO" id="PTV-ys-cbR">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                        </menuItem>
+                        <menuItem title="Charging To Maximum" hidden="YES" enabled="NO" id="nWm-0d-xw6">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                        </menuItem>
+                        <menuItem title="Charging To Full" hidden="YES" enabled="NO" id="F8E-0n-LBJ">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                        </menuItem>
+                        <menuItem title="Charging (Unknown Mode)" hidden="YES" enabled="NO" id="tXk-Dr-ZCO">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                        </menuItem>
+                        <menuItem title="Not Charging" hidden="YES" enabled="NO" id="QRX-If-BNP">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                        </menuItem>
+                        <menuItem title="Requested Charging To Maximum" hidden="YES" enabled="NO" id="dq4-4h-B2m">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                        </menuItem>
+                        <menuItem title="Requested Charging To Full" hidden="YES" enabled="NO" id="A7t-cy-HPp">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                        </menuItem>
+                        <menuItem title="Not Charging (Unknown Mode)" hidden="YES" enabled="NO" id="K5N-g3-QcY">
                             <modifierMask key="keyEquivalentModifierMask"/>
                         </menuItem>
                         <menuItem isSeparatorItem="YES" id="VJd-te-iRz"/>
