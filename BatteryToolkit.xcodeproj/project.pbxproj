@@ -33,6 +33,9 @@
 		CE3C1DA928CA3702008A0F7D /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE30CB9E28C4865C001E2AC6 /* Settings.storyboard */; };
 		CE3E9FE128CBA34400642CBB /* me.mhaeuser.batterytoolkitlegacyd in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3C1DAF28CBA26E008A0F7D /* me.mhaeuser.batterytoolkitlegacyd */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		CE3E9FE228CBBE5700642CBB /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6B75FF28BC1995008DF170 /* ServiceManagement.framework */; };
+		CE50557128D65B48000E4387 /* XPCValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE50557028D65B48000E4387 /* XPCValidation.swift */; };
+		CE50557228D65B48000E4387 /* XPCValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE50557028D65B48000E4387 /* XPCValidation.swift */; };
+		CE50557328D65C6D000E4387 /* BTPreprocessor.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE387BD28A836AA00C2007C /* BTPreprocessor.m */; };
 		CE52867B28298B6E00860C7B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE52867A28298B6E00860C7B /* Assets.xcassets */; };
 		CE52868628298CA300860C7B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE52868528298CA300860C7B /* AppDelegate.swift */; };
 		CE6B75F928BC18EA008DF170 /* HelperCommProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA80FDA285A57030064ADEA /* HelperCommProtocol.swift */; };
@@ -155,6 +158,7 @@
 		CE3C1DA428CA2FF5008A0F7D /* AuthorizationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationService.swift; sourceTree = "<group>"; };
 		CE3C1DA628CA33FD008A0F7D /* LegacyHelperInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyHelperInfo.swift; sourceTree = "<group>"; };
 		CE3C1DAF28CBA26E008A0F7D /* me.mhaeuser.batterytoolkitlegacyd */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = me.mhaeuser.batterytoolkitlegacyd; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE50557028D65B48000E4387 /* XPCValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XPCValidation.swift; sourceTree = "<group>"; };
 		CE52867A28298B6E00860C7B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CE52867F28298B6E00860C7B /* BatteryToolkit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BatteryToolkit.entitlements; sourceTree = "<group>"; };
 		CE52868528298CA300860C7B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -332,6 +336,7 @@
 				CE0DB56228BEB4E600B8FC4C /* SettingsInfo.swift */,
 				CE3C1DA628CA33FD008A0F7D /* LegacyHelperInfo.swift */,
 				CEB4A42728D3B184004FA277 /* StateInfo.swift */,
+				CE50557028D65B48000E4387 /* XPCValidation.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -451,7 +456,6 @@
 			buildPhases = (
 				CEECE31428BB648F00821A3B /* Sources */,
 				CEECE31528BB648F00821A3B /* Frameworks */,
-				CEECE31628BB648F00821A3B /* Resources */,
 			);
 			buildRules = (
 			);
@@ -529,13 +533,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CEECE31628BB648F00821A3B /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -568,6 +565,7 @@
 				CE7F623428B95A7E00EF58F9 /* BTPreprocessor.m in Sources */,
 				CEA80FD2285A28230064ADEA /* Settings.swift in Sources */,
 				CEB4A42928D3B184004FA277 /* StateInfo.swift in Sources */,
+				CE50557128D65B48000E4387 /* XPCValidation.swift in Sources */,
 				CE2B96C028A7E2BB00FE3DDB /* SleepKit.swift in Sources */,
 				CEA80FD0285A27FB0064ADEA /* PowerEvents.swift in Sources */,
 				CE3C1DA828CA33FD008A0F7D /* LegacyHelperInfo.swift in Sources */,
@@ -631,9 +629,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE50557328D65C6D000E4387 /* BTPreprocessor.m in Sources */,
 				CEECE33128BB742500821A3B /* ServiceCommProtocol.swift in Sources */,
 				CE6B760928BC1D15008DF170 /* ServiceXPCServer.swift in Sources */,
 				CEECE32828BB652400821A3B /* main.swift in Sources */,
+				CE50557228D65B48000E4387 /* XPCValidation.swift in Sources */,
 				CEECE33328BB745B00821A3B /* ServiceComm.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
