@@ -184,7 +184,6 @@
 		CED8DD3828C365790082C02A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		CEE387BD28A836AA00C2007C /* BTPreprocessor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BTPreprocessor.m; sourceTree = "<group>"; };
 		CEE95015285BC3EF00FF60E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		CEE95016285BCBE200FF60E0 /* me.mhaeuser.batterytoolkitd.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = me.mhaeuser.batterytoolkitd.entitlements; sourceTree = "<group>"; };
 		CEECE31028BAB12000821A3B /* PowerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerState.swift; sourceTree = "<group>"; };
 		CEECE31828BB648F00821A3B /* BatteryToolkitXPC.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = BatteryToolkitXPC.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEECE32028BB648F00821A3B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -239,7 +238,6 @@
 				CEECE31028BAB12000821A3B /* PowerState.swift */,
 				CE3A8F6C284D056D00A9E373 /* Settings.swift */,
 				CEC321AF284BAA2B009B9A30 /* PowerEvents.swift */,
-				CEE95016285BCBE200FF60E0 /* me.mhaeuser.batterytoolkitd.entitlements */,
 				CE3C1D8028C7F622008A0F7D /* launchd.plist */,
 				CE675D9528C7E81600F05929 /* me.mhaeuser.batterytoolkitd.plist */,
 				CE675D9628C7E82E00F05929 /* Info.plist */,
@@ -670,7 +668,6 @@
 		CE3974462859E518002D0EC9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = me.mhaeuser.batterytoolkitd/me.mhaeuser.batterytoolkitd.entitlements;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/$(PRODUCT_NAME)/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -693,7 +690,6 @@
 		CE3974472859E518002D0EC9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = me.mhaeuser.batterytoolkitd/me.mhaeuser.batterytoolkitd.entitlements;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/$(PRODUCT_NAME)/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
