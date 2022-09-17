@@ -8,12 +8,14 @@ import os.log
 import ServiceManagement
 import BTPreprocessor
 
+// FIXME: Using 14.0 constants due to broken Ventura daemons
+
 extension BTDaemonManagement.Status {
     init(fromLegacySuccess: Bool) {
         self = fromLegacySuccess ? BTDaemonManagement.Status.enabled : BTDaemonManagement.Status.notRegistered
     }
 
-    @available(macOS 13.0, *)
+    @available(macOS 14.0, *)
     init(fromSMStatus: SMAppService.Status) {
         switch fromSMStatus {
             case SMAppService.Status.enabled:
@@ -31,7 +33,7 @@ extension BTDaemonManagement.Status {
 internal struct BTDaemonManagement {
     private static let daemonServicePlist = "\(BT_DAEMON_NAME).plist"
 
-    @available(macOS, deprecated: 13.0)
+    @available(macOS, deprecated: 14.0)
     private static func registerLegacyHelper(reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
         BTAuthorizationService.createEmptyAuthorization() { (auth) -> Void in
             assert(!Thread.isMainThread)
@@ -60,7 +62,7 @@ internal struct BTDaemonManagement {
         }
     }
     
-    @available(macOS, deprecated: 13.0)
+    @available(macOS, deprecated: 14.0)
     private static func startLegacyHelper(reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
         os_log("Starting legacy helper")
         // FIXME: Check daemon version and conditionally update
@@ -102,13 +104,13 @@ internal struct BTDaemonManagement {
         }
     }
     
-    @available(macOS 13.0, *)
+    @available(macOS 14.0, *)
     private static func daemonServiceRegistered(status: SMAppService.Status) -> Bool {
         return status != SMAppService.Status.notRegistered &&
             status != SMAppService.Status.notFound
     }
     
-    @available(macOS 13.0, *)
+    @available(macOS 14.0, *)
     private static func registerDaemonServiceSync(appService: SMAppService) {
         os_log("Registering daemon service")
 
@@ -126,7 +128,7 @@ internal struct BTDaemonManagement {
         }
     }
     
-    @available(macOS 13.0, *)
+    @available(macOS 14.0, *)
     private static func unregisterDaemonService(appService: SMAppService, reply: @Sendable @escaping (Bool) -> Void) {
         os_log("Unregistering daemon service")
         //
@@ -149,7 +151,7 @@ internal struct BTDaemonManagement {
         }
     }
     
-    @available(macOS 13.0, *)
+    @available(macOS 14.0, *)
     private static func unregisterLegacyHelperService(reply: @Sendable @escaping (Bool) -> Void) {
         os_log("Unregistering legacy helper via service")
 
@@ -164,7 +166,7 @@ internal struct BTDaemonManagement {
         BTDaemonManagement.unregisterLegacyHelper(reply: reply)
     }
     
-    @available(macOS 13.0, *)
+    @available(macOS 14.0, *)
     private static func updateDaemonService(appService: SMAppService, reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
         os_log("Updating daemon service")
 
@@ -186,7 +188,7 @@ internal struct BTDaemonManagement {
         }
     }
     
-    @available(macOS 13.0, *)
+    @available(macOS 14.0, *)
     private static func startDaemonService(reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
         os_log("Starting daemon service")
         
@@ -203,7 +205,7 @@ internal struct BTDaemonManagement {
     }
     
     internal static func startDaemon(reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
-        if #available(macOS 13.0, *) {
+        if #available(macOS 14.0, *) {
             BTDaemonManagement.startDaemonService(reply: reply)
         } else {
             BTDaemonManagement.startLegacyHelper(reply: reply)
@@ -211,7 +213,7 @@ internal struct BTDaemonManagement {
     }
     
     internal static func approveDaemon() {
-        if #available(macOS 13.0, *) {
+        if #available(macOS 14.0, *) {
             SMAppService.openSystemSettingsLoginItems()
         } else {
             assert(false)
@@ -219,7 +221,7 @@ internal struct BTDaemonManagement {
     }
     
     internal static func unregisterDaemon(reply: @Sendable @escaping (Bool) -> Void) {
-        if #available(macOS 13.0, *) {
+        if #available(macOS 14.0, *) {
             let appService = SMAppService.daemon(plistName: BTDaemonManagement.daemonServicePlist)
             BTDaemonManagement.unregisterDaemonService(appService: appService, reply: reply)
         } else {
