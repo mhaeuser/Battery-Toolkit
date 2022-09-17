@@ -7,24 +7,10 @@ import Foundation
 import os.log
 import BTPreprocessor
 
+@MainActor
 internal struct BTAuthorizationService {
     internal static func createEmptyAuthorization(reply: @Sendable @escaping (AuthorizationRef?) -> Void) {
-        let lConnect = NSXPCConnection(serviceName: BT_SERVICE_NAME)
-        lConnect.remoteObjectInterface = NSXPCInterface(with: BTServiceCommProtocol.self)
-        lConnect.resume()
-        
-        guard let service = lConnect.remoteObjectProxyWithErrorHandler({ error in
-            os_log("XPC client remote object error: \(error)")
-        }) as? BTServiceCommProtocol else {
-            os_log("XPC client remote object is malfored")
-            lConnect.invalidate()
-            reply(nil)
-            return
-        }
-
-        service.askAuthorization() { (authData) -> Void in
-            lConnect.invalidate()
-
+        BTAppXPCClient.askAuthorization() { (authData) -> Void in
             guard let authData = authData, authData.count == kAuthorizationExternalFormLength else {
                 reply(nil)
                 return
