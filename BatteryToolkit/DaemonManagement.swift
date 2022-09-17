@@ -34,7 +34,7 @@ internal struct BTDaemonManagement {
     private static let daemonServicePlist = "\(BT_DAEMON_NAME).plist"
 
     @available(macOS, deprecated: 14.0)
-    private static func registerLegacyHelper(reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
+    @MainActor private static func registerLegacyHelper(reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
         BTAuthorizationService.createEmptyAuthorization() { (auth) -> Void in
             assert(!Thread.isMainThread)
 
@@ -63,13 +63,13 @@ internal struct BTDaemonManagement {
     }
     
     @available(macOS, deprecated: 14.0)
-    private static func startLegacyHelper(reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
+    @MainActor private static func startLegacyHelper(reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
         os_log("Starting legacy helper")
         // FIXME: Check daemon version and conditionally update
         BTDaemonManagement.registerLegacyHelper(reply: reply)
     }
     
-    private static func unregisterLegacyHelper(reply: @Sendable @escaping (Bool) -> Void) {
+    @MainActor private static func unregisterLegacyHelper(reply: @Sendable @escaping (Bool) -> Void) {
         os_log("Unregistering legacy helper")
         
         BTAuthorizationService.createEmptyAuthorization() { (auth) -> Void in
@@ -152,7 +152,7 @@ internal struct BTDaemonManagement {
     }
     
     @available(macOS 14.0, *)
-    private static func unregisterLegacyHelperService(reply: @Sendable @escaping (Bool) -> Void) {
+    @MainActor private static func unregisterLegacyHelperService(reply: @Sendable @escaping (Bool) -> Void) {
         os_log("Unregistering legacy helper via service")
 
         let legacyUrl = URL(fileURLWithPath: BTLegacyHelperInfo.legacyHelperPlist, isDirectory: false)
@@ -189,7 +189,7 @@ internal struct BTDaemonManagement {
     }
     
     @available(macOS 14.0, *)
-    private static func startDaemonService(reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
+    @MainActor private static func startDaemonService(reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
         os_log("Starting daemon service")
         
         BTDaemonManagement.unregisterLegacyHelperService() { (success) -> Void in
@@ -204,7 +204,7 @@ internal struct BTDaemonManagement {
         }
     }
     
-    internal static func startDaemon(reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
+    @MainActor internal static func startDaemon(reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
         if #available(macOS 14.0, *) {
             BTDaemonManagement.startDaemonService(reply: reply)
         } else {
@@ -220,7 +220,7 @@ internal struct BTDaemonManagement {
         }
     }
     
-    internal static func unregisterDaemon(reply: @Sendable @escaping (Bool) -> Void) {
+    @MainActor internal static func unregisterDaemon(reply: @Sendable @escaping (Bool) -> Void) {
         if #available(macOS 14.0, *) {
             let appService = SMAppService.daemon(plistName: BTDaemonManagement.daemonServicePlist)
             BTDaemonManagement.unregisterDaemonService(appService: appService, reply: reply)

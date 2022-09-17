@@ -7,14 +7,13 @@ import Foundation
 import os.log
 import IOPMPrivate
 
-@MainActor
 internal final class BTHelperComm: NSObject, BTHelperCommProtocol {
     private static let helperFiles = [
         BTLegacyHelperInfo.legacyHelperExec,
         BTLegacyHelperInfo.legacyHelperPlist
     ]
 
-    internal func execute(command: UInt8) -> Void {
+    @MainActor internal func execute(command: UInt8) -> Void {
         switch command {
             case BTHelperCommProtocolCommands.disablePowerAdapter.rawValue:
                 BTPowerState.disablePowerAdapter()
@@ -39,7 +38,7 @@ internal final class BTHelperComm: NSObject, BTHelperCommProtocol {
         }
     }
 
-    internal func getState(reply: @Sendable @escaping ([String: AnyObject]) -> Void) -> Void {
+    @MainActor internal func getState(reply: @Sendable @escaping ([String: AnyObject]) -> Void) -> Void {
         let charging  = SMCPowerKit.isChargingEnabled()
         let connected = IOPSDrawingUnlimitedPower()
         let power     = SMCPowerKit.isPowerAdapterEnabled()
@@ -56,16 +55,16 @@ internal final class BTHelperComm: NSObject, BTHelperCommProtocol {
         reply(state)
     }
 
-    internal func getSettings(reply: @Sendable @escaping ([String: AnyObject]) -> Void) {
+    @MainActor internal func getSettings(reply: @Sendable @escaping ([String: AnyObject]) -> Void) {
         let settings = BTSettings.getSettings()
         reply(settings)
     }
 
-    internal func setSettings(settings: [String: AnyObject]) -> Void {
+    @MainActor internal func setSettings(settings: [String: AnyObject]) -> Void {
         BTSettings.setSettings(settings: settings)
     }
     
-    private static func removeHelperFiles() -> Void {
+    @MainActor private static func removeHelperFiles() -> Void {
         //
         // CommandLine is logically immutable and thus concurrency-safe.
         //

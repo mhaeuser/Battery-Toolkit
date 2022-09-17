@@ -14,9 +14,9 @@ enum BTHelperCommProtocolCommands: UInt8 {
     case removeHelperFiles
 }
 
-@MainActor @objc public protocol BTHelperCommProtocol {
-    func execute(command: UInt8) -> Void
-    func getState(reply: @Sendable @escaping ([String: AnyObject]) -> Void) -> Void
-    func getSettings(reply: @Sendable @escaping ([String: AnyObject]) -> Void) -> Void
-    func setSettings(settings: [String: AnyObject]) -> Void
+@objc public protocol BTHelperCommProtocol {
+    @MainActor func execute(command: UInt8) -> Void
+    @MainActor func getState(reply: @Sendable @escaping ([String: AnyObject]) -> Void) -> Void
+    @MainActor func getSettings(reply: @Sendable @escaping ([String: AnyObject]) -> Void) -> Void
+    @MainActor func setSettings(settings: [String: AnyObject]) -> Void
 }
