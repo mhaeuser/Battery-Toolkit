@@ -30,8 +30,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                         alert.messageText = "Allow background activity?"
                         alert.informativeText = AppDelegate.backgroundActivityRequiredStr + "\n\nDo you want to approve the Battery Toolkit Login Item in System Settings?"
                         alert.alertStyle = NSAlert.Style.warning
-                        alert.addButton(withTitle: "Approve")
-                        alert.addButton(withTitle: "Quit")
+                        _ = alert.addButton(withTitle: "Approve")
+                        _ = alert.addButton(withTitle: "Quit")
                         let response = alert.runModal()
                         switch response {
                             case NSApplication.ModalResponse.alertFirstButtonReturn:
@@ -53,8 +53,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                         alert.messageText = "Failed to enable background activity."
                         alert.informativeText = AppDelegate.backgroundActivityRequiredStr
                         alert.alertStyle = NSAlert.Style.critical
-                        alert.addButton(withTitle: "Retry")
-                        alert.addButton(withTitle: "Quit")
+                        _ = alert.addButton(withTitle: "Retry")
+                        _ = alert.addButton(withTitle: "Quit")
                         let response = alert.runModal()
                         switch response {
                             case NSApplication.ModalResponse.alertFirstButtonReturn:
@@ -104,8 +104,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 let alert = NSAlert()
                 alert.messageText = "An error occurred disabling background activity."
                 alert.alertStyle = NSAlert.Style.critical
-                alert.addButton(withTitle: "OK")
-                alert.addButton(withTitle: "Retry")
+                _ = alert.addButton(withTitle: "OK")
+                _ = alert.addButton(withTitle: "Retry")
                 let response = alert.runModal()
                 if response == NSApplication.ModalResponse.alertSecondButtonReturn {
                     AppDelegate.unregisterDaemon()
@@ -119,8 +119,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         alert.messageText = "Disable background activity?"
         alert.informativeText = AppDelegate.backgroundActivityRequiredStr + "\n\nDo you want to disable the Battery Toolkit background activity?"
         alert.alertStyle = NSAlert.Style.warning
-        alert.addButton(withTitle: "Disable and Quit")
-        alert.addButton(withTitle: "Cancel")
+        _ = alert.addButton(withTitle: "Disable and Quit")
+        _ = alert.addButton(withTitle: "Cancel")
         let response = alert.runModal()
         if response == NSApplication.ModalResponse.alertFirstButtonReturn {
             AppDelegate.unregisterDaemon()
