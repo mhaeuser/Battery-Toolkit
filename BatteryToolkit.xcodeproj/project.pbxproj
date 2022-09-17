@@ -670,6 +670,8 @@
 			buildSettings = {
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/$(PRODUCT_NAME)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				OTHER_LDFLAGS = (
 					"-sectcreate",
 					__TEXT,
@@ -686,6 +688,8 @@
 			buildSettings = {
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/$(PRODUCT_NAME)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				OTHER_LDFLAGS = (
 					"-sectcreate",
 					__TEXT,
@@ -799,6 +803,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = .;
+				INFOPLIST_KEY_CFBundleDisplayName = "Battery Toolkit";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2022 Marvin Häuser. All rights reserved.";
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.0;
@@ -878,6 +883,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = .;
+				INFOPLIST_KEY_CFBundleDisplayName = "Battery Toolkit";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2022 Marvin Häuser. All rights reserved.";
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.0;
@@ -900,7 +906,6 @@
 				CODE_SIGN_ENTITLEMENTS = BatteryToolkit/BatteryToolkit.entitlements;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/BatteryToolkit/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Battery Toolkit";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
@@ -916,7 +921,6 @@
 				CODE_SIGN_ENTITLEMENTS = BatteryToolkit/BatteryToolkit.entitlements;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/BatteryToolkit/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Battery Toolkit";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
@@ -929,8 +933,7 @@
 			buildSettings = {
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BatteryToolkitXPC/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Battery Toolkit";
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				PRODUCT_BUNDLE_IDENTIFIER = me.mhaeuser.BatteryToolkitXPC;
 				SKIP_INSTALL = YES;
 			};
@@ -941,8 +944,7 @@
 			buildSettings = {
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BatteryToolkitXPC/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Battery Toolkit";
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				PRODUCT_BUNDLE_IDENTIFIER = me.mhaeuser.BatteryToolkitXPC;
 				SKIP_INSTALL = YES;
 			};
