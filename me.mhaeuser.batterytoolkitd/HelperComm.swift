@@ -79,12 +79,12 @@ internal final class BTHelperComm: NSObject, BTHelperCommProtocol {
             return
         }
 
-        do {
-            for path in BTHelperComm.helperFiles {
+        for path in BTHelperComm.helperFiles {
+            do {
                 try FileManager.default.removeItem(atPath: path)
+            } catch {
+                os_log("Error deleting file \(path): \(error)")
             }
-        } catch {
-            os_log("An error took place: \(error)")
         }
     }
 }
