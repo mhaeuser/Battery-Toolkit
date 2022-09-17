@@ -50,6 +50,10 @@ final class MenuBarExtraMenuDelegate: NSObject, NSMenuDelegate {
                       let charging     = chargingNum?.boolValue,
                       let progress     = progressNum?.intValue,
                       let chargingMode = chargingModeNum?.intValue else {
+                    //
+                    // Capturing non-sendable self is fine, because this is
+                    // executed in DispatchQueue.main.
+                    //
                     self.infoPowerAdapterDisabledItem.isHidden       = true
                     self.infoPowerAdapterEnabledItem.isHidden        = true
                     self.infoChargingToMaximumItem.isHidden          = true
