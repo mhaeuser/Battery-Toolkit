@@ -172,7 +172,7 @@
 		CEA80FD5285A565C0064ADEA /* HelperComm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperComm.swift; sourceTree = "<group>"; };
 		CEA80FD7285A56B50064ADEA /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		CEA80FDA285A57030064ADEA /* HelperCommProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperCommProtocol.swift; sourceTree = "<group>"; };
-		CEB4671B2843BFA000D7CB01 /* SMCStructs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMCStructs.h; sourceTree = "<group>"; };
+		CEB4671B2843BFA000D7CB01 /* SMCParamStruct.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMCParamStruct.h; sourceTree = "<group>"; };
 		CEB4671D2843C87200D7CB01 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		CEB4A42328D39ECE004FA277 /* DaemonManagementStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaemonManagementStatus.swift; sourceTree = "<group>"; };
 		CEB4A42728D3B184004FA277 /* StateInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateInfo.swift; sourceTree = "<group>"; };
@@ -278,7 +278,7 @@
 				CEECE31928BB648F00821A3B /* BatteryToolkitXPC */,
 				CE6B75F728BC18DD008DF170 /* Common */,
 				CE6C06B828A84C2400D76CC8 /* Preprocessor */,
-				CEB4671C2843C80D00D7CB01 /* SMCHeaders */,
+				CEB4671C2843C80D00D7CB01 /* SMCPrivate */,
 				CE6C06A328A84A9200D76CC8 /* IOPMPrivate */,
 				CE3D5ADD285DE62600705842 /* BatteryToolkitStandalone */,
 				CE555D89285D2A0B0031A6F9 /* Libraries */,
@@ -356,13 +356,13 @@
 			path = Preprocessor;
 			sourceTree = "<group>";
 		};
-		CEB4671C2843C80D00D7CB01 /* SMCHeaders */ = {
+		CEB4671C2843C80D00D7CB01 /* SMCPrivate */ = {
 			isa = PBXGroup;
 			children = (
-				CEB4671B2843BFA000D7CB01 /* SMCStructs.h */,
+				CEB4671B2843BFA000D7CB01 /* SMCParamStruct.h */,
 				CEB4671D2843C87200D7CB01 /* module.modulemap */,
 			);
-			path = SMCHeaders;
+			path = SMCPrivate;
 			sourceTree = "<group>";
 		};
 		CED8DD3628C364D60082C02A /* NSXPCConnectionAuditToken */ = {

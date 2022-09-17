@@ -21,8 +21,8 @@
  * @APPLE_LICENSE_HEADER_END@
  */
 
-#ifndef SMCStructs_h
-#define SMCStructs_h
+#ifndef SMCParamStruct_h
+#define SMCParamStruct_h
 
 #include <stdint.h>
 
@@ -91,4 +91,4 @@ typedef struct {
     uint8_t             bytes[32];
 }  SMCParamStruct;
 
-#endif /* SMCStructs_h */
+#endif /* SMCParamStruct_h */

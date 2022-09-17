@@ -7,7 +7,7 @@ import IOKit
 import Foundation
 import os
 
-import SMCHeaders
+import SMCPrivate
 
 private func packUInt32(
     _ byte0: UInt8,
