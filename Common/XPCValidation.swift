@@ -11,7 +11,7 @@ import BTPreprocessor
 public struct BTXPCValidation {
     private static func verifySignFlags(code: SecCode) -> Bool {
         var staticCode: SecStaticCode? = nil
-        let status = SecCodeCopyStaticCode(code, SecCSFlags(rawValue: 0), &staticCode)
+        let status = SecCodeCopyStaticCode(code, [], &staticCode)
         guard status == errSecSuccess, let staticCode = staticCode else {
             os_log("Failed to retrieve SecStaticCode")
             return false
@@ -134,7 +134,7 @@ public struct BTXPCValidation {
         let validStatus = SecCodeCheckValidity(
             code,
             [
-                SecCSFlags.enforceRevocationChecks,
+                .enforceRevocationChecks,
                 SecCSFlags(rawValue: kSecCSRestrictSidebandData),
                 SecCSFlags(rawValue: kSecCSStrictValidate)
             ],
