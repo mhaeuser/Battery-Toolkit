@@ -6,7 +6,7 @@
 import Foundation
 
 internal final class BTServiceComm: NSObject, BTServiceCommProtocol {
-    internal func askAuthorization(reply: @escaping ((NSData?) -> Void)) -> Void {
+    internal func askAuthorization(reply: @Sendable @escaping (NSData?) -> Void) -> Void {
         var auth: AuthorizationRef? = nil
         let status = AuthorizationCreate(nil, nil, [], &auth)
         guard status == errAuthorizationSuccess, let auth = auth else {

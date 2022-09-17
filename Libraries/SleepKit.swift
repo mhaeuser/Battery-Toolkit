@@ -8,6 +8,7 @@ import os.log
 
 import IOPMPrivate
 
+@MainActor
 public struct SleepKit {
     private static var sleepDisabledCounter: UInt8 = 0
     private static var sleepRestore: Bool          = false

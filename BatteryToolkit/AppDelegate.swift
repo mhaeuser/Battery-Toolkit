@@ -7,6 +7,7 @@ import Cocoa
 import os.log
 
 @main
+@MainActor
 final class AppDelegate: NSObject, NSApplicationDelegate {
     private var menuBarExtraItem: NSStatusItem!
     @IBOutlet weak var menuBarExtraMenu: NSMenu!
@@ -69,6 +70,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             }
         }
     }
+
+    //
+    // NSApplicationDelegate is implicitly @MainActor and thus the warnings are
+    // misleading.
+    //
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         AppDelegate.startDaemon()

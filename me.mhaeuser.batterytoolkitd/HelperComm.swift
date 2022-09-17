@@ -7,6 +7,7 @@ import Foundation
 import os.log
 import IOPMPrivate
 
+@MainActor
 internal final class BTHelperComm: NSObject, BTHelperCommProtocol {
     private static let helperFiles = [
         BTLegacyHelperInfo.legacyHelperExec,
@@ -38,7 +39,7 @@ internal final class BTHelperComm: NSObject, BTHelperCommProtocol {
         }
     }
 
-    internal func getState(reply: @escaping (([String: AnyObject]) -> Void)) -> Void {
+    internal func getState(reply: @Sendable @escaping ([String: AnyObject]) -> Void) -> Void {
         let charging  = SMCPowerKit.isChargingEnabled()
         let connected = IOPSDrawingUnlimitedPower()
         let power     = SMCPowerKit.isPowerAdapterEnabled()
@@ -55,7 +56,7 @@ internal final class BTHelperComm: NSObject, BTHelperCommProtocol {
         reply(state)
     }
 
-    internal func getSettings(reply: @escaping (([String: AnyObject]) -> Void)) {
+    internal func getSettings(reply: @Sendable @escaping ([String: AnyObject]) -> Void) {
         let settings = BTSettings.getSettings()
         reply(settings)
     }
@@ -65,13 +66,17 @@ internal final class BTHelperComm: NSObject, BTHelperCommProtocol {
     }
     
     private static func removeHelperFiles() -> Void {
-        if CommandLine.arguments.count <= 0 {
+        //
+        // CommandLine is logically immutable and thus concurrency-safe.
+        //
+        let args = CommandLine.arguments
+        if args.count <= 0 {
             os_log("No command line arguments provided")
             return
         }
         
-        if CommandLine.arguments[0] != BTHelperComm.helperFiles[0] {
-            os_log("Helper launched from unexpected location: \(CommandLine.arguments[0])")
+        if args[0] != BTHelperComm.helperFiles[0] {
+            os_log("Helper launched from unexpected location: \(args[0])")
             return
         }
 

@@ -32,7 +32,7 @@ internal struct BTDaemonManagement {
     private static let daemonServicePlist = "\(BT_DAEMON_NAME).plist"
 
     @available(macOS, deprecated: 13.0)
-    private static func registerLegacyHelper(reply: @escaping ((BTDaemonManagement.Status) -> Void)) {
+    private static func registerLegacyHelper(reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
         BTAuthorizationService.createEmptyAuthorization() { (auth) -> Void in
             assert(!Thread.isMainThread)
 
@@ -61,13 +61,13 @@ internal struct BTDaemonManagement {
     }
     
     @available(macOS, deprecated: 13.0)
-    private static func startLegacyHelper(reply: @escaping ((BTDaemonManagement.Status) -> Void)) {
+    private static func startLegacyHelper(reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
         os_log("Starting legacy helper")
         // FIXME: Check daemon version and conditionally update
         BTDaemonManagement.registerLegacyHelper(reply: reply)
     }
     
-    private static func unregisterLegacyHelper(reply: @escaping ((Bool) -> Void)) {
+    private static func unregisterLegacyHelper(reply: @Sendable @escaping (Bool) -> Void) {
         os_log("Unregistering legacy helper")
         
         BTAuthorizationService.createEmptyAuthorization() { (auth) -> Void in
@@ -78,7 +78,9 @@ internal struct BTDaemonManagement {
                 return
             }
 
-            BTHelperXPCClient.removeHelperFiles()
+            DispatchQueue.main.async {
+                BTHelperXPCClient.removeHelperFiles()
+            }
 
             var error: Unmanaged<CFError>? = nil
             let success = SMJobRemove(
@@ -125,7 +127,7 @@ internal struct BTDaemonManagement {
     }
     
     @available(macOS 13.0, *)
-    private static func unregisterDaemonService(appService: SMAppService, reply: @escaping ((Bool) -> Void)) {
+    private static func unregisterDaemonService(appService: SMAppService, reply: @Sendable @escaping (Bool) -> Void) {
         os_log("Unregistering daemon service")
         //
         // Any other status code makes unregister() loop indefinitely.
@@ -148,7 +150,7 @@ internal struct BTDaemonManagement {
     }
     
     @available(macOS 13.0, *)
-    private static func unregisterLegacyHelperService(reply: @escaping ((Bool) -> Void)) {
+    private static func unregisterLegacyHelperService(reply: @Sendable @escaping (Bool) -> Void) {
         os_log("Unregistering legacy helper via service")
 
         let legacyUrl = URL(fileURLWithPath: BTLegacyHelperInfo.legacyHelperPlist, isDirectory: false)
@@ -163,7 +165,7 @@ internal struct BTDaemonManagement {
     }
     
     @available(macOS 13.0, *)
-    private static func updateDaemonService(appService: SMAppService, reply: @escaping ((BTDaemonManagement.Status) -> Void)) {
+    private static func updateDaemonService(appService: SMAppService, reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
         os_log("Updating daemon service")
 
         BTDaemonManagement.unregisterDaemonService(appService: appService) { _ in
@@ -185,7 +187,7 @@ internal struct BTDaemonManagement {
     }
     
     @available(macOS 13.0, *)
-    private static func startDaemonService(reply: @escaping ((BTDaemonManagement.Status) -> Void)) {
+    private static func startDaemonService(reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
         os_log("Starting daemon service")
         
         BTDaemonManagement.unregisterLegacyHelperService() { (success) -> Void in
@@ -200,7 +202,7 @@ internal struct BTDaemonManagement {
         }
     }
     
-    internal static func startDaemon(reply: @escaping ((BTDaemonManagement.Status) -> Void)) {
+    internal static func startDaemon(reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
         if #available(macOS 13.0, *) {
             BTDaemonManagement.startDaemonService(reply: reply)
         } else {
@@ -216,7 +218,7 @@ internal struct BTDaemonManagement {
         }
     }
     
-    internal static func unregisterDaemon(reply: @escaping ((Bool) -> Void)) {
+    internal static func unregisterDaemon(reply: @Sendable @escaping (Bool) -> Void) {
         if #available(macOS 13.0, *) {
             let appService = SMAppService.daemon(plistName: BTDaemonManagement.daemonServicePlist)
             BTDaemonManagement.unregisterDaemonService(appService: appService, reply: reply)

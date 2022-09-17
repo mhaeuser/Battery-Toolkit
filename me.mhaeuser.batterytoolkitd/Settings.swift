@@ -6,6 +6,7 @@
 import Foundation
 import os.log
 
+@MainActor
 internal struct BTSettings {
     internal private(set) static var minCharge    = BTSettingsInfo.Defaults.minCharge
     internal private(set) static var maxCharge    = BTSettingsInfo.Defaults.maxCharge

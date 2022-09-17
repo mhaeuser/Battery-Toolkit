@@ -5,6 +5,7 @@
 
 import Foundation
 
+@MainActor
 internal struct BTPowerState {
     private static var chargingDisabled = false
     private static var powerDisabled    = false

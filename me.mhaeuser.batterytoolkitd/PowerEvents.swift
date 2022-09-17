@@ -7,6 +7,7 @@ import Foundation
 import IOKit.ps
 import IOPMPrivate
 
+@MainActor
 internal struct BTPowerEvents {
     internal private(set) static var chargeMode: BTStateInfo.ChargingMode = BTStateInfo.ChargingMode.standard
     

@@ -8,6 +8,7 @@ public struct SMCKitKeyInfo {
     let info: SMCKitKeyInfoData
 }
 
+@MainActor
 public struct SMCPowerKit {
     private struct Keys {
         fileprivate static let CH0C = SMCKitKey("C", "H", "0", "C")

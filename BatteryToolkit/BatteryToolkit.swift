@@ -6,8 +6,9 @@
 import Foundation
 import BTPreprocessor
 
+@MainActor
 internal struct BatteryToolkit {
-    internal static func startDaemon(reply: @escaping ((BTDaemonManagement.Status) -> Void)) {
+    internal static func startDaemon(reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
         BTDaemonManagement.startDaemon(reply: reply)
     }
 
@@ -39,11 +40,11 @@ internal struct BatteryToolkit {
         BTHelperXPCClient.disableCharging()
     }
 
-    internal static func getState(reply: @escaping (([String: AnyObject]) -> Void)) {
+    internal static func getState(reply: @Sendable @escaping ([String: AnyObject]) -> Void) {
         BTHelperXPCClient.getState(reply: reply)
     }
 
-    internal static func getSettings(reply: @escaping (([String: AnyObject]) -> Void)) {
+    internal static func getSettings(reply: @Sendable @escaping ([String: AnyObject]) -> Void) {
         BTHelperXPCClient.getSettings(reply: reply)
     }
 
@@ -51,7 +52,7 @@ internal struct BatteryToolkit {
         BTHelperXPCClient.setSettings(settings: settings)
     }
     
-    internal static func unregisterDaemon(reply: @escaping ((Bool) -> Void)) {
+    internal static func unregisterDaemon(reply: @Sendable @escaping (Bool) -> Void) {
         BTDaemonManagement.unregisterDaemon(reply: reply)
     }
 }

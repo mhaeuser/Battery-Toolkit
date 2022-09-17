@@ -101,6 +101,7 @@ public enum SMCKitError: Error {
     case native(kIOReturn: kern_return_t, SMCResult: UInt8)
 }
 
+@MainActor
 public struct SMCKit {
     private static var SMCConnect: io_connect_t = IO_OBJECT_NULL
     
@@ -114,7 +115,9 @@ public struct SMCKit {
         if smc == IO_OBJECT_NULL {
             return false
         }
-
+        //
+        // mach_task_self_ is logically immutable and thus concurrency-safe.
+        //
         let resultOpen = IOServiceOpen(
             smc,
             mach_task_self_,

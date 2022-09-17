@@ -6,6 +6,7 @@
 import Foundation
 import os.log
 
+@MainActor
 private func main() -> Never {
     let powerResult = BTPowerEvents.start()
     if !powerResult {
@@ -13,10 +14,7 @@ private func main() -> Never {
         exit(-1)
     }
 
-    let xpcResult = BTHelperXPCServer.start()
-    if !xpcResult {
-        os_log("XPC server start failed")
-    }
+    BTHelperXPCServer.start()
 
     let termSource = DispatchSource.makeSignalSource(signal: SIGTERM)
     termSource.setEventHandler {

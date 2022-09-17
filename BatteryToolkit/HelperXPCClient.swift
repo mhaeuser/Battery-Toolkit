@@ -7,19 +7,25 @@ import Foundation
 import os.log
 import BTPreprocessor
 
+@MainActor
 internal struct BTHelperXPCClient {
+    private struct Handlers {
+        fileprivate static func interruption() {
+            os_log("XPC client connection interrupted")
+        }
+
+        fileprivate static func invalidation() {
+            os_log("XPC client connection invalidated")
+
+            DispatchQueue.main.async {
+                BTHelperXPCClient.connect = nil
+                BTHelperXPCClient.helper  = nil
+            }
+        }
+    }
+
     private static var connect: NSXPCConnection?     = nil
     private static var helper: BTHelperCommProtocol? = nil
-
-    private static func interruptionHandler() {
-        os_log("XPC client connection interrupted")
-    }
-    
-    private static func invalidationHandler() {
-        os_log("XPC client connection invalidated")
-        BTHelperXPCClient.connect = nil
-        BTHelperXPCClient.helper  = nil
-    }
 
     internal static func connectDaemon() {
         if BTHelperXPCClient.connect != nil {
@@ -36,8 +42,8 @@ internal struct BTHelperXPCClient {
 
         lConnect.remoteObjectInterface = NSXPCInterface(with: BTHelperCommProtocol.self)
         
-        lConnect.invalidationHandler = BTHelperXPCClient.invalidationHandler
-        lConnect.interruptionHandler = BTHelperXPCClient.interruptionHandler
+        lConnect.invalidationHandler = BTHelperXPCClient.Handlers.invalidation
+        lConnect.interruptionHandler = BTHelperXPCClient.Handlers.interruption
         
         lConnect.resume()
         
@@ -69,7 +75,7 @@ internal struct BTHelperXPCClient {
         lConnect.invalidate()
     }
     
-    internal static func getState(reply: @escaping (([String: AnyObject]) -> Void)) -> Void {
+    internal static func getState(reply: @Sendable @escaping ([String: AnyObject]) -> Void) -> Void {
         BTHelperXPCClient.connectDaemon()
         BTHelperXPCClient.helper?.getState(reply: reply)
     }
@@ -109,7 +115,7 @@ internal struct BTHelperXPCClient {
         )
     }
 
-    internal static func getSettings(reply: @escaping (([String: AnyObject]) -> Void)) {
+    internal static func getSettings(reply: @Sendable @escaping ([String: AnyObject]) -> Void) {
         BTHelperXPCClient.connectDaemon()
         BTHelperXPCClient.helper?.getSettings(reply: reply)
     }

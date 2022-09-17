@@ -17,19 +17,13 @@ internal struct BTHelperXPCServer {
         }
     }
 
-    private static var listener: NSXPCListener? = nil
+    @MainActor private static var listener: NSXPCListener = NSXPCListener(machServiceName: BT_DAEMON_NAME)
 
     private static let delegate: NSXPCListenerDelegate = BTHelperXPCServer.Delegate()
     
-    internal static func start() -> Bool {
-        assert(listener == nil)
-
-        let lListener      = NSXPCListener(machServiceName: BT_DAEMON_NAME)
-        lListener.delegate = delegate
-        listener           = lListener
-        lListener.resume()
-        
-        return true
+    @MainActor internal static func start() {
+        listener.delegate = delegate
+        listener.resume()
     }
     
     private static func verifySignFlags(code: SecCode) -> Bool {

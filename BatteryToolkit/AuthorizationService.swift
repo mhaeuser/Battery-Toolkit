@@ -8,7 +8,7 @@ import os.log
 import BTPreprocessor
 
 internal struct BTAuthorizationService {
-    internal static func createEmptyAuthorization(reply: @escaping ((AuthorizationRef?) -> Void)) {
+    internal static func createEmptyAuthorization(reply: @Sendable @escaping (AuthorizationRef?) -> Void) {
         let lConnect = NSXPCConnection(serviceName: BT_SERVICE_NAME)
         lConnect.remoteObjectInterface = NSXPCInterface(with: BTServiceCommProtocol.self)
         lConnect.resume()
