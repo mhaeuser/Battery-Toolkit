@@ -1034,6 +1034,7 @@
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				PRODUCT_BUNDLE_IDENTIFIER = me.mhaeuser.BatteryToolkitXPC;
 				SKIP_INSTALL = YES;
+				STRIP_STYLE = all;
 			};
 			name = Debug;
 		};
@@ -1045,6 +1046,7 @@
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				PRODUCT_BUNDLE_IDENTIFIER = me.mhaeuser.BatteryToolkitXPC;
 				SKIP_INSTALL = YES;
+				STRIP_STYLE = all;
 			};
 			name = Release;
 		};
