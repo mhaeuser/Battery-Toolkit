@@ -11,18 +11,30 @@ import os.log
 final class AppDelegate: NSObject, NSApplicationDelegate {
     private var menuBarExtraItem: NSStatusItem!
     @IBOutlet weak var menuBarExtraMenu: NSMenu!
-    
-    @IBOutlet weak var disableBackgroundMenuItem: NSMenuItem!
+
+    @IBOutlet weak var settingsItem: NSMenuItem!
+    @IBOutlet weak var disableBackgroundItem: NSMenuItem!
 
     @IBAction private func unregisterDaemonHandler(sender: NSMenuItem) {
         AppDelegate.promptUnregisterDaemon()
     }
 
-    private static func startDaemon() {
+    private func startDaemon() {
         BatteryToolkit.startDaemon() { (status) -> Void in
             switch status {
                 case BTDaemonManagement.Status.enabled:
                     os_log("Daemon is enabled")
+
+                    DispatchQueue.main.async {
+                        self.disableBackgroundItem.isEnabled = true
+                        self.settingsItem.isEnabled          = true
+
+                        self.menuBarExtraItem = NSStatusBar.system.statusItem(
+                            withLength: NSStatusItem.squareLength
+                            )
+                        self.menuBarExtraItem.button?.image = NSImage(named: NSImage.Name("StatusItemIcon"))
+                        self.menuBarExtraItem.menu = self.menuBarExtraMenu
+                    }
                     
                 case BTDaemonManagement.Status.requiresApproval:
                     os_log("Daemon requires approval")
@@ -35,7 +47,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                     os_log("Daemon not registered")
                     
                     DispatchQueue.main.async {
-                        AppDelegate.promptRegisterDaemonError()
+                        self.promptRegisterDaemonError()
                     }
             }
         }
@@ -47,13 +59,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     //
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        AppDelegate.startDaemon()
-
-        self.menuBarExtraItem = NSStatusBar.system.statusItem(
-            withLength: NSStatusItem.squareLength
-            )
-        self.menuBarExtraItem.button?.image = NSImage(named: NSImage.Name("StatusItemIcon"))
-        self.menuBarExtraItem.menu = self.menuBarExtraMenu
+        self.startDaemon()
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -94,7 +100,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    private static func promptRegisterDaemonError() {
+    private func promptRegisterDaemonError() {
         let alert             = NSAlert()
         alert.messageText     = BTLocalization.Prompts.Daemon.enableFailMessage
         alert.informativeText = BTLocalization.Prompts.Daemon.requiredInfo
@@ -104,7 +110,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let response = alert.runModal()
         switch response {
             case NSApplication.ModalResponse.alertFirstButtonReturn:
-                AppDelegate.startDaemon()
+                self.startDaemon()
 
             case NSApplication.ModalResponse.alertSecondButtonReturn:
                 NSApplication.shared.terminate(self)

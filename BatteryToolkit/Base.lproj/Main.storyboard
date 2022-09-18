@@ -13,7 +13,7 @@
                         <items>
                             <menuItem title="Battery Toolkit" id="1Xt-HY-uBw">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Battery Toolkit" systemMenu="apple" id="uQy-DD-JDr">
+                                <menu key="submenu" title="Battery Toolkit" systemMenu="apple" autoenablesItems="NO" id="uQy-DD-JDr">
                                     <items>
                                         <menuItem title="About Battery Toolkit" id="5kV-Vb-QxS">
                                             <modifierMask key="keyEquivalentModifierMask"/>
@@ -22,12 +22,12 @@
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="VOq-y0-SEH"/>
-                                        <menuItem title="Settings…" keyEquivalent="," id="BOF-NM-1cW">
+                                        <menuItem title="Settings…" enabled="NO" keyEquivalent="," id="BOF-NM-1cW">
                                             <connections>
                                                 <segue destination="Lf9-ud-Dh4" kind="show" id="xhQ-qx-DMZ"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Disable Background Activity" id="oaJ-hp-PXw">
+                                        <menuItem title="Disable Background Activity" enabled="NO" id="oaJ-hp-PXw">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="unregisterDaemonHandlerWithSender:" target="Voe-Tx-rLC" id="op0-U1-2YE"/>
@@ -165,8 +165,9 @@
                 </application>
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="BatteryToolkitStandalone" customModuleProvider="target">
                     <connections>
-                        <outlet property="disableBackgroundMenuItem" destination="oaJ-hp-PXw" id="CAR-aQ-V7Y"/>
+                        <outlet property="disableBackgroundItem" destination="oaJ-hp-PXw" id="RQ8-BD-wMQ"/>
                         <outlet property="menuBarExtraMenu" destination="95L-Hg-MpQ" id="qx9-JK-hzr"/>
+                        <outlet property="settingsItem" destination="BOF-NM-1cW" id="y0F-VK-O7S"/>
                     </connections>
                 </customObject>
                 <customObject id="Yoz-Et-jXW" userLabel="Menu Bar Extra Menu Delegate" customClass="MenuBarExtraMenuDelegate" customModule="BatteryToolkitStandalone" customModuleProvider="target">
