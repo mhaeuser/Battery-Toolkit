@@ -51,7 +51,7 @@ internal struct BTAppXPCClient {
         let connect = BTAppXPCClient.connectService()
 
         let service = connect.remoteObjectProxyWithErrorHandler({ error in
-            os_log("XPC app remote object error: \(error)")
+            os_log("XPC app remote object error: \(error.localizedDescription)")
         }) as! BTServiceCommProtocol
 
         return service

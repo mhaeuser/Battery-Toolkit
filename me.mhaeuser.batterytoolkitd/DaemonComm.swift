@@ -87,7 +87,7 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
             do {
                 try FileManager.default.removeItem(atPath: path)
             } catch {
-                os_log("Error deleting file \(path): \(error)")
+                os_log("Error deleting file \(path): \(error.localizedDescription)")
             }
         }
     }

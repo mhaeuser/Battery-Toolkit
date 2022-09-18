@@ -55,7 +55,7 @@ internal struct BTDaemonXPCClient {
         let daemon = connect.remoteObjectProxyWithErrorHandler({ error in
             // FIXME: Properly handle errors, e.g. force reinstall daemon.
 
-            os_log("XPC client remote object error: \(error)")
+            os_log("XPC client remote object error: \(error.localizedDescription)")
             errorHandler()
         }) as! BTDaemonCommProtocol
 
