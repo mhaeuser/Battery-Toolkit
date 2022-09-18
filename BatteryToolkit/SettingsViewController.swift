@@ -125,7 +125,7 @@ final class SettingsViewController: NSViewController {
         self.view.window?.windowController?.close()
     }
     
-    @IBAction func okButtonAction(_ sender: NSButton) {
+    @IBAction func doneButtonAction(_ sender: NSButton) {
         let settings: [String : AnyObject] = [
             BTSettingsInfo.Keys.minCharge: self.minChargeNum,
             BTSettingsInfo.Keys.maxCharge: self.maxChargeNum,

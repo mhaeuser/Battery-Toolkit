@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="21223" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="Svp-Rd-cF3">
     <dependencies>
-        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21223"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -213,7 +212,7 @@ DQ
 </string>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="okButtonAction:" target="qK6-EM-YZH" id="Bkx-3c-Vju"/>
+                                    <action selector="doneButtonAction:" target="qK6-EM-YZH" id="Bkx-3c-Vju"/>
                                 </connections>
                             </button>
                         </subviews>
