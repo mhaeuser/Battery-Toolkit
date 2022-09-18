@@ -860,7 +860,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_KEY_CFBundleDisplayName = "Battery Toolkit";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2022 Marvin Häuser. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 Marvin Häuser. All rights reserved.";
 				LLVM_LTO = YES_THIN;
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.0;
@@ -990,7 +990,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_KEY_CFBundleDisplayName = "Battery Toolkit";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2022 Marvin Häuser. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 Marvin Häuser. All rights reserved.";
 				LLVM_LTO = YES_THIN;
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.0;
