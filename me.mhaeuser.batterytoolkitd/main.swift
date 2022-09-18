@@ -14,7 +14,7 @@ private func main() -> Never {
         exit(-1)
     }
 
-    BTHelperXPCServer.start()
+    BTDaemonXPCServer.start()
 
     let termSource = DispatchSource.makeSignalSource(signal: SIGTERM)
     termSource.setEventHandler {

@@ -81,7 +81,7 @@ internal struct BTDaemonManagement {
             }
 
             DispatchQueue.main.async {
-                BTHelperXPCClient.removeHelperFiles()
+                BTDaemonXPCClient.removeLegacyHelperFiles()
             }
 
             var error: Unmanaged<CFError>? = nil

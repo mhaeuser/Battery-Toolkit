@@ -17,39 +17,39 @@ internal struct BatteryToolkit {
     }
     
     internal static func stop() {
-        BTHelperXPCClient.stop()
+        BTDaemonXPCClient.stop()
     }
     
     internal static func disablePowerAdapter() {
-        BTHelperXPCClient.disablePowerAdapter()
+        BTDaemonXPCClient.disablePowerAdapter()
     }
 
     internal static func enablePowerAdapter() {
-        BTHelperXPCClient.enablePowerAdapter()
+        BTDaemonXPCClient.enablePowerAdapter()
     }
 
     internal static func chargeToMaximum() {
-        BTHelperXPCClient.chargeToMaximum()
+        BTDaemonXPCClient.chargeToMaximum()
     }
 
     internal static func chargeToFull() {
-        BTHelperXPCClient.chargeToFull()
+        BTDaemonXPCClient.chargeToFull()
     }
 
     internal static func disableCharging() {
-        BTHelperXPCClient.disableCharging()
+        BTDaemonXPCClient.disableCharging()
     }
 
     internal static func getState(reply: @Sendable @escaping ([String: AnyObject]) -> Void) {
-        BTHelperXPCClient.getState(reply: reply)
+        BTDaemonXPCClient.getState(reply: reply)
     }
 
     internal static func getSettings(reply: @Sendable @escaping ([String: AnyObject]) -> Void) {
-        BTHelperXPCClient.getSettings(reply: reply)
+        BTDaemonXPCClient.getSettings(reply: reply)
     }
 
     internal static func setSettings(settings: [String: AnyObject]) {
-        BTHelperXPCClient.setSettings(settings: settings)
+        BTDaemonXPCClient.setSettings(settings: settings)
     }
     
     internal static func unregisterDaemon(reply: @Sendable @escaping (Bool) -> Void) {

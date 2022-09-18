@@ -7,31 +7,31 @@ import Foundation
 import os.log
 import IOPMPrivate
 
-internal final class BTHelperComm: NSObject, BTHelperCommProtocol {
-    private static let helperFiles = [
+internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
+    private static let legacyHelperFiles = [
         BTLegacyHelperInfo.legacyHelperExec,
         BTLegacyHelperInfo.legacyHelperPlist
     ]
 
     @MainActor internal func execute(command: UInt8) -> Void {
         switch command {
-            case BTHelperCommProtocolCommands.disablePowerAdapter.rawValue:
+            case BTDaemonCommProtocolCommands.disablePowerAdapter.rawValue:
                 BTPowerState.disablePowerAdapter()
 
-            case BTHelperCommProtocolCommands.enablePowerAdapter.rawValue:
+            case BTDaemonCommProtocolCommands.enablePowerAdapter.rawValue:
                 BTPowerState.enablePowerAdapter()
 
-            case BTHelperCommProtocolCommands.chargeToFull.rawValue:
+            case BTDaemonCommProtocolCommands.chargeToFull.rawValue:
                 BTPowerEvents.chargeToFull()
 
-            case BTHelperCommProtocolCommands.chargeToMaximum.rawValue:
+            case BTDaemonCommProtocolCommands.chargeToMaximum.rawValue:
                 BTPowerEvents.chargeToMaximum()
 
-            case BTHelperCommProtocolCommands.disableCharging.rawValue:
+            case BTDaemonCommProtocolCommands.disableCharging.rawValue:
                 BTPowerEvents.disableCharging()
 
-            case BTHelperCommProtocolCommands.removeHelperFiles.rawValue:
-                BTHelperComm.removeHelperFiles()
+            case BTDaemonCommProtocolCommands.removeLegacyHelperFiles.rawValue:
+                BTDaemonComm.removeLegacyHelperFiles()
 
             default:
                 os_log("Unknown command: \(command)")
@@ -64,7 +64,7 @@ internal final class BTHelperComm: NSObject, BTHelperCommProtocol {
         BTSettings.setSettings(settings: settings)
     }
     
-    @MainActor private static func removeHelperFiles() -> Void {
+    @MainActor private static func removeLegacyHelperFiles() -> Void {
         //
         // CommandLine is logically immutable and thus concurrency-safe.
         //
@@ -74,12 +74,12 @@ internal final class BTHelperComm: NSObject, BTHelperCommProtocol {
             return
         }
         
-        if args[0] != BTHelperComm.helperFiles[0] {
-            os_log("Helper launched from unexpected location: \(args[0])")
+        if args[0] != BTDaemonComm.legacyHelperFiles[0] {
+            os_log("Legacy helper launched from unexpected location: \(args[0])")
             return
         }
 
-        for path in BTHelperComm.helperFiles {
+        for path in BTDaemonComm.legacyHelperFiles {
             do {
                 try FileManager.default.removeItem(atPath: path)
             } catch {

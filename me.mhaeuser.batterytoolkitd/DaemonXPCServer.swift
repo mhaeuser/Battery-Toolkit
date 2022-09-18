@@ -10,16 +10,16 @@ import BTPreprocessor
 import NSXPCConnectionAuditToken
 import Security
 
-internal struct BTHelperXPCServer {
+internal struct BTDaemonXPCServer {
     private final class Delegate: NSObject, NSXPCListenerDelegate {
         fileprivate func listener(_ listener: NSXPCListener, shouldAcceptNewConnection newConnection: NSXPCConnection) -> Bool {
-            return BTHelperXPCServer.accept(newConnection: newConnection)
+            return BTDaemonXPCServer.accept(newConnection: newConnection)
         }
     }
 
     @MainActor private static var listener: NSXPCListener = NSXPCListener(machServiceName: BT_DAEMON_NAME)
 
-    private static let delegate: NSXPCListenerDelegate = BTHelperXPCServer.Delegate()
+    private static let delegate: NSXPCListenerDelegate = BTDaemonXPCServer.Delegate()
     
     @MainActor internal static func start() {
         listener.delegate = delegate
@@ -32,8 +32,8 @@ internal struct BTHelperXPCServer {
             return false
         }
 
-        newConnection.exportedInterface = NSXPCInterface(with: BTHelperCommProtocol.self)
-        newConnection.exportedObject    = BTHelperComm()
+        newConnection.exportedInterface = NSXPCInterface(with: BTDaemonCommProtocol.self)
+        newConnection.exportedObject    = BTDaemonComm()
         
         newConnection.resume()
         

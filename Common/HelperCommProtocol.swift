@@ -5,16 +5,16 @@
 
 import Foundation
 
-enum BTHelperCommProtocolCommands: UInt8 {
+enum BTDaemonCommProtocolCommands: UInt8 {
     case disablePowerAdapter
     case enablePowerAdapter
     case chargeToFull
     case chargeToMaximum
     case disableCharging
-    case removeHelperFiles
+    case removeLegacyHelperFiles
 }
 
-@objc public protocol BTHelperCommProtocol {
+@objc public protocol BTDaemonCommProtocol {
     @MainActor func execute(command: UInt8) -> Void
     @MainActor func getState(reply: @Sendable @escaping ([String: AnyObject]) -> Void) -> Void
     @MainActor func getSettings(reply: @Sendable @escaping ([String: AnyObject]) -> Void) -> Void

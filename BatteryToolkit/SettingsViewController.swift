@@ -133,7 +133,7 @@ final class SettingsViewController: NSViewController {
                 value: self.adapterSleepButton.state == NSControl.StateValue.off
                 )
         ]
-        BTHelperXPCClient.setSettings(settings: settings)
+        BTDaemonXPCClient.setSettings(settings: settings)
         self.view.window?.windowController?.close()
     }
     
