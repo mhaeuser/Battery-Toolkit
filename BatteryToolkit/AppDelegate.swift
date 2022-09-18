@@ -13,8 +13,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var menuBarExtraMenu: NSMenu!
     
     @IBOutlet weak var disableBackgroundMenuItem: NSMenuItem!
-    
-    private static let backgroundActivityRequiredStr = "To manage the power state of your Mac, Battery Toolkit needs to run in the background."
 
     @IBAction private func unregisterDaemonHandler(sender: NSMenuItem) {
         AppDelegate.promptUnregisterDaemon()
@@ -30,7 +28,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                     os_log("Daemon requires approval")
                     
                     DispatchQueue.main.async {
-                        AppDelegate.prompRegisterDaemon()
+                        AppDelegate.promptRegisterDaemon()
                     }
 
                 case BTDaemonManagement.Status.notRegistered:
@@ -75,13 +73,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    private static func prompRegisterDaemon() {
+    private static func promptRegisterDaemon() {
         let alert             = NSAlert()
-        alert.messageText     = "Allow background activity?"
-        alert.informativeText = AppDelegate.backgroundActivityRequiredStr + "\n\nDo you want to approve the Battery Toolkit Login Item in System Settings?"
+        alert.messageText     = BTLocalization.Prompts.Daemon.allowMessage
+        alert.informativeText = BTLocalization.Prompts.Daemon.requiredInfo +
+            "\n\n" + BTLocalization.Prompts.Daemon.allowInfo
         alert.alertStyle      = NSAlert.Style.warning
-        _ = alert.addButton(withTitle: "Approve")
-        _ = alert.addButton(withTitle: "Quit")
+        _ = alert.addButton(withTitle: BTLocalization.Prompts.approve)
+        _ = alert.addButton(withTitle: BTLocalization.Prompts.quit)
         let response = alert.runModal()
         switch response {
             case NSApplication.ModalResponse.alertFirstButtonReturn:
@@ -97,11 +96,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private static func promptRegisterDaemonError() {
         let alert             = NSAlert()
-        alert.messageText     = "Failed to enable background activity."
-        alert.informativeText = AppDelegate.backgroundActivityRequiredStr
+        alert.messageText     = BTLocalization.Prompts.Daemon.enableFailMessage
+        alert.informativeText = BTLocalization.Prompts.Daemon.requiredInfo
         alert.alertStyle      = NSAlert.Style.critical
-        _ = alert.addButton(withTitle: "Retry")
-        _ = alert.addButton(withTitle: "Quit")
+        _ = alert.addButton(withTitle: BTLocalization.Prompts.retry)
+        _ = alert.addButton(withTitle: BTLocalization.Prompts.quit)
         let response = alert.runModal()
         switch response {
             case NSApplication.ModalResponse.alertFirstButtonReturn:
@@ -117,11 +116,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private static func promptUnregisterDaemon() {
         let alert             = NSAlert()
-        alert.messageText     = "Disable background activity?"
-        alert.informativeText = AppDelegate.backgroundActivityRequiredStr + "\n\nDo you want to disable the Battery Toolkit background activity?"
+        alert.messageText     = BTLocalization.Prompts.Daemon.disableMessage
+        alert.informativeText = BTLocalization.Prompts.Daemon.requiredInfo +
+            "\n\n" + BTLocalization.Prompts.Daemon.disableInfo
         alert.alertStyle      = NSAlert.Style.warning
-        _ = alert.addButton(withTitle: "Disable and Quit")
-        _ = alert.addButton(withTitle: "Cancel")
+        _ = alert.addButton(withTitle: BTLocalization.Prompts.disableAndQuit)
+        _ = alert.addButton(withTitle: BTLocalization.Prompts.cancel)
         let response = alert.runModal()
         if response == NSApplication.ModalResponse.alertFirstButtonReturn {
             AppDelegate.unregisterDaemon()
@@ -130,12 +130,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private static func promptUnregisterDaemonError() {
         let alert         = NSAlert()
-        alert.messageText = "An error occurred disabling background activity."
+        alert.messageText = BTLocalization.Prompts.Daemon.disableFailMessage
         alert.alertStyle  = NSAlert.Style.critical
-        _ = alert.addButton(withTitle: "OK")
-        _ = alert.addButton(withTitle: "Retry")
+        _ = alert.addButton(withTitle: BTLocalization.Prompts.retry)
+        _ = alert.addButton(withTitle: BTLocalization.Prompts.cancel)
         let response = alert.runModal()
-        if response == NSApplication.ModalResponse.alertSecondButtonReturn {
+        if response == NSApplication.ModalResponse.alertFirstButtonReturn {
             AppDelegate.unregisterDaemon()
         }
     }

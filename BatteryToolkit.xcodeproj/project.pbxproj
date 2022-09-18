@@ -12,9 +12,12 @@
 		CE0DB56528BEB4E600B8FC4C /* SettingsInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0DB56228BEB4E600B8FC4C /* SettingsInfo.swift */; };
 		CE1F5E3728D7339D00F61F67 /* CSIdentification.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1F5E3528D7339D00F61F67 /* CSIdentification.swift */; };
 		CE1F5E3A28D7399D00F61F67 /* CSIdentification.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1F5E3528D7339D00F61F67 /* CSIdentification.swift */; };
+		CE1F5E3C28D760D400F61F67 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1F5E3B28D760D400F61F67 /* Localization.swift */; };
+		CE1F5E3D28D760D400F61F67 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1F5E3B28D760D400F61F67 /* Localization.swift */; };
+		CE1F5E3E28D76C6D00F61F67 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE1F5E4128D76C6D00F61F67 /* Settings.storyboard */; };
+		CE1F5E3F28D76C6D00F61F67 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE1F5E4128D76C6D00F61F67 /* Settings.storyboard */; };
 		CE2B96C028A7E2BB00FE3DDB /* SleepKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2B96BF28A7E2BB00FE3DDB /* SleepKit.swift */; };
 		CE2B96C128A7E2BB00FE3DDB /* SleepKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2B96BF28A7E2BB00FE3DDB /* SleepKit.swift */; };
-		CE30CB9F28C4865C001E2AC6 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE30CB9E28C4865C001E2AC6 /* Settings.storyboard */; };
 		CE30CBA128C48995001E2AC6 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE30CBA028C48995001E2AC6 /* SettingsViewController.swift */; };
 		CE37DD0C283F80960060C43F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE37DD0A283F80960060C43F /* Main.storyboard */; };
 		CE39745A285A2193002D0EC9 /* SMCKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE37DD0D283F86F90060C43F /* SMCKit.swift */; };
@@ -32,7 +35,6 @@
 		CE3C1DA528CA2FF5008A0F7D /* AuthorizationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3C1DA428CA2FF5008A0F7D /* AuthorizationService.swift */; };
 		CE3C1DA728CA33FD008A0F7D /* LegacyHelperInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3C1DA628CA33FD008A0F7D /* LegacyHelperInfo.swift */; };
 		CE3C1DA828CA33FD008A0F7D /* LegacyHelperInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3C1DA628CA33FD008A0F7D /* LegacyHelperInfo.swift */; };
-		CE3C1DA928CA3702008A0F7D /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE30CB9E28C4865C001E2AC6 /* Settings.storyboard */; };
 		CE3E9FE128CBA34400642CBB /* me.mhaeuser.batterytoolkitlegacyd in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3C1DAF28CBA26E008A0F7D /* me.mhaeuser.batterytoolkitlegacyd */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		CE3E9FE228CBBE5700642CBB /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6B75FF28BC1995008DF170 /* ServiceManagement.framework */; };
 		CE50557128D65B48000E4387 /* XPCValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE50557028D65B48000E4387 /* XPCValidation.swift */; };
@@ -139,11 +141,12 @@
 		CE00654628A989EB0049B17D /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		CE0DB56228BEB4E600B8FC4C /* SettingsInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsInfo.swift; sourceTree = "<group>"; };
 		CE1F5E3528D7339D00F61F67 /* CSIdentification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSIdentification.swift; sourceTree = "<group>"; };
+		CE1F5E3B28D760D400F61F67 /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
+		CE1F5E4028D76C6D00F61F67 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Settings.storyboard; sourceTree = "<group>"; };
 		CE2B96BD28A7CEFE00FE3DDB /* IOPMLibPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOPMLibPrivate.h; sourceTree = "<group>"; };
 		CE2B96BF28A7E2BB00FE3DDB /* SleepKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepKit.swift; sourceTree = "<group>"; };
 		CE2B96C228A81C5100FE3DDB /* BTPreprocessor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BTPreprocessor.h; sourceTree = "<group>"; };
 		CE2B96C328A81CB900FE3DDB /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
-		CE30CB9E28C4865C001E2AC6 /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		CE30CBA028C48995001E2AC6 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		CE37DD0B283F80960060C43F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CE37DD0D283F86F90060C43F /* SMCKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMCKit.swift; sourceTree = "<group>"; };
@@ -311,7 +314,7 @@
 				CE39746D285A229F002D0EC9 /* BatteryToolkit.swift */,
 				CE397477285A25A1002D0EC9 /* DaemonXPCClient.swift */,
 				CE6B760628BC1ABC008DF170 /* AppXPCClient.swift */,
-				CE30CB9E28C4865C001E2AC6 /* Settings.storyboard */,
+				CE1F5E4128D76C6D00F61F67 /* Settings.storyboard */,
 				CE30CBA028C48995001E2AC6 /* SettingsViewController.swift */,
 				CE3C1DA228C9329F008A0F7D /* DaemonManagement.swift */,
 				CE3C1DA428CA2FF5008A0F7D /* AuthorizationService.swift */,
@@ -341,6 +344,7 @@
 				CE3C1DA628CA33FD008A0F7D /* LegacyHelperInfo.swift */,
 				CEB4A42728D3B184004FA277 /* StateInfo.swift */,
 				CE50557028D65B48000E4387 /* XPCValidation.swift */,
+				CE1F5E3B28D760D400F61F67 /* Localization.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -521,7 +525,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE3C1DA928CA3702008A0F7D /* Settings.storyboard in Resources */,
+				CE1F5E3F28D76C6D00F61F67 /* Settings.storyboard in Resources */,
 				CE397464285A2193002D0EC9 /* Main.storyboard in Resources */,
 				CE397465285A2193002D0EC9 /* Assets.xcassets in Resources */,
 			);
@@ -531,7 +535,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE30CB9F28C4865C001E2AC6 /* Settings.storyboard in Resources */,
+				CE1F5E3E28D76C6D00F61F67 /* Settings.storyboard in Resources */,
 				CE37DD0C283F80960060C43F /* Main.storyboard in Resources */,
 				CE52867B28298B6E00860C7B /* Assets.xcassets in Resources */,
 			);
@@ -597,6 +601,7 @@
 				CE8ED7F528C16A5800398581 /* PowerEvents.swift in Sources */,
 				CE8ED7F728C16AA200398581 /* Dispatcher.swift in Sources */,
 				CE0DB56528BEB4E600B8FC4C /* SettingsInfo.swift in Sources */,
+				CE1F5E3D28D760D400F61F67 /* Localization.swift in Sources */,
 				CE39745A285A2193002D0EC9 /* SMCKit.swift in Sources */,
 				CE8ED7F628C16A6500398581 /* PowerState.swift in Sources */,
 				CE2B96C128A7E2BB00FE3DDB /* SleepKit.swift in Sources */,
@@ -627,6 +632,7 @@
 				CEECE33028BB742500821A3B /* ServiceCommProtocol.swift in Sources */,
 				CE39746E285A229F002D0EC9 /* BatteryToolkit.swift in Sources */,
 				CE52868628298CA300860C7B /* AppDelegate.swift in Sources */,
+				CE1F5E3C28D760D400F61F67 /* Localization.swift in Sources */,
 				CE3C1DA728CA33FD008A0F7D /* LegacyHelperInfo.swift in Sources */,
 				CEB4A42828D3B184004FA277 /* StateInfo.swift in Sources */,
 				CEB4A42C28D3B97A004FA277 /* MenuBarExtraMenuDelegate.swift in Sources */,
@@ -662,6 +668,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		CE1F5E4128D76C6D00F61F67 /* Settings.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE1F5E4028D76C6D00F61F67 /* Base */,
+			);
+			name = Settings.storyboard;
+			sourceTree = "<group>";
+		};
 		CE37DD0A283F80960060C43F /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
