@@ -55,6 +55,7 @@
 		CE7F623328B95A7300EF58F9 /* BTPreprocessor.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE387BD28A836AA00C2007C /* BTPreprocessor.m */; };
 		CE7F623428B95A7E00EF58F9 /* BTPreprocessor.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE387BD28A836AA00C2007C /* BTPreprocessor.m */; };
 		CE7F623528B95A8200EF58F9 /* BTPreprocessor.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE387BD28A836AA00C2007C /* BTPreprocessor.m */; };
+		CE85D05F28D7B7E6005D1E0C /* DaemonManagementService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE85D05E28D7B7E6005D1E0C /* DaemonManagementService.swift */; };
 		CE8ED7F428C144EE00398581 /* Dispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8ED7F328C144EE00398581 /* Dispatcher.swift */; };
 		CE8ED7F528C16A5800398581 /* PowerEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC321AF284BAA2B009B9A30 /* PowerEvents.swift */; };
 		CE8ED7F628C16A6500398581 /* PowerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEECE31028BAB12000821A3B /* PowerState.swift */; };
@@ -65,8 +66,8 @@
 		CEA80FD2285A28230064ADEA /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3A8F6C284D056D00A9E373 /* Settings.swift */; };
 		CEA80FD6285A565C0064ADEA /* DaemonComm.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA80FD5285A565C0064ADEA /* DaemonComm.swift */; };
 		CEA80FD8285A56B60064ADEA /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA80FD7285A56B50064ADEA /* main.swift */; };
+		CEB09B7328D7B9A5007FFB37 /* DaemonManagementLegacy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB09B7228D7B9A5007FFB37 /* DaemonManagementLegacy.swift */; };
 		CEB4A42428D39ECE004FA277 /* DaemonManagementStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4A42328D39ECE004FA277 /* DaemonManagementStatus.swift */; };
-		CEB4A42528D39ECE004FA277 /* DaemonManagementStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4A42328D39ECE004FA277 /* DaemonManagementStatus.swift */; };
 		CEB4A42828D3B184004FA277 /* StateInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4A42728D3B184004FA277 /* StateInfo.swift */; };
 		CEB4A42928D3B184004FA277 /* StateInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4A42728D3B184004FA277 /* StateInfo.swift */; };
 		CEB4A42A28D3B184004FA277 /* StateInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4A42728D3B184004FA277 /* StateInfo.swift */; };
@@ -176,12 +177,14 @@
 		CE6B760828BC1D15008DF170 /* ServiceXPCServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceXPCServer.swift; sourceTree = "<group>"; };
 		CE6C06A028A8398600D76CC8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		CE6C06A428A84AAB00D76CC8 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
+		CE85D05E28D7B7E6005D1E0C /* DaemonManagementService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaemonManagementService.swift; sourceTree = "<group>"; };
 		CE8ED7F328C144EE00398581 /* Dispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dispatcher.swift; sourceTree = "<group>"; };
 		CEA80FCA285A270F0064ADEA /* BatteryToolkitStandalone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BatteryToolkitStandalone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEA80FD3285A51600064ADEA /* NSXPCConnectionAuditToken.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSXPCConnectionAuditToken.h; sourceTree = "<group>"; };
 		CEA80FD5285A565C0064ADEA /* DaemonComm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaemonComm.swift; sourceTree = "<group>"; };
 		CEA80FD7285A56B50064ADEA /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		CEA80FDA285A57030064ADEA /* DaemonCommProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaemonCommProtocol.swift; sourceTree = "<group>"; };
+		CEB09B7228D7B9A5007FFB37 /* DaemonManagementLegacy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaemonManagementLegacy.swift; sourceTree = "<group>"; };
 		CEB4671B2843BFA000D7CB01 /* SMCParamStruct.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMCParamStruct.h; sourceTree = "<group>"; };
 		CEB4671D2843C87200D7CB01 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		CEB4A42328D39ECE004FA277 /* DaemonManagementStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaemonManagementStatus.swift; sourceTree = "<group>"; };
@@ -242,6 +245,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CE0DA2BB28D7BFA800C35C45 /* DaemonManagement */ = {
+			isa = PBXGroup;
+			children = (
+				CEB4A42328D39ECE004FA277 /* DaemonManagementStatus.swift */,
+				CE3C1DA228C9329F008A0F7D /* DaemonManagement.swift */,
+				CE85D05E28D7B7E6005D1E0C /* DaemonManagementService.swift */,
+				CEB09B7228D7B9A5007FFB37 /* DaemonManagementLegacy.swift */,
+			);
+			path = DaemonManagement;
+			sourceTree = "<group>";
+		};
 		CE3974422859E518002D0EC9 /* me.mhaeuser.batterytoolkitd */ = {
 			isa = PBXGroup;
 			children = (
@@ -306,6 +320,7 @@
 		CE52867528298B6D00860C7B /* BatteryToolkit */ = {
 			isa = PBXGroup;
 			children = (
+				CE0DA2BB28D7BFA800C35C45 /* DaemonManagement */,
 				CEE95015285BC3EF00FF60E0 /* Info.plist */,
 				CE52867A28298B6E00860C7B /* Assets.xcassets */,
 				CE52867F28298B6E00860C7B /* BatteryToolkit.entitlements */,
@@ -316,9 +331,7 @@
 				CE6B760628BC1ABC008DF170 /* AppXPCClient.swift */,
 				CE1F5E4128D76C6D00F61F67 /* Settings.storyboard */,
 				CE30CBA028C48995001E2AC6 /* SettingsViewController.swift */,
-				CE3C1DA228C9329F008A0F7D /* DaemonManagement.swift */,
 				CE3C1DA428CA2FF5008A0F7D /* AuthorizationService.swift */,
-				CEB4A42328D39ECE004FA277 /* DaemonManagementStatus.swift */,
 				CEB4A42B28D3B97A004FA277 /* MenuBarExtraMenuDelegate.swift */,
 				CEB4A42E28D4D4D0004FA277 /* SettingsWindowController.swift */,
 			);
@@ -596,7 +609,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEED18AF28BCB24D005F06FC /* Settings.swift in Sources */,
-				CEB4A42528D39ECE004FA277 /* DaemonManagementStatus.swift in Sources */,
 				CE7F623328B95A7300EF58F9 /* BTPreprocessor.m in Sources */,
 				CE8ED7F528C16A5800398581 /* PowerEvents.swift in Sources */,
 				CE8ED7F728C16AA200398581 /* Dispatcher.swift in Sources */,
@@ -621,6 +633,7 @@
 				CE7F623528B95A8200EF58F9 /* BTPreprocessor.m in Sources */,
 				CEB4A42428D39ECE004FA277 /* DaemonManagementStatus.swift in Sources */,
 				CE3C1DA528CA2FF5008A0F7D /* AuthorizationService.swift in Sources */,
+				CEB09B7328D7B9A5007FFB37 /* DaemonManagementLegacy.swift in Sources */,
 				CE6B760728BC1ABC008DF170 /* AppXPCClient.swift in Sources */,
 				CE1F5E3A28D7399D00F61F67 /* CSIdentification.swift in Sources */,
 				CE3C1DA328C9329F008A0F7D /* DaemonManagement.swift in Sources */,
@@ -629,6 +642,7 @@
 				CE397478285A25A1002D0EC9 /* DaemonXPCClient.swift in Sources */,
 				CE0DB56328BEB4E600B8FC4C /* SettingsInfo.swift in Sources */,
 				CE30CBA128C48995001E2AC6 /* SettingsViewController.swift in Sources */,
+				CE85D05F28D7B7E6005D1E0C /* DaemonManagementService.swift in Sources */,
 				CEECE33028BB742500821A3B /* ServiceCommProtocol.swift in Sources */,
 				CE39746E285A229F002D0EC9 /* BatteryToolkit.swift in Sources */,
 				CE52868628298CA300860C7B /* AppDelegate.swift in Sources */,

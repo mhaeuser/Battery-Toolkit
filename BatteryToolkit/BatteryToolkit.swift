@@ -9,11 +9,11 @@ import BTPreprocessor
 @MainActor
 internal struct BatteryToolkit {
     internal static func startDaemon(reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
-        BTDaemonManagement.startDaemon(reply: reply)
+        BTDaemonManagement.start(reply: reply)
     }
 
     internal static func approveDaemon() {
-        BTDaemonManagement.approveDaemon()
+        BTDaemonManagement.approve()
     }
     
     internal static func stop() {
@@ -53,6 +53,6 @@ internal struct BatteryToolkit {
     }
     
     internal static func unregisterDaemon(reply: @Sendable @escaping (Bool) -> Void) {
-        BTDaemonManagement.unregisterDaemon(reply: reply)
+        BTDaemonManagement.unregister(reply: reply)
     }
 }
