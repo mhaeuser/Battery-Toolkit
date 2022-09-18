@@ -49,19 +49,21 @@ internal struct BTDaemonXPCClient {
         return connect
     }
 
-    private static func getDaemon() -> BTDaemonCommProtocol? {
-        // FIXME: Properly handle errors, e.g. force reinstall daemon.
-
+    private static func getDaemon(errorHandler: @escaping @Sendable () -> Void) -> BTDaemonCommProtocol {
         let connect = BTDaemonXPCClient.connectDaemon()
 
-        guard let daemon = connect.remoteObjectProxyWithErrorHandler({ error in
+        let daemon = connect.remoteObjectProxyWithErrorHandler({ error in
+            // FIXME: Properly handle errors, e.g. force reinstall daemon.
+
             os_log("XPC client remote object error: \(error)")
-        }) as? BTDaemonCommProtocol else {
-            os_log("XPC client remote object is malfored")
-            return nil
-        }
+            errorHandler()
+        }) as! BTDaemonCommProtocol
 
         return daemon
+    }
+
+    private static func getDaemon() -> BTDaemonCommProtocol {
+        return BTDaemonXPCClient.getDaemon() { }
     }
     
     internal static func stop() {
@@ -73,9 +75,18 @@ internal struct BTDaemonXPCClient {
 
         connect.invalidate()
     }
-    
+
+    internal static func getUniqueId(reply: @Sendable @escaping (NSData?) -> Void) -> Void {
+        let daemon = BTDaemonXPCClient.getDaemon() {
+            reply(nil)
+            return
+        }
+
+        daemon.getUniqueId(reply: reply)
+    }
+
     internal static func getState(reply: @Sendable @escaping ([String: AnyObject]) -> Void) -> Void {
-        guard let daemon = BTDaemonXPCClient.getDaemon() else {
+        let daemon = BTDaemonXPCClient.getDaemon() {
             reply([:])
             return
         }
@@ -85,41 +96,41 @@ internal struct BTDaemonXPCClient {
 
     internal static func disablePowerAdapter() -> Void {
         let daemon = BTDaemonXPCClient.getDaemon()
-        daemon?.execute(
+        daemon.execute(
             command: BTDaemonCommProtocolCommands.disablePowerAdapter.rawValue
             )
     }
 
     internal static func enablePowerAdapter() -> Void {
         let daemon = BTDaemonXPCClient.getDaemon()
-        daemon?.execute(
+        daemon.execute(
             command: BTDaemonCommProtocolCommands.enablePowerAdapter.rawValue
             )
     }
 
     internal static func chargeToMaximum() -> Void {
         let daemon = BTDaemonXPCClient.getDaemon()
-        daemon?.execute(
+        daemon.execute(
             command: BTDaemonCommProtocolCommands.chargeToMaximum.rawValue
             )
     }
 
     internal static func chargeToFull() -> Void {
         let daemon = BTDaemonXPCClient.getDaemon()
-        daemon?.execute(
+        daemon.execute(
             command: BTDaemonCommProtocolCommands.chargeToFull.rawValue
             )
     }
 
     internal static func disableCharging() -> Void {
         let daemon = BTDaemonXPCClient.getDaemon()
-        daemon?.execute(
+        daemon.execute(
             command: BTDaemonCommProtocolCommands.disableCharging.rawValue
         )
     }
 
     internal static func getSettings(reply: @Sendable @escaping ([String: AnyObject]) -> Void) {
-        guard let daemon = BTDaemonXPCClient.getDaemon() else {
+        let daemon = BTDaemonXPCClient.getDaemon() {
             reply([:])
             return
         }
@@ -129,12 +140,12 @@ internal struct BTDaemonXPCClient {
     
     internal static func setSettings(settings: [String: AnyObject]) -> Void {
         let daemon = BTDaemonXPCClient.getDaemon()
-        daemon?.setSettings(settings: settings)
+        daemon.setSettings(settings: settings)
     }
 
     internal static func removeLegacyHelperFiles() {
         let daemon = BTDaemonXPCClient.getDaemon()
-        daemon?.execute(
+        daemon.execute(
             command: BTDaemonCommProtocolCommands.removeLegacyHelperFiles.rawValue
             )
     }

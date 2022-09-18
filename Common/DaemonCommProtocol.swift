@@ -15,6 +15,7 @@ enum BTDaemonCommProtocolCommands: UInt8 {
 }
 
 @objc public protocol BTDaemonCommProtocol {
+    @MainActor func getUniqueId(reply: @Sendable @escaping (NSData?) -> Void) -> Void
     @MainActor func execute(command: UInt8) -> Void
     @MainActor func getState(reply: @Sendable @escaping ([String: AnyObject]) -> Void) -> Void
     @MainActor func getSettings(reply: @Sendable @escaping ([String: AnyObject]) -> Void) -> Void

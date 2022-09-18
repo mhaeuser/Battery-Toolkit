@@ -13,6 +13,10 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
         BTLegacyHelperInfo.legacyHelperPlist
     ]
 
+    @MainActor func getUniqueId(reply: @Sendable @escaping (NSData?) -> Void) -> Void {
+        reply(CSIdentification.getUniqueIdSelf())
+    }
+
     @MainActor internal func execute(command: UInt8) -> Void {
         switch command {
             case BTDaemonCommProtocolCommands.disablePowerAdapter.rawValue:

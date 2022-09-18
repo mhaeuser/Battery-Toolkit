@@ -47,26 +47,19 @@ internal struct BTAppXPCClient {
         return connect
     }
 
-    private static func getService() -> BTServiceCommProtocol? {
+    private static func getService(reply: @escaping @Sendable () -> Void) -> BTServiceCommProtocol {
         let connect = BTAppXPCClient.connectService()
 
-        guard let service = connect.remoteObjectProxyWithErrorHandler({ error in
+        let service = connect.remoteObjectProxyWithErrorHandler({ error in
             os_log("XPC app remote object error: \(error)")
-        }) as? BTServiceCommProtocol else {
-            os_log("XPC app remote object is malfored")
-            return nil
-        }
+        }) as! BTServiceCommProtocol
 
         return service
     }
 
     internal static func askAuthorization(reply: @Sendable @escaping (NSData?) -> Void) -> Void {
-        guard let service = BTAppXPCClient.getService() else {
-            DispatchQueue.global(qos: .userInitiated).async {
-                reply(nil)
-            }
-
-            return
+        let service = BTAppXPCClient.getService() {
+            reply(nil)
         }
 
         service.askAuthorization(reply: reply)

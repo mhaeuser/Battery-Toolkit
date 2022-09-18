@@ -35,6 +35,8 @@ internal struct BTDaemonManagement {
 
     @available(macOS, deprecated: 14.0)
     @MainActor private static func registerLegacyHelper(reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
+        os_log("Registering legacy helper")
+
         BTAuthorizationService.createEmptyAuthorization() { (auth) -> Void in
             assert(!Thread.isMainThread)
 
@@ -60,13 +62,6 @@ internal struct BTDaemonManagement {
             
             reply(BTDaemonManagement.Status(fromLegacySuccess: success))
         }
-    }
-    
-    @available(macOS, deprecated: 14.0)
-    @MainActor private static func startLegacyHelper(reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
-        os_log("Starting legacy helper")
-        // FIXME: Check daemon version and conditionally update
-        BTDaemonManagement.registerLegacyHelper(reply: reply)
     }
     
     @MainActor private static func unregisterLegacyHelper(reply: @Sendable @escaping (Bool) -> Void) {
@@ -189,7 +184,7 @@ internal struct BTDaemonManagement {
     }
     
     @available(macOS 14.0, *)
-    @MainActor private static func startDaemonService(reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
+    @MainActor private static func registerDaemonService(reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
         os_log("Starting daemon service")
         
         BTDaemonManagement.unregisterLegacyHelperService() { (success) -> Void in
@@ -197,18 +192,42 @@ internal struct BTDaemonManagement {
                 reply(BTDaemonManagement.Status.notRegistered)
                 return
             }
-            
-            // FIXME: Check daemon version and conditionally update
+
             let appService = SMAppService.daemon(plistName: BTDaemonManagement.daemonServicePlist)
             BTDaemonManagement.updateDaemonService(appService: appService, reply: reply)
         }
     }
+
+    private static func daemonUpToDate(daemonId: NSData?) -> Bool {
+        guard let daemonId = daemonId else {
+            os_log("Daemon unique ID is nil")
+            return false
+        }
+
+        let bundleId = CSIdentification.getBundleRelativeUniqueId(
+            relative: "Contents/Library/LaunchServices/me.mhaeuser.batterytoolkitd"
+            )
+        guard let bundleId = bundleId else {
+            os_log("Bundle daemon unique ID is nil")
+            return false
+        }
+
+        return bundleId.isEqual(to: daemonId)
+    }
     
     @MainActor internal static func startDaemon(reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
-        if #available(macOS 14.0, *) {
-            BTDaemonManagement.startDaemonService(reply: reply)
-        } else {
-            BTDaemonManagement.startLegacyHelper(reply: reply)
+        BTDaemonXPCClient.getUniqueId { (daemonId) -> Void in
+            if !BTDaemonManagement.daemonUpToDate(daemonId: daemonId) {
+                DispatchQueue.main.async {
+                    if #available(macOS 14.0, *) {
+                        BTDaemonManagement.registerDaemonService(reply: reply)
+                    } else {
+                        BTDaemonManagement.registerLegacyHelper(reply: reply)
+                    }
+                }
+            } else {
+                os_log("The daemon is unchanged, skip install")
+            }
         }
     }
     
