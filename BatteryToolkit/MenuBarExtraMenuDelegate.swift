@@ -36,7 +36,9 @@ final class MenuBarExtraMenuDelegate: NSObject, NSMenuDelegate {
     @IBOutlet weak var settingsItem: NSMenuItem!
     @IBOutlet weak var preferencesItem: NSMenuItem!
 
-    func menuWillOpen(_ menu: NSMenu) {
+    private var refreshTimer: DispatchSourceTimer? = nil
+
+    private func refresh() {
         BatteryToolkit.getState { (state) -> Void in
             DispatchQueue.main.async {
                 let powerNum        = state[BTStateInfo.Keys.power] as? NSNumber
@@ -212,6 +214,25 @@ final class MenuBarExtraMenuDelegate: NSObject, NSMenuDelegate {
             self.settingsItem.isHidden    = true
             self.preferencesItem.isHidden = false
         }
+    }
+
+    func menuWillOpen(_ menu: NSMenu) {
+        assert (self.refreshTimer == nil)
+
+        let timer = DispatchSource.makeTimerSource(queue: DispatchQueue.main)
+        timer.setEventHandler {
+            self.refresh()
+        }
+        timer.schedule(deadline: .now(), repeating: 5)
+        timer.resume()
+        self.refreshTimer = timer
+    }
+
+    func menuDidClose(_ menu: NSMenu) {
+        assert(self.refreshTimer != nil)
+
+        self.refreshTimer!.cancel()
+        self.refreshTimer = nil
     }
 
     @IBAction private func disablePowerAdapterHandler(sender: NSMenuItem) {
