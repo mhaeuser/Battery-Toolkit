@@ -11,7 +11,7 @@
             <objects>
                 <windowController storyboardIdentifier="SettingsWindowController" showSeguePresentationStyle="single" id="Svp-Rd-cF3" userLabel="SettingsWindowController" customClass="SettingsWindowController" customModule="BatteryToolkitStandalone" customModuleProvider="target" sceneMemberID="viewController">
                     <window key="window" title="Battery Toolkit Settings" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="utilityWindow" tabbingMode="disallowed" id="zbj-Ah-uH1">
-                        <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
+                        <windowStyleMask key="styleMask" titled="YES"/>
                         <windowCollectionBehavior key="collectionBehavior" fullScreenNone="YES" fullScreenDisallowsTiling="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="480" height="270"/>
@@ -67,7 +67,7 @@
                                     <constraint firstAttribute="height" constant="21" id="rsv-Oj-MN1"/>
                                     <constraint firstAttribute="width" constant="30" id="zsc-xi-mpZ"/>
                                 </constraints>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="70" drawsBackground="YES" id="elh-5S-Rel">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" title="70" drawsBackground="YES" id="elh-5S-Rel">
                                     <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="2zy-eb-0h8"/>
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -128,7 +128,7 @@
                                     <constraint firstAttribute="width" constant="30" id="L5G-Jm-a22"/>
                                     <constraint firstAttribute="height" constant="21" id="LcJ-uM-8qd"/>
                                 </constraints>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="80" drawsBackground="YES" id="GKW-RL-L6O">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" title="80" drawsBackground="YES" id="GKW-RL-L6O">
                                     <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="mBa-Eo-6ty"/>
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -205,7 +205,7 @@ Gw
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="BhX-ub-3xB"/>
                                 </constraints>
-                                <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" inset="2" id="Vxl-hW-i75">
+                                <buttonCell key="cell" type="push" title="Done" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" inset="2" id="Vxl-hW-i75">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                     <string key="keyEquivalent" base64-UTF8="YES">
