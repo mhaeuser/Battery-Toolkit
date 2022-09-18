@@ -23,7 +23,7 @@ public struct BTXPCValidation {
             [],
             &signInfo
             )
-        if infoStatus != errSecSuccess {
+        guard infoStatus == errSecSuccess else {
             os_log("Failed to retrieve signing information")
             return false
         }
@@ -54,7 +54,7 @@ public struct BTXPCValidation {
             .libraryValidation,
             .runtime
         ]
-        if (!codeFlags.contains(reqFlags)) {
+        guard codeFlags.contains(reqFlags) else {
             os_log("Signature flags constraints violated: \(signingFlags)")
             return false
         }
@@ -82,7 +82,7 @@ public struct BTXPCValidation {
                 return false
             }
 
-            if entitlement.key.starts(with: "com.apple.security.private.") {
+            guard !entitlement.key.starts(with: "com.apple.security.private.") else {
                 os_log("Client declares private entitlement \(entitlement.key)")
                 return false
             }
@@ -121,13 +121,13 @@ public struct BTXPCValidation {
             [],
             &requirement
             )
-        if reqStatus != errSecSuccess {
+        guard reqStatus == errSecSuccess else {
             return false
         }
 
         assert(requirement != nil);
 
-        if !BTXPCValidation.verifySignFlags(code: code) {
+        guard BTXPCValidation.verifySignFlags(code: code) else {
             return false
         }
 

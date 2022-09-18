@@ -17,7 +17,7 @@ internal struct BTServiceXPCServer {
     private static let listener = NSXPCListener.service()
 
     private static func accept(newConnection: NSXPCConnection) -> Bool {
-        if !BTXPCValidation.isValidClient(connection: newConnection) {
+        guard BTXPCValidation.isValidClient(connection: newConnection) else {
             os_log("XPC service connection by invalid client")
             return false
         }

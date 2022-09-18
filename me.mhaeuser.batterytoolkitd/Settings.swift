@@ -45,7 +45,7 @@ internal struct BTSettings {
         let maxCharge = UserDefaults.standard.integer(
             forKey: BTSettingsInfo.Keys.maxCharge
             )
-        if !BTSettingsInfo.chargeLimitsValid(minCharge: minCharge, maxCharge: maxCharge) {
+        guard BTSettingsInfo.chargeLimitsValid(minCharge: minCharge, maxCharge: maxCharge) else {
             os_log("Charge limits malformed, restore current values")
             BTSettings.write()
             return
@@ -56,7 +56,7 @@ internal struct BTSettings {
     }
     
     private static func setChargeLimits(minCharge: Int, maxCharge: Int) {
-        if !BTSettingsInfo.chargeLimitsValid(minCharge: minCharge, maxCharge: maxCharge) {
+        guard BTSettingsInfo.chargeLimitsValid(minCharge: minCharge, maxCharge: maxCharge) else {
             os_log("Client charge limits malformed, preserve current values")
             return
         }
@@ -68,7 +68,7 @@ internal struct BTSettings {
     }
     
     private static func setAdapterSleep(enabled: Bool) {
-        if BTSettings.adapterSleep == enabled {
+        guard BTSettings.adapterSleep != enabled else {
             return
         }
 

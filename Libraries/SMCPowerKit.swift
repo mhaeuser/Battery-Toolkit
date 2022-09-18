@@ -39,7 +39,7 @@ public struct SMCPowerKit {
         for keyInfo in SMCPowerKit.keys {
             do {
                 let info = try SMCKit.GetKeyInfo(key: keyInfo.key)
-                if keyInfo.info != info {
+                guard keyInfo.info == info else {
                     return false
                 }
             } catch {

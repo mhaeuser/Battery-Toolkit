@@ -69,7 +69,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private static func unregisterDaemon() {
         BatteryToolkit.unregisterDaemon() { (success) -> Void in
             DispatchQueue.main.async {
-                if !success {
+                guard success else {
                     AppDelegate.promptUnregisterDaemonError()
                     return
                 }

@@ -24,14 +24,14 @@ internal struct BTPowerEvents {
     }
 
     private static func registerLimitedPowerHandler() -> Bool {
-        if BTPowerEvents.powerCreated {
+        guard !BTPowerEvents.powerCreated else {
             return true
         }
 
         BTPowerEvents.powerCreated = BTDispatcher.registerLimitedPowerNotification(
             BTPowerEvents.LimitedPowerHandler
             )
-        if !BTPowerEvents.powerCreated {
+        guard BTPowerEvents.powerCreated else {
             return false
         }
 
@@ -41,7 +41,7 @@ internal struct BTPowerEvents {
     }
     
     private static func unregisterLimitedPowerHandler() {
-        if !BTPowerEvents.powerCreated {
+        guard BTPowerEvents.powerCreated else {
             return
         }
 
@@ -50,14 +50,14 @@ internal struct BTPowerEvents {
     }
 
     private static func registerPercentChangedHandler() -> Bool {
-        if BTPowerEvents.percentCreated {
+        guard !BTPowerEvents.percentCreated else {
             return true
         }
 
         BTPowerEvents.percentCreated = BTDispatcher.registerPercentChangeNotification(
             BTPowerEvents.PercentChangeHandler
             )
-        if !BTPowerEvents.percentCreated {
+        guard BTPowerEvents.percentCreated else {
             return false
         }
 
@@ -85,7 +85,7 @@ internal struct BTPowerEvents {
     }
 
     private static func unregisterPercentChangedHandler() {
-        if !BTPowerEvents.percentCreated {
+        guard BTPowerEvents.percentCreated else {
             return
         }
         
@@ -103,7 +103,7 @@ internal struct BTPowerEvents {
 
         var percent: Int32 = 100
         let result = IOPSGetPercentRemaining(&percent, nil, nil)
-        if result != kIOReturnSuccess {
+        guard result == kIOReturnSuccess else {
             os_log("Failed to retrieve battery percent")
             return 100;
         }
@@ -179,20 +179,20 @@ internal struct BTPowerEvents {
     }
 
     internal static func start() -> Bool {
-        let smcResult = SMCKit.start()
-        if !smcResult {
+        let smcSuccess = SMCKit.start()
+        guard smcSuccess else {
             return false
         }
 
-        if !SMCPowerKit.supported() {
+        guard SMCPowerKit.supported() else {
             SMCKit.stop()
             return false
         }
         
         BTSettings.read()
         
-        let registerResult = registerLimitedPowerHandler()
-        if !registerResult {
+        let registerSuccess = registerLimitedPowerHandler()
+        guard registerSuccess else {
             SMCKit.stop()
             return false
         }
@@ -211,7 +211,7 @@ internal struct BTPowerEvents {
     }
     
     internal static func settingsChanged() {
-        if !BTPowerEvents.percentCreated {
+        guard BTPowerEvents.percentCreated else {
             return
         }
 
@@ -225,13 +225,13 @@ internal struct BTPowerEvents {
         // charging to not disable sleep. The charging mode will be handled by
         // power source handler when power is connected.
         //
-        if !BTPowerEvents.percentCreated {
+        guard BTPowerEvents.percentCreated else {
             return
         }
         
         var percent: Int32 = 100
         let result = IOPSGetPercentRemaining(&percent, nil, nil)
-        if result != kIOReturnSuccess {
+        guard result == kIOReturnSuccess else {
             os_log("Failed to retrieve battery percent")
             return;
         }
@@ -259,7 +259,7 @@ internal struct BTPowerEvents {
     internal static func getChargingProgress() -> BTStateInfo.ChargingProgress {
         var percent: Int32 = 100
         let result = IOPSGetPercentRemaining(&percent, nil, nil)
-        if result != kIOReturnSuccess {
+        guard result == kIOReturnSuccess else {
             os_log("Failed to retrieve battery percent")
             return BTStateInfo.ChargingProgress.full;
         }

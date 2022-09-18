@@ -14,7 +14,7 @@ public struct CSIdentification {
             [],
             &signInfo
             )
-        if infoStatus != errSecSuccess {
+        guard infoStatus == errSecSuccess else {
             os_log("Failed to retrieve signing information")
             return nil
         }

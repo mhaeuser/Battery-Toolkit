@@ -9,7 +9,7 @@ import os.log
 @MainActor
 private func main() -> Never {
     let powerResult = BTPowerEvents.start()
-    if !powerResult {
+    guard powerResult else {
         os_log("Power events start failed")
         exit(-1)
     }

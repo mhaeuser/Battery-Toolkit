@@ -112,7 +112,7 @@ public struct SMCKit {
             kIOMasterPortDefault,
             IOServiceMatching("AppleSMC")
             )
-        if smc == IO_OBJECT_NULL {
+        guard smc != IO_OBJECT_NULL else {
             return false
         }
         //
@@ -124,7 +124,7 @@ public struct SMCKit {
             1,
             &SMCKit.SMCConnect
             )
-        if resultOpen != kIOReturnSuccess {
+        guard resultOpen == kIOReturnSuccess else {
             assert(SMCKit.SMCConnect == IO_OBJECT_NULL)
             return false
         }
@@ -183,8 +183,8 @@ public struct SMCKit {
             &outputValues,
             &outStructSize
             )
-        if resultCall != kIOReturnSuccess
-         || outputValues.result != UInt8(kSMCSuccess) {
+        guard resultCall == kIOReturnSuccess &&
+                outputValues.result == UInt8(kSMCSuccess) else {
             throw SMCKitError.native(
                 kIOReturn: resultCall,
                 SMCResult: outputValues.result

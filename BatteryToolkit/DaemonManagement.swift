@@ -129,7 +129,7 @@ internal struct BTDaemonManagement {
         //
         // Any other status code makes unregister() loop indefinitely.
         //
-        if appService.status != SMAppService.Status.enabled {
+        guard appService.status == SMAppService.Status.enabled else {
             DispatchQueue.global(qos: .userInitiated).async {
                 reply(true)
             }
@@ -152,7 +152,7 @@ internal struct BTDaemonManagement {
 
         let legacyUrl = URL(fileURLWithPath: BTLegacyHelperInfo.legacyHelperPlist, isDirectory: false)
         let status    = SMAppService.statusForLegacyPlist(at: legacyUrl)
-        if !BTDaemonManagement.daemonServiceRegistered(status: status) {
+        guard BTDaemonManagement.daemonServiceRegistered(status: status) else {
             os_log("Legacy helper is not registered")
             reply(true)
             return
@@ -170,7 +170,7 @@ internal struct BTDaemonManagement {
 
             for _ in 0...2 {
                 BTDaemonManagement.registerDaemonServiceSync(appService: appService)
-                if BTDaemonManagement.daemonServiceRegistered(status: appService.status) {
+                guard !BTDaemonManagement.daemonServiceRegistered(status: appService.status) else {
                     reply(BTDaemonManagement.Status(fromSMStatus: appService.status))
                     return
                 }
@@ -188,7 +188,7 @@ internal struct BTDaemonManagement {
         os_log("Starting daemon service")
         
         BTDaemonManagement.unregisterLegacyHelperService() { (success) -> Void in
-            if !success {
+            guard success else {
                 reply(BTDaemonManagement.Status.notRegistered)
                 return
             }
@@ -217,7 +217,7 @@ internal struct BTDaemonManagement {
     
     @MainActor internal static func startDaemon(reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
         BTDaemonXPCClient.getUniqueId { (daemonId) -> Void in
-            if !BTDaemonManagement.daemonUpToDate(daemonId: daemonId) {
+            guard BTDaemonManagement.daemonUpToDate(daemonId: daemonId) else {
                 DispatchQueue.main.async {
                     if #available(macOS 14.0, *) {
                         BTDaemonManagement.registerDaemonService(reply: reply)
@@ -225,19 +225,22 @@ internal struct BTDaemonManagement {
                         BTDaemonManagement.registerLegacyHelper(reply: reply)
                     }
                 }
-            } else {
-                os_log("The daemon is unchanged, skip install")
-                reply(BTDaemonManagement.Status.enabled)
+
+                return
             }
+
+            os_log("Daemon is up-to-date, skip install")
+            reply(BTDaemonManagement.Status.enabled)
         }
     }
     
     internal static func approveDaemon() {
-        if #available(macOS 14.0, *) {
-            SMAppService.openSystemSettingsLoginItems()
-        } else {
+        guard #available(macOS 14.0, *) else {
             assert(false)
+            return
         }
+
+        SMAppService.openSystemSettingsLoginItems()
     }
     
     @MainActor internal static func unregisterDaemon(reply: @Sendable @escaping (Bool) -> Void) {

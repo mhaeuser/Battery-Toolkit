@@ -73,12 +73,12 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
         // CommandLine is logically immutable and thus concurrency-safe.
         //
         let args = CommandLine.arguments
-        if args.count <= 0 {
+        guard args.count > 0 else {
             os_log("No command line arguments provided")
             return
         }
         
-        if args[0] != BTDaemonComm.legacyHelperFiles[0] {
+        guard args[0] == BTDaemonComm.legacyHelperFiles[0] else {
             os_log("Legacy helper launched from unexpected location: \(args[0])")
             return
         }

@@ -16,7 +16,7 @@ internal final class BTServiceComm: NSObject, BTServiceCommProtocol {
         
         var extAuth = AuthorizationExternalForm()
         let extStatus = AuthorizationMakeExternalForm(auth, &extAuth)
-        if extStatus != errAuthorizationSuccess {
+        guard extStatus == errAuthorizationSuccess else {
             reply(nil)
             return
         }

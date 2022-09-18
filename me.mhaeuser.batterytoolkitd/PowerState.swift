@@ -35,7 +35,7 @@ internal struct BTPowerState {
         //
         // If power is disabled, toggle sleep.
         //
-        if !BTPowerState.powerDisabled {
+        guard BTPowerState.powerDisabled else {
             return
         }
 
@@ -47,12 +47,12 @@ internal struct BTPowerState {
     }
 
     internal static func disableCharging() {
-        if BTPowerState.chargingDisabled {
+        guard !BTPowerState.chargingDisabled else {
             return
         }
 
-        let result = SMCPowerKit.disableCharging()
-        if !result {
+        let success = SMCPowerKit.disableCharging()
+        guard success else {
             os_log("Failed to disable charging")
             return
         }
@@ -79,7 +79,7 @@ internal struct BTPowerState {
     }
 
     internal static func disablePowerAdapter() {
-        if BTPowerState.powerDisabled {
+        guard !BTPowerState.powerDisabled else {
             return
         }
 
@@ -87,8 +87,8 @@ internal struct BTPowerState {
             SleepKit.disableSleep()
         }
 
-        let result = SMCPowerKit.disablePowerAdapter()
-        if !result {
+        let success = SMCPowerKit.disablePowerAdapter()
+        guard success else {
             if !BTSettings.adapterSleep {
                 SleepKit.restoreSleep()
             }
@@ -101,12 +101,12 @@ internal struct BTPowerState {
     }
 
     internal static func enablePowerAdapter() {
-        if !BTPowerState.powerDisabled {
+        guard BTPowerState.powerDisabled else {
             return
         }
 
-        let result = SMCPowerKit.enablePowerAdapter()
-        if !result {
+        let success = SMCPowerKit.enablePowerAdapter()
+        guard success else {
             os_log("Failed to enable power adapter")
             return
         }

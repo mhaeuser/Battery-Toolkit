@@ -27,7 +27,7 @@ internal struct BTDaemonXPCServer {
     }
     
     private static func accept(newConnection: NSXPCConnection) -> Bool {
-        if !BTXPCValidation.isValidClient(connection: newConnection) {
+        guard BTXPCValidation.isValidClient(connection: newConnection) else {
             os_log("XPC server connection by invalid client")
             return false
         }
