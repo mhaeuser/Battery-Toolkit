@@ -227,6 +227,7 @@ internal struct BTDaemonManagement {
                 }
             } else {
                 os_log("The daemon is unchanged, skip install")
+                reply(BTDaemonManagement.Status.enabled)
             }
         }
     }
