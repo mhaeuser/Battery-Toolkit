@@ -38,7 +38,7 @@ final class MenuBarExtraMenuDelegate: NSObject, NSMenuDelegate {
 
     private var refreshTimer: DispatchSourceTimer? = nil
 
-    private func refresh() {
+    @MainActor private func refresh() {
         BatteryToolkit.getState { (state) -> Void in
             DispatchQueue.main.async {
                 let powerNum        = state[BTStateInfo.Keys.power] as? NSNumber
@@ -216,7 +216,12 @@ final class MenuBarExtraMenuDelegate: NSObject, NSMenuDelegate {
         }
     }
 
-    func menuWillOpen(_ menu: NSMenu) {
+    //
+    // NSMenuDelegate is implicitly @MainActor and thus the warnings are
+    // misleading.
+    //
+
+    @MainActor func menuWillOpen(_ menu: NSMenu) {
         assert (self.refreshTimer == nil)
 
         let timer = DispatchSource.makeTimerSource(queue: DispatchQueue.main)
