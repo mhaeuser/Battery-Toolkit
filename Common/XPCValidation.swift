@@ -20,7 +20,7 @@ public struct BTXPCValidation {
         var signInfo: CFDictionary? = nil
         let infoStatus = SecCodeCopySigningInformation(
             staticCode,
-            SecCSFlags(rawValue: kSecCSDynamicInformation),
+            [],
             &signInfo
             )
         if infoStatus != errSecSuccess {
@@ -33,7 +33,7 @@ public struct BTXPCValidation {
             return false
         }
 
-        guard let signingFlags = signInfo["flags"] as? UInt32 else {
+        guard let signingFlags = signInfo[kSecCodeInfoFlags as String] as? UInt32 else {
             os_log("Failed to retrieve signature flags")
             return false
         }
@@ -59,7 +59,7 @@ public struct BTXPCValidation {
             return false
         }
 
-        guard let entitlements = signInfo["entitlements-dict"] as? [String: AnyObject] else {
+        guard let entitlements = signInfo[kSecCodeInfoEntitlementsDict as String] as? [String: AnyObject] else {
             os_log("Failed to retrieve entitlements")
             return false
         }
@@ -110,10 +110,10 @@ public struct BTXPCValidation {
             return false
         }
 
-        let entitlements = "identifier \"" + BT_APP_NAME +
-            "\" and anchor apple generic and certificate leaf[subject.CN] = \"" +
-            BT_CODE_SIGN_CN +
-            "\" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */"
+        let entitlements = "identifier \"" + BT_APP_NAME + "\"" +
+            " and anchor apple generic" +
+            " and certificate leaf[subject.CN] = \"" + BT_CODE_SIGN_CN + "\"" +
+            " and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */"
 
         var requirement: SecRequirement? = nil
         let reqStatus = SecRequirementCreateWithString(
