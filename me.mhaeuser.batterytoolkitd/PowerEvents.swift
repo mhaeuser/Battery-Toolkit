@@ -91,11 +91,6 @@ internal struct BTPowerEvents {
         
         BTDispatcher.unregisterPercentChangeNotification()
         BTPowerEvents.percentCreated = false
-        //
-        // Disable charging to not have micro-charges happening when
-        // connecting to power.
-        //
-        BTPowerState.disableCharging()
     }
     
     private static func handleChargeHysteresis() -> Int32 {
@@ -164,9 +159,16 @@ internal struct BTPowerEvents {
         } else {
             BTPowerEvents.unregisterPercentChangedHandler()
             //
+            // Disable charging to not have micro-charges happening when
+            // connecting to power. The sleep state may not have been
+            // initialized yet, but the disableSleep() call from the setup phase
+            // can be released by this call.
+            //
+            BTPowerState.disableCharging()
+            //
             // Force restoring sleep to not ever disable sleep when not
             // connected to power. This call implicitly restores sleep from the
-            // setup phase.
+            // setup phase, if not already restored by disableCharging().
             //
             SleepKit.forceRestoreSleep()
         }
