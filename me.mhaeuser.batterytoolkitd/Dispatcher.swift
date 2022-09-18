@@ -4,6 +4,7 @@
 */
 
 import Foundation
+import os.log
 import notify
 import Dispatch
 import IOPMPrivate
@@ -56,7 +57,7 @@ internal struct BTDispatcher {
 
         let result = BTDispatcher.unregisterDispatch(token: BTDispatcher.percentToken)
         if !result {
-            // FIXME: Handle error
+            os_log("Failed to unregister limited percent change notification")
         }
 
         BTDispatcher.percentToken = 0
@@ -67,7 +68,7 @@ internal struct BTDispatcher {
 
         let result = BTDispatcher.unregisterDispatch(token: BTDispatcher.powerToken)
         if !result {
-            // FIXME: Handle error
+            os_log("Failed to unregister limited power notification")
         }
 
         BTDispatcher.powerToken = 0

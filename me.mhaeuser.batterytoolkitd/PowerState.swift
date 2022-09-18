@@ -4,6 +4,7 @@
 */
 
 import Foundation
+import os.log
 
 @MainActor
 internal struct BTPowerState {
@@ -52,7 +53,7 @@ internal struct BTPowerState {
 
         let result = SMCPowerKit.disableCharging()
         if !result {
-            // FIXME: Handle error
+            os_log("Failed to disable charging")
             return
         }
         
@@ -68,7 +69,7 @@ internal struct BTPowerState {
 
         let result = SMCPowerKit.enableCharging()
         if !result {
-            // FIXME: Handle error
+            os_log("Failed to enable charging")
             return
         }
         
@@ -91,7 +92,8 @@ internal struct BTPowerState {
             if !BTSettings.adapterSleep {
                 SleepKit.restoreSleep()
             }
-            // TODO: Handle error
+
+            os_log("Failed to disable power adapter")
             return
         }
 
@@ -105,7 +107,7 @@ internal struct BTPowerState {
 
         let result = SMCPowerKit.enablePowerAdapter()
         if !result {
-            // TODO: Handle error
+            os_log("Failed to enable power adapter")
             return
         }
         

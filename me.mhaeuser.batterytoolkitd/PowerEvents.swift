@@ -4,6 +4,7 @@
 */
 
 import Foundation
+import os.log
 import IOKit.ps
 import IOPMPrivate
 
@@ -103,7 +104,7 @@ internal struct BTPowerEvents {
         var percent: Int32 = 100
         let result = IOPSGetPercentRemaining(&percent, nil, nil)
         if result != kIOReturnSuccess {
-            // FIXME: Handle error
+            os_log("Failed to retrieve battery percent")
             return 100;
         }
         //
@@ -153,8 +154,8 @@ internal struct BTPowerEvents {
             
             let result = BTPowerEvents.registerPercentChangedHandler()
             if !result {
+                os_log("Failed to register percent changed handler")
                 BTPowerEvents.restoreDefaults()
-                // FIXME: Handle error
             }
             //
             // Restore sleep from the setup phase.
@@ -231,7 +232,7 @@ internal struct BTPowerEvents {
         var percent: Int32 = 100
         let result = IOPSGetPercentRemaining(&percent, nil, nil)
         if result != kIOReturnSuccess {
-            // FIXME: Handle error
+            os_log("Failed to retrieve battery percent")
             return;
         }
 
@@ -259,6 +260,7 @@ internal struct BTPowerEvents {
         var percent: Int32 = 100
         let result = IOPSGetPercentRemaining(&percent, nil, nil)
         if result != kIOReturnSuccess {
+            os_log("Failed to retrieve battery percent")
             return BTStateInfo.ChargingProgress.full;
         }
 
