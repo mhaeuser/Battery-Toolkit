@@ -20,6 +20,14 @@ internal struct BTPowerEvents {
     }
 
     private static func PercentChangeHandler(token: Int32) {
+        //
+        // An unlucky dispatching order of LimitedPower and PercentChanged
+        // events may cause this constraint to actually be violated.
+        //
+        guard BTPowerEvents.percentCreated else {
+            return
+        }
+
         _ = BTPowerEvents.handleChargeHysteresis()
     }
 
@@ -27,6 +35,18 @@ internal struct BTPowerEvents {
         guard !BTPowerEvents.powerCreated else {
             return true
         }
+        //
+        // The charging state has no default value when starting the daemon.
+        // We do not want to default to enabled, because this may cause many
+        // micro-charges when continuously updating the daemon.
+        // We do not want to default to disabled, because this may cause
+        // micro-charges when starting the service after a fresh boot (e.g.,
+        // on Apple Silicon devices, where the SMC state is reset to
+        // defaults when resetting the platform).
+        //
+        // Initialize the sleep state based on the current platform state.
+        //
+        BTPowerState.initSleepState()
 
         BTPowerEvents.powerCreated = BTDispatcher.registerLimitedPowerNotification(
             BTPowerEvents.LimitedPowerHandler
@@ -134,44 +154,23 @@ internal struct BTPowerEvents {
         SleepKit.disableSleep()
 
         if IOPSDrawingUnlimitedPower() {
-            //
-            // The charging state has no default value when starting the daemon.
-            // We do not want to default to enabled, because this may cause many
-            // micro-charges when continuously updating the daemon.
-            // We do not want to default to disabled, because this may cause
-            // micro-charges when starting the service after a fresh boot (e.g.,
-            // on Apple Silicon devices, where the SMC state is reset to
-            // defaults when resetting the platform).
-            //
-            // Initialize the sleep state based on the current platform state.
-            //
-            BTPowerState.initSleepState()
-            
             let result = BTPowerEvents.registerPercentChangedHandler()
             if !result {
                 os_log("Failed to register percent changed handler")
                 BTPowerEvents.restoreDefaults()
             }
-            //
-            // Restore sleep from the setup phase.
-            //
-            SleepKit.restoreSleep()
         } else {
             BTPowerEvents.unregisterPercentChangedHandler()
             //
             // Disable charging to not have micro-charges happening when
-            // connecting to power. The sleep state may not have been
-            // initialized yet, but the disableSleep() call from the setup phase
-            // can be released by this call.
+            // connecting to power.
             //
             BTPowerState.disableCharging()
-            //
-            // Force restoring sleep to not ever disable sleep when not
-            // connected to power. This call implicitly restores sleep from the
-            // setup phase, if not already restored by disableCharging().
-            //
-            SleepKit.forceRestoreSleep()
         }
+        //
+        // Restore sleep from the setup phase.
+        //
+        SleepKit.restoreSleep()
     }
 
     private static func restoreDefaults() {
