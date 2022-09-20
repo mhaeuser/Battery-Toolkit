@@ -37,11 +37,6 @@ internal struct BTDaemonManagementService {
 
         assert(!Thread.isMainThread)
 
-        /*if registered(status: appService.status) {
-         os_log("Daemon already registered: \(appService.status)")
-         return
-         }*/
-
         do {
             try appService.register()
         } catch {
@@ -85,24 +80,30 @@ internal struct BTDaemonManagementService {
         BTDaemonManagementLegacy.unregister(reply: reply)
     }
 
+    private static func forceRegister(appService: SMAppService, run: UInt8, reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
+        guard run < 6 else {
+            reply(.notRegistered)
+            return
+        }
+
+        DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 0.5) {
+            registerSync(appService: appService)
+            guard registered(status: appService.status) else {
+                forceRegister(appService: appService, run: run + 1, reply: reply)
+                return
+            }
+
+            reply(BTDaemonManagement.Status(fromSMStatus: appService.status))
+        }
+    }
+
     private static func update(appService: SMAppService, reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
         os_log("Updating daemon service")
 
         unregisterService(appService: appService) { _ in
             assert(!Thread.isMainThread)
 
-            for _ in 0...2 {
-                registerSync(appService: appService)
-                guard !registered(status: appService.status) else {
-                    reply(BTDaemonManagement.Status(fromSMStatus: appService.status))
-                    return
-                }
-
-                // FIXME: Replace sleep() with DispatchQueue.asyncAfter()
-                sleep(1)
-            }
-
-            reply(.notRegistered)
+            forceRegister(appService: appService, run: 0, reply: reply)
         }
     }
 
