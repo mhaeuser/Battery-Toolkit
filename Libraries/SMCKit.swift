@@ -118,21 +118,20 @@ public struct SMCKit {
         //
         // mach_task_self_ is logically immutable and thus concurrency-safe.
         //
+        var connect: io_connect_t = IO_OBJECT_NULL
         let resultOpen = IOServiceOpen(
             smc,
             mach_task_self_,
             1,
-            &SMCKit.SMCConnect
+            &connect
             )
-        guard resultOpen == kIOReturnSuccess else {
-            assert(SMCKit.SMCConnect == IO_OBJECT_NULL)
+        guard resultOpen == kIOReturnSuccess, connect != IO_OBJECT_NULL else {
             return false
         }
-        
-        assert(SMCKit.SMCConnect != IO_OBJECT_NULL)
-        
+
+        SMCKit.SMCConnect = connect
         IOConnectCallMethod(
-            SMCKit.SMCConnect,
+            connect,
             UInt32(kSMCUserClientOpen),
             nil,
             0,

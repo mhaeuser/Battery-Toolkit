@@ -121,11 +121,9 @@ public struct BTXPCValidation {
             [],
             &requirement
             )
-        guard reqStatus == errSecSuccess else {
+        guard reqStatus == errSecSuccess, let requirement = requirement else {
             return false
         }
-
-        assert(requirement != nil);
 
         guard BTXPCValidation.verifySignFlags(code: code) else {
             return false

@@ -11,10 +11,15 @@ import IOPMPrivate
 
 @MainActor
 internal struct BTDispatcher {
-    private static var percentToken: Int32 = 0
-    private static var powerToken: Int32   = 0
+    fileprivate struct Registration {
+        fileprivate var valid: Bool  = false
+        fileprivate var token: Int32 = 0
+    }
 
-    private static func registerDispatch(_ notify_type: UnsafePointer<CChar>!, _ handler: @MainActor @escaping (Int32) -> Void) -> Int32 {
+    private static var percentRegistration = Registration()
+    private static var powerRegistration   = Registration()
+
+    private static func registerDispatch(_ notify_type: String, _ handler: @MainActor @escaping (Int32) -> Void) -> BTDispatcher.Registration {
         //
         // The warning about losing MainActor is misleading as notifications are
         // always posted to DispatchQueue.main as per the registration.
@@ -26,51 +31,54 @@ internal struct BTDispatcher {
             DispatchQueue.main,
             handler
             )
-        return status == NOTIFY_STATUS_OK ? token : 0
+        return Registration(valid: status == NOTIFY_STATUS_OK, token: token)
     }
     
-    private static func unregisterDispatch(token: Int32) -> Bool {
-        return notify_cancel(token) == NOTIFY_STATUS_OK
+    private static func unregisterDispatch(registration: BTDispatcher.Registration) -> Bool {
+        assert(registration.valid)
+
+        return notify_cancel(registration.token) == NOTIFY_STATUS_OK
     }
     
     internal static func registerLimitedPowerNotification(_ handler: @MainActor @escaping (Int32) -> Void) -> Bool {
-        assert(BTDispatcher.powerToken == 0)
-        BTDispatcher.powerToken = BTDispatcher.registerDispatch(
+        assert(!BTDispatcher.powerRegistration.valid)
+
+        BTDispatcher.powerRegistration = BTDispatcher.registerDispatch(
             kIOPSNotifyPowerSource,
             handler
             )
-        return BTDispatcher.powerToken != 0
+        return BTDispatcher.powerRegistration.valid
     }
     
     internal static func registerPercentChangeNotification(_ handler: @MainActor @escaping (Int32) -> Void) -> Bool {
-        assert(BTDispatcher.percentToken == 0)
+        assert(!BTDispatcher.percentRegistration.valid)
 
-        BTDispatcher.percentToken = BTDispatcher.registerDispatch(
+        BTDispatcher.percentRegistration = BTDispatcher.registerDispatch(
             kIOPSNotifyPercentChange,
             handler
             )
-        return BTDispatcher.percentToken != 0
+        return BTDispatcher.percentRegistration.valid
     }
     
     internal static func unregisterPercentChangeNotification() {
-        assert(BTDispatcher.percentToken != 0)
-
-        let result = BTDispatcher.unregisterDispatch(token: BTDispatcher.percentToken)
+        let result = BTDispatcher.unregisterDispatch(
+            registration: BTDispatcher.percentRegistration
+            )
         if !result {
-            os_log("Failed to unregister limited percent change notification")
+            os_log("Failed to unregister percent change notification")
         }
 
-        BTDispatcher.percentToken = 0
+        BTDispatcher.percentRegistration = BTDispatcher.Registration()
     }
     
     internal static func unregisterLimitedPowerNotification() {
-        assert(BTDispatcher.powerToken != 0)
-
-        let result = BTDispatcher.unregisterDispatch(token: BTDispatcher.powerToken)
+        let result = BTDispatcher.unregisterDispatch(
+            registration: BTDispatcher.powerRegistration
+            )
         if !result {
             os_log("Failed to unregister limited power notification")
         }
 
-        BTDispatcher.powerToken = 0
+        BTDispatcher.powerRegistration = BTDispatcher.Registration()
     }
 }
