@@ -141,4 +141,8 @@ final class SettingsViewController: NSViewController {
         super.viewDidLoad()
         self.initSettingsState()
     }
+
+    override func viewWillAppear() {
+        NSApplication.shared.activate(ignoringOtherApps: true)
+    }
 }
