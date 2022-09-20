@@ -65,6 +65,18 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationWillTerminate(_ aNotification: Notification) {
         BatteryToolkit.stop()
     }
+
+    func applicationWillBecomeActive(_ notification: Notification) {
+        _ = NSApplication.shared.setActivationPolicy(.regular)
+    }
+
+    func applicationWillResignActive(_ notification: Notification) {
+        guard NSApplication.shared.keyWindow == nil else {
+            return
+        }
+
+        _ = NSApplication.shared.setActivationPolicy(.accessory)
+    }
     
     private static func unregisterDaemon() {
         BatteryToolkit.unregisterDaemon() { (success) -> Void in
