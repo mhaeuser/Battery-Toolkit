@@ -14,8 +14,6 @@ private func main() -> Never {
         exit(-1)
     }
 
-    BTDaemonXPCServer.start()
-
     let termSource = DispatchSource.makeSignalSource(signal: SIGTERM)
     termSource.setEventHandler {
         BTPowerEvents.stop()
@@ -26,6 +24,8 @@ private func main() -> Never {
     // Ignore SIGTERM to catch it above and gracefully stop the service.
     //
     signal(SIGTERM, SIG_IGN)
+
+    BTDaemonXPCServer.start()
 
     dispatchMain()
 }
