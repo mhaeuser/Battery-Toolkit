@@ -10,9 +10,7 @@ import BTPreprocessor
 
 internal extension BTDaemonManagement.Status {
     init(fromLegacySuccess: Bool) {
-        self = fromLegacySuccess ?
-            BTDaemonManagement.Status.enabled :
-            BTDaemonManagement.Status.notRegistered
+        self = fromLegacySuccess ? .enabled : .notRegistered
     }
 }
 
@@ -27,7 +25,7 @@ internal struct BTDaemonManagementLegacy {
             assert(!Thread.isMainThread)
 
             guard let auth = auth else {
-                reply(BTDaemonManagement.Status.notRegistered)
+                reply(.notRegistered)
                 return
             }
 

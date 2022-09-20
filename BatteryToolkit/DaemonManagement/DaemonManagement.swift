@@ -29,7 +29,7 @@ internal struct BTDaemonManagement {
 
     @MainActor internal static func start(reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
         BTDaemonXPCClient.getUniqueId { (daemonId) -> Void in
-            guard BTDaemonManagement.daemonUpToDate(daemonId: daemonId) else {
+            guard daemonUpToDate(daemonId: daemonId) else {
                 DispatchQueue.main.async {
                     if #available(macOS 14.0, *) {
                         BTDaemonManagementService.register(reply: reply)
@@ -42,7 +42,7 @@ internal struct BTDaemonManagement {
             }
 
             os_log("Daemon is up-to-date, skip install")
-            reply(BTDaemonManagement.Status.enabled)
+            reply(.enabled)
         }
     }
     

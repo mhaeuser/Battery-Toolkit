@@ -103,10 +103,10 @@ public enum SMCKitError: Error {
 
 @MainActor
 public struct SMCKit {
-    private static var SMCConnect: io_connect_t = IO_OBJECT_NULL
+    private static var connect: io_connect_t = IO_OBJECT_NULL
     
     public static func start() -> Bool {
-        assert(SMCKit.SMCConnect == IO_OBJECT_NULL)
+        assert(SMCKit.connect == IO_OBJECT_NULL)
         
         let smc = IOServiceGetMatchingService(
             kIOMasterPortDefault,
@@ -129,7 +129,7 @@ public struct SMCKit {
             return false
         }
 
-        SMCKit.SMCConnect = connect
+        SMCKit.connect = connect
         IOConnectCallMethod(
             connect,
             UInt32(kSMCUserClientOpen),
@@ -147,9 +147,9 @@ public struct SMCKit {
     }
     
     public static func stop() {
-        assert(SMCKit.SMCConnect != IO_OBJECT_NULL)
+        assert(SMCKit.connect != IO_OBJECT_NULL)
         IOConnectCallMethod(
-            SMCKit.SMCConnect,
+            SMCKit.connect,
             UInt32(kSMCUserClientClose),
             nil,
             0,
@@ -160,14 +160,14 @@ public struct SMCKit {
             nil,
             nil
             )
-        IOServiceClose(SMCKit.SMCConnect)
-        SMCKit.SMCConnect = IO_OBJECT_NULL
+        IOServiceClose(SMCKit.connect)
+        SMCKit.connect = IO_OBJECT_NULL
     }
 
     private static func callSMCFunctionYPC(
         params: inout SMCParamStruct
         ) throws -> SMCParamStruct {
-        assert(SMCKit.SMCConnect != IO_OBJECT_NULL)
+        assert(SMCKit.connect != IO_OBJECT_NULL)
 
         assert(MemoryLayout<SMCParamStruct>.stride == 80)
             
@@ -175,7 +175,7 @@ public struct SMCKit {
         var outStructSize = MemoryLayout<SMCParamStruct>.stride
 
         let resultCall = IOConnectCallStructMethod(
-            SMCKit.SMCConnect,
+            SMCKit.connect,
             UInt32(kSMCHandleYPCEvent),
             &params,
             MemoryLayout<SMCParamStruct>.stride,
@@ -196,7 +196,7 @@ public struct SMCKit {
     public static func GetKeyInfo(key: SMCKitKey) throws -> SMCKitKeyInfoData {
         var inputStruct = SMCParamStructInfo(key: key)
 
-        let outputStruct = try SMCKit.callSMCFunctionYPC(params: &inputStruct)
+        let outputStruct = try callSMCFunctionYPC(params: &inputStruct)
 
         return outputStruct.keyInfo
     }
@@ -204,7 +204,7 @@ public struct SMCKit {
     public static func ReadKeyUI8(key: SMCKitKey) throws -> UInt8 {
         var inputStruct = SMCParamStructReadUI8(key: key)
 
-        let outputStruct = try SMCKit.callSMCFunctionYPC(params: &inputStruct)
+        let outputStruct = try callSMCFunctionYPC(params: &inputStruct)
 
         return outputStruct.bytes.0
     }
@@ -212,6 +212,6 @@ public struct SMCKit {
     public static func WriteKeyUI8(key: SMCKitKey, value: UInt8) throws {
         var inputStruct = SMCParamStructWriteUI8(key: key, value: value)
 
-        _ = try SMCKit.callSMCFunctionYPC(params: &inputStruct)
+        _ = try callSMCFunctionYPC(params: &inputStruct)
     }
 }

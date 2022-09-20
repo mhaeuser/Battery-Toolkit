@@ -12,7 +12,7 @@ internal struct BTDaemonManagement {
 internal struct BatteryToolkit {
     internal static func startDaemon(reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
         let result = BTPowerEvents.start()
-        reply(result ? BTDaemonManagement.Status.enabled : BTDaemonManagement.Status.notRegistered)
+        reply(result ? .enabled : .notRegistered)
     }
 
     internal static func approveDaemon() {

@@ -50,7 +50,7 @@ public struct SleepKit {
         }
 
         SleepKit.sleepDisabledCounter = 0
-        SleepKit.restorePreviousSleepState()
+        restorePreviousSleepState()
     }
     
     public static func restoreSleep() {
@@ -61,7 +61,7 @@ public struct SleepKit {
             return
         }
 
-        SleepKit.restorePreviousSleepState()
+        restorePreviousSleepState()
     }
     
     public static func disableSleep() {

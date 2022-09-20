@@ -16,13 +16,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var disableBackgroundItem: NSMenuItem!
 
     @IBAction private func unregisterDaemonHandler(sender: NSMenuItem) {
-        AppDelegate.promptUnregisterDaemon()
+        BTAppPrompts.promptUnregisterDaemon()
     }
 
     private func startDaemon() {
         BatteryToolkit.startDaemon() { (status) -> Void in
             switch status {
-                case BTDaemonManagement.Status.enabled:
+                case .enabled:
                     os_log("Daemon is enabled")
 
                     DispatchQueue.main.async {
@@ -36,18 +36,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                         self.menuBarExtraItem.menu = self.menuBarExtraMenu
                     }
                     
-                case BTDaemonManagement.Status.requiresApproval:
+                case .requiresApproval:
                     os_log("Daemon requires approval")
                     
                     DispatchQueue.main.async {
-                        AppDelegate.promptRegisterDaemon()
+                        BTAppPrompts.promptApproveDaemon()
                     }
 
-                case BTDaemonManagement.Status.notRegistered:
+                case .notRegistered:
                     os_log("Daemon not registered")
                     
                     DispatchQueue.main.async {
-                        self.promptRegisterDaemonError()
+                        if BTAppPrompts.promptRegisterDaemonError() {
+                            self.startDaemon()
+                        }
                     }
             }
         }
@@ -59,7 +61,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     //
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        self.startDaemon()
+        startDaemon()
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -76,85 +78,5 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
 
         _ = NSApplication.shared.setActivationPolicy(.accessory)
-    }
-    
-    private static func unregisterDaemon() {
-        BatteryToolkit.unregisterDaemon() { (success) -> Void in
-            DispatchQueue.main.async {
-                guard success else {
-                    AppDelegate.promptUnregisterDaemonError()
-                    return
-                }
-
-                NSApplication.shared.terminate(self)
-            }
-        }
-    }
-
-    private static func promptRegisterDaemon() {
-        let alert             = NSAlert()
-        alert.messageText     = BTLocalization.Prompts.Daemon.allowMessage
-        alert.informativeText = BTLocalization.Prompts.Daemon.requiredInfo +
-            "\n\n" + BTLocalization.Prompts.Daemon.allowInfo
-        alert.alertStyle      = NSAlert.Style.warning
-        _ = alert.addButton(withTitle: BTLocalization.Prompts.approve)
-        _ = alert.addButton(withTitle: BTLocalization.Prompts.quit)
-        let response = alert.runModal()
-        switch response {
-            case NSApplication.ModalResponse.alertFirstButtonReturn:
-                BatteryToolkit.approveDaemon()
-
-            case NSApplication.ModalResponse.alertSecondButtonReturn:
-                NSApplication.shared.terminate(self)
-
-            default:
-                assert(false)
-        }
-    }
-
-    private func promptRegisterDaemonError() {
-        let alert             = NSAlert()
-        alert.messageText     = BTLocalization.Prompts.Daemon.enableFailMessage
-        alert.informativeText = BTLocalization.Prompts.Daemon.requiredInfo
-        alert.alertStyle      = NSAlert.Style.critical
-        _ = alert.addButton(withTitle: BTLocalization.Prompts.retry)
-        _ = alert.addButton(withTitle: BTLocalization.Prompts.quit)
-        let response = alert.runModal()
-        switch response {
-            case NSApplication.ModalResponse.alertFirstButtonReturn:
-                self.startDaemon()
-
-            case NSApplication.ModalResponse.alertSecondButtonReturn:
-                NSApplication.shared.terminate(self)
-
-            default:
-                assert(false)
-        }
-    }
-
-    private static func promptUnregisterDaemon() {
-        let alert             = NSAlert()
-        alert.messageText     = BTLocalization.Prompts.Daemon.disableMessage
-        alert.informativeText = BTLocalization.Prompts.Daemon.requiredInfo +
-            "\n\n" + BTLocalization.Prompts.Daemon.disableInfo
-        alert.alertStyle      = NSAlert.Style.warning
-        _ = alert.addButton(withTitle: BTLocalization.Prompts.disableAndQuit)
-        _ = alert.addButton(withTitle: BTLocalization.Prompts.cancel)
-        let response = alert.runModal()
-        if response == NSApplication.ModalResponse.alertFirstButtonReturn {
-            AppDelegate.unregisterDaemon()
-        }
-    }
-
-    private static func promptUnregisterDaemonError() {
-        let alert         = NSAlert()
-        alert.messageText = BTLocalization.Prompts.Daemon.disableFailMessage
-        alert.alertStyle  = NSAlert.Style.critical
-        _ = alert.addButton(withTitle: BTLocalization.Prompts.retry)
-        _ = alert.addButton(withTitle: BTLocalization.Prompts.cancel)
-        let response = alert.runModal()
-        if response == NSApplication.ModalResponse.alertFirstButtonReturn {
-            AppDelegate.unregisterDaemon()
-        }
     }
 }

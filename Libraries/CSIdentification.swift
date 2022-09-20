@@ -46,7 +46,7 @@ public struct CSIdentification {
             return nil
         }
 
-        return CSIdentification.getUniqueId(staticCode: staticCode)
+        return getUniqueId(staticCode: staticCode)
     }
 
     public static func getBundleRelativeUniqueId(relative: String) -> NSData? {
@@ -62,6 +62,6 @@ public struct CSIdentification {
             return nil
         }
 
-        return CSIdentification.getUniqueId(staticCode: staticCode)
+        return getUniqueId(staticCode: staticCode)
     }
 }

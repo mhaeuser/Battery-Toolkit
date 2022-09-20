@@ -125,7 +125,7 @@ public struct BTXPCValidation {
             return false
         }
 
-        guard BTXPCValidation.verifySignFlags(code: code) else {
+        guard verifySignFlags(code: code) else {
             return false
         }
 

@@ -42,6 +42,8 @@
 		CE50557328D65C6D000E4387 /* BTPreprocessor.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE387BD28A836AA00C2007C /* BTPreprocessor.m */; };
 		CE52867B28298B6E00860C7B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE52867A28298B6E00860C7B /* Assets.xcassets */; };
 		CE52868628298CA300860C7B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE52868528298CA300860C7B /* AppDelegate.swift */; };
+		CE54510228D9FE9D00D6EB5F /* DaemonManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE54510128D9FE9D00D6EB5F /* DaemonManagement.swift */; };
+		CE54510428DA017300D6EB5F /* AppPrompts.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE54510328DA017300D6EB5F /* AppPrompts.swift */; };
 		CE6B75F928BC18EA008DF170 /* DaemonCommProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA80FDA285A57030064ADEA /* DaemonCommProtocol.swift */; };
 		CE6B75FA28BC1908008DF170 /* DaemonCommProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA80FDA285A57030064ADEA /* DaemonCommProtocol.swift */; };
 		CE6B75FC28BC196C008DF170 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6C06A028A8398600D76CC8 /* Foundation.framework */; };
@@ -169,6 +171,8 @@
 		CE52867A28298B6E00860C7B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CE52867F28298B6E00860C7B /* BatteryToolkit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BatteryToolkit.entitlements; sourceTree = "<group>"; };
 		CE52868528298CA300860C7B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		CE54510128D9FE9D00D6EB5F /* DaemonManagement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaemonManagement.swift; sourceTree = "<group>"; };
+		CE54510328DA017300D6EB5F /* AppPrompts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPrompts.swift; sourceTree = "<group>"; };
 		CE675D9528C7E81600F05929 /* me.mhaeuser.batterytoolkitd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = me.mhaeuser.batterytoolkitd.plist; sourceTree = "<group>"; };
 		CE675D9628C7E82E00F05929 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE6B75FF28BC1995008DF170 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
@@ -269,6 +273,7 @@
 				CEA80FD5285A565C0064ADEA /* DaemonComm.swift */,
 				CEA80FD7285A56B50064ADEA /* main.swift */,
 				CE8ED7F328C144EE00398581 /* Dispatcher.swift */,
+				CE54510128D9FE9D00D6EB5F /* DaemonManagement.swift */,
 			);
 			path = me.mhaeuser.batterytoolkitd;
 			sourceTree = "<group>";
@@ -334,6 +339,7 @@
 				CE3C1DA428CA2FF5008A0F7D /* AuthorizationService.swift */,
 				CEB4A42B28D3B97A004FA277 /* MenuBarExtraMenuDelegate.swift */,
 				CEB4A42E28D4D4D0004FA277 /* SettingsWindowController.swift */,
+				CE54510328DA017300D6EB5F /* AppPrompts.swift */,
 			);
 			path = BatteryToolkit;
 			sourceTree = "<group>";
@@ -600,6 +606,7 @@
 				CEA80FD8285A56B60064ADEA /* main.swift in Sources */,
 				CE1F5E3728D7339D00F61F67 /* CSIdentification.swift in Sources */,
 				CEA80FCB285A27CF0064ADEA /* SMCKit.swift in Sources */,
+				CE54510228D9FE9D00D6EB5F /* DaemonManagement.swift in Sources */,
 				CE397472285A2396002D0EC9 /* DaemonXPCServer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -631,6 +638,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE7F623528B95A8200EF58F9 /* BTPreprocessor.m in Sources */,
+				CE54510428DA017300D6EB5F /* AppPrompts.swift in Sources */,
 				CEB4A42428D39ECE004FA277 /* DaemonManagementStatus.swift in Sources */,
 				CE3C1DA528CA2FF5008A0F7D /* AuthorizationService.swift in Sources */,
 				CEB09B7328D7B9A5007FFB37 /* DaemonManagementLegacy.swift in Sources */,

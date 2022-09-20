@@ -19,7 +19,7 @@ internal struct BTDaemonXPCServer {
 
     @MainActor private static var listener: NSXPCListener = NSXPCListener(machServiceName: BT_DAEMON_NAME)
 
-    private static let delegate: NSXPCListenerDelegate = BTDaemonXPCServer.Delegate()
+    private static let delegate: NSXPCListenerDelegate = Delegate()
     
     @MainActor internal static func start() {
         listener.delegate = delegate

@@ -116,9 +116,9 @@ final class SettingsViewController: NSViewController {
     }
     
     @IBAction func restoreDefaultsButtonAction(_ sender: NSButton) {
-        self.setMinCharge(value: Int(BTSettingsInfo.Defaults.minCharge))
-        self.setMaxCharge(value: Int(BTSettingsInfo.Defaults.maxCharge))
-        self.setAdapterSleep(value: BTSettingsInfo.Defaults.adapterSleep)
+        setMinCharge(value: Int(BTSettingsInfo.Defaults.minCharge))
+        setMaxCharge(value: Int(BTSettingsInfo.Defaults.maxCharge))
+        setAdapterSleep(value: BTSettingsInfo.Defaults.adapterSleep)
     }
     
     @IBAction func cancelButtonAction(_ sender: NSButton) {
@@ -139,7 +139,7 @@ final class SettingsViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.initSettingsState()
+        initSettingsState()
     }
 
     override func viewWillAppear() {
