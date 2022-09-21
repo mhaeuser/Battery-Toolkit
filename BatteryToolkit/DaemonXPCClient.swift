@@ -159,12 +159,11 @@ internal struct BTDaemonXPCClient {
         daemon.setSettings(settings: settings)
     }
 
-    internal static func removeLegacyHelperFiles() {
+    internal static func removeLegacyHelperFiles(reply: @Sendable @escaping (Bool) -> Void) {
         let daemon = getDaemon()
         daemon.execute(
-            command: BTDaemonCommProtocolCommands.removeLegacyHelperFiles.rawValue
-            ) { success in
-            // FIXME: Handle error
-        }
+            command: BTDaemonCommProtocolCommands.removeLegacyHelperFiles.rawValue,
+            reply: reply
+            )
     }
 }

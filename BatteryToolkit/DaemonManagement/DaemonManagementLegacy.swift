@@ -64,9 +64,9 @@ internal struct BTDaemonManagementLegacy {
             }
 
             DispatchQueue.main.async {
-                BTDaemonXPCClient.removeLegacyHelperFiles()
+                BTDaemonXPCClient.removeLegacyHelperFiles() { success in
+                    // FIXME: Handle error
 
-                DispatchQueue.global(qos: .userInitiated).async {
                     var error: Unmanaged<CFError>? = nil
                     let success = SMJobRemove(
                         kSMDomainSystemLaunchd,
