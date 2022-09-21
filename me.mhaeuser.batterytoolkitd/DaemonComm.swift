@@ -11,29 +11,32 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
         reply(CSIdentification.getUniqueIdSelf())
     }
 
-    @MainActor internal func execute(command: UInt8) -> Void {
+    @MainActor internal func execute(command: UInt8, reply: @Sendable @escaping (Bool) -> Void) -> Void {
+        var success = false
         switch command {
             case BTDaemonCommProtocolCommands.disablePowerAdapter.rawValue:
-                BTPowerState.disablePowerAdapter()
+                success = BTPowerState.disablePowerAdapter()
 
             case BTDaemonCommProtocolCommands.enablePowerAdapter.rawValue:
-                BTPowerState.enablePowerAdapter()
+                success = BTPowerState.enablePowerAdapter()
 
             case BTDaemonCommProtocolCommands.chargeToFull.rawValue:
-                BTPowerEvents.chargeToFull()
+                success = BTPowerEvents.chargeToFull()
 
             case BTDaemonCommProtocolCommands.chargeToMaximum.rawValue:
-                BTPowerEvents.chargeToMaximum()
+                success = BTPowerEvents.chargeToMaximum()
 
             case BTDaemonCommProtocolCommands.disableCharging.rawValue:
-                BTPowerEvents.disableCharging()
+                success = BTPowerEvents.disableCharging()
 
             case BTDaemonCommProtocolCommands.removeLegacyHelperFiles.rawValue:
-                BTDaemonManagement.removeLegacyHelperFiles()
+                success = BTDaemonManagement.removeLegacyHelperFiles()
 
             default:
                 os_log("Unknown command: \(command)")
         }
+
+        reply(success)
     }
 
     @MainActor internal func getState(reply: @Sendable @escaping ([String: AnyObject]) -> Void) -> Void {

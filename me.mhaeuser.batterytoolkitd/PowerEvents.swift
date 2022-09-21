@@ -89,12 +89,12 @@ internal struct BTPowerEvents {
         switch BTPowerEvents.chargeMode {
             case .toMaximum:
                 if percent < BTSettings.maxCharge {
-                    BTPowerState.enableCharging()
+                    _ = BTPowerState.enableCharging()
                 }
 
             case .toFull:
                 if percent < 100 {
-                    BTPowerState.enableCharging()
+                    _ = BTPowerState.enableCharging()
                 }
 
             case .standard:
@@ -138,10 +138,10 @@ internal struct BTPowerEvents {
                 // Charging modes are reset once we disable charging.
                 //
                 BTPowerEvents.chargeMode = .standard
-                BTPowerState.disableCharging()
+                _ = BTPowerState.disableCharging()
             }
         } else if percent < BTSettings.minCharge {
-            BTPowerState.enableCharging()
+            _ = BTPowerState.enableCharging()
         }
         
         return percent
@@ -165,7 +165,7 @@ internal struct BTPowerEvents {
             // Disable charging to not have micro-charges happening when
             // connecting to power.
             //
-            BTPowerState.disableCharging()
+            _ = BTPowerState.disableCharging()
         }
         //
         // Restore sleep from the setup phase.
@@ -175,8 +175,8 @@ internal struct BTPowerEvents {
 
     private static func restoreDefaults() {
         // FIXME: Enable!
-        //BTPowerState.enableCharging()
-        BTPowerState.enablePowerAdapter()
+        //_ = BTPowerState.enableCharging()
+        _ = BTPowerState.enablePowerAdapter()
     }
 
     internal static func start() -> Bool {
@@ -219,7 +219,7 @@ internal struct BTPowerEvents {
         _ = handleChargeHysteresis()
     }
     
-    private static func enableBelowThresholdMode(threshold: UInt8) {
+    private static func enableBelowThresholdMode(threshold: UInt8) -> Bool {
         //
         // When the percent loop is inactive, this currently means that the
         // device is not connected to power. In this case, do not enable
@@ -227,34 +227,36 @@ internal struct BTPowerEvents {
         // power source handler when power is connected.
         //
         guard BTPowerEvents.percentCreated else {
-            return
+            return true
         }
         
         var percent: Int32 = 100
         let result = IOPSGetPercentRemaining(&percent, nil, nil)
         guard result == kIOReturnSuccess else {
             os_log("Failed to retrieve battery percent")
-            return;
+            return false
         }
 
         if percent < threshold {
-            BTPowerState.enableCharging()
+            return BTPowerState.enableCharging()
         }
+
+        return true
     }
     
-    internal static func chargeToMaximum() {
+    internal static func chargeToMaximum() -> Bool {
         BTPowerEvents.chargeMode = .toMaximum
-        enableBelowThresholdMode(threshold: BTSettings.maxCharge)
+        return enableBelowThresholdMode(threshold: BTSettings.maxCharge)
     }
 
-    internal static func disableCharging() {
+    internal static func disableCharging() -> Bool {
         BTPowerEvents.chargeMode = .standard
-        BTPowerState.disableCharging()
+        return BTPowerState.disableCharging()
     }
     
-    internal static func chargeToFull() {
+    internal static func chargeToFull() -> Bool {
         BTPowerEvents.chargeMode = .toFull
-        enableBelowThresholdMode(threshold: 100)
+        return enableBelowThresholdMode(threshold: 100)
     }
 
     internal static func getChargingProgress() -> BTStateInfo.ChargingProgress {

@@ -46,41 +46,43 @@ internal struct BTPowerState {
         }
     }
 
-    internal static func disableCharging() {
+    internal static func disableCharging() -> Bool {
         guard !BTPowerState.chargingDisabled else {
-            return
+            return true
         }
 
         let success = SMCPowerKit.disableCharging()
         guard success else {
             os_log("Failed to disable charging")
-            return
+            return false
         }
         
         SleepKit.restoreSleep()
         
         BTPowerState.chargingDisabled = true
+        return true
     }
     
-    internal static func enableCharging() {
-        if !BTPowerState.chargingDisabled {
-            return
+    internal static func enableCharging() -> Bool {
+        guard BTPowerState.chargingDisabled else {
+            return true
         }
 
         let result = SMCPowerKit.enableCharging()
         if !result {
             os_log("Failed to enable charging")
-            return
+            return false
         }
         
         SleepKit.disableSleep()
         
         BTPowerState.chargingDisabled = false
+        return true
     }
 
-    internal static func disablePowerAdapter() {
+    internal static func disablePowerAdapter() -> Bool {
         guard !BTPowerState.powerDisabled else {
-            return
+            return true
         }
 
         if !BTSettings.adapterSleep {
@@ -94,21 +96,22 @@ internal struct BTPowerState {
             }
 
             os_log("Failed to disable power adapter")
-            return
+            return false
         }
 
         BTPowerState.powerDisabled = true
+        return true
     }
 
-    internal static func enablePowerAdapter() {
+    internal static func enablePowerAdapter() -> Bool {
         guard BTPowerState.powerDisabled else {
-            return
+            return true
         }
 
         let success = SMCPowerKit.enablePowerAdapter()
         guard success else {
             os_log("Failed to enable power adapter")
-            return
+            return false
         }
         
         if !BTSettings.adapterSleep {
@@ -116,5 +119,6 @@ internal struct BTPowerState {
         }
 
         BTPowerState.powerDisabled = false
+        return true
     }
 }

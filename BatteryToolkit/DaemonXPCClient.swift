@@ -105,35 +105,45 @@ internal struct BTDaemonXPCClient {
         let daemon = getDaemon()
         daemon.execute(
             command: BTDaemonCommProtocolCommands.disablePowerAdapter.rawValue
-            )
+            ) { success in
+                // FIXME: Handle error
+        }
     }
 
     internal static func enablePowerAdapter() -> Void {
         let daemon = getDaemon()
         daemon.execute(
             command: BTDaemonCommProtocolCommands.enablePowerAdapter.rawValue
-            )
+            ) { success in
+            // FIXME: Handle error
+        }
     }
 
     internal static func chargeToMaximum() -> Void {
         let daemon = getDaemon()
         daemon.execute(
             command: BTDaemonCommProtocolCommands.chargeToMaximum.rawValue
-            )
+            ) { success in
+            // FIXME: Handle error
+        }
     }
 
     internal static func chargeToFull() -> Void {
         let daemon = getDaemon()
         daemon.execute(
             command: BTDaemonCommProtocolCommands.chargeToFull.rawValue
-            )
+            ) { success in
+            // FIXME: Handle error
+        }
     }
 
     internal static func disableCharging() -> Void {
         let daemon = getDaemon()
         daemon.execute(
             command: BTDaemonCommProtocolCommands.disableCharging.rawValue
-        )
+            ) { success in
+            // FIXME: Handle error
+        }
     }
 
     internal static func getSettings(reply: @Sendable @escaping ([String: AnyObject]) -> Void) {
@@ -153,6 +163,8 @@ internal struct BTDaemonXPCClient {
         let daemon = getDaemon()
         daemon.execute(
             command: BTDaemonCommProtocolCommands.removeLegacyHelperFiles.rawValue
-            )
+            ) { success in
+            // FIXME: Handle error
+        }
     }
 }

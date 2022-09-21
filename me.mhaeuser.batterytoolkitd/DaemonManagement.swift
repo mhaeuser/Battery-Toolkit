@@ -8,33 +8,34 @@ import os.log
 import IOPMPrivate
 
 internal struct BTDaemonManagement {
-    private static let legacyHelperFiles = [
-        BTLegacyHelperInfo.legacyHelperExec,
-        BTLegacyHelperInfo.legacyHelperPlist
-    ]
+    private static func removeFile(path: String) -> Bool {
+        do {
+            try FileManager.default.removeItem(atPath: path)
+            return true
+        } catch {
+            os_log("Error deleting file \(path): \(error.localizedDescription)")
+            return false
+        }
+    }
 
-    @MainActor internal static func removeLegacyHelperFiles() -> Void {
+    @MainActor internal static func removeLegacyHelperFiles() -> Bool {
         //
         // CommandLine is logically immutable and thus concurrency-safe.
         //
         let args = CommandLine.arguments
         guard args.count > 0 else {
             os_log("No command line arguments provided")
-            return
+            return false
         }
 
-        guard args[0] == BTDaemonManagement.legacyHelperFiles[0] else {
+        guard args[0] == BTLegacyHelperInfo.legacyHelperExec else {
             os_log("Legacy helper launched from unexpected location: \(args[0])")
-            return
+            return false
         }
 
-        for path in BTDaemonManagement.legacyHelperFiles {
-            do {
-                try FileManager.default.removeItem(atPath: path)
-            } catch {
-                os_log("Error deleting file \(path): \(error.localizedDescription)")
-            }
-        }
+        let success1 = removeFile(path: BTLegacyHelperInfo.legacyHelperPlist)
+        let success2 = removeFile(path: BTLegacyHelperInfo.legacyHelperExec)
+        return success1 && success2
     }
 
     @MainActor internal static func getState(reply: @Sendable @escaping ([String: AnyObject]) -> Void) -> Void {
