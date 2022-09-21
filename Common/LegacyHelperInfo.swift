@@ -8,8 +8,8 @@ import BTPreprocessor
 
 public struct BTLegacyHelperInfo {
     public static let legacyHelperExec  = "/Library/PrivilegedHelperTools/" +
-        BTPreprocessor.BT_LEGACY_HELPER_NAME
+        BTPreprocessor.BT_DAEMON_NAME
 
     public static let legacyHelperPlist = "/Library/LaunchDaemons/" +
-        BTPreprocessor.BT_LEGACY_HELPER_NAME + ".plist"
+        BTPreprocessor.BT_DAEMON_NAME + ".plist"
 }

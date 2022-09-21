@@ -35,7 +35,6 @@
 		CE3C1DA528CA2FF5008A0F7D /* AuthorizationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3C1DA428CA2FF5008A0F7D /* AuthorizationService.swift */; };
 		CE3C1DA728CA33FD008A0F7D /* LegacyHelperInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3C1DA628CA33FD008A0F7D /* LegacyHelperInfo.swift */; };
 		CE3C1DA828CA33FD008A0F7D /* LegacyHelperInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3C1DA628CA33FD008A0F7D /* LegacyHelperInfo.swift */; };
-		CE3E9FE128CBA34400642CBB /* me.mhaeuser.batterytoolkitlegacyd in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3C1DAF28CBA26E008A0F7D /* me.mhaeuser.batterytoolkitlegacyd */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		CE3E9FE228CBBE5700642CBB /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6B75FF28BC1995008DF170 /* ServiceManagement.framework */; };
 		CE50557128D65B48000E4387 /* XPCValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE50557028D65B48000E4387 /* XPCValidation.swift */; };
 		CE50557228D65B48000E4387 /* XPCValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE50557028D65B48000E4387 /* XPCValidation.swift */; };
@@ -121,7 +120,6 @@
 			dstPath = Contents/Library/LaunchServices;
 			dstSubfolderSpec = 1;
 			files = (
-				CE3E9FE128CBA34400642CBB /* me.mhaeuser.batterytoolkitlegacyd in CopyFiles */,
 				CE3C1DA128C92A42008A0F7D /* me.mhaeuser.batterytoolkitd in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -166,7 +164,6 @@
 		CE3C1DA228C9329F008A0F7D /* DaemonManagement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaemonManagement.swift; sourceTree = "<group>"; };
 		CE3C1DA428CA2FF5008A0F7D /* AuthorizationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationService.swift; sourceTree = "<group>"; };
 		CE3C1DA628CA33FD008A0F7D /* LegacyHelperInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyHelperInfo.swift; sourceTree = "<group>"; };
-		CE3C1DAF28CBA26E008A0F7D /* me.mhaeuser.batterytoolkitlegacyd */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = me.mhaeuser.batterytoolkitlegacyd; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE50557028D65B48000E4387 /* XPCValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XPCValidation.swift; sourceTree = "<group>"; };
 		CE52867A28298B6E00860C7B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CE52867F28298B6E00860C7B /* BatteryToolkit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BatteryToolkit.entitlements; sourceTree = "<group>"; };
@@ -318,7 +315,6 @@
 				CE39744C285A1D35002D0EC9 /* Battery Toolkit.app */,
 				CEA80FCA285A270F0064ADEA /* BatteryToolkitStandalone.app */,
 				CEECE31828BB648F00821A3B /* BatteryToolkitXPC.xpc */,
-				CE3C1DAF28CBA26E008A0F7D /* me.mhaeuser.batterytoolkitlegacyd */,
 			);
 			sourceTree = "<group>";
 		};
@@ -427,7 +423,6 @@
 			buildPhases = (
 				CE39743D2859E518002D0EC9 /* Sources */,
 				CE39743E2859E518002D0EC9 /* Frameworks */,
-				CE3C1DAE28CBA22F008A0F7D /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -561,29 +556,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		CE3C1DAE28CBA22F008A0F7D /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${BUILT_PRODUCTS_DIR}/${TARGET_NAME}",
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${BUILT_PRODUCTS_DIR}/me.mhaeuser.batterytoolkitlegacyd",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "cd \"${BUILT_PRODUCTS_DIR}/\"\nln -fs \"${TARGET_NAME}\" \"me.mhaeuser.batterytoolkitlegacyd\"\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		CE39743D2859E518002D0EC9 /* Sources */ = {
@@ -752,7 +724,6 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				BT_APP_NAME = me.mhaeuser.BatteryToolkitStandalone;
 				BT_DAEMON_NAME = me.mhaeuser.BatteryToolkitStandalone;
-				BT_LEGACY_HELPER_NAME = me.mhaeuser.BatteryToolkitStandalone;
 				BT_SERVICE_NAME = me.mhaeuser.BatteryToolkitStandalone;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Battery Toolkit (Standalone)";
@@ -770,7 +741,6 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				BT_APP_NAME = me.mhaeuser.BatteryToolkitStandalone;
 				BT_DAEMON_NAME = me.mhaeuser.BatteryToolkitStandalone;
-				BT_LEGACY_HELPER_NAME = me.mhaeuser.BatteryToolkitStandalone;
 				BT_SERVICE_NAME = me.mhaeuser.BatteryToolkitStandalone;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Battery Toolkit (Standalone)";
@@ -788,7 +758,6 @@
 				BT_APP_NAME = me.mhaeuser.BatteryToolkit;
 				BT_CODE_SIGN_CN = "Apple Development: mhaeuser@posteo.de (FK3MXHN3BX)";
 				BT_DAEMON_NAME = me.mhaeuser.batterytoolkitd;
-				BT_LEGACY_HELPER_NAME = me.mhaeuser.batterytoolkitlegacyd;
 				BT_SERVICE_NAME = me.mhaeuser.BatteryToolkitXPC;
 				CLANG_ANALYZER_GCD_PERFORMANCE = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_EMPTY_CONTEXT = YES;
@@ -869,7 +838,6 @@
 					"\"BT_DAEMON_NAME_=\\\"$(BT_DAEMON_NAME)\\\"\"",
 					"\"BT_CODE_SIGN_CN_=\\\"$(BT_CODE_SIGN_CN)\\\"\"",
 					"\"BT_SERVICE_NAME_=\\\"$(BT_SERVICE_NAME)\\\"\"",
-					"\"BT_LEGACY_HELPER_NAME_=\\\"$(BT_LEGACY_HELPER_NAME)\\\"\"",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
@@ -920,7 +888,6 @@
 				BT_APP_NAME = me.mhaeuser.BatteryToolkit;
 				BT_CODE_SIGN_CN = "Apple Development: mhaeuser@posteo.de (FK3MXHN3BX)";
 				BT_DAEMON_NAME = me.mhaeuser.batterytoolkitd;
-				BT_LEGACY_HELPER_NAME = me.mhaeuser.batterytoolkitlegacyd;
 				BT_SERVICE_NAME = me.mhaeuser.BatteryToolkitXPC;
 				CLANG_ANALYZER_GCD_PERFORMANCE = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_EMPTY_CONTEXT = YES;
@@ -999,7 +966,6 @@
 					"\"BT_DAEMON_NAME_=\\\"$(BT_DAEMON_NAME)\\\"\"",
 					"\"BT_CODE_SIGN_CN_=\\\"$(BT_CODE_SIGN_CN)\\\"\"",
 					"\"BT_SERVICE_NAME_=\\\"$(BT_SERVICE_NAME)\\\"\"",
-					"\"BT_LEGACY_HELPER_NAME_=\\\"$(BT_LEGACY_HELPER_NAME)\\\"\"",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;

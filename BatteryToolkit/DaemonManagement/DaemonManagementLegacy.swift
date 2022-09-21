@@ -32,7 +32,7 @@ internal struct BTDaemonManagementLegacy {
             var error: Unmanaged<CFError>?
             let success = SMJobBless(
                 kSMDomainSystemLaunchd,
-                BT_LEGACY_HELPER_NAME as CFString,
+                BT_DAEMON_NAME as CFString,
                 auth,
                 &error
             )
@@ -70,7 +70,7 @@ internal struct BTDaemonManagementLegacy {
             var error: Unmanaged<CFError>? = nil
             let success = SMJobRemove(
                 kSMDomainSystemLaunchd,
-                BT_LEGACY_HELPER_NAME as CFString,
+                BT_DAEMON_NAME as CFString,
                 auth,
                 true,
                 &error
