@@ -55,7 +55,7 @@ internal struct BTDaemonManagementLegacy {
     @MainActor internal static func unregister(reply: @Sendable @escaping (Bool) -> Void) {
         os_log("Unregistering legacy helper")
 
-        BTAuthorizationService.createEmptyAuthorization() { (auth) -> Void in
+        BTAuthorizationService.createDaemonAuthorization() { (auth) -> Void in
             assert(!Thread.isMainThread)
 
             guard let auth = auth else {

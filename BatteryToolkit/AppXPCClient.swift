@@ -57,11 +57,19 @@ internal struct BTAppXPCClient {
         return service
     }
 
-    internal static func askAuthorization(reply: @Sendable @escaping (NSData?) -> Void) -> Void {
+    internal static func createEmptyAuthorization(reply: @Sendable @escaping (NSData?) -> Void) -> Void {
         let service = BTAppXPCClient.getService() {
             reply(nil)
         }
 
-        service.askAuthorization(reply: reply)
+        service.createEmptyAuthorization(reply: reply)
+    }
+
+    internal static func createDaemonAuthorization(reply: @Sendable @escaping (NSData?) -> Void) -> Void {
+        let service = BTAppXPCClient.getService() {
+            reply(nil)
+        }
+
+        service.createDaemonAuthorization(reply: reply)
     }
 }

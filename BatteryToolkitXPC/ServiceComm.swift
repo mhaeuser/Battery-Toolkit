@@ -4,23 +4,17 @@
 */
 
 import Foundation
+import ServiceManagement
 
 internal final class BTServiceComm: NSObject, BTServiceCommProtocol {
-    internal func askAuthorization(reply: @Sendable @escaping (NSData?) -> Void) -> Void {
-        var auth: AuthorizationRef? = nil
-        let status = AuthorizationCreate(nil, nil, [], &auth)
-        guard status == errAuthorizationSuccess, let auth = auth else {
-            reply(nil)
-            return
-        }
-        
-        var extAuth = AuthorizationExternalForm()
-        let extStatus = AuthorizationMakeExternalForm(auth, &extAuth)
-        guard extStatus == errAuthorizationSuccess else {
-            reply(nil)
-            return
-        }
-        
-        reply(NSData(bytes: &extAuth.bytes, length: Int(kAuthorizationExternalFormLength)))
+    func createEmptyAuthorization(reply: @Sendable @escaping (NSData?) -> Void) -> Void {
+        BTAuthorization.empty(reply: reply)
+    }
+
+    func createDaemonAuthorization(reply: @Sendable @escaping (NSData?) -> Void) -> Void {
+        BTAuthorization.interactive(
+            rightName: kSMRightModifySystemDaemons,
+            reply: reply
+            )
     }
 }

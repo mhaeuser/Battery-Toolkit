@@ -19,6 +19,9 @@
 		CE2B96C028A7E2BB00FE3DDB /* SleepKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2B96BF28A7E2BB00FE3DDB /* SleepKit.swift */; };
 		CE2B96C128A7E2BB00FE3DDB /* SleepKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2B96BF28A7E2BB00FE3DDB /* SleepKit.swift */; };
 		CE30CBA128C48995001E2AC6 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE30CBA028C48995001E2AC6 /* SettingsViewController.swift */; };
+		CE3179EA28DB540600E9C121 /* Authorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3179E928DB540600E9C121 /* Authorization.swift */; };
+		CE3179EC28DB543200E9C121 /* Authorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3179E928DB540600E9C121 /* Authorization.swift */; };
+		CE3179ED28DB543600E9C121 /* Authorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3179E928DB540600E9C121 /* Authorization.swift */; };
 		CE37DD0C283F80960060C43F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE37DD0A283F80960060C43F /* Main.storyboard */; };
 		CE39745A285A2193002D0EC9 /* SMCKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE37DD0D283F86F90060C43F /* SMCKit.swift */; };
 		CE397460285A2193002D0EC9 /* SMCPowerKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE37DD0F284164160060C43F /* SMCPowerKit.swift */; };
@@ -149,6 +152,7 @@
 		CE2B96C228A81C5100FE3DDB /* BTPreprocessor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BTPreprocessor.h; sourceTree = "<group>"; };
 		CE2B96C328A81CB900FE3DDB /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		CE30CBA028C48995001E2AC6 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		CE3179E928DB540600E9C121 /* Authorization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Authorization.swift; sourceTree = "<group>"; };
 		CE37DD0B283F80960060C43F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CE37DD0D283F86F90060C43F /* SMCKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMCKit.swift; sourceTree = "<group>"; };
 		CE37DD0F284164160060C43F /* SMCPowerKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMCPowerKit.swift; sourceTree = "<group>"; };
@@ -354,6 +358,7 @@
 		CE6B75F728BC18DD008DF170 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				CE3179E928DB540600E9C121 /* Authorization.swift */,
 				CEA80FDA285A57030064ADEA /* DaemonCommProtocol.swift */,
 				CE0DB56228BEB4E600B8FC4C /* SettingsInfo.swift */,
 				CE3C1DA628CA33FD008A0F7D /* LegacyHelperInfo.swift */,
@@ -568,6 +573,7 @@
 				CEB4A42928D3B184004FA277 /* StateInfo.swift in Sources */,
 				CE50557128D65B48000E4387 /* XPCValidation.swift in Sources */,
 				CE2B96C028A7E2BB00FE3DDB /* SleepKit.swift in Sources */,
+				CE3179EC28DB543200E9C121 /* Authorization.swift in Sources */,
 				CEA80FD0285A27FB0064ADEA /* PowerEvents.swift in Sources */,
 				CE3C1DA828CA33FD008A0F7D /* LegacyHelperInfo.swift in Sources */,
 				CE8ED7F428C144EE00398581 /* Dispatcher.swift in Sources */,
@@ -624,6 +630,7 @@
 				CE30CBA128C48995001E2AC6 /* SettingsViewController.swift in Sources */,
 				CE85D05F28D7B7E6005D1E0C /* DaemonManagementService.swift in Sources */,
 				CEECE33028BB742500821A3B /* ServiceCommProtocol.swift in Sources */,
+				CE3179ED28DB543600E9C121 /* Authorization.swift in Sources */,
 				CE39746E285A229F002D0EC9 /* BatteryToolkit.swift in Sources */,
 				CE52868628298CA300860C7B /* AppDelegate.swift in Sources */,
 				CE1F5E3C28D760D400F61F67 /* Localization.swift in Sources */,
@@ -642,6 +649,7 @@
 				CE6B760928BC1D15008DF170 /* ServiceXPCServer.swift in Sources */,
 				CEECE32828BB652400821A3B /* main.swift in Sources */,
 				CE50557228D65B48000E4387 /* XPCValidation.swift in Sources */,
+				CE3179EA28DB540600E9C121 /* Authorization.swift in Sources */,
 				CEECE33328BB745B00821A3B /* ServiceComm.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
