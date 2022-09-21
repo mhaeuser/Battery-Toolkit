@@ -65,7 +65,16 @@ internal struct BTDaemonXPCClient {
     private static func getDaemon() -> BTDaemonCommProtocol {
         return getDaemon() { }
     }
-    
+
+    internal static func disconnectDaemon() {
+        guard let connect = BTDaemonXPCClient.connect else {
+            return
+        }
+
+        BTDaemonXPCClient.connect = nil
+        connect.invalidate()
+    }
+
     internal static func stop() {
         guard let connect = BTDaemonXPCClient.connect else {
             return
@@ -79,7 +88,6 @@ internal struct BTDaemonXPCClient {
     internal static func getUniqueId(reply: @Sendable @escaping (NSData?) -> Void) -> Void {
         let daemon = getDaemon() {
             reply(nil)
-            return
         }
 
         daemon.getUniqueId(reply: reply)
@@ -88,7 +96,6 @@ internal struct BTDaemonXPCClient {
     internal static func getState(reply: @Sendable @escaping ([String: AnyObject]) -> Void) -> Void {
         let daemon = getDaemon() {
             reply([:])
-            return
         }
 
         daemon.getState(reply: reply)
@@ -132,7 +139,6 @@ internal struct BTDaemonXPCClient {
     internal static func getSettings(reply: @Sendable @escaping ([String: AnyObject]) -> Void) {
         let daemon = getDaemon() {
             reply([:])
-            return
         }
 
         daemon.getSettings(reply: reply)

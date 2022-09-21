@@ -65,25 +65,27 @@ internal struct BTDaemonManagementLegacy {
 
             DispatchQueue.main.async {
                 BTDaemonXPCClient.removeLegacyHelperFiles()
+
+                DispatchQueue.global(qos: .userInitiated).async {
+                    var error: Unmanaged<CFError>? = nil
+                    let success = SMJobRemove(
+                        kSMDomainSystemLaunchd,
+                        BT_DAEMON_NAME as CFString,
+                        auth,
+                        true,
+                        &error
+                        )
+
+                    os_log("Legacy helper unregistering result: \(success), error: \(String(describing: error))")
+
+                    let status = AuthorizationFree(auth, [.destroyRights])
+                    if status != errSecSuccess {
+                        os_log("Freeing authorization error: \(status)")
+                    }
+                }
             }
 
-            var error: Unmanaged<CFError>? = nil
-            let success = SMJobRemove(
-                kSMDomainSystemLaunchd,
-                BT_DAEMON_NAME as CFString,
-                auth,
-                true,
-                &error
-            )
-
-            os_log("Legacy helper unregistering result: \(success), error: \(String(describing: error))")
-
-            let status = AuthorizationFree(auth, [.destroyRights])
-            if status != errSecSuccess {
-                os_log("Freeing authorization error: \(status)")
-            }
-
-            reply(success)
+            reply(true)
         }
     }
 }

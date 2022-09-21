@@ -44,11 +44,12 @@ internal struct BTDaemonManagementService {
         }
     }
 
-    private static func unregisterService(appService: SMAppService, reply: @Sendable @escaping (Bool) -> Void) {
+    private static func unregisterService(reply: @Sendable @escaping (Bool) -> Void) {
         os_log("Unregistering daemon service")
         //
         // Any other status code makes unregister() loop indefinitely.
         //
+        let appService = SMAppService.daemon(plistName: BTDaemonManagementService.daemonServicePlist)
         guard appService.status == .enabled else {
             DispatchQueue.global(qos: .userInitiated).async {
                 reply(true)
@@ -66,30 +67,17 @@ internal struct BTDaemonManagementService {
         }
     }
 
-    @MainActor private static func unregisterLegacy(reply: @Sendable @escaping (Bool) -> Void) {
-        os_log("Unregistering legacy helper via service")
-
-        let legacyUrl = URL(fileURLWithPath: BTLegacyHelperInfo.legacyHelperPlist, isDirectory: false)
-        let status    = SMAppService.statusForLegacyPlist(at: legacyUrl)
-        guard registered(status: status) else {
-            os_log("Legacy helper is not registered")
-            reply(true)
-            return
-        }
-
-        BTDaemonManagementLegacy.unregister(reply: reply)
-    }
-
-    private static func forceRegister(appService: SMAppService, run: UInt8, reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
+    private static func forceRegister(run: UInt8, reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
         guard run < 6 else {
             reply(.notRegistered)
             return
         }
 
         DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 0.5) {
+            let appService = SMAppService.daemon(plistName: BTDaemonManagementService.daemonServicePlist)
             registerSync(appService: appService)
             guard registered(status: appService.status) else {
-                forceRegister(appService: appService, run: run + 1, reply: reply)
+                forceRegister(run: run + 1, reply: reply)
                 return
             }
 
@@ -97,27 +85,35 @@ internal struct BTDaemonManagementService {
         }
     }
 
-    private static func update(appService: SMAppService, reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
+    private static func update(reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
         os_log("Updating daemon service")
 
-        unregisterService(appService: appService) { _ in
-            assert(!Thread.isMainThread)
-
-            forceRegister(appService: appService, run: 0, reply: reply)
+        unregisterService { _ in
+            forceRegister(run: 0, reply: reply)
         }
     }
 
     @MainActor internal static func register(reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
         os_log("Starting daemon service")
 
-        unregisterLegacy { (success) -> Void in
+        let legacyUrl = URL(fileURLWithPath: BTLegacyHelperInfo.legacyHelperPlist, isDirectory: false)
+        let status    = SMAppService.statusForLegacyPlist(at: legacyUrl)
+        guard registered(status: status) else {
+            os_log("Legacy helper is not registered")
+            update(reply: reply)
+            return
+        }
+
+        BTDaemonManagementLegacy.unregister() { success in
             guard success else {
                 reply(.notRegistered)
                 return
             }
 
-            let appService = SMAppService.daemon(plistName: BTDaemonManagementService.daemonServicePlist)
-            update(appService: appService, reply: reply)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 75) {
+                BTDaemonXPCClient.disconnectDaemon()
+                update(reply: reply)
+            }
         }
     }
 
@@ -126,7 +122,6 @@ internal struct BTDaemonManagementService {
     }
 
     internal static func unregister(reply: @Sendable @escaping (Bool) -> Void) {
-        let appService = SMAppService.daemon(plistName: BTDaemonManagementService.daemonServicePlist)
-        unregisterService(appService: appService, reply: reply)
+        unregisterService(reply: reply)
     }
 }
