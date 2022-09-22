@@ -93,6 +93,24 @@ internal struct BTDaemonManagementService {
         }
     }
 
+    private static func awaitUnregister(run: UInt8, reply: @Sendable @escaping (Bool) -> Void) {
+        let appService = SMAppService.daemon(plistName: BTDaemonManagementService.daemonServicePlist)
+        guard !registered(status: appService.status) else {
+            guard run < 18 else {
+                reply(false)
+                return
+            }
+
+            DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 5) {
+                awaitUnregister(run: run + 1, reply: reply)
+            }
+
+            return
+        }
+
+        reply(true)
+    }
+
     @MainActor internal static func register(reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
         os_log("Starting daemon service")
 
@@ -110,7 +128,12 @@ internal struct BTDaemonManagementService {
                 return
             }
 
-            DispatchQueue.main.asyncAfter(deadline: .now() + 75) {
+            awaitUnregister(run: 0) { success in
+                guard success else {
+                    reply(.notRegistered)
+                    return
+                }
+
                 BTDaemonXPCClient.disconnectDaemon()
                 update(reply: reply)
             }
