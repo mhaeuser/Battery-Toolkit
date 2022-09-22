@@ -43,6 +43,14 @@ internal struct BTDaemonManagement {
             reply(.enabled)
         }
     }
+
+    @MainActor internal static func upgrade(reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
+        if #available(macOS 13.0, *) {
+            BTDaemonManagementService.upgrade(reply: reply)
+        } else  {
+            BTDaemonManagementLegacy.upgrade()
+        }
+    }
     
     internal static func approve(timeout: UInt8, reply: @escaping @Sendable (Bool) -> Void) {
         if #available(macOS 13.0, *) {

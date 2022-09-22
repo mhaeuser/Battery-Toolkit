@@ -22,6 +22,8 @@
 		CE3179EA28DB540600E9C121 /* Authorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3179E928DB540600E9C121 /* Authorization.swift */; };
 		CE3179EC28DB543200E9C121 /* Authorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3179E928DB540600E9C121 /* Authorization.swift */; };
 		CE3179ED28DB543600E9C121 /* Authorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3179E928DB540600E9C121 /* Authorization.swift */; };
+		CE3179F128DC729900E9C121 /* Upgrading.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE3179F328DC729900E9C121 /* Upgrading.storyboard */; };
+		CE3179F528DC72D800E9C121 /* UpgradingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3179F428DC72D800E9C121 /* UpgradingViewController.swift */; };
 		CE37DD0C283F80960060C43F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE37DD0A283F80960060C43F /* Main.storyboard */; };
 		CE39745A285A2193002D0EC9 /* SMCKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE37DD0D283F86F90060C43F /* SMCKit.swift */; };
 		CE397460285A2193002D0EC9 /* SMCPowerKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE37DD0F284164160060C43F /* SMCPowerKit.swift */; };
@@ -153,6 +155,8 @@
 		CE2B96C328A81CB900FE3DDB /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		CE30CBA028C48995001E2AC6 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		CE3179E928DB540600E9C121 /* Authorization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Authorization.swift; sourceTree = "<group>"; };
+		CE3179F228DC729900E9C121 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Upgrading.storyboard; sourceTree = "<group>"; };
+		CE3179F428DC72D800E9C121 /* UpgradingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradingViewController.swift; sourceTree = "<group>"; };
 		CE37DD0B283F80960060C43F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CE37DD0D283F86F90060C43F /* SMCKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMCKit.swift; sourceTree = "<group>"; };
 		CE37DD0F284164160060C43F /* SMCPowerKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMCPowerKit.swift; sourceTree = "<group>"; };
@@ -340,6 +344,8 @@
 				CEB4A42B28D3B97A004FA277 /* MenuBarExtraMenuDelegate.swift */,
 				CEB4A42E28D4D4D0004FA277 /* SettingsWindowController.swift */,
 				CE54510328DA017300D6EB5F /* AppPrompts.swift */,
+				CE3179F328DC729900E9C121 /* Upgrading.storyboard */,
+				CE3179F428DC72D800E9C121 /* UpgradingViewController.swift */,
 			);
 			path = BatteryToolkit;
 			sourceTree = "<group>";
@@ -555,6 +561,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE1F5E3E28D76C6D00F61F67 /* Settings.storyboard in Resources */,
+				CE3179F128DC729900E9C121 /* Upgrading.storyboard in Resources */,
 				CE37DD0C283F80960060C43F /* Main.storyboard in Resources */,
 				CE52867B28298B6E00860C7B /* Assets.xcassets in Resources */,
 			);
@@ -615,6 +622,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE3179F528DC72D800E9C121 /* UpgradingViewController.swift in Sources */,
 				CE7F623528B95A8200EF58F9 /* BTPreprocessor.m in Sources */,
 				CE54510428DA017300D6EB5F /* AppPrompts.swift in Sources */,
 				CEB4A42428D39ECE004FA277 /* DaemonManagementStatus.swift in Sources */,
@@ -676,6 +684,14 @@
 				CE1F5E4028D76C6D00F61F67 /* Base */,
 			);
 			name = Settings.storyboard;
+			sourceTree = "<group>";
+		};
+		CE3179F328DC729900E9C121 /* Upgrading.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE3179F228DC729900E9C121 /* Base */,
+			);
+			name = Upgrading.storyboard;
 			sourceTree = "<group>";
 		};
 		CE37DD0A283F80960060C43F /* Main.storyboard */ = {

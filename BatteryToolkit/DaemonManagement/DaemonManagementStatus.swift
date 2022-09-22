@@ -10,5 +10,6 @@ extension BTDaemonManagement {
         case notRegistered    = 0
         case enabled          = 1
         case requiresApproval = 2
+        case requiresUpgrade  = 3
     }
 }

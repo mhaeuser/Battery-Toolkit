@@ -20,6 +20,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func daemonStatusHandler(status: BTDaemonManagement.Status) {
         switch status {
+            case .notRegistered:
+                os_log("Daemon not registered")
+
+                DispatchQueue.main.async {
+                    if BTAppPrompts.promptRegisterDaemonError() {
+                        BatteryToolkit.startDaemon(reply: self.daemonStatusHandler)
+                    }
+                }
+
             case .enabled:
                 os_log("Daemon is enabled")
 
@@ -48,12 +57,19 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                     }
                 }
 
-            case .notRegistered:
-                os_log("Daemon not registered")
+            case .requiresUpgrade:
+                os_log("Daemon requires upgrade")
 
                 DispatchQueue.main.async {
-                    if BTAppPrompts.promptRegisterDaemonError() {
-                        BatteryToolkit.startDaemon(reply: self.daemonStatusHandler)
+                    let storyboard = NSStoryboard(name: "Upgrading", bundle: nil)
+                    let upgradingController = storyboard.instantiateInitialController() as! NSWindowController
+                    upgradingController.showWindow(nil)
+
+                    BTDaemonManagement.upgrade() { status in
+                        DispatchQueue.main.async {
+                            upgradingController.close()
+                            self.daemonStatusHandler(status: status)
+                        }
                     }
                 }
         }
@@ -66,10 +82,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     @MainActor func applicationDidFinishLaunching(_ aNotification: Notification) {
         BatteryToolkit.startDaemon(reply: daemonStatusHandler)
-
-        let storyboard = NSStoryboard(name: "Upgrading", bundle: nil)
-        let vs = storyboard.instantiateInitialController() as! NSWindowController
-        vs.showWindow(nil)
     }
     
     @MainActor func applicationWillTerminate(_ aNotification: Notification) {

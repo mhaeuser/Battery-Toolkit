@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="21503.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="Cb8-W0-8gz">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21503.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Window Controller-->
+        <scene sceneID="gb5-bB-HuN">
+            <objects>
+                <windowController showSeguePresentationStyle="single" id="Cb8-W0-8gz" sceneMemberID="viewController">
+                    <window key="window" title="Battery Toolkit Upgrade" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="LWN-3i-ZL8">
+                        <windowStyleMask key="styleMask" titled="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="425" y="462" width="480" height="270"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1415"/>
+                        <view key="contentView" id="cUg-24-nkd">
+                            <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </view>
+                        <connections>
+                            <outlet property="delegate" destination="Cb8-W0-8gz" id="auu-iD-1mz"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="nh7-vh-qsR" kind="relationship" relationship="window.shadowedContentViewController" id="DoZ-5e-rbv"/>
+                    </connections>
+                </windowController>
+                <customObject id="SXm-Mq-dSr" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1" y="-757"/>
+        </scene>
+        <!--UpgradingViewController-->
+        <scene sceneID="gH7-2U-rfn">
+            <objects>
+                <viewController id="nh7-vh-qsR" userLabel="UpgradingViewController" customClass="UpgradingViewController" customModule="Battery_Toolkit" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="jgQ-cQ-6CX">
+                        <rect key="frame" x="0.0" y="0.0" width="368" height="72"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="cBz-Pu-BLE">
+                                <rect key="frame" x="58" y="20" width="292" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="288" id="Och-gx-3j6"/>
+                                </constraints>
+                                <textFieldCell key="cell" selectable="YES" alignment="center" title="Upgrading Battery Toolkit to improve reliability. This process may take several minutes." id="zRQ-jJ-oCI">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <progressIndicator maxValue="100" indeterminate="YES" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="BcS-6j-8fm">
+                                <rect key="frame" x="20" y="20" width="32" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="32" id="aao-Oh-r10"/>
+                                    <constraint firstAttribute="height" constant="32" id="dEK-VM-Nvx"/>
+                                </constraints>
+                            </progressIndicator>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="cBz-Pu-BLE" firstAttribute="top" secondItem="jgQ-cQ-6CX" secondAttribute="top" constant="20" symbolic="YES" id="34h-hM-yNK"/>
+                            <constraint firstAttribute="trailing" secondItem="cBz-Pu-BLE" secondAttribute="trailing" constant="20" symbolic="YES" id="d3R-Db-Plf"/>
+                            <constraint firstItem="cBz-Pu-BLE" firstAttribute="leading" secondItem="BcS-6j-8fm" secondAttribute="trailing" constant="8" symbolic="YES" id="foC-WO-Vdd"/>
+                            <constraint firstAttribute="bottom" secondItem="cBz-Pu-BLE" secondAttribute="bottom" constant="20" symbolic="YES" id="iW8-Py-ENZ"/>
+                            <constraint firstItem="cBz-Pu-BLE" firstAttribute="centerY" secondItem="BcS-6j-8fm" secondAttribute="centerY" id="lU3-RO-Ohy"/>
+                            <constraint firstItem="BcS-6j-8fm" firstAttribute="leading" secondItem="jgQ-cQ-6CX" secondAttribute="leading" constant="20" symbolic="YES" id="vtv-hJ-OGd"/>
+                            <constraint firstItem="cBz-Pu-BLE" firstAttribute="leading" secondItem="BcS-6j-8fm" secondAttribute="trailing" constant="8" symbolic="YES" id="xql-NO-k8S"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="progress" destination="BcS-6j-8fm" id="InZ-kb-59h"/>
+                    </connections>
+                </viewController>
+                <customObject id="vdu-7Y-DiV" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-49" y="-486"/>
+        </scene>
+    </scenes>
+</document>

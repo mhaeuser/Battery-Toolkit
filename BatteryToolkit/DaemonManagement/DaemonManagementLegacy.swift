@@ -48,6 +48,10 @@ internal struct BTDaemonManagementLegacy {
         }
     }
 
+    internal static func upgrade() {
+        assert(false)
+    }
+
     internal static func approve() {
         assert(false)
     }

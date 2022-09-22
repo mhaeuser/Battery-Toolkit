@@ -111,6 +111,24 @@ internal struct BTDaemonManagementService {
         reply(true)
     }
 
+    private static func awaitApproval(run: UInt8, timeout: UInt8, reply: @escaping @Sendable (Bool) -> Void) {
+        let appService = SMAppService.daemon(plistName: BTDaemonManagementService.daemonServicePlist)
+        guard appService.status == .enabled else {
+            guard run < timeout else {
+                reply(false)
+                return
+            }
+
+            DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 1) {
+                awaitApproval(run: run + 1, timeout: timeout, reply: reply)
+            }
+
+            return
+        }
+
+        reply(true)
+    }
+
     @MainActor internal static func register(reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
         os_log("Starting daemon service")
 
@@ -122,6 +140,10 @@ internal struct BTDaemonManagementService {
             return
         }
 
+        reply(.requiresUpgrade)
+    }
+
+    @MainActor internal static func upgrade(reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
         BTDaemonManagementLegacy.unregister() { success in
             guard success else {
                 reply(.notRegistered)
@@ -140,24 +162,6 @@ internal struct BTDaemonManagementService {
                 }
             }
         }
-    }
-
-    private static func awaitApproval(run: UInt8, timeout: UInt8, reply: @escaping @Sendable (Bool) -> Void) {
-        let appService = SMAppService.daemon(plistName: BTDaemonManagementService.daemonServicePlist)
-        guard appService.status == .enabled else {
-            guard run < timeout else {
-                reply(false)
-                return
-            }
-
-            DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 1) {
-                awaitApproval(run: run + 1, timeout: timeout, reply: reply)
-            }
-
-            return
-        }
-
-        reply(true)
     }
 
     internal static func approve(timeout: UInt8, reply: @escaping @Sendable (Bool) -> Void) {
