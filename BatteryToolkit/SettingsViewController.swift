@@ -136,13 +136,10 @@ final class SettingsViewController: NSViewController {
         BTDaemonXPCClient.setSettings(settings: settings)
         self.view.window?.windowController?.close()
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        initSettingsState()
-    }
 
     override func viewWillAppear() {
+        super.viewWillAppear()
+        initSettingsState()
         NSApplication.shared.activate(ignoringOtherApps: true)
     }
 }
