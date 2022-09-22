@@ -46,9 +46,9 @@ internal struct BTDaemonManagement {
         }
     }
     
-    internal static func approve() {
+    internal static func approve(timeout: UInt8, reply: @escaping @Sendable (Bool) -> Void) {
         if #available(macOS 14.0, *) {
-            BTDaemonManagementService.approve()
+            BTDaemonManagementService.approve(timeout: timeout, reply: reply)
         } else  {
             BTDaemonManagementLegacy.approve()
         }

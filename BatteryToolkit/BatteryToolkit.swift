@@ -12,8 +12,8 @@ internal struct BatteryToolkit {
         BTDaemonManagement.start(reply: reply)
     }
 
-    internal static func approveDaemon() {
-        BTDaemonManagement.approve()
+    internal static func approveDaemon(timeout: UInt8, reply: @escaping @Sendable (Bool) -> Void) {
+        BTDaemonManagement.approve(timeout: timeout, reply: reply)
     }
     
     internal static func stop() {

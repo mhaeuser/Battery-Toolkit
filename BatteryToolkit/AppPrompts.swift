@@ -20,7 +20,7 @@ internal struct BTAppPrompts {
         }
     }
 
-    internal static func promptApproveDaemon() {
+    internal static func promptApproveDaemon(timeout: UInt8, reply: @escaping @Sendable (Bool) -> Void) {
         let alert             = NSAlert()
         alert.messageText     = BTLocalization.Prompts.Daemon.allowMessage
         alert.informativeText = BTLocalization.Prompts.Daemon.requiredInfo +
@@ -31,7 +31,7 @@ internal struct BTAppPrompts {
         let response = alert.runModal()
         switch response {
             case NSApplication.ModalResponse.alertFirstButtonReturn:
-                BatteryToolkit.approveDaemon()
+                BatteryToolkit.approveDaemon(timeout: timeout, reply: reply)
 
             case NSApplication.ModalResponse.alertSecondButtonReturn:
                 NSApplication.shared.terminate(self)

@@ -19,39 +19,44 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         BTAppPrompts.promptUnregisterDaemon()
     }
 
-    private func startDaemon() {
-        BatteryToolkit.startDaemon() { (status) -> Void in
-            switch status {
-                case .enabled:
-                    os_log("Daemon is enabled")
+    private func daemonStatusHandler(status: BTDaemonManagement.Status) {
+        switch status {
+            case .enabled:
+                os_log("Daemon is enabled")
 
-                    DispatchQueue.main.async {
-                        self.disableBackgroundItem.isEnabled = true
-                        self.settingsItem.isEnabled          = true
+                DispatchQueue.main.async {
+                    self.disableBackgroundItem.isEnabled = true
+                    self.settingsItem.isEnabled          = true
 
-                        self.menuBarExtraItem = NSStatusBar.system.statusItem(
-                            withLength: NSStatusItem.squareLength
-                            )
-                        self.menuBarExtraItem.button?.image = NSImage(named: NSImage.Name("StatusItemIcon"))
-                        self.menuBarExtraItem.menu = self.menuBarExtraMenu
-                    }
-                    
-                case .requiresApproval:
-                    os_log("Daemon requires approval")
-                    
-                    DispatchQueue.main.async {
-                        BTAppPrompts.promptApproveDaemon()
-                    }
+                    self.menuBarExtraItem = NSStatusBar.system.statusItem(
+                        withLength: NSStatusItem.squareLength
+                    )
+                    self.menuBarExtraItem.button?.image = NSImage(named: NSImage.Name("StatusItemIcon"))
+                    self.menuBarExtraItem.menu = self.menuBarExtraMenu
+                }
 
-                case .notRegistered:
-                    os_log("Daemon not registered")
-                    
-                    DispatchQueue.main.async {
-                        if BTAppPrompts.promptRegisterDaemonError() {
-                            self.startDaemon()
+            case .requiresApproval:
+                os_log("Daemon requires approval")
+
+                DispatchQueue.main.async {
+                    BTAppPrompts.promptApproveDaemon(timeout: 20) { success in
+                        guard success else {
+                            self.daemonStatusHandler(status: .requiresApproval)
+                            return
                         }
+
+                        self.daemonStatusHandler(status: .enabled)
                     }
-            }
+                }
+
+            case .notRegistered:
+                os_log("Daemon not registered")
+
+                DispatchQueue.main.async {
+                    if BTAppPrompts.promptRegisterDaemonError() {
+                        BatteryToolkit.startDaemon(reply: self.daemonStatusHandler)
+                    }
+                }
         }
     }
 
@@ -61,7 +66,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     //
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        startDaemon()
+        BatteryToolkit.startDaemon(reply: daemonStatusHandler)
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {

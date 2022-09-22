@@ -140,8 +140,27 @@ internal struct BTDaemonManagementService {
         }
     }
 
-    internal static func approve() {
+    private static func awaitApproval(run: UInt8, timeout: UInt8, reply: @escaping @Sendable (Bool) -> Void) {
+        let appService = SMAppService.daemon(plistName: BTDaemonManagementService.daemonServicePlist)
+        guard appService.status == .enabled else {
+            guard run < timeout else {
+                reply(false)
+                return
+            }
+
+            DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 1) {
+                awaitApproval(run: run + 1, timeout: timeout, reply: reply)
+            }
+
+            return
+        }
+
+        reply(true)
+    }
+
+    internal static func approve(timeout: UInt8, reply: @escaping @Sendable (Bool) -> Void) {
         SMAppService.openSystemSettingsLoginItems()
+        awaitApproval(run: 0, timeout: timeout, reply: reply)
     }
 
     internal static func unregister(reply: @Sendable @escaping (Bool) -> Void) {
