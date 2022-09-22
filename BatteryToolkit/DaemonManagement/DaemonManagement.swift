@@ -7,8 +7,6 @@ import Foundation
 import os.log
 import BTPreprocessor
 
-// FIXME: Using 14.0 constants due to broken Ventura daemons
-
 internal struct BTDaemonManagement {
     private static func daemonUpToDate(daemonId: NSData?) -> Bool {
         guard let daemonId = daemonId else {
@@ -31,7 +29,7 @@ internal struct BTDaemonManagement {
         BTDaemonXPCClient.getUniqueId { (daemonId) -> Void in
             guard daemonUpToDate(daemonId: daemonId) else {
                 DispatchQueue.main.async {
-                    if #available(macOS 14.0, *) {
+                    if #available(macOS 13.0, *) {
                         BTDaemonManagementService.register(reply: reply)
                     } else {
                         BTDaemonManagementLegacy.register(reply: reply)
@@ -47,7 +45,7 @@ internal struct BTDaemonManagement {
     }
     
     internal static func approve(timeout: UInt8, reply: @escaping @Sendable (Bool) -> Void) {
-        if #available(macOS 14.0, *) {
+        if #available(macOS 13.0, *) {
             BTDaemonManagementService.approve(timeout: timeout, reply: reply)
         } else  {
             BTDaemonManagementLegacy.approve()
@@ -55,7 +53,7 @@ internal struct BTDaemonManagement {
     }
     
     @MainActor internal static func unregister(reply: @Sendable @escaping (Bool) -> Void) {
-        if #available(macOS 14.0, *) {
+        if #available(macOS 13.0, *) {
             BTDaemonManagementService.unregister(reply: reply)
         } else {
             BTDaemonManagementLegacy.unregister(reply: reply)
