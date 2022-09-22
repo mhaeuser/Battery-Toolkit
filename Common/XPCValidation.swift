@@ -110,34 +110,39 @@ public struct BTXPCValidation {
             return false
         }
 
-        let entitlements = "identifier \"" + BT_APP_NAME + "\"" +
-            " and anchor apple generic" +
-            " and certificate leaf[subject.CN] = \"" + BT_CODE_SIGN_CN + "\"" +
-            " and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */"
-
-        var requirement: SecRequirement? = nil
-        let reqStatus = SecRequirementCreateWithString(
-            entitlements as CFString,
-            [],
-            &requirement
-            )
-        guard reqStatus == errSecSuccess, let requirement = requirement else {
-            return false
-        }
-
         guard verifySignFlags(code: code) else {
             return false
         }
 
-        let validStatus = SecCodeCheckValidity(
-            code,
-            [
-                .enforceRevocationChecks,
-                SecCSFlags(rawValue: kSecCSRestrictSidebandData),
-                SecCSFlags(rawValue: kSecCSStrictValidate)
-            ],
-            requirement
-            )
-        return validStatus == errSecSuccess
+        let requirementText = "identifier \"" + BT_APP_NAME + "\"" +
+            " and anchor apple generic" +
+            " and certificate leaf[subject.CN] = \"" + BT_CODE_SIGN_CN + "\"" +
+            " and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */"
+
+        if #available(macOS 13.0, *) {
+            connection.setCodeSigningRequirement(requirementText)
+            return true
+        } else {
+            var requirement: SecRequirement? = nil
+            let reqStatus = SecRequirementCreateWithString(
+                requirementText as CFString,
+                [],
+                &requirement
+                )
+            guard reqStatus == errSecSuccess, let requirement = requirement else {
+                return false
+            }
+
+            let validStatus = SecCodeCheckValidity(
+                code,
+                [
+                    .enforceRevocationChecks,
+                    SecCSFlags(rawValue: kSecCSRestrictSidebandData),
+                    SecCSFlags(rawValue: kSecCSStrictValidate)
+                ],
+                requirement
+                )
+            return validStatus == errSecSuccess
+        }
     }
 }
