@@ -8,15 +8,27 @@ import os.log
 
 @MainActor
 private func main() -> Never {
-    let powerResult = BTPowerEvents.start()
-    guard powerResult else {
+    let prepareResult = BTPowerEvents.prepare()
+    guard prepareResult else {
+        os_log("Power events preparation failed")
+        exit(-1)
+    }
+
+    let supported = BTPowerEvents.supported()
+    guard supported else {
+        os_log("Machine is unsupported")
+        exit(0)
+    }
+
+    let startResult = BTPowerEvents.start()
+    guard startResult else {
         os_log("Power events start failed")
         exit(-1)
     }
 
     let termSource = DispatchSource.makeSignalSource(signal: SIGTERM)
     termSource.setEventHandler {
-        BTPowerEvents.stop()
+        BTPowerEvents.exit()
         exit(0)
     }
     termSource.resume()

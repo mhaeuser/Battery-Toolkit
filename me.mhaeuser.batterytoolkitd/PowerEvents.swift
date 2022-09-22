@@ -179,17 +179,20 @@ internal struct BTPowerEvents {
         _ = BTPowerState.enablePowerAdapter()
     }
 
-    internal static func start() -> Bool {
-        let smcSuccess = SMCKit.start()
-        guard smcSuccess else {
-            return false
+    internal static func prepare() -> Bool {
+        return SMCKit.start()
+    }
+
+    internal static func supported() -> Bool {
+        let supported = SMCPowerKit.supported()
+        if !supported {
+            SMCKit.stop()
         }
 
-        guard SMCPowerKit.supported() else {
-            SMCKit.stop()
-            return false
-        }
-        
+        return supported
+    }
+
+    internal static func start() -> Bool {
         BTSettings.readDefaults()
         
         let registerSuccess = registerLimitedPowerHandler()
@@ -200,15 +203,19 @@ internal struct BTPowerEvents {
         
         return true
     }
-    
+
+    internal static func exit() {
+        restoreDefaults()
+        SleepKit.forceRestoreSleep()
+    }
+
     internal static func stop() {
         unregisterLimitedPowerHandler()
         unregisterPercentChangedHandler()
-        restoreDefaults()
+
+        exit()
 
         SMCKit.stop()
-        
-        SleepKit.forceRestoreSleep()
     }
     
     internal static func settingsChanged() {
