@@ -10,7 +10,7 @@ import BTPreprocessor
 import SecCodeEx
 
 public struct BTXPCValidation {
-    private static func verifySignFlags(code: SecCode) -> Bool {
+    private static func verifyCsStatus(code: SecCode) -> Bool {
         var signInfo: CFDictionary? = nil
         let infoStatus = SecCodeCopySigningInformationDynamic(
             code,
@@ -27,12 +27,12 @@ public struct BTXPCValidation {
             return false
         }
 
-        guard let signingStatus = signInfo[kSecCodeInfoStatus as String] as? UInt32 else {
+        guard let signStatus = signInfo[kSecCodeInfoStatus as String] as? UInt32 else {
             os_log("Failed to retrieve signature status")
             return false
         }
 
-        let codeStatus = SecCodeStatus(rawValue: signingStatus)
+        let codeStatus = SecCodeStatus(rawValue: signStatus)
         //
         // REF: https://blog.obdev.at/what-we-have-learned-from-a-vulnerability/index.html
         // valid:             Enforce a valid in-memory CS status.
@@ -61,37 +61,8 @@ public struct BTXPCValidation {
         }
 
         guard codeStatus.contains(reqStatus) else {
-            os_log("Signature status constraints violated: \(signingStatus) vs \(reqStatus.rawValue)")
+            os_log("Signature status constraints violated: \(signStatus) vs \(reqStatus.rawValue)")
             return false
-        }
-
-        guard let entitlements = signInfo[kSecCodeInfoEntitlementsDict as String] as? [String: AnyObject] else {
-            os_log("Failed to retrieve entitlements")
-            return false
-        }
-
-        for entitlement in entitlements {
-            if entitlement.key.starts(with: "com.apple.security.") {
-                if entitlement.key == "com.apple.security.app-sandbox" ||
-                    entitlement.key == "com.apple.security.application-groups" {
-                    continue
-                }
-
-                #if DEBUG
-                if entitlement.key == "com.apple.security.get-task-allow" {
-                    os_log("Allowing get-task-allow in DEBUG mode")
-                    continue
-                }
-                #endif
-
-                os_log("Client declares security entitlement \(entitlement.key)")
-                return false
-            }
-
-            guard !entitlement.key.starts(with: "com.apple.security.private.") else {
-                os_log("Client declares private entitlement \(entitlement.key)")
-                return false
-            }
         }
 
         return true
@@ -116,14 +87,19 @@ public struct BTXPCValidation {
             return false
         }
 
-        guard verifySignFlags(code: code) else {
+        guard verifyCsStatus(code: code) else {
             return false
         }
 
-        let requirementText = "identifier \"" + BT_APP_NAME + "\"" +
+        var requirementText = "identifier \"" + BT_APP_NAME + "\"" +
             " and anchor apple generic" +
             " and certificate leaf[subject.CN] = \"" + BT_CODE_SIGN_CN + "\"" +
-            " and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */"
+            " and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */" +
+            " and !(entitlement[\"com.apple.security.cs.allow-dyld-environment-variables\"] /* exists */)" +
+            " and !(entitlement[\"com.apple.security.cs.disable-library-validation\"] /* exists */)"
+        #if !DEBUG
+        requirementText += " and !(entitlement[\"com.apple.security.get-task-allow\"] /* exists */)"
+        #endif
 
         if #available(macOS 13.0, *) {
             connection.setCodeSigningRequirement(requirementText)
