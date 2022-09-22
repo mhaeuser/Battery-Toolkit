@@ -7,15 +7,14 @@ import Cocoa
 import os.log
 
 @main
-@MainActor
 final class AppDelegate: NSObject, NSApplicationDelegate {
-    private var menuBarExtraItem: NSStatusItem!
-    @IBOutlet weak var menuBarExtraMenu: NSMenu!
+    @MainActor private var menuBarExtraItem: NSStatusItem!
+    @MainActor @IBOutlet weak var menuBarExtraMenu: NSMenu!
 
-    @IBOutlet weak var settingsItem: NSMenuItem!
-    @IBOutlet weak var disableBackgroundItem: NSMenuItem!
+    @MainActor @IBOutlet weak var settingsItem: NSMenuItem!
+    @MainActor @IBOutlet weak var disableBackgroundItem: NSMenuItem!
 
-    @IBAction private func unregisterDaemonHandler(sender: NSMenuItem) {
+    @MainActor @IBAction private func unregisterDaemonHandler(sender: NSMenuItem) {
         BTAppPrompts.promptUnregisterDaemon()
     }
 
@@ -65,19 +64,23 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     // misleading.
     //
 
-    func applicationDidFinishLaunching(_ aNotification: Notification) {
+    @MainActor func applicationDidFinishLaunching(_ aNotification: Notification) {
         BatteryToolkit.startDaemon(reply: daemonStatusHandler)
+
+        let storyboard = NSStoryboard(name: "Upgrading", bundle: nil)
+        let vs = storyboard.instantiateInitialController() as! NSWindowController
+        vs.showWindow(nil)
     }
     
-    func applicationWillTerminate(_ aNotification: Notification) {
+    @MainActor func applicationWillTerminate(_ aNotification: Notification) {
         BatteryToolkit.stop()
     }
 
-    func applicationWillBecomeActive(_ notification: Notification) {
+    @MainActor func applicationWillBecomeActive(_ notification: Notification) {
         _ = NSApplication.shared.setActivationPolicy(.regular)
     }
 
-    func applicationWillResignActive(_ notification: Notification) {
+    @MainActor func applicationWillResignActive(_ notification: Notification) {
         guard NSApplication.shared.keyWindow == nil else {
             return
         }

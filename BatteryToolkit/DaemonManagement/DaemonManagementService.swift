@@ -134,8 +134,10 @@ internal struct BTDaemonManagementService {
                     return
                 }
 
-                BTDaemonXPCClient.disconnectDaemon()
-                update(reply: reply)
+                DispatchQueue.main.async {
+                    BTDaemonXPCClient.disconnectDaemon()
+                    update(reply: reply)
+                }
             }
         }
     }
