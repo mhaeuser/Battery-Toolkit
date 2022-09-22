@@ -89,6 +89,8 @@
 		CEECE33128BB742500821A3B /* ServiceCommProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEECE32F28BB742500821A3B /* ServiceCommProtocol.swift */; };
 		CEECE33328BB745B00821A3B /* ServiceComm.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEECE33228BB745B00821A3B /* ServiceComm.swift */; };
 		CEED18AF28BCB24D005F06FC /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3A8F6C284D056D00A9E373 /* Settings.swift */; };
+		CEF3497128DCD75F00A1CECD /* SecCodeEx.c in Sources */ = {isa = PBXBuildFile; fileRef = CEF3496E28DCD36100A1CECD /* SecCodeEx.c */; };
+		CEF3497228DCD77000A1CECD /* SecCodeEx.c in Sources */ = {isa = PBXBuildFile; fileRef = CEF3496E28DCD36100A1CECD /* SecCodeEx.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -212,6 +214,9 @@
 		CEECE32728BB652400821A3B /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		CEECE32F28BB742500821A3B /* ServiceCommProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceCommProtocol.swift; sourceTree = "<group>"; };
 		CEECE33228BB745B00821A3B /* ServiceComm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceComm.swift; sourceTree = "<group>"; };
+		CEF3496E28DCD36100A1CECD /* SecCodeEx.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = SecCodeEx.c; sourceTree = "<group>"; };
+		CEF3496F28DCD52400A1CECD /* SecCodeEx.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecCodeEx.h; sourceTree = "<group>"; };
+		CEF3497028DCD55900A1CECD /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -307,6 +312,7 @@
 		CE52866A28298B6D00860C7B = {
 			isa = PBXGroup;
 			children = (
+				CEF3496D28DCD34900A1CECD /* SecCodeEx */,
 				CE3C1D8128C7F950008A0F7D /* uninstall_legacy.sh */,
 				CED8DD3628C364D60082C02A /* NSXPCConnectionAuditToken */,
 				CEECE31928BB648F00821A3B /* BatteryToolkitXPC */,
@@ -423,6 +429,16 @@
 				CE6B760828BC1D15008DF170 /* ServiceXPCServer.swift */,
 			);
 			path = BatteryToolkitXPC;
+			sourceTree = "<group>";
+		};
+		CEF3496D28DCD34900A1CECD /* SecCodeEx */ = {
+			isa = PBXGroup;
+			children = (
+				CEF3497028DCD55900A1CECD /* module.modulemap */,
+				CEF3496F28DCD52400A1CECD /* SecCodeEx.h */,
+				CEF3496E28DCD36100A1CECD /* SecCodeEx.c */,
+			);
+			path = SecCodeEx;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -593,6 +609,7 @@
 				CEA80FCB285A27CF0064ADEA /* SMCKit.swift in Sources */,
 				CE54510228D9FE9D00D6EB5F /* DaemonManagement.swift in Sources */,
 				CE397472285A2396002D0EC9 /* DaemonXPCServer.swift in Sources */,
+				CEF3497128DCD75F00A1CECD /* SecCodeEx.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -659,6 +676,7 @@
 				CE50557228D65B48000E4387 /* XPCValidation.swift in Sources */,
 				CE3179EA28DB540600E9C121 /* Authorization.swift in Sources */,
 				CEECE33328BB745B00821A3B /* ServiceComm.swift in Sources */,
+				CEF3497228DCD77000A1CECD /* SecCodeEx.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

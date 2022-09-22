@@ -7,20 +7,14 @@ import Foundation
 import os.log
 import NSXPCConnectionAuditToken
 import BTPreprocessor
+import SecCodeEx
 
 public struct BTXPCValidation {
     private static func verifySignFlags(code: SecCode) -> Bool {
-        var staticCode: SecStaticCode? = nil
-        let status = SecCodeCopyStaticCode(code, [], &staticCode)
-        guard status == errSecSuccess, let staticCode = staticCode else {
-            os_log("Failed to retrieve SecStaticCode")
-            return false
-        }
-
         var signInfo: CFDictionary? = nil
-        let infoStatus = SecCodeCopySigningInformation(
-            staticCode,
-            [],
+        let infoStatus = SecCodeCopySigningInformationDynamic(
+            code,
+            [SecCSFlags(rawValue: kSecCSDynamicInformation)],
             &signInfo
             )
         guard infoStatus == errSecSuccess else {
@@ -33,29 +27,41 @@ public struct BTXPCValidation {
             return false
         }
 
-        guard let signingFlags = signInfo[kSecCodeInfoFlags as String] as? UInt32 else {
-            os_log("Failed to retrieve signature flags")
+        guard let signingStatus = signInfo[kSecCodeInfoStatus as String] as? UInt32 else {
+            os_log("Failed to retrieve signature status")
             return false
         }
 
-        let codeFlags = SecCodeSignatureFlags(rawValue: signingFlags)
+        let codeStatus = SecCodeStatus(rawValue: signingStatus)
         //
         // REF: https://blog.obdev.at/what-we-have-learned-from-a-vulnerability/index.html
-        // forceHard, forceKill: Do not allow late loading of (malicious) code.
-        // restrict:             Disallow unrestricted DTrace.
-        // enforcement:          Enforce code signing for all executable memory.
-        // libraryValidation:    Do not allow loading of third-party libraries.
-        // runtime:              Enforce Hardened Runtime.
+        // valid:             Enforce a valid in-memory CS status.
+        // hard, kill:        Disallow late loading of (malicious) code.
+        // restrict:          Disallow unrestricted DTrace.
+        // enforcement:       Enforce code signing for all executable memory.
+        // libraryValidation: Disallow loading of third-party libraries.
+        // runtime:           Enforce Hardened Runtime.
         //
-        let reqFlags: SecCodeSignatureFlags = [
-            .forceHard, .forceKill,
-            .restrict,
-            .enforcement,
-            .libraryValidation,
-            .runtime
+        var reqStatus: SecCodeStatus = [
+            .valid,
+            .hard, .kill,
+            SecCodeStatus(rawValue: SecCodeSignatureFlags.restrict.rawValue),
+            SecCodeStatus(rawValue: SecCodeSignatureFlags.enforcement.rawValue),
+            SecCodeStatus(rawValue: SecCodeSignatureFlags.libraryValidation.rawValue),
+            SecCodeStatus(rawValue: SecCodeSignatureFlags.runtime.rawValue)
         ]
-        guard codeFlags.contains(reqFlags) else {
-            os_log("Signature flags constraints violated: \(signingFlags)")
+
+        if codeStatus.contains(.debugged) {
+            #if !DEBUG
+            os_log("Signature status constraints violated: Code has been debugged")
+            return false
+            #endif
+
+            reqStatus.remove([.valid, .hard, .kill])
+        }
+
+        guard codeStatus.contains(reqStatus) else {
+            os_log("Signature status constraints violated: \(signingStatus) vs \(reqStatus.rawValue)")
             return false
         }
 

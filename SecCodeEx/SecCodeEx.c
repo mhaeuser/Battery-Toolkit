@@ -1,6 +1,8 @@
-#import <Foundation/Foundation.h>
-#import <
+#include "SecCodeEx.h"
 
-SecCodeRef CastSecCodeToSecStaticCode(SecStaticCodeRef code) {
-    return
+#include <Security/SecCode.h>
+
+OSStatus SecCodeCopySigningInformationDynamic(SecCodeRef code, SecCSFlags flags, CFDictionaryRef * __nonnull CF_RETURNS_RETAINED information)
+{
+    return SecCodeCopySigningInformation(code, flags, information);
 }
