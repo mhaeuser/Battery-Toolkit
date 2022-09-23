@@ -8,7 +8,7 @@ import os.log
 
 internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
     @MainActor func getUniqueId(reply: @Sendable @escaping (NSData?) -> Void) -> Void {
-        reply(CSIdentification.getUniqueIdSelf())
+        reply(BTIdentification.getUniqueId())
     }
 
     @MainActor internal func execute(command: UInt8, reply: @Sendable @escaping (Bool) -> Void) -> Void {

@@ -91,6 +91,7 @@
 		CEED18AF28BCB24D005F06FC /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3A8F6C284D056D00A9E373 /* Settings.swift */; };
 		CEF3497128DCD75F00A1CECD /* SecCodeEx.c in Sources */ = {isa = PBXBuildFile; fileRef = CEF3496E28DCD36100A1CECD /* SecCodeEx.c */; };
 		CEF3497228DCD77000A1CECD /* SecCodeEx.c in Sources */ = {isa = PBXBuildFile; fileRef = CEF3496E28DCD36100A1CECD /* SecCodeEx.c */; };
+		CEF3497528DDA55800A1CECD /* BTIdentification.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF3497428DDA55800A1CECD /* BTIdentification.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -217,6 +218,7 @@
 		CEF3496E28DCD36100A1CECD /* SecCodeEx.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = SecCodeEx.c; sourceTree = "<group>"; };
 		CEF3496F28DCD52400A1CECD /* SecCodeEx.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecCodeEx.h; sourceTree = "<group>"; };
 		CEF3497028DCD55900A1CECD /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
+		CEF3497428DDA55800A1CECD /* BTIdentification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTIdentification.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -284,6 +286,7 @@
 				CEA80FD7285A56B50064ADEA /* main.swift */,
 				CE8ED7F328C144EE00398581 /* Dispatcher.swift */,
 				CE54510128D9FE9D00D6EB5F /* DaemonManagement.swift */,
+				CEF3497428DDA55800A1CECD /* BTIdentification.swift */,
 			);
 			path = me.mhaeuser.batterytoolkitd;
 			sourceTree = "<group>";
@@ -608,6 +611,7 @@
 				CE1F5E3728D7339D00F61F67 /* CSIdentification.swift in Sources */,
 				CEA80FCB285A27CF0064ADEA /* SMCKit.swift in Sources */,
 				CE54510228D9FE9D00D6EB5F /* DaemonManagement.swift in Sources */,
+				CEF3497528DDA55800A1CECD /* BTIdentification.swift in Sources */,
 				CE397472285A2396002D0EC9 /* DaemonXPCServer.swift in Sources */,
 				CEF3497128DCD75F00A1CECD /* SecCodeEx.c in Sources */,
 			);

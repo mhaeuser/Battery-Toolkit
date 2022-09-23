@@ -8,6 +8,8 @@ import os.log
 
 @MainActor
 private func main() -> Never {
+    BTIdentification.cacheUniqueId()
+
     let prepareResult = BTPowerEvents.prepare()
     guard prepareResult else {
         os_log("Power events preparation failed")
