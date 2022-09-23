@@ -134,8 +134,9 @@ internal struct BTDaemonManagementService {
     @MainActor internal static func register(reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
         os_log("Starting daemon service")
 
-        let legacyUrl = URL(fileURLWithPath: BTLegacyHelperInfo.legacyHelperPlist, isDirectory: false)
-        let status    = SMAppService.statusForLegacyPlist(at: legacyUrl)
+        let status = SMAppService.statusForLegacyPlist(
+            at: BTLegacyHelperInfo.legacyHelperPlist
+            )
         guard registered(status: status) else {
             os_log("Legacy helper is not registered")
             update(reply: reply)

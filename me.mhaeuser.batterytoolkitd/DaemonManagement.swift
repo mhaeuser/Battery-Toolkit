@@ -8,9 +8,9 @@ import os.log
 import IOPMPrivate
 
 internal struct BTDaemonManagement {
-    private static func removeFile(path: String) -> Bool {
+    private static func removeFile(path: URL) -> Bool {
         do {
-            try FileManager.default.removeItem(atPath: path)
+            try FileManager.default.removeItem(at: path)
             return true
         } catch {
             os_log("Error deleting file \(path): \(error.localizedDescription)")
@@ -28,7 +28,8 @@ internal struct BTDaemonManagement {
             return false
         }
 
-        guard args[0] == BTLegacyHelperInfo.legacyHelperExec else {
+        let launchUrl = URL(fileURLWithPath: args[0], isDirectory: false)
+        guard launchUrl == BTLegacyHelperInfo.legacyHelperExec else {
             os_log("Legacy helper launched from unexpected location: \(args[0])")
             return false
         }

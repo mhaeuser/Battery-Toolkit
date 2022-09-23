@@ -7,9 +7,13 @@ import Foundation
 import BTPreprocessor
 
 public struct BTLegacyHelperInfo {
-    public static let legacyHelperExec  = "/Library/PrivilegedHelperTools/" +
-        BTPreprocessor.BT_DAEMON_NAME
+    public static let legacyHelperExec = URL(
+        fileURLWithPath: "/Library/PrivilegedHelperTools/" + BTPreprocessor.BT_DAEMON_NAME,
+        isDirectory: false
+        )
 
-    public static let legacyHelperPlist = "/Library/LaunchDaemons/" +
-        BTPreprocessor.BT_DAEMON_NAME + ".plist"
+    public static let legacyHelperPlist = URL(
+        fileURLWithPath: "/Library/LaunchDaemons/" + BTPreprocessor.BT_DAEMON_NAME + ".plist",
+        isDirectory: false
+        )
 }
