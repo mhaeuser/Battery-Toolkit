@@ -12,6 +12,8 @@ internal struct BTDaemonManagement {
         do {
             try FileManager.default.removeItem(at: path)
             return true
+        } catch CocoaError.fileNoSuchFile {
+            return true
         } catch {
             os_log("Error deleting file \(path): \(error.localizedDescription)")
             return false
