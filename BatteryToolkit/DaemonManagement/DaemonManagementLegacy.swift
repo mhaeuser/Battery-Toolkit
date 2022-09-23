@@ -71,6 +71,11 @@ internal struct BTDaemonManagementLegacy {
                 BTDaemonXPCClient.removeLegacyHelperFiles() { success in
                     // FIXME: Handle error
 
+                    guard success else {
+                        reply(false)
+                        return
+                    }
+
                     var error: Unmanaged<CFError>? = nil
                     let success = SMJobRemove(
                         kSMDomainSystemLaunchd,
