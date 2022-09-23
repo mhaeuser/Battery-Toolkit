@@ -74,11 +74,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    //
-    // NSApplicationDelegate is implicitly @MainActor and thus the warnings are
-    // misleading.
-    //
-
     @MainActor func applicationDidFinishLaunching(_ aNotification: Notification) {
         BatteryToolkit.startDaemon(reply: daemonStatusHandler)
     }

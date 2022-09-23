@@ -216,11 +216,6 @@ final class MenuBarExtraMenuDelegate: NSObject, NSMenuDelegate {
         }
     }
 
-    //
-    // NSMenuDelegate is implicitly @MainActor and thus the warnings are
-    // misleading.
-    //
-
     @MainActor func menuWillOpen(_ menu: NSMenu) {
         assert (self.refreshTimer == nil)
 
