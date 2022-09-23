@@ -8,7 +8,7 @@ import os.log
 
 @main
 final class AppDelegate: NSObject, NSApplicationDelegate {
-    @MainActor private var menuBarExtraItem: NSStatusItem!
+    @MainActor private var menuBarExtraItem: NSStatusItem?
     @MainActor @IBOutlet weak var menuBarExtraMenu: NSMenu!
 
     @MainActor @IBOutlet weak var settingsItem: NSMenuItem!
@@ -36,11 +36,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                     self.disableBackgroundItem.isEnabled = true
                     self.settingsItem.isEnabled          = true
 
-                    self.menuBarExtraItem = NSStatusBar.system.statusItem(
+                    let extraItem = NSStatusBar.system.statusItem(
                         withLength: NSStatusItem.squareLength
-                    )
-                    self.menuBarExtraItem.button?.image = NSImage(named: NSImage.Name("StatusItemIcon"))
-                    self.menuBarExtraItem.menu = self.menuBarExtraMenu
+                        )
+                    extraItem.button?.image = NSImage(named: NSImage.Name("StatusItemIcon"))
+                    extraItem.menu = self.menuBarExtraMenu
+                    self.menuBarExtraItem = extraItem
                 }
 
             case .requiresApproval:
