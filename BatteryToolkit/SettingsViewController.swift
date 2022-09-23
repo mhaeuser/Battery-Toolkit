@@ -6,13 +6,13 @@
 import Cocoa
 
 final class SettingsViewController: NSViewController {
-    @IBOutlet weak var minChargeTextField: NSTextField!
-    @IBOutlet weak var minChargeSlider: NSSlider!
+    @IBOutlet var minChargeTextField: NSTextField!
+    @IBOutlet var minChargeSlider: NSSlider!
     
-    @IBOutlet weak var maxChargeTextField: NSTextField!
-    @IBOutlet weak var maxChargeSlider: NSSlider!
+    @IBOutlet var maxChargeTextField: NSTextField!
+    @IBOutlet var maxChargeSlider: NSSlider!
     
-    @IBOutlet weak var adapterSleepButton: NSButton!
+    @IBOutlet var adapterSleepButton: NSButton!
 
     private var minChargeVal = BTSettingsInfo.Defaults.minCharge
     @objc dynamic var minChargeNum: NSNumber {

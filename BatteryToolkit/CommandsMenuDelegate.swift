@@ -7,30 +7,30 @@ import Cocoa
 import os.log
 
 final class CommandsMenuDelegate: NSObject, NSMenuDelegate {
-    @IBOutlet weak var infoUnknownStateItem: NSMenuItem!
+    @IBOutlet var infoUnknownStateItem: NSMenuItem!
 
-    @IBOutlet weak var infoPowerAdapterEnabledItem: NSMenuItem!
-    @IBOutlet weak var infoPowerAdapterDisabledItem: NSMenuItem!
+    @IBOutlet var infoPowerAdapterEnabledItem: NSMenuItem!
+    @IBOutlet var infoPowerAdapterDisabledItem: NSMenuItem!
 
-    @IBOutlet weak var infoChargingToMaximumItem: NSMenuItem!
-    @IBOutlet weak var infoChargingToFullItem: NSMenuItem!
-    @IBOutlet weak var infoChargingUnknownModeItem: NSMenuItem!
+    @IBOutlet var infoChargingToMaximumItem: NSMenuItem!
+    @IBOutlet var infoChargingToFullItem: NSMenuItem!
+    @IBOutlet var infoChargingUnknownModeItem: NSMenuItem!
 
-    @IBOutlet weak var infoNotChargingItem: NSMenuItem!
-    @IBOutlet weak var infoRequestedChargingToMaximumItem: NSMenuItem!
-    @IBOutlet weak var infoRequestedChargingToFullItem: NSMenuItem!
-    @IBOutlet weak var infoNotChargingUnknownModeItem: NSMenuItem!
+    @IBOutlet var infoNotChargingItem: NSMenuItem!
+    @IBOutlet var infoRequestedChargingToMaximumItem: NSMenuItem!
+    @IBOutlet var infoRequestedChargingToFullItem: NSMenuItem!
+    @IBOutlet var infoNotChargingUnknownModeItem: NSMenuItem!
 
-    @IBOutlet weak var disablePowerAdapterItem: NSMenuItem!
-    @IBOutlet weak var enablePowerAdapterItem: NSMenuItem!
+    @IBOutlet var disablePowerAdapterItem: NSMenuItem!
+    @IBOutlet var enablePowerAdapterItem: NSMenuItem!
 
-    @IBOutlet weak var chargeToFullNowItem: NSMenuItem!
-    @IBOutlet weak var chargeToMaximumNowItem: NSMenuItem!
-    @IBOutlet weak var disableChargingItem: NSMenuItem!
+    @IBOutlet var chargeToFullNowItem: NSMenuItem!
+    @IBOutlet var chargeToMaximumNowItem: NSMenuItem!
+    @IBOutlet var disableChargingItem: NSMenuItem!
 
-    @IBOutlet weak var requestChargingToFullItem: NSMenuItem!
-    @IBOutlet weak var requestChargingToMaximumItem: NSMenuItem!
-    @IBOutlet weak var cancelChargingRequestItem: NSMenuItem!
+    @IBOutlet var requestChargingToFullItem: NSMenuItem!
+    @IBOutlet var requestChargingToMaximumItem: NSMenuItem!
+    @IBOutlet var cancelChargingRequestItem: NSMenuItem!
 
     private var refreshTimer: DispatchSourceTimer? = nil
 

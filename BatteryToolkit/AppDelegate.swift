@@ -9,10 +9,10 @@ import os.log
 @main
 final class AppDelegate: NSObject, NSApplicationDelegate {
     @MainActor private var menuBarExtraItem: NSStatusItem?
-    @MainActor @IBOutlet weak var menuBarExtraMenu: NSMenu!
+    @MainActor @IBOutlet var menuBarExtraMenu: NSMenu!
 
-    @MainActor @IBOutlet weak var settingsItem: NSMenuItem!
-    @MainActor @IBOutlet weak var disableBackgroundItem: NSMenuItem!
+    @MainActor @IBOutlet var settingsItem: NSMenuItem!
+    @MainActor @IBOutlet var disableBackgroundItem: NSMenuItem!
 
     @MainActor @IBAction private func unregisterDaemonHandler(sender: NSMenuItem) {
         BTAppPrompts.promptUnregisterDaemon()

@@ -6,7 +6,7 @@
 import Cocoa
 
 final class UpgradingViewController: NSViewController {
-    @IBOutlet weak var progress: NSProgressIndicator!
+    @IBOutlet var progress: NSProgressIndicator!
 
     override func viewWillAppear() {
         super.viewWillAppear()
