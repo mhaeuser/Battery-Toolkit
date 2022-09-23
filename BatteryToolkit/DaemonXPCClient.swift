@@ -62,10 +62,6 @@ internal struct BTDaemonXPCClient {
         return daemon
     }
 
-    private static func getDaemon() -> BTDaemonCommProtocol {
-        return getDaemon() { }
-    }
-
     internal static func disconnectDaemon() {
         guard let connect = BTDaemonXPCClient.connect else {
             return
@@ -101,49 +97,59 @@ internal struct BTDaemonXPCClient {
         daemon.getState(reply: reply)
     }
 
-    internal static func disablePowerAdapter() -> Void {
-        let daemon = getDaemon()
-        daemon.execute(
-            command: BTDaemonCommProtocolCommands.disablePowerAdapter.rawValue
-            ) { success in
-                // FIXME: Handle error
+    internal static func disablePowerAdapter(reply: @Sendable @escaping (Bool) -> Void) -> Void {
+        let daemon = getDaemon() {
+            reply(false)
         }
+
+        daemon.execute(
+            command: BTDaemonCommProtocolCommands.disablePowerAdapter.rawValue,
+            reply: reply
+            )
     }
 
-    internal static func enablePowerAdapter() -> Void {
-        let daemon = getDaemon()
-        daemon.execute(
-            command: BTDaemonCommProtocolCommands.enablePowerAdapter.rawValue
-            ) { success in
-            // FIXME: Handle error
+    internal static func enablePowerAdapter(reply: @Sendable @escaping (Bool) -> Void) -> Void {
+        let daemon = getDaemon() {
+            reply(false)
         }
+
+        daemon.execute(
+            command: BTDaemonCommProtocolCommands.enablePowerAdapter.rawValue,
+            reply: reply
+            )
     }
 
-    internal static func chargeToMaximum() -> Void {
-        let daemon = getDaemon()
-        daemon.execute(
-            command: BTDaemonCommProtocolCommands.chargeToMaximum.rawValue
-            ) { success in
-            // FIXME: Handle error
+    internal static func chargeToMaximum(reply: @Sendable @escaping (Bool) -> Void) -> Void {
+        let daemon = getDaemon() {
+            reply(false)
         }
+
+        daemon.execute(
+            command: BTDaemonCommProtocolCommands.chargeToMaximum.rawValue,
+            reply: reply
+            )
     }
 
-    internal static func chargeToFull() -> Void {
-        let daemon = getDaemon()
-        daemon.execute(
-            command: BTDaemonCommProtocolCommands.chargeToFull.rawValue
-            ) { success in
-            // FIXME: Handle error
+    internal static func chargeToFull(reply: @Sendable @escaping (Bool) -> Void) -> Void {
+        let daemon = getDaemon() {
+            reply(false)
         }
+
+        daemon.execute(
+            command: BTDaemonCommProtocolCommands.chargeToFull.rawValue,
+            reply: reply
+            )
     }
 
-    internal static func disableCharging() -> Void {
-        let daemon = getDaemon()
-        daemon.execute(
-            command: BTDaemonCommProtocolCommands.disableCharging.rawValue
-            ) { success in
-            // FIXME: Handle error
+    internal static func disableCharging(reply: @Sendable @escaping (Bool) -> Void) -> Void {
+        let daemon = getDaemon() {
+            reply(false)
         }
+
+        daemon.execute(
+            command: BTDaemonCommProtocolCommands.disableCharging.rawValue,
+            reply: reply
+            )
     }
 
     internal static func getSettings(reply: @Sendable @escaping ([String: AnyObject]) -> Void) {
@@ -154,13 +160,19 @@ internal struct BTDaemonXPCClient {
         daemon.getSettings(reply: reply)
     }
     
-    internal static func setSettings(settings: [String: AnyObject]) -> Void {
-        let daemon = getDaemon()
-        daemon.setSettings(settings: settings)
+    internal static func setSettings(settings: [String: AnyObject], reply: @Sendable @escaping (Bool) -> Void) -> Void {
+        let daemon = getDaemon() {
+            reply(false)
+        }
+
+        daemon.setSettings(settings: settings, reply: reply)
     }
 
     internal static func removeLegacyHelperFiles(reply: @Sendable @escaping (Bool) -> Void) {
-        let daemon = getDaemon()
+        let daemon = getDaemon() {
+            reply(false)
+        }
+
         daemon.execute(
             command: BTDaemonCommProtocolCommands.removeLegacyHelperFiles.rawValue,
             reply: reply

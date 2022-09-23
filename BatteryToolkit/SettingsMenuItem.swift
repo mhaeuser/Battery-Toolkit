@@ -1,9 +1,7 @@
-//
-//  SettingsMenuItem.swift
-//  BatteryToolkit
-//
-//  Created by User on 23.09.22.
-//
+/*
+  Copyright (C) 2022 Marvin Häuser. All rights reserved.
+  SPDX-License-Identifier: BSD-3-Clause
+*/
 
 import AppKit
 

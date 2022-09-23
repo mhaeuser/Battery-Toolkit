@@ -7,6 +7,11 @@ import Foundation
 
 public struct BTLocalization {
     public struct Prompts {
+        public static let ok = NSLocalizedString(
+            "OK",
+            comment: "Prompt button to acknowledge an situation"
+            )
+
         public static let approve = NSLocalizedString(
             "Approve",
             comment: "Prompt button to approve an action"
@@ -30,6 +35,11 @@ public struct BTLocalization {
         public static let disableAndQuit = NSLocalizedString(
             "Disable and Quit",
             comment: "Prompt button to disable a core function and quit the app"
+            )
+
+        public static let unexpectedErrorMessage = NSLocalizedString(
+            "An unexpected error has occured.",
+            comment: "Prompt caption informing the user of an unexpected error"
             )
 
         public struct Daemon {

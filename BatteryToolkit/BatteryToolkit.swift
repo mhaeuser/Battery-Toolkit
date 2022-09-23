@@ -6,53 +6,52 @@
 import Foundation
 import BTPreprocessor
 
-@MainActor
 internal struct BatteryToolkit {
-    internal static func startDaemon(reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
+    @MainActor internal static func startDaemon(reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
         BTDaemonManagement.start(reply: reply)
     }
 
-    internal static func approveDaemon(timeout: UInt8, reply: @escaping @Sendable (Bool) -> Void) {
+    @MainActor internal static func approveDaemon(timeout: UInt8, reply: @escaping @Sendable (Bool) -> Void) {
         BTDaemonManagement.approve(timeout: timeout, reply: reply)
     }
     
-    internal static func stop() {
+    @MainActor internal static func stop() {
         BTDaemonXPCClient.stop()
     }
     
-    internal static func disablePowerAdapter() {
-        BTDaemonXPCClient.disablePowerAdapter()
+    @MainActor internal static func disablePowerAdapter(reply: @Sendable @escaping (Bool) -> Void) {
+        BTDaemonXPCClient.disablePowerAdapter(reply: reply)
     }
 
-    internal static func enablePowerAdapter() {
-        BTDaemonXPCClient.enablePowerAdapter()
+    @MainActor internal static func enablePowerAdapter(reply: @Sendable @escaping (Bool) -> Void) {
+        BTDaemonXPCClient.enablePowerAdapter(reply: reply)
     }
 
-    internal static func chargeToMaximum() {
-        BTDaemonXPCClient.chargeToMaximum()
+    @MainActor internal static func chargeToMaximum(reply: @Sendable @escaping (Bool) -> Void) {
+        BTDaemonXPCClient.chargeToMaximum(reply: reply)
     }
 
-    internal static func chargeToFull() {
-        BTDaemonXPCClient.chargeToFull()
+    @MainActor internal static func chargeToFull(reply: @Sendable @escaping (Bool) -> Void) {
+        BTDaemonXPCClient.chargeToFull(reply: reply)
     }
 
-    internal static func disableCharging() {
-        BTDaemonXPCClient.disableCharging()
+    @MainActor internal static func disableCharging(reply: @Sendable @escaping (Bool) -> Void) {
+        BTDaemonXPCClient.disableCharging(reply: reply)
     }
 
-    internal static func getState(reply: @Sendable @escaping ([String: AnyObject]) -> Void) {
+    @MainActor internal static func getState(reply: @Sendable @escaping ([String: AnyObject]) -> Void) {
         BTDaemonXPCClient.getState(reply: reply)
     }
 
-    internal static func getSettings(reply: @Sendable @escaping ([String: AnyObject]) -> Void) {
+    @MainActor internal static func getSettings(reply: @Sendable @escaping ([String: AnyObject]) -> Void) {
         BTDaemonXPCClient.getSettings(reply: reply)
     }
 
-    internal static func setSettings(settings: [String: AnyObject]) {
-        BTDaemonXPCClient.setSettings(settings: settings)
+    @MainActor internal static func setSettings(settings: [String: AnyObject], reply: @Sendable @escaping (Bool) -> Void) {
+        BTDaemonXPCClient.setSettings(settings: settings, reply: reply)
     }
     
-    internal static func unregisterDaemon(reply: @Sendable @escaping (Bool) -> Void) {
+    @MainActor internal static func unregisterDaemon(reply: @Sendable @escaping (Bool) -> Void) {
         BTDaemonManagement.unregister(reply: reply)
     }
 }

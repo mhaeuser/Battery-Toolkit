@@ -88,4 +88,22 @@ internal struct BTAppPrompts {
             unregisterDaemon()
         }
     }
+
+    private static func unexpectedErrorAlert() -> NSAlert {
+        let alert         = NSAlert()
+        alert.messageText = BTLocalization.Prompts.unexpectedErrorMessage
+        alert.alertStyle  = NSAlert.Style.critical
+        _ = alert.addButton(withTitle: BTLocalization.Prompts.ok)
+        return alert
+    }
+
+    internal static func promptUnexpectedError() {
+        let alert = unexpectedErrorAlert()
+        _ = alert.runModal()
+    }
+
+    internal static func promptUnexpectedError(window: NSWindow) {
+        let alert = unexpectedErrorAlert()
+        _ = alert.beginSheetModal(for: window)
+    }
 }

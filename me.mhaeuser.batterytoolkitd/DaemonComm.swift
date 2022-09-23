@@ -47,7 +47,7 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
         reply(BTSettings.getSettings())
     }
 
-    @MainActor internal func setSettings(settings: [String: AnyObject]) -> Void {
-        BTSettings.setSettings(settings: settings)
+    @MainActor internal func setSettings(settings: [String: AnyObject], reply: @Sendable @escaping (Bool) -> Void) -> Void {
+        BTSettings.setSettings(settings: settings, reply: reply)
     }
 }

@@ -55,16 +55,18 @@ internal struct BTSettings {
         BTSettings.maxCharge = UInt8(maxCharge)
     }
     
-    private static func setChargeLimits(minCharge: Int, maxCharge: Int) {
+    private static func setChargeLimits(minCharge: Int, maxCharge: Int) -> Bool {
         guard BTSettingsInfo.chargeLimitsValid(minCharge: minCharge, maxCharge: maxCharge) else {
             os_log("Client charge limits malformed, preserve current values")
-            return
+            return false
         }
         
         BTSettings.minCharge = UInt8(minCharge)
         BTSettings.maxCharge = UInt8(maxCharge)
         
         BTPowerEvents.settingsChanged()
+
+        return true
     }
     
     private static func setAdapterSleep(enabled: Bool) {
@@ -90,18 +92,26 @@ internal struct BTSettings {
         return settings
     }
 
-    internal static func setSettings(settings: [String: AnyObject]) {
-        let minChargeNum   = settings[BTSettingsInfo.Keys.minCharge] as? NSNumber
-        let maxChargeNum   = settings[BTSettingsInfo.Keys.maxCharge] as? NSNumber
-        let adapterInfoNum = settings[BTSettingsInfo.Keys.adapterSleep] as? NSNumber
-
+    internal static func setSettings(settings: [String: AnyObject], reply: @Sendable @escaping (Bool) -> Void) {
+        let minChargeNum = settings[BTSettingsInfo.Keys.minCharge] as? NSNumber
         let minCharge    = minChargeNum?.intValue    ?? Int(BTSettingsInfo.Defaults.minCharge)
-        let maxCharge    = maxChargeNum?.intValue    ?? Int(BTSettingsInfo.Defaults.maxCharge)
-        let adapterSleep = adapterInfoNum?.boolValue ?? BTSettingsInfo.Defaults.adapterSleep
 
-        setChargeLimits(minCharge: minCharge, maxCharge: maxCharge)
+        let maxChargeNum = settings[BTSettingsInfo.Keys.maxCharge] as? NSNumber
+        let maxCharge    = maxChargeNum?.intValue    ?? Int(BTSettingsInfo.Defaults.maxCharge)
+
+        let success = setChargeLimits(minCharge: minCharge, maxCharge: maxCharge)
+        guard success else {
+            reply(false)
+            return
+        }
+
+        let adapterInfoNum = settings[BTSettingsInfo.Keys.adapterSleep] as? NSNumber
+        let adapterSleep   = adapterInfoNum?.boolValue ?? BTSettingsInfo.Defaults.adapterSleep
+
         setAdapterSleep(enabled: adapterSleep)
 
         writeDefaults()
+
+        reply(true)
     }
 }

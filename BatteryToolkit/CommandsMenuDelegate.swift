@@ -222,22 +222,22 @@ final class CommandsMenuDelegate: NSObject, NSMenuDelegate {
     }
 
     @IBAction private func disablePowerAdapterHandler(sender: NSMenuItem) {
-        BatteryToolkit.disablePowerAdapter()
+        BatteryToolkit.disablePowerAdapter(reply: BTCompletionHandlers.commandError)
     }
 
     @IBAction private func enablePowerAdapterHandler(sender: NSMenuItem) {
-        BatteryToolkit.enablePowerAdapter()
+        BatteryToolkit.enablePowerAdapter(reply: BTCompletionHandlers.commandError)
     }
 
     @IBAction private func chargeToMaximumHandler(sender: NSMenuItem) {
-        BatteryToolkit.chargeToMaximum()
+        BatteryToolkit.chargeToMaximum(reply: BTCompletionHandlers.commandError)
     }
 
     @IBAction private func chargeToFullHandler(sender: NSMenuItem) {
-        BatteryToolkit.chargeToFull()
+        BatteryToolkit.chargeToFull(reply: BTCompletionHandlers.commandError)
     }
 
     @IBAction private func disableChargingHandler(sender: NSMenuItem) {
-        BatteryToolkit.disableCharging()
+        BatteryToolkit.disableCharging(reply: BTCompletionHandlers.commandError)
     }
 }

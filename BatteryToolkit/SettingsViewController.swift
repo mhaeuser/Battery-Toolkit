@@ -133,8 +133,15 @@ final class SettingsViewController: NSViewController {
                 value: self.adapterSleepButton.state == NSControl.StateValue.off
                 )
         ]
-        BTDaemonXPCClient.setSettings(settings: settings)
-        self.view.window?.windowController?.close()
+        BTDaemonXPCClient.setSettings(settings: settings) { success in
+            DispatchQueue.main.async {
+                if success {
+                    self.view.window!.windowController!.close()
+                } else {
+                    BTAppPrompts.promptUnexpectedError(window: self.view.window!)
+                }
+            }
+        }
     }
 
     override func viewWillAppear() {

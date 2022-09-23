@@ -19,5 +19,5 @@ enum BTDaemonCommProtocolCommands: UInt8 {
     @MainActor func execute(command: UInt8, reply: @Sendable @escaping (Bool) -> Void) -> Void
     @MainActor func getState(reply: @Sendable @escaping ([String: AnyObject]) -> Void) -> Void
     @MainActor func getSettings(reply: @Sendable @escaping ([String: AnyObject]) -> Void) -> Void
-    @MainActor func setSettings(settings: [String: AnyObject]) -> Void
+    @MainActor func setSettings(settings: [String: AnyObject], reply: @Sendable @escaping (Bool) -> Void) -> Void
 }
