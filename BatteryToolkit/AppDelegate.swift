@@ -41,6 +41,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                     extraItem.menu = self.menuBarExtraMenu
                     self.menuBarExtraItem = extraItem
 
+                    if !NSApp.isActive {
+                        BTAccessoryMode.activate()
+                    }
+
                 case .requiresApproval:
                     os_log("Daemon requires approval")
 
@@ -84,14 +88,18 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     @MainActor func applicationWillBecomeActive(_ notification: Notification) {
-        _ = NSApplication.shared.setActivationPolicy(.regular)
-    }
-
-    @MainActor func applicationWillResignActive(_ notification: Notification) {
-        guard NSApplication.shared.keyWindow == nil else {
+        guard self.menuBarExtraItem != nil else {
             return
         }
 
-        _ = NSApplication.shared.setActivationPolicy(.accessory)
+        BTAccessoryMode.deactivate()
+    }
+
+    @MainActor func applicationWillResignActive(_ notification: Notification) {
+        guard self.menuBarExtraItem != nil else {
+            return
+        }
+
+        BTAccessoryMode.activate()
     }
 }
