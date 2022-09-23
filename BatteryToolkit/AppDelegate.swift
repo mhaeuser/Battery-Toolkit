@@ -19,20 +19,18 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private func daemonStatusHandler(status: BTDaemonManagement.Status) {
-        switch status {
-            case .notRegistered:
-                os_log("Daemon not registered")
+        DispatchQueue.main.async {
+            switch status {
+                case .notRegistered:
+                    os_log("Daemon not registered")
 
-                DispatchQueue.main.async {
                     if BTAppPrompts.promptRegisterDaemonError() {
                         BatteryToolkit.startDaemon(reply: self.daemonStatusHandler)
                     }
-                }
 
-            case .enabled:
-                os_log("Daemon is enabled")
+                case .enabled:
+                    os_log("Daemon is enabled")
 
-                DispatchQueue.main.async {
                     self.disableBackgroundItem.isEnabled = true
                     self.settingsItem.isEnabled          = true
 
@@ -42,12 +40,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                     extraItem.button?.image = NSImage(named: NSImage.Name("StatusItemIcon"))
                     extraItem.menu = self.menuBarExtraMenu
                     self.menuBarExtraItem = extraItem
-                }
 
-            case .requiresApproval:
-                os_log("Daemon requires approval")
+                case .requiresApproval:
+                    os_log("Daemon requires approval")
 
-                DispatchQueue.main.async {
                     BTAppPrompts.promptApproveDaemon(timeout: 20) { success in
                         guard success else {
                             self.daemonStatusHandler(status: .requiresApproval)
@@ -56,12 +52,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
                         self.daemonStatusHandler(status: .enabled)
                     }
-                }
 
-            case .requiresUpgrade:
-                os_log("Daemon requires upgrade")
+                case .requiresUpgrade:
+                    os_log("Daemon requires upgrade")
 
-                DispatchQueue.main.async {
                     let storyboard = NSStoryboard(name: "Upgrading", bundle: nil)
                     let upgradingController = storyboard.instantiateInitialController() as! NSWindowController
                     upgradingController.showWindow(nil)
@@ -72,7 +66,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                             self.daemonStatusHandler(status: status)
                         }
                     }
-                }
+            }
         }
     }
 

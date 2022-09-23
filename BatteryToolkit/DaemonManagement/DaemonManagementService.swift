@@ -73,16 +73,18 @@ internal struct BTDaemonManagementService {
             return
         }
 
-        DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 0.5) {
-            let appService = SMAppService.daemon(plistName: BTDaemonManagementService.daemonServicePlist)
-            registerSync(appService: appService)
-            guard registered(status: appService.status) else {
-                forceRegister(run: run + 1, reply: reply)
-                return
-            }
+        assert(!Thread.isMainThread)
 
-            reply(BTDaemonManagement.Status(fromSMStatus: appService.status))
+        let appService = SMAppService.daemon(plistName: BTDaemonManagementService.daemonServicePlist)
+        registerSync(appService: appService)
+        guard registered(status: appService.status) else {
+            DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 0.5) {
+                forceRegister(run: run + 1, reply: reply)
+            }
+            return
         }
+
+        reply(BTDaemonManagement.Status(fromSMStatus: appService.status))
     }
 
     private static func update(reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
