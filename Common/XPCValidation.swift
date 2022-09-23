@@ -96,7 +96,9 @@ public struct BTXPCValidation {
             " and certificate leaf[subject.CN] = \"" + BT_CODE_SIGN_CN + "\"" +
             " and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */" +
             " and !(entitlement[\"com.apple.security.cs.allow-dyld-environment-variables\"] /* exists */)" +
-            " and !(entitlement[\"com.apple.security.cs.disable-library-validation\"] /* exists */)"
+            " and !(entitlement[\"com.apple.security.cs.disable-library-validation\"] /* exists */)" +
+            " and !(entitlement[\"com.apple.security.cs.allow-unsigned-executable-memory\"] /* exists */)" +
+            " and !(entitlement[\"com.apple.security.cs.allow-jit\"] /* exists */)"
         #if !DEBUG
         requirementText += " and !(entitlement[\"com.apple.security.get-task-allow\"] /* exists */)"
         #endif
