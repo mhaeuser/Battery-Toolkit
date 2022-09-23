@@ -6,7 +6,7 @@
 import Cocoa
 import os.log
 
-final class MenuBarExtraMenuDelegate: NSObject, NSMenuDelegate {
+final class CommandsMenuDelegate: NSObject, NSMenuDelegate {
     @IBOutlet weak var infoUnknownStateItem: NSMenuItem!
 
     @IBOutlet weak var infoPowerAdapterEnabledItem: NSMenuItem!
@@ -31,10 +31,6 @@ final class MenuBarExtraMenuDelegate: NSObject, NSMenuDelegate {
     @IBOutlet weak var requestChargingToFullItem: NSMenuItem!
     @IBOutlet weak var requestChargingToMaximumItem: NSMenuItem!
     @IBOutlet weak var cancelChargingRequestItem: NSMenuItem!
-    @IBOutlet weak var commandsSeparatorItem: NSMenuItem!
-
-    @IBOutlet weak var settingsItem: NSMenuItem!
-    @IBOutlet weak var preferencesItem: NSMenuItem!
 
     private var refreshTimer: DispatchSourceTimer? = nil
 
@@ -75,13 +71,11 @@ final class MenuBarExtraMenuDelegate: NSObject, NSMenuDelegate {
                     self.requestChargingToMaximumItem.isHidden = true
                     self.disableChargingItem.isHidden          = true
                     self.cancelChargingRequestItem.isHidden    = true
-                    self.commandsSeparatorItem.isHidden        = true
 
                     return
                 }
 
-                self.infoUnknownStateItem.isHidden  = true
-                self.commandsSeparatorItem.isHidden = false
+                self.infoUnknownStateItem.isHidden = true
 
                 if power {
                     self.infoPowerAdapterDisabledItem.isHidden = true
@@ -208,11 +202,6 @@ final class MenuBarExtraMenuDelegate: NSObject, NSMenuDelegate {
                     }
                 }
             }
-        }
-
-        if #unavailable(macOS 13.0) {
-            self.settingsItem.isHidden    = true
-            self.preferencesItem.isHidden = false
         }
     }
 

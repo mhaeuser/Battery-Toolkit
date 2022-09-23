@@ -49,6 +49,10 @@
 		CE54510228D9FE9D00D6EB5F /* DaemonManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE54510128D9FE9D00D6EB5F /* DaemonManagement.swift */; };
 		CE54510428DA017300D6EB5F /* AppPrompts.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE54510328DA017300D6EB5F /* AppPrompts.swift */; };
 		CE5E5AE328DE214200AF1D07 /* AccessoryMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5E5AE228DE214200AF1D07 /* AccessoryMode.swift */; };
+		CE5E5AE528DE292D00AF1D07 /* CommandsMenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5E5AE428DE292D00AF1D07 /* CommandsMenuDelegate.swift */; };
+		CE5E5AE628DE292D00AF1D07 /* CommandsMenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5E5AE428DE292D00AF1D07 /* CommandsMenuDelegate.swift */; };
+		CE5E5AE828DE31EB00AF1D07 /* SettingsMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5E5AE728DE31EB00AF1D07 /* SettingsMenuItem.swift */; };
+		CE5E5AE928DE31EB00AF1D07 /* SettingsMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5E5AE728DE31EB00AF1D07 /* SettingsMenuItem.swift */; };
 		CE6B75F928BC18EA008DF170 /* DaemonCommProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA80FDA285A57030064ADEA /* DaemonCommProtocol.swift */; };
 		CE6B75FA28BC1908008DF170 /* DaemonCommProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA80FDA285A57030064ADEA /* DaemonCommProtocol.swift */; };
 		CE6B75FC28BC196C008DF170 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6C06A028A8398600D76CC8 /* Foundation.framework */; };
@@ -78,8 +82,6 @@
 		CEB4A42828D3B184004FA277 /* StateInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4A42728D3B184004FA277 /* StateInfo.swift */; };
 		CEB4A42928D3B184004FA277 /* StateInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4A42728D3B184004FA277 /* StateInfo.swift */; };
 		CEB4A42A28D3B184004FA277 /* StateInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4A42728D3B184004FA277 /* StateInfo.swift */; };
-		CEB4A42C28D3B97A004FA277 /* MenuBarExtraMenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4A42B28D3B97A004FA277 /* MenuBarExtraMenuDelegate.swift */; };
-		CEB4A42D28D3B97A004FA277 /* MenuBarExtraMenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4A42B28D3B97A004FA277 /* MenuBarExtraMenuDelegate.swift */; };
 		CEB4A42F28D4D4D0004FA277 /* SettingsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4A42E28D4D4D0004FA277 /* SettingsWindowController.swift */; };
 		CEB4A43028D4D4D0004FA277 /* SettingsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4A42E28D4D4D0004FA277 /* SettingsWindowController.swift */; };
 		CED8DD3928C365790082C02A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CED8DD3828C365790082C02A /* Security.framework */; };
@@ -183,6 +185,8 @@
 		CE54510128D9FE9D00D6EB5F /* DaemonManagement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaemonManagement.swift; sourceTree = "<group>"; };
 		CE54510328DA017300D6EB5F /* AppPrompts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPrompts.swift; sourceTree = "<group>"; };
 		CE5E5AE228DE214200AF1D07 /* AccessoryMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryMode.swift; sourceTree = "<group>"; };
+		CE5E5AE428DE292D00AF1D07 /* CommandsMenuDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandsMenuDelegate.swift; sourceTree = "<group>"; };
+		CE5E5AE728DE31EB00AF1D07 /* SettingsMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMenuItem.swift; sourceTree = "<group>"; };
 		CE675D9528C7E81600F05929 /* me.mhaeuser.batterytoolkitd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = me.mhaeuser.batterytoolkitd.plist; sourceTree = "<group>"; };
 		CE675D9628C7E82E00F05929 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE6B75FF28BC1995008DF170 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
@@ -203,7 +207,6 @@
 		CEB4671D2843C87200D7CB01 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		CEB4A42328D39ECE004FA277 /* DaemonManagementStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaemonManagementStatus.swift; sourceTree = "<group>"; };
 		CEB4A42728D3B184004FA277 /* StateInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateInfo.swift; sourceTree = "<group>"; };
-		CEB4A42B28D3B97A004FA277 /* MenuBarExtraMenuDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarExtraMenuDelegate.swift; sourceTree = "<group>"; };
 		CEB4A42E28D4D4D0004FA277 /* SettingsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWindowController.swift; sourceTree = "<group>"; };
 		CEC321AF284BAA2B009B9A30 /* PowerEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerEvents.swift; sourceTree = "<group>"; };
 		CEC321B1284BBC93009B9A30 /* IOPowerSourcesPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOPowerSourcesPrivate.h; sourceTree = "<group>"; };
@@ -352,12 +355,13 @@
 				CE1F5E4128D76C6D00F61F67 /* Settings.storyboard */,
 				CE30CBA028C48995001E2AC6 /* SettingsViewController.swift */,
 				CE3C1DA428CA2FF5008A0F7D /* AuthorizationService.swift */,
-				CEB4A42B28D3B97A004FA277 /* MenuBarExtraMenuDelegate.swift */,
+				CE5E5AE428DE292D00AF1D07 /* CommandsMenuDelegate.swift */,
 				CEB4A42E28D4D4D0004FA277 /* SettingsWindowController.swift */,
 				CE54510328DA017300D6EB5F /* AppPrompts.swift */,
 				CE3179F328DC729900E9C121 /* Upgrading.storyboard */,
 				CE3179F428DC72D800E9C121 /* UpgradingViewController.swift */,
 				CE5E5AE228DE214200AF1D07 /* AccessoryMode.swift */,
+				CE5E5AE728DE31EB00AF1D07 /* SettingsMenuItem.swift */,
 			);
 			path = BatteryToolkit;
 			sourceTree = "<group>";
@@ -636,9 +640,10 @@
 				CE397460285A2193002D0EC9 /* SMCPowerKit.swift in Sources */,
 				CEB4A42A28D3B184004FA277 /* StateInfo.swift in Sources */,
 				CE397470285A22BB002D0EC9 /* BatteryToolkit.swift in Sources */,
+				CE5E5AE928DE31EB00AF1D07 /* SettingsMenuItem.swift in Sources */,
 				CE397461285A2193002D0EC9 /* AppDelegate.swift in Sources */,
 				CEB4A43028D4D4D0004FA277 /* SettingsWindowController.swift in Sources */,
-				CEB4A42D28D3B97A004FA277 /* MenuBarExtraMenuDelegate.swift in Sources */,
+				CE5E5AE628DE292D00AF1D07 /* CommandsMenuDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -660,6 +665,7 @@
 				CE397478285A25A1002D0EC9 /* DaemonXPCClient.swift in Sources */,
 				CE0DB56328BEB4E600B8FC4C /* SettingsInfo.swift in Sources */,
 				CE30CBA128C48995001E2AC6 /* SettingsViewController.swift in Sources */,
+				CE5E5AE528DE292D00AF1D07 /* CommandsMenuDelegate.swift in Sources */,
 				CE85D05F28D7B7E6005D1E0C /* DaemonManagementService.swift in Sources */,
 				CEECE33028BB742500821A3B /* ServiceCommProtocol.swift in Sources */,
 				CE3179ED28DB543600E9C121 /* Authorization.swift in Sources */,
@@ -668,7 +674,7 @@
 				CE1F5E3C28D760D400F61F67 /* Localization.swift in Sources */,
 				CE3C1DA728CA33FD008A0F7D /* LegacyHelperInfo.swift in Sources */,
 				CEB4A42828D3B184004FA277 /* StateInfo.swift in Sources */,
-				CEB4A42C28D3B97A004FA277 /* MenuBarExtraMenuDelegate.swift in Sources */,
+				CE5E5AE828DE31EB00AF1D07 /* SettingsMenuItem.swift in Sources */,
 				CE5E5AE328DE214200AF1D07 /* AccessoryMode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
