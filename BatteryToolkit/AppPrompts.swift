@@ -15,7 +15,7 @@ internal struct BTAppPrompts {
                     return
                 }
 
-                NSApplication.shared.terminate(self)
+                NSApp.terminate(self)
             }
         }
     }
@@ -34,7 +34,7 @@ internal struct BTAppPrompts {
                 BatteryToolkit.approveDaemon(timeout: timeout, reply: reply)
 
             case NSApplication.ModalResponse.alertSecondButtonReturn:
-                NSApplication.shared.terminate(self)
+                NSApp.terminate(self)
 
             default:
                 assert(false)
@@ -54,7 +54,7 @@ internal struct BTAppPrompts {
                 return true
 
             case NSApplication.ModalResponse.alertSecondButtonReturn:
-                NSApplication.shared.terminate(self)
+                NSApp.terminate(self)
 
             default:
                 assert(false)
