@@ -76,6 +76,10 @@ internal struct BTDaemonManagementLegacy {
                         return
                     }
 
+                    DispatchQueue.main.async {
+                        BTDaemonXPCClient.disconnectDaemon()
+                    }
+
                     var error: Unmanaged<CFError>? = nil
                     let success = SMJobRemove(
                         kSMDomainSystemLaunchd,

@@ -58,6 +58,10 @@ internal struct BTDaemonManagementService {
             return
         }
 
+        DispatchQueue.main.async {
+            BTDaemonXPCClient.disconnectDaemon()
+        }
+
         appService.unregister() { (error) -> Void in
             if error != nil {
                 os_log("Daemon service unregistering failed, error: \(error), status: \(appService.status.rawValue)")
@@ -159,10 +163,7 @@ internal struct BTDaemonManagementService {
                     return
                 }
 
-                DispatchQueue.main.async {
-                    BTDaemonXPCClient.disconnectDaemon()
-                    update(reply: reply)
-                }
+                update(reply: reply)
             }
         }
     }
