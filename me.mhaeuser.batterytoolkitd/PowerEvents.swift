@@ -176,9 +176,14 @@ internal struct BTPowerEvents {
     }
 
     private static func restoreDefaults() {
-        // FIXME: Enable!
-        //_ = BTPowerState.enableCharging()
+        //
+        // Do not reset to defaults when debugging to not stress the batteries
+        // of development machines.
+        //
+        #if !DEBUG
+        _ = BTPowerState.enableCharging()
         _ = BTPowerState.enablePowerAdapter()
+        #endif
     }
 
     internal static func prepare() -> Bool {
