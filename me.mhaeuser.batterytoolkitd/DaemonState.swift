@@ -8,16 +8,16 @@ import IOPMPrivate
 
 internal struct BTDaemonState {
     @MainActor internal static func getState() -> [String: AnyObject] {
-        let charging  = SMCPowerKit.isChargingEnabled()
-        let connected = IOPSDrawingUnlimitedPower()
-        let power     = SMCPowerKit.isPowerAdapterEnabled()
-        let progress  = BTPowerEvents.getChargingProgress()
-        let mode      = BTPowerEvents.chargeMode
+        let chargingDisabled = BTPowerState.isChargingDisabled()
+        let connected        = IOPSDrawingUnlimitedPower()
+        let powerDisabled    = BTPowerState.isPowerAdapterDisabled()
+        let progress         = BTPowerEvents.getChargingProgress()
+        let mode             = BTPowerEvents.chargeMode
 
         return [
-            BTStateInfo.Keys.power: NSNumber(value: power),
+            BTStateInfo.Keys.powerDisabled: NSNumber(value: powerDisabled),
             BTStateInfo.Keys.connected: NSNumber(value: connected),
-            BTStateInfo.Keys.charging: NSNumber(value: charging),
+            BTStateInfo.Keys.chargingDisabled: NSNumber(value: chargingDisabled),
             BTStateInfo.Keys.progress: NSNumber(value: progress.rawValue),
             BTStateInfo.Keys.chargingMode: NSNumber(value: mode.rawValue)
         ]

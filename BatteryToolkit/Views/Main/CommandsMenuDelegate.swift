@@ -42,17 +42,17 @@ final class CommandsMenuDelegate: NSObject, NSMenuDelegate {
                     return
                 }
 
-                let powerNum        = state[BTStateInfo.Keys.power] as? NSNumber
-                let connectedNum    = state[BTStateInfo.Keys.connected] as? NSNumber
-                let chargingNum     = state[BTStateInfo.Keys.charging] as? NSNumber
-                let progressNum     = state[BTStateInfo.Keys.progress] as? NSNumber
-                let chargingModeNum = state[BTStateInfo.Keys.chargingMode] as? NSNumber
+                let powerDisabledNum    = state[BTStateInfo.Keys.powerDisabled] as? NSNumber
+                let connectedNum        = state[BTStateInfo.Keys.connected] as? NSNumber
+                let chargingDisabledNum = state[BTStateInfo.Keys.chargingDisabled] as? NSNumber
+                let progressNum         = state[BTStateInfo.Keys.progress] as? NSNumber
+                let chargingModeNum     = state[BTStateInfo.Keys.chargingMode] as? NSNumber
 
-                guard let power        = powerNum?.boolValue,
-                      let connected    = connectedNum?.boolValue,
-                      let charging     = chargingNum?.boolValue,
-                      let progress     = progressNum?.intValue,
-                      let chargingMode = chargingModeNum?.intValue else {
+                guard let powerDisabled    = powerDisabledNum?.boolValue,
+                      let connected        = connectedNum?.boolValue,
+                      let chargingDisabled = chargingDisabledNum?.boolValue,
+                      let progress         = progressNum?.intValue,
+                      let chargingMode     = chargingModeNum?.intValue else {
 
                     self.infoPowerAdapterDisabledItem.isHidden       = true
                     self.infoPowerAdapterEnabledItem.isHidden        = true
@@ -79,7 +79,7 @@ final class CommandsMenuDelegate: NSObject, NSMenuDelegate {
 
                 self.infoUnknownStateItem.isHidden = true
 
-                if power {
+                if !powerDisabled {
                     self.infoPowerAdapterDisabledItem.isHidden = true
                     self.infoPowerAdapterEnabledItem.isHidden  = false
 
@@ -93,7 +93,7 @@ final class CommandsMenuDelegate: NSObject, NSMenuDelegate {
                     self.enablePowerAdapterItem.isHidden  = false
                 }
 
-                if charging {
+                if !chargingDisabled {
                     self.infoNotChargingItem.isHidden                = true
                     self.infoRequestedChargingToMaximumItem.isHidden = true
                     self.infoRequestedChargingToFullItem.isHidden    = true
@@ -160,12 +160,12 @@ final class CommandsMenuDelegate: NSObject, NSMenuDelegate {
                     self.requestChargingToFullItem.isHidden    = true
                     self.requestChargingToMaximumItem.isHidden = true
                     self.cancelChargingRequestItem.isHidden    = true
-                    self.disableChargingItem.isHidden          = !charging
+                    self.disableChargingItem.isHidden          = chargingDisabled
 
                     switch chargingMode {
                         case Int(BTStateInfo.ChargingMode.standard.rawValue),
                             Int(BTStateInfo.ChargingMode.toMaximum.rawValue):
-                            self.chargeToMaximumNowItem.isHidden = charging || !chargeBelowMax
+                            self.chargeToMaximumNowItem.isHidden = !chargingDisabled || !chargeBelowMax
                             self.chargeToFullNowItem.isHidden    = !chargeBelowFull
 
                         case Int(BTStateInfo.ChargingMode.toFull.rawValue):

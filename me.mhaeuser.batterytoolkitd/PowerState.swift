@@ -121,4 +121,12 @@ internal struct BTPowerState {
         BTPowerState.powerDisabled = false
         return true
     }
+
+    internal static func isChargingDisabled() -> Bool {
+        return BTPowerState.chargingDisabled
+    }
+
+    internal static func isPowerAdapterDisabled() -> Bool {
+        return BTPowerState.powerDisabled
+    }
 }

@@ -19,10 +19,10 @@ public struct BTStateInfo {
     }
 
     public struct Keys {
-        public static let power        = "Power"
-        public static let connected    = "Connected"
-        public static let charging     = "Charging"
-        public static let progress     = "Progress"
-        public static let chargingMode = "Mode"
+        public static let powerDisabled    = "PowerDisabled"
+        public static let connected        = "Connected"
+        public static let chargingDisabled = "ChargingDisabled"
+        public static let progress         = "Progress"
+        public static let chargingMode     = "Mode"
     }
 }
