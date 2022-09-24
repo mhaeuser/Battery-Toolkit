@@ -78,7 +78,7 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
     }
 
     @MainActor internal func getState(reply: @Sendable @escaping ([String: AnyObject]) -> Void) -> Void {
-        BTDaemonManagement.getState(reply: reply)
+        reply(BTDaemonState.getState())
     }
 
     @MainActor internal func getSettings(reply: @Sendable @escaping ([String: AnyObject]) -> Void) {

@@ -68,7 +68,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                     upgradingController.window?.center()
                     upgradingController.showWindow(self)
 
-                    BTDaemonManagement.upgrade() { status in
+                    BatteryToolkit.upgradeDaemon() { status in
                         DispatchQueue.main.async {
                             upgradingController.close()
                             self.daemonStatusHandler(status: status)

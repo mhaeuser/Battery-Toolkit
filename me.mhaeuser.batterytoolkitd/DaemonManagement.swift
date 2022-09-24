@@ -5,7 +5,6 @@
 
 import Foundation
 import os.log
-import IOPMPrivate
 
 internal struct BTDaemonManagement {
     private static func removeFile(path: URL) -> Bool {
@@ -39,22 +38,5 @@ internal struct BTDaemonManagement {
         let success1 = removeFile(path: BTLegacyHelperInfo.legacyHelperPlist)
         let success2 = removeFile(path: BTLegacyHelperInfo.legacyHelperExec)
         return success1 && success2
-    }
-
-    @MainActor internal static func getState(reply: @Sendable @escaping ([String: AnyObject]) -> Void) -> Void {
-        let charging  = SMCPowerKit.isChargingEnabled()
-        let connected = IOPSDrawingUnlimitedPower()
-        let power     = SMCPowerKit.isPowerAdapterEnabled()
-        let progress  = BTPowerEvents.getChargingProgress()
-        let mode      = BTPowerEvents.chargeMode
-
-        let state = [
-            BTStateInfo.Keys.power: NSNumber(value: power),
-            BTStateInfo.Keys.connected: NSNumber(value: connected),
-            BTStateInfo.Keys.charging: NSNumber(value: charging),
-            BTStateInfo.Keys.progress: NSNumber(value: progress.rawValue),
-            BTStateInfo.Keys.chargingMode: NSNumber(value: mode.rawValue)
-        ]
-        reply(state)
     }
 }
