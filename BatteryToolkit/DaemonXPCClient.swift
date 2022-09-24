@@ -21,6 +21,9 @@ internal struct BTDaemonXPCClient {
             options: .privileged
             )
         connect.remoteObjectInterface = NSXPCInterface(with: BTDaemonCommProtocol.self)
+
+        BTXPCValidation.protectDaemon(connection: connect)
+
         connect.resume()
         BTDaemonXPCClient.connect = connect
 

@@ -38,6 +38,8 @@ internal struct BTAppXPCClient {
         connect.invalidationHandler = BTAppXPCClient.Handlers.invalidation
         connect.interruptionHandler = BTAppXPCClient.Handlers.interruption
 
+        BTXPCValidation.protectService(connection: connect)
+
         connect.resume()
 
         BTAppXPCClient.connect = connect

@@ -84,6 +84,8 @@
 		CEA3908E28DF97770023261A /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5E5AEC28DE442900AF1D07 /* ErrorHandler.swift */; };
 		CEA3909128DF99190023261A /* DaemonState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA3909028DF99190023261A /* DaemonState.swift */; };
 		CEA3909228DF99190023261A /* DaemonState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA3909028DF99190023261A /* DaemonState.swift */; };
+		CEA3909328DFAE1C0023261A /* XPCValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE50557028D65B48000E4387 /* XPCValidation.swift */; };
+		CEA3909428DFAE670023261A /* SecCodeEx.c in Sources */ = {isa = PBXBuildFile; fileRef = CEF3496E28DCD36100A1CECD /* SecCodeEx.c */; };
 		CEA80FCB285A27CF0064ADEA /* SMCKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE37DD0D283F86F90060C43F /* SMCKit.swift */; };
 		CEA80FCC285A27D20064ADEA /* SMCPowerKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE37DD0F284164160060C43F /* SMCPowerKit.swift */; };
 		CEA80FD0285A27FB0064ADEA /* PowerEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC321AF284BAA2B009B9A30 /* PowerEvents.swift */; };
@@ -729,6 +731,7 @@
 				CE30CBA128C48995001E2AC6 /* SettingsViewController.swift in Sources */,
 				CE5E5AE528DE292D00AF1D07 /* CommandsMenuDelegate.swift in Sources */,
 				CE85D05F28D7B7E6005D1E0C /* DaemonManagementService.swift in Sources */,
+				CEA3909328DFAE1C0023261A /* XPCValidation.swift in Sources */,
 				CEECE33028BB742500821A3B /* ServiceCommProtocol.swift in Sources */,
 				CE3179ED28DB543600E9C121 /* Authorization.swift in Sources */,
 				CE39746E285A229F002D0EC9 /* BatteryToolkit.swift in Sources */,
@@ -739,6 +742,7 @@
 				CEB4A42828D3B184004FA277 /* StateInfo.swift in Sources */,
 				CE5E5AE828DE31EB00AF1D07 /* SettingsMenuItem.swift in Sources */,
 				CE5E5AE328DE214200AF1D07 /* AccessoryMode.swift in Sources */,
+				CEA3909428DFAE670023261A /* SecCodeEx.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

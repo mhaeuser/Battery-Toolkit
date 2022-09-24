@@ -68,6 +68,38 @@ public struct BTXPCValidation {
         return true
     }
 
+    private static func requirementsTextFromId(identifier: String) -> String {
+        var text = "identifier \"" + identifier + "\"" +
+            " and anchor apple generic" +
+            " and certificate leaf[subject.CN] = \"" + BT_CODE_SIGN_CN + "\"" +
+            " and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */" +
+            " and !(entitlement[\"com.apple.security.cs.allow-dyld-environment-variables\"] /* exists */)" +
+            " and !(entitlement[\"com.apple.security.cs.disable-library-validation\"] /* exists */)" +
+            " and !(entitlement[\"com.apple.security.cs.allow-unsigned-executable-memory\"] /* exists */)" +
+            " and !(entitlement[\"com.apple.security.cs.allow-jit\"] /* exists */)"
+        #if !DEBUG
+        text += " and !(entitlement[\"com.apple.security.get-task-allow\"] /* exists */)"
+        #endif
+
+        return text
+    }
+
+    public static func protectService(connection: NSXPCConnection) {
+        if #available(macOS 13.0, *) {
+            connection.setCodeSigningRequirement(
+                requirementsTextFromId(identifier: BT_SERVICE_NAME)
+                )
+        }
+    }
+
+    public static func protectDaemon(connection: NSXPCConnection) {
+        if #available(macOS 13.0, *) {
+            connection.setCodeSigningRequirement(
+                requirementsTextFromId(identifier: BT_DAEMON_NAME)
+            )
+        }
+    }
+
     public static func isValidClient(connection: NSXPCConnection) -> Bool {
         var token = connection.auditToken;
         let tokenData = Data(
@@ -91,18 +123,7 @@ public struct BTXPCValidation {
             return false
         }
 
-        var requirementText = "identifier \"" + BT_APP_NAME + "\"" +
-            " and anchor apple generic" +
-            " and certificate leaf[subject.CN] = \"" + BT_CODE_SIGN_CN + "\"" +
-            " and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */" +
-            " and !(entitlement[\"com.apple.security.cs.allow-dyld-environment-variables\"] /* exists */)" +
-            " and !(entitlement[\"com.apple.security.cs.disable-library-validation\"] /* exists */)" +
-            " and !(entitlement[\"com.apple.security.cs.allow-unsigned-executable-memory\"] /* exists */)" +
-            " and !(entitlement[\"com.apple.security.cs.allow-jit\"] /* exists */)"
-        #if !DEBUG
-        requirementText += " and !(entitlement[\"com.apple.security.get-task-allow\"] /* exists */)"
-        #endif
-
+        let requirementText = requirementsTextFromId(identifier: BT_APP_NAME)
         if #available(macOS 13.0, *) {
             connection.setCodeSigningRequirement(requirementText)
             return true
