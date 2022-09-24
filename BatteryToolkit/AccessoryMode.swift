@@ -31,7 +31,7 @@ internal struct BTAccessoryMode {
             return
         }
 
-        guard NSApp.keyWindow == nil, !BTAppPrompts.open else {
+        guard NSApp.keyWindow == nil, BTAppPrompts.open == 0 else {
             return
         }
 

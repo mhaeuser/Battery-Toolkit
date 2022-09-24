@@ -7,7 +7,7 @@ import Cocoa
 
 @MainActor
 internal struct BTAppPrompts {
-    internal private(set) static var open = false
+    internal private(set) static var open: UInt8 = 0
 
     private static func unregisterDaemon() {
         BatteryToolkit.unregisterDaemon() { error in
@@ -22,6 +22,23 @@ internal struct BTAppPrompts {
         }
     }
 
+    private static func runPromptStandalone(alert: NSAlert) -> NSApplication.ModalResponse {
+        open += 1
+        let response = alert.runModal()
+        open -= 1
+
+        return response
+    }
+
+    private static func runPromptNoResponse(alert: NSAlert, window: NSWindow? = nil) {
+        guard let window = window else {
+            _ = runPromptStandalone(alert: alert)
+            return
+        }
+
+        _ = alert.beginSheetModal(for: window)
+    }
+
     internal static func promptApproveDaemon(timeout: UInt8, reply: @escaping @Sendable (Bool) -> Void) {
         let alert             = NSAlert()
         alert.messageText     = BTLocalization.Prompts.Daemon.allowMessage
@@ -30,11 +47,7 @@ internal struct BTAppPrompts {
         alert.alertStyle      = NSAlert.Style.warning
         _ = alert.addButton(withTitle: BTLocalization.Prompts.approve)
         _ = alert.addButton(withTitle: BTLocalization.Prompts.quit)
-
-        open = true
-        let response = alert.runModal()
-        open = false
-
+        let response = runPromptStandalone(alert: alert)
         switch response {
             case NSApplication.ModalResponse.alertFirstButtonReturn:
                 BatteryToolkit.approveDaemon(timeout: timeout, reply: reply)
@@ -54,11 +67,7 @@ internal struct BTAppPrompts {
         alert.alertStyle      = NSAlert.Style.critical
         _ = alert.addButton(withTitle: BTLocalization.Prompts.retry)
         _ = alert.addButton(withTitle: BTLocalization.Prompts.quit)
-
-        open = true
-        let response = alert.runModal()
-        open = false
-
+        let response = runPromptStandalone(alert: alert)
         switch response {
             case NSApplication.ModalResponse.alertFirstButtonReturn:
                 return true
@@ -81,11 +90,7 @@ internal struct BTAppPrompts {
         alert.alertStyle      = NSAlert.Style.warning
         _ = alert.addButton(withTitle: BTLocalization.Prompts.disableAndQuit)
         _ = alert.addButton(withTitle: BTLocalization.Prompts.cancel)
-
-        open = true
-        let response = alert.runModal()
-        open = false
-
+        let response = runPromptStandalone(alert: alert)
         if response == NSApplication.ModalResponse.alertFirstButtonReturn {
             unregisterDaemon()
         }
@@ -97,11 +102,7 @@ internal struct BTAppPrompts {
         alert.alertStyle  = NSAlert.Style.critical
         _ = alert.addButton(withTitle: BTLocalization.Prompts.retry)
         _ = alert.addButton(withTitle: BTLocalization.Prompts.cancel)
-
-        open = true
-        let response = alert.runModal()
-        open = false
-
+        let response = runPromptStandalone(alert: alert)
         if response == NSApplication.ModalResponse.alertFirstButtonReturn {
             unregisterDaemon()
         }
@@ -117,10 +118,7 @@ internal struct BTAppPrompts {
 
     internal static func promptUnexpectedError() {
         let alert = unexpectedErrorAlert()
-
-        open = true
-        _ = alert.runModal()
-        open = false
+        _ = runPromptStandalone(alert: alert)
     }
 
     internal static func promptUnexpectedError(window: NSWindow) {
