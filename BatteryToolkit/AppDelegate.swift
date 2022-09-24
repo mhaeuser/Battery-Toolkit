@@ -62,7 +62,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
                     let storyboard = NSStoryboard(name: "Upgrading", bundle: nil)
                     let upgradingController = storyboard.instantiateInitialController() as! NSWindowController
-                    upgradingController.showWindow(nil)
+                    upgradingController.window?.center()
+                    upgradingController.showWindow(self)
 
                     BTDaemonManagement.upgrade() { status in
                         DispatchQueue.main.async {

@@ -10,6 +10,6 @@ final class UpgradingViewController: NSViewController {
 
     override func viewWillAppear() {
         super.viewWillAppear()
-        self.progress.startAnimation(nil)
+        self.progress.startAnimation(self)
     }
 }
