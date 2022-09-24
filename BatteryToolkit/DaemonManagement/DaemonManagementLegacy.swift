@@ -79,8 +79,6 @@ internal struct BTDaemonManagementLegacy {
 
             DispatchQueue.main.async {
                 BTDaemonXPCClient.removeLegacyHelperFiles(authRef: auth) { error in
-                    // FIXME: Handle error
-
                     if error == BTError.success.rawValue {
                         DispatchQueue.main.async {
                             BTDaemonXPCClient.disconnectDaemon()
