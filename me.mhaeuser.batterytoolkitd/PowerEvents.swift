@@ -13,6 +13,8 @@ internal struct BTPowerEvents {
     internal static var upgrading = false
 
     internal private(set) static var chargeMode: BTStateInfo.ChargingMode = .standard
+
+    internal private(set) static var unlimitedPower = false
     
     private static var powerCreated: Bool   = false
     private static var percentCreated: Bool = false
@@ -155,7 +157,9 @@ internal struct BTPowerEvents {
         //
         SleepKit.disableSleep()
 
-        if IOPSDrawingUnlimitedPower() {
+        let unlimitedPower = IOPSDrawingUnlimitedPower()
+        BTPowerEvents.unlimitedPower = unlimitedPower
+        if unlimitedPower{
             let result = registerPercentChangedHandler()
             if !result {
                 os_log("Failed to register percent changed handler")

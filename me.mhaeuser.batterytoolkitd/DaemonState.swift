@@ -9,7 +9,7 @@ import IOPMPrivate
 internal struct BTDaemonState {
     @MainActor internal static func getState() -> [String: AnyObject] {
         let chargingDisabled = BTPowerState.isChargingDisabled()
-        let connected        = IOPSDrawingUnlimitedPower()
+        let connected        = BTPowerEvents.unlimitedPower
         let powerDisabled    = BTPowerState.isPowerAdapterDisabled()
         let progress         = BTPowerEvents.getChargingProgress()
         let mode             = BTPowerEvents.chargeMode
