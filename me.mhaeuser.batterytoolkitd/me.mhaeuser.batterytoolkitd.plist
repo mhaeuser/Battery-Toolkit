@@ -5,7 +5,10 @@
 	<key>ProcessType</key>
 	<string>Adaptive</string>
 	<key>KeepAlive</key>
-	<true/>
+	<dict>
+		<key>SuccessfulExit</key>
+		<false/>
+	</dict>
 	<key>BundleProgram</key>
 	<string>Contents/Library/LaunchServices/me.mhaeuser.batterytoolkitd</string>
 	<key>Label</key>

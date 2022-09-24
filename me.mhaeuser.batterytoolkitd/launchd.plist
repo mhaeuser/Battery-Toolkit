@@ -5,16 +5,16 @@
 	<key>ProcessType</key>
 	<string>Adaptive</string>
 	<key>KeepAlive</key>
-	<true/>
+	<dict>
+		<key>SuccessfulExit</key>
+		<false/>
+	</dict>
 	<key>AssociatedBundleIdentifiers</key>
 	<string>me.mhaeuser.BatteryToolkit</string>
 	<key>Label</key>
 	<string>me.mhaeuser.batterytoolkitd</string>
 	<key>RunAtLoad</key>
-	<dict>
-		<key>SuccessfulExit</key>
-		<false/>
-	</dict>
+	<true/>
 	<key>MachServices</key>
 	<dict>
 		<key>me.mhaeuser.batterytoolkitd</key>
