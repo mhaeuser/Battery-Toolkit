@@ -49,17 +49,45 @@ internal struct BTDaemonXPCClient {
         }
     }
 
-    // FIXME: Retry authorization in case we timeout before the daemon checks?
-    private static func executeDaemonManageRetry(errorHandler: @escaping @Sendable (BTError.RawValue) -> Void, command: @MainActor @escaping @Sendable (BTDaemonCommProtocol, AuthorizationRef) -> Void) {
+    private static func executeDaemonManageRetry(reply: @escaping @Sendable (BTError.RawValue) -> Void, command: @MainActor @escaping @Sendable (BTDaemonCommProtocol, AuthorizationRef, @Sendable @escaping (BTError.RawValue) -> Void) -> Void) {
         BTAuthorizationService.manage() { authRef in
             guard let authRef = authRef else {
-                errorHandler(BTError.notAuthorized.rawValue)
+                reply(BTError.notAuthorized.rawValue)
                 return
             }
 
-            executeDaemonRetry(errorHandler: errorHandler) { daemon in
-                command(daemon, authRef)
+            executeDaemonRetry(errorHandler: reply) { daemon in
+                command(daemon, authRef) { error in
+                    guard error == BTError.notAuthorized.rawValue else {
+                        reply(error)
+                        return
+                    }
+
+                    os_log("Authorization expired, re-aquire")
+                    DispatchQueue.main.async {
+                        BTAuthorizationService.reacquireManage { authRef in
+                            guard let authRef = authRef else {
+                                reply(BTError.notAuthorized.rawValue)
+                                return
+                            }
+
+                            executeDaemonRetry(errorHandler: reply) { daemon in
+                                command(daemon, authRef, reply)
+                            }
+                        }
+                    }
+                }
             }
+        }
+    }
+
+    private static func runExecute(command: BTDaemonCommCommand, reply: @Sendable @escaping (BTError.RawValue) -> Void) {
+        executeDaemonManageRetry(reply: reply) { (daemon, authRef, reply) in
+            daemon.execute(
+                authData: BTAuthorization.toData(authRef: authRef),
+                command: command.rawValue,
+                reply: reply
+                )
         }
     }
 
@@ -101,53 +129,23 @@ internal struct BTDaemonXPCClient {
     }
 
     internal static func disablePowerAdapter(reply: @Sendable @escaping (BTError.RawValue) -> Void) -> Void {
-        executeDaemonManageRetry(errorHandler: reply) { (daemon, authRef) in
-            daemon.execute(
-                authData: BTAuthorization.toData(authRef: authRef),
-                command: BTDaemonCommCommand.disablePowerAdapter.rawValue,
-                reply: reply
-                )
-        }
+        runExecute(command: BTDaemonCommCommand.disablePowerAdapter, reply: reply)
     }
 
     internal static func enablePowerAdapter(reply: @Sendable @escaping (BTError.RawValue) -> Void) -> Void {
-        executeDaemonManageRetry(errorHandler: reply) { (daemon, authRef) in
-            daemon.execute(
-                authData: BTAuthorization.toData(authRef: authRef),
-                command: BTDaemonCommCommand.enablePowerAdapter.rawValue,
-                reply: reply
-                )
-        }
+        runExecute(command: BTDaemonCommCommand.enablePowerAdapter, reply: reply)
     }
 
     internal static func chargeToMaximum(reply: @Sendable @escaping (BTError.RawValue) -> Void) -> Void {
-        executeDaemonManageRetry(errorHandler: reply) { (daemon, authRef) in
-            daemon.execute(
-                authData: BTAuthorization.toData(authRef: authRef),
-                command: BTDaemonCommCommand.chargeToMaximum.rawValue,
-                reply: reply
-                )
-        }
+        runExecute(command: BTDaemonCommCommand.chargeToMaximum, reply: reply)
     }
 
     internal static func chargeToFull(reply: @Sendable @escaping (BTError.RawValue) -> Void) -> Void {
-        executeDaemonManageRetry(errorHandler: reply) { (daemon, authRef) in
-            daemon.execute(
-                authData: BTAuthorization.toData(authRef: authRef),
-                command: BTDaemonCommCommand.chargeToFull.rawValue,
-                reply: reply
-                )
-        }
+        runExecute(command: BTDaemonCommCommand.chargeToFull, reply: reply)
     }
 
     internal static func disableCharging(reply: @Sendable @escaping (BTError.RawValue) -> Void) -> Void {
-        executeDaemonManageRetry(errorHandler: reply) { (daemon, authRef) in
-            daemon.execute(
-                authData: BTAuthorization.toData(authRef: authRef),
-                command: BTDaemonCommCommand.disableCharging.rawValue,
-                reply: reply
-                )
-        }
+        runExecute(command: BTDaemonCommCommand.disableCharging, reply: reply)
     }
 
     internal static func getSettings(reply: @Sendable @escaping (BTError.RawValue, [String: AnyObject]) -> Void) {
@@ -161,7 +159,7 @@ internal struct BTDaemonXPCClient {
     }
     
     internal static func setSettings(settings: [String: AnyObject], reply: @Sendable @escaping (BTError.RawValue) -> Void) -> Void {
-        executeDaemonManageRetry(errorHandler: reply) { (daemon, authRef) in
+        executeDaemonManageRetry(reply: reply) { (daemon, authRef, reply) in
             daemon.setSettings(
                 authData: BTAuthorization.toData(authRef: authRef),
                 settings: settings,

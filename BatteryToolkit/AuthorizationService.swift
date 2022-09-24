@@ -23,23 +23,26 @@ internal struct BTAuthorizationService {
         }
     }
 
-    internal static func manage(reply: @MainActor @Sendable @escaping (AuthorizationRef?) -> Void) {
+    private static func acquireManage(reply: @MainActor @Sendable @escaping (AuthorizationRef?) -> Void) {
+        BTAppXPCClient.createManageAuthorization { authData in
+            let authRef = BTAuthorization.fromData(authData: authData)
+
+            DispatchQueue.main.async {
+                if authRef != nil {
+                    BTAuthorizationService.manageAuthRef = authRef
+                }
+
+                reply(authRef)
+            }
+        }
+    }
+
+    internal static func reacquireManage(reply: @MainActor @Sendable @escaping (AuthorizationRef?) -> Void) {
         let authData = BTAuthorization.toData(
             authRef: BTAuthorizationService.manageAuthRef
             )
         guard let authData = authData else {
-            BTAppXPCClient.createManageAuthorization { authData in
-                let authRef = BTAuthorization.fromData(authData: authData)
-
-                DispatchQueue.main.async {
-                    if authRef != nil {
-                        BTAuthorizationService.manageAuthRef = authRef
-                    }
-
-                    reply(authRef)
-                }
-            }
-
+            acquireManage(reply: reply)
             return
         }
 
@@ -48,5 +51,14 @@ internal struct BTAuthorizationService {
                 reply(BTAuthorizationService.manageAuthRef)
             }
         }
+    }
+
+    internal static func manage(reply: @MainActor @Sendable @escaping (AuthorizationRef?) -> Void) {
+        guard let authRef = BTAuthorizationService.manageAuthRef else {
+            acquireManage(reply: reply)
+            return
+        }
+
+        reply(authRef)
     }
 }
