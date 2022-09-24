@@ -18,7 +18,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         BTAppPrompts.promptUnregisterDaemon()
     }
 
-    private func daemonStatusHandler(status: BTDaemonManagement.Status) {
+    @Sendable private func daemonStatusHandler(status: BTDaemonManagement.Status) {
         DispatchQueue.main.async {
             switch status {
                 case .notRegistered:
