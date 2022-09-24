@@ -42,6 +42,11 @@ public struct BTLocalization {
             comment: "Prompt caption informing the user of an unexpected error"
             )
 
+        public static let notAuthorizedMessage = NSLocalizedString(
+            "You do not have permission to perform this operation.",
+            comment: "Prompt caption informing the user that they are not authorized to perform a specific operation"
+            )
+
         public struct Daemon {
             public static let requiredInfo = NSLocalizedString(
                 "To manage the power state of your Mac, Battery Toolkit needs to run in the background.",

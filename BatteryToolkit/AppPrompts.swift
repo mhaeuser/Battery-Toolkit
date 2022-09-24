@@ -125,4 +125,22 @@ internal struct BTAppPrompts {
         let alert = unexpectedErrorAlert()
         _ = alert.beginSheetModal(for: window)
     }
+
+    private static func notAuthorizedAlert() -> NSAlert {
+        let alert         = NSAlert()
+        alert.messageText = BTLocalization.Prompts.notAuthorizedMessage
+        alert.alertStyle  = NSAlert.Style.critical
+        _ = alert.addButton(withTitle: BTLocalization.Prompts.ok)
+        return alert
+    }
+
+    internal static func promptNotAuthorized() {
+        let alert = notAuthorizedAlert()
+        _ = runPromptStandalone(alert: alert)
+    }
+
+    internal static func promptNotAuthorized(window: NSWindow) {
+        let alert = notAuthorizedAlert()
+        _ = alert.beginSheetModal(for: window)
+    }
 }

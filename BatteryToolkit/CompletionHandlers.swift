@@ -13,6 +13,9 @@ internal struct BTCompletionHandlers {
 
         DispatchQueue.main.async {
             switch error {
+                case BTError.notAuthorized.rawValue:
+                    BTAppPrompts.promptNotAuthorized()
+
                 default:
                     BTAppPrompts.promptUnexpectedError()
             }
