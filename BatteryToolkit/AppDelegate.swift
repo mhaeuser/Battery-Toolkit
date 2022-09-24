@@ -34,12 +34,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                     self.disableBackgroundItem.isEnabled = true
                     self.settingsItem.isEnabled          = true
 
+                    let image = NSImage(named: NSImage.Name("ExtraItemIcon"))
+                    image?.isTemplate = true
+
                     let extraItem = NSStatusBar.system.statusItem(
                         withLength: NSStatusItem.squareLength
                         )
-                    extraItem.button?.image = NSImage(named: NSImage.Name("StatusItemIcon"))
-                    extraItem.menu = self.menuBarExtraMenu
-                    self.menuBarExtraItem = extraItem
+                    extraItem.button?.image = image
+                    extraItem.menu          = self.menuBarExtraMenu
+                    self.menuBarExtraItem   = extraItem
 
                     if !NSApp.isActive {
                         BTAccessoryMode.activate()
