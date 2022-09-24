@@ -102,7 +102,7 @@ internal struct BTDaemonManagementService {
     private static func awaitUnregister(run: UInt8, reply: @Sendable @escaping (Bool) -> Void) {
         let appService = SMAppService.daemon(plistName: BTDaemonManagementService.daemonServicePlist)
         guard !registered(status: appService.status) else {
-            guard run < 18 else {
+            guard run < 24 else {
                 reply(false)
                 return
             }
