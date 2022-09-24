@@ -92,7 +92,7 @@ internal struct BTSettings {
         return settings
     }
 
-    internal static func setSettings(settings: [String: AnyObject], reply: @Sendable @escaping (Bool) -> Void) {
+    internal static func setSettings(settings: [String: AnyObject], reply: @Sendable @escaping (BTError.RawValue) -> Void) {
         let minChargeNum = settings[BTSettingsInfo.Keys.minCharge] as? NSNumber
         let minCharge    = minChargeNum?.intValue    ?? Int(BTSettingsInfo.Defaults.minCharge)
 
@@ -101,7 +101,7 @@ internal struct BTSettings {
 
         let success = setChargeLimits(minCharge: minCharge, maxCharge: maxCharge)
         guard success else {
-            reply(false)
+            reply(BTError.malformedData.rawValue)
             return
         }
 
@@ -112,6 +112,6 @@ internal struct BTSettings {
 
         writeDefaults()
 
-        reply(true)
+        reply(BTError.success.rawValue)
     }
 }

@@ -60,7 +60,7 @@ internal struct BTDaemonManagement {
         }
     }
     
-    @MainActor internal static func unregister(reply: @Sendable @escaping (Bool) -> Void) {
+    @MainActor internal static func unregister(reply: @Sendable @escaping (BTError.RawValue) -> Void) {
         if #available(macOS 13.0, *) {
             BTDaemonManagementService.unregister(reply: reply)
         } else {

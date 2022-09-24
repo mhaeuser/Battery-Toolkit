@@ -14,10 +14,10 @@ enum BTDaemonCommProtocolCommands: UInt8 {
     case removeLegacyHelperFiles
 }
 
-@objc public protocol BTDaemonCommProtocol {
+@objc internal protocol BTDaemonCommProtocol {
     @MainActor func getUniqueId(reply: @Sendable @escaping (NSData?) -> Void) -> Void
-    @MainActor func execute(authData: NSData?, command: UInt8, reply: @Sendable @escaping (Bool) -> Void) -> Void
+    @MainActor func execute(authData: NSData?, command: UInt8, reply: @Sendable @escaping (BTError.RawValue) -> Void) -> Void
     @MainActor func getState(reply: @Sendable @escaping ([String: AnyObject]) -> Void) -> Void
     @MainActor func getSettings(reply: @Sendable @escaping ([String: AnyObject]) -> Void) -> Void
-    @MainActor func setSettings(authData: NSData?, settings: [String: AnyObject], reply: @Sendable @escaping (Bool) -> Void) -> Void
+    @MainActor func setSettings(authData: NSData?, settings: [String: AnyObject], reply: @Sendable @escaping (BTError.RawValue) -> Void) -> Void
 }

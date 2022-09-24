@@ -10,9 +10,9 @@ internal struct BTAppPrompts {
     internal private(set) static var open = false
 
     private static func unregisterDaemon() {
-        BatteryToolkit.unregisterDaemon() { (success) -> Void in
+        BatteryToolkit.unregisterDaemon() { error in
             DispatchQueue.main.async {
-                guard success else {
+                guard error == BTError.success.rawValue else {
                     promptUnregisterDaemonError()
                     return
                 }

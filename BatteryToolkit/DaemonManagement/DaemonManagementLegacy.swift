@@ -56,22 +56,22 @@ internal struct BTDaemonManagementLegacy {
         assert(false)
     }
 
-    @MainActor internal static func unregister(reply: @Sendable @escaping (Bool) -> Void) {
+    @MainActor internal static func unregister(reply: @Sendable @escaping (BTError.RawValue) -> Void) {
         os_log("Unregistering legacy helper")
 
         BTAuthorizationService.daemonManagement() { (auth) -> Void in
             assert(!Thread.isMainThread)
 
             guard let auth = auth else {
-                reply(false)
+                reply(BTError.notAuthorized.rawValue)
                 return
             }
 
             DispatchQueue.main.async {
-                BTDaemonXPCClient.removeLegacyHelperFiles(authRef: auth) { success in
+                BTDaemonXPCClient.removeLegacyHelperFiles(authRef: auth) { error in
                     // FIXME: Handle error
 
-                    if success {
+                    if error == BTError.success.rawValue {
                         DispatchQueue.main.async {
                             BTDaemonXPCClient.disconnectDaemon()
                         }
@@ -95,7 +95,7 @@ internal struct BTDaemonManagementLegacy {
                         os_log("Freeing authorization error: \(status)")
                     }
 
-                    reply(success)
+                    reply(error)
                 }
             }
         }

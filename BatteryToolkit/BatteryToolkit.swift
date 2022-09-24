@@ -19,23 +19,23 @@ internal struct BatteryToolkit {
         BTDaemonXPCClient.stop()
     }
     
-    @MainActor internal static func disablePowerAdapter(reply: @Sendable @escaping (Bool) -> Void) {
+    @MainActor internal static func disablePowerAdapter(reply: @Sendable @escaping (BTError.RawValue) -> Void) {
         BTDaemonXPCClient.disablePowerAdapter(reply: reply)
     }
 
-    @MainActor internal static func enablePowerAdapter(reply: @Sendable @escaping (Bool) -> Void) {
+    @MainActor internal static func enablePowerAdapter(reply: @Sendable @escaping (BTError.RawValue) -> Void) {
         BTDaemonXPCClient.enablePowerAdapter(reply: reply)
     }
 
-    @MainActor internal static func chargeToMaximum(reply: @Sendable @escaping (Bool) -> Void) {
+    @MainActor internal static func chargeToMaximum(reply: @Sendable @escaping (BTError.RawValue) -> Void) {
         BTDaemonXPCClient.chargeToMaximum(reply: reply)
     }
 
-    @MainActor internal static func chargeToFull(reply: @Sendable @escaping (Bool) -> Void) {
+    @MainActor internal static func chargeToFull(reply: @Sendable @escaping (BTError.RawValue) -> Void) {
         BTDaemonXPCClient.chargeToFull(reply: reply)
     }
 
-    @MainActor internal static func disableCharging(reply: @Sendable @escaping (Bool) -> Void) {
+    @MainActor internal static func disableCharging(reply: @Sendable @escaping (BTError.RawValue) -> Void) {
         BTDaemonXPCClient.disableCharging(reply: reply)
     }
 
@@ -47,11 +47,11 @@ internal struct BatteryToolkit {
         BTDaemonXPCClient.getSettings(reply: reply)
     }
 
-    @MainActor internal static func setSettings(settings: [String: AnyObject], reply: @Sendable @escaping (Bool) -> Void) {
+    @MainActor internal static func setSettings(settings: [String: AnyObject], reply: @Sendable @escaping (BTError.RawValue) -> Void) {
         BTDaemonXPCClient.setSettings(settings: settings, reply: reply)
     }
     
-    @MainActor internal static func unregisterDaemon(reply: @Sendable @escaping (Bool) -> Void) {
+    @MainActor internal static func unregisterDaemon(reply: @Sendable @escaping (BTError.RawValue) -> Void) {
         BTDaemonManagement.unregister(reply: reply)
     }
 }

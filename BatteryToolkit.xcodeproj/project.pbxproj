@@ -59,6 +59,9 @@
 		CE5E5AF428DF183E00AF1D07 /* AuthorizationRights.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5E5AF228DF183E00AF1D07 /* AuthorizationRights.swift */; };
 		CE5E5AF528DF183E00AF1D07 /* AuthorizationRights.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5E5AF228DF183E00AF1D07 /* AuthorizationRights.swift */; };
 		CE5E5AF628DF187C00AF1D07 /* AuthorizationRights.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5E5AF228DF183E00AF1D07 /* AuthorizationRights.swift */; };
+		CE5E5AF828DF1CB100AF1D07 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5E5AF728DF1CB100AF1D07 /* Error.swift */; };
+		CE5E5AF928DF1CB100AF1D07 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5E5AF728DF1CB100AF1D07 /* Error.swift */; };
+		CE5E5AFA28DF1CB100AF1D07 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5E5AF728DF1CB100AF1D07 /* Error.swift */; };
 		CE6B75F928BC18EA008DF170 /* DaemonCommProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA80FDA285A57030064ADEA /* DaemonCommProtocol.swift */; };
 		CE6B75FA28BC1908008DF170 /* DaemonCommProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA80FDA285A57030064ADEA /* DaemonCommProtocol.swift */; };
 		CE6B75FC28BC196C008DF170 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6C06A028A8398600D76CC8 /* Foundation.framework */; };
@@ -195,6 +198,7 @@
 		CE5E5AE728DE31EB00AF1D07 /* SettingsMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMenuItem.swift; sourceTree = "<group>"; };
 		CE5E5AEC28DE442900AF1D07 /* CompletionHandlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletionHandlers.swift; sourceTree = "<group>"; };
 		CE5E5AF228DF183E00AF1D07 /* AuthorizationRights.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationRights.swift; sourceTree = "<group>"; };
+		CE5E5AF728DF1CB100AF1D07 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		CE675D9528C7E81600F05929 /* me.mhaeuser.batterytoolkitd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = me.mhaeuser.batterytoolkitd.plist; sourceTree = "<group>"; };
 		CE675D9628C7E82E00F05929 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE6B75FF28BC1995008DF170 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
@@ -397,6 +401,7 @@
 				CE50557028D65B48000E4387 /* XPCValidation.swift */,
 				CE1F5E3B28D760D400F61F67 /* Localization.swift */,
 				CE5E5AF228DF183E00AF1D07 /* AuthorizationRights.swift */,
+				CE5E5AF728DF1CB100AF1D07 /* Error.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -612,6 +617,7 @@
 			files = (
 				CE6B75FA28BC1908008DF170 /* DaemonCommProtocol.swift in Sources */,
 				CE7F623428B95A7E00EF58F9 /* BTPreprocessor.m in Sources */,
+				CE5E5AF928DF1CB100AF1D07 /* Error.swift in Sources */,
 				CEA80FD2285A28230064ADEA /* Settings.swift in Sources */,
 				CEB4A42928D3B184004FA277 /* StateInfo.swift in Sources */,
 				CE50557128D65B48000E4387 /* XPCValidation.swift in Sources */,
@@ -657,6 +663,7 @@
 				CE5E5AEE28DE442900AF1D07 /* CompletionHandlers.swift in Sources */,
 				CEB4A43028D4D4D0004FA277 /* SettingsWindowController.swift in Sources */,
 				CE5E5AE628DE292D00AF1D07 /* CommandsMenuDelegate.swift in Sources */,
+				CE5E5AFA28DF1CB100AF1D07 /* Error.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -676,6 +683,7 @@
 				CE6B75F928BC18EA008DF170 /* DaemonCommProtocol.swift in Sources */,
 				CEB4A42F28D4D4D0004FA277 /* SettingsWindowController.swift in Sources */,
 				CE397478285A25A1002D0EC9 /* DaemonXPCClient.swift in Sources */,
+				CE5E5AF828DF1CB100AF1D07 /* Error.swift in Sources */,
 				CE0DB56328BEB4E600B8FC4C /* SettingsInfo.swift in Sources */,
 				CE5E5AF328DF183E00AF1D07 /* AuthorizationRights.swift in Sources */,
 				CE30CBA128C48995001E2AC6 /* SettingsViewController.swift in Sources */,

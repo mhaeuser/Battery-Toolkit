@@ -6,10 +6,15 @@
 import Foundation
 
 internal struct BTCompletionHandlers {
-    @Sendable internal static func commandError(success: Bool) {
-        if !success {
-            DispatchQueue.main.async {
-                BTAppPrompts.promptUnexpectedError()
+    @Sendable internal static func commandError(error: BTError.RawValue) {
+        guard error != BTError.success.rawValue else {
+            return
+        }
+
+        DispatchQueue.main.async {
+            switch error {
+                default:
+                    BTAppPrompts.promptUnexpectedError()
             }
         }
     }

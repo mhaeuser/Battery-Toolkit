@@ -44,7 +44,7 @@ internal struct BTDaemonManagementService {
         }
     }
 
-    private static func unregisterService(reply: @Sendable @escaping (Bool) -> Void) {
+    private static func unregisterService(reply: @Sendable @escaping (BTError.RawValue) -> Void) {
         os_log("Unregistering daemon service")
         //
         // Any other status code makes unregister() loop indefinitely.
@@ -52,7 +52,7 @@ internal struct BTDaemonManagementService {
         let appService = SMAppService.daemon(plistName: BTDaemonManagementService.daemonServicePlist)
         guard appService.status == .enabled else {
             DispatchQueue.global(qos: .userInitiated).async {
-                reply(true)
+                reply(BTError.success.rawValue)
             }
 
             return
@@ -67,7 +67,7 @@ internal struct BTDaemonManagementService {
                 os_log("Daemon service unregistering failed, error: \(error), status: \(appService.status.rawValue)")
             }
 
-            reply(error == nil)
+            reply(BTError(fromBool: error == nil).rawValue)
         }
     }
 
@@ -151,8 +151,8 @@ internal struct BTDaemonManagementService {
     }
 
     @MainActor internal static func upgrade(reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
-        BTDaemonManagementLegacy.unregister() { success in
-            guard success else {
+        BTDaemonManagementLegacy.unregister() { error in
+            guard error == BTError.success.rawValue else {
                 reply(.notRegistered)
                 return
             }
@@ -173,7 +173,7 @@ internal struct BTDaemonManagementService {
         awaitApproval(run: 0, timeout: timeout, reply: reply)
     }
 
-    internal static func unregister(reply: @Sendable @escaping (Bool) -> Void) {
+    internal static func unregister(reply: @Sendable @escaping (BTError.RawValue) -> Void) {
         unregisterService(reply: reply)
     }
 }
