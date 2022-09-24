@@ -82,6 +82,11 @@ public struct BTLocalization {
                 "An error occurred disabling background activity.",
                 comment: "Prompt caption informing of failure to disable background activity"
                 )
+
+            public static let commFailInfo = NSLocalizedString(
+                "Please restart your Mac and try again. If the problem persists, contact the developers.",
+                comment: "Prompt text instructing the user to restart the machine and try again"
+                )
         }
     }
 

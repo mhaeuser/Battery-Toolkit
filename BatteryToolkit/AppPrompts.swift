@@ -143,4 +143,26 @@ internal struct BTAppPrompts {
         let alert = notAuthorizedAlert()
         _ = alert.beginSheetModal(for: window)
     }
+
+    internal static func daemonCommFailedAlert() -> NSAlert {
+        let alert         = NSAlert()
+        alert.messageText = "Failed to communicate with the background service."
+        alert.informativeText = BTLocalization.Prompts.Daemon.requiredInfo + "\n\n" + "Please restart your Mac and try again. If the probblem persists, contact the developers."
+        alert.alertStyle  = NSAlert.Style.critical
+        _ = alert.addButton(withTitle: BTLocalization.Prompts.quit)
+        return alert
+    }
+
+    internal static func promptDaemonCommFailed() {
+        let alert = daemonCommFailedAlert()
+        _ = runPromptStandalone(alert: alert)
+        NSApp.terminate(self)
+    }
+
+    internal static func promptDaemonCommFailed(window: NSWindow) {
+        let alert = daemonCommFailedAlert()
+        _ = alert.beginSheetModal(for: window) { _ in
+            NSApp.terminate(self)
+        }
+    }
 }

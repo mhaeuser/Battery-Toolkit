@@ -16,6 +16,9 @@ internal struct BTCompletionHandlers {
                 case BTError.notAuthorized.rawValue:
                     BTAppPrompts.promptNotAuthorized()
 
+                case BTError.commFailed.rawValue:
+                    BTAppPrompts.promptDaemonCommFailed()
+
                 default:
                     BTAppPrompts.promptUnexpectedError()
             }

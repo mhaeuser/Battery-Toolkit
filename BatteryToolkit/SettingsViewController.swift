@@ -140,7 +140,10 @@ final class SettingsViewController: NSViewController {
                         self.view.window!.windowController!.close()
 
                     case BTError.notAuthorized.rawValue:
-                        BTAppPrompts.promptNotAuthorized(window: self.view.window!)
+                        BTAppPrompts.promptDaemonCommFailed(window: self.view.window!)
+
+                    case BTError.commFailed.rawValue:
+                        BTAppPrompts.promptDaemonCommFailed(window: self.view.window!)
 
                     default:
                         BTAppPrompts.promptUnexpectedError(window: self.view.window!)
