@@ -10,6 +10,8 @@ import IOPMPrivate
 
 @MainActor
 internal struct BTPowerEvents {
+    internal static var upgrading = false
+
     internal private(set) static var chargeMode: BTStateInfo.ChargingMode = .standard
     
     private static var powerCreated: Bool   = false
@@ -205,7 +207,10 @@ internal struct BTPowerEvents {
     }
 
     internal static func exit() {
-        restoreDefaults()
+        if !BTPowerEvents.upgrading {
+            restoreDefaults()
+        }
+
         SleepKit.forceRestoreSleep()
     }
 

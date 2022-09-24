@@ -13,13 +13,23 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
     }
 
     @MainActor internal func execute(authData: NSData?, command: UInt8, reply: @Sendable @escaping (BTError.RawValue) -> Void) -> Void {
+        if command == BTDaemonCommCommand.prepareUpdate.rawValue {
+            os_log("Preparing upgrade")
+            BTPowerEvents.upgrading = true
+            return
+        } else if command == BTDaemonCommCommand.finishUpdate.rawValue {
+            os_log("Upgrade finished")
+            BTPowerEvents.upgrading = false
+            return
+        }
+
         let authRef = BTAuthorization.fromData(authData: authData)
         guard let authRef = authRef else {
             reply(BTError.notAuthorized.rawValue)
             return
         }
 
-        guard command != BTDaemonCommProtocolCommands.removeLegacyHelperFiles.rawValue else {
+        guard command != BTDaemonCommCommand.removeLegacyHelperFiles.rawValue else {
             let authorized = BTAuthorization.checkRight(
                 authRef: authRef,
                 rightName: kSMRightModifySystemDaemons
@@ -45,19 +55,19 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
 
         var success = false
         switch command {
-            case BTDaemonCommProtocolCommands.disablePowerAdapter.rawValue:
+            case BTDaemonCommCommand.disablePowerAdapter.rawValue:
                 success = BTPowerState.disablePowerAdapter()
 
-            case BTDaemonCommProtocolCommands.enablePowerAdapter.rawValue:
+            case BTDaemonCommCommand.enablePowerAdapter.rawValue:
                 success = BTPowerState.enablePowerAdapter()
 
-            case BTDaemonCommProtocolCommands.chargeToFull.rawValue:
+            case BTDaemonCommCommand.chargeToFull.rawValue:
                 success = BTPowerEvents.chargeToFull()
 
-            case BTDaemonCommProtocolCommands.chargeToMaximum.rawValue:
+            case BTDaemonCommCommand.chargeToMaximum.rawValue:
                 success = BTPowerEvents.chargeToMaximum()
 
-            case BTDaemonCommProtocolCommands.disableCharging.rawValue:
+            case BTDaemonCommCommand.disableCharging.rawValue:
                 success = BTPowerEvents.disableCharging()
 
             default:

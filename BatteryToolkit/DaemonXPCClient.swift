@@ -49,6 +49,7 @@ internal struct BTDaemonXPCClient {
         }
     }
 
+    // FIXME: Retry authorization in case we timeout before the daemon checks?
     private static func executeDaemonManageRetry(errorHandler: @escaping @Sendable (BTError.RawValue) -> Void, command: @MainActor @escaping @Sendable (BTDaemonCommProtocol, AuthorizationRef) -> Void) {
         BTAuthorizationService.manage() { authRef in
             guard let authRef = authRef else {
@@ -103,7 +104,7 @@ internal struct BTDaemonXPCClient {
         executeDaemonManageRetry(errorHandler: reply) { (daemon, authRef) in
             daemon.execute(
                 authData: BTAuthorization.toData(authRef: authRef),
-                command: BTDaemonCommProtocolCommands.disablePowerAdapter.rawValue,
+                command: BTDaemonCommCommand.disablePowerAdapter.rawValue,
                 reply: reply
                 )
         }
@@ -113,7 +114,7 @@ internal struct BTDaemonXPCClient {
         executeDaemonManageRetry(errorHandler: reply) { (daemon, authRef) in
             daemon.execute(
                 authData: BTAuthorization.toData(authRef: authRef),
-                command: BTDaemonCommProtocolCommands.enablePowerAdapter.rawValue,
+                command: BTDaemonCommCommand.enablePowerAdapter.rawValue,
                 reply: reply
                 )
         }
@@ -123,7 +124,7 @@ internal struct BTDaemonXPCClient {
         executeDaemonManageRetry(errorHandler: reply) { (daemon, authRef) in
             daemon.execute(
                 authData: BTAuthorization.toData(authRef: authRef),
-                command: BTDaemonCommProtocolCommands.chargeToMaximum.rawValue,
+                command: BTDaemonCommCommand.chargeToMaximum.rawValue,
                 reply: reply
                 )
         }
@@ -133,7 +134,7 @@ internal struct BTDaemonXPCClient {
         executeDaemonManageRetry(errorHandler: reply) { (daemon, authRef) in
             daemon.execute(
                 authData: BTAuthorization.toData(authRef: authRef),
-                command: BTDaemonCommProtocolCommands.chargeToFull.rawValue,
+                command: BTDaemonCommCommand.chargeToFull.rawValue,
                 reply: reply
                 )
         }
@@ -143,7 +144,7 @@ internal struct BTDaemonXPCClient {
         executeDaemonManageRetry(errorHandler: reply) { (daemon, authRef) in
             daemon.execute(
                 authData: BTAuthorization.toData(authRef: authRef),
-                command: BTDaemonCommProtocolCommands.disableCharging.rawValue,
+                command: BTDaemonCommCommand.disableCharging.rawValue,
                 reply: reply
                 )
         }
@@ -175,8 +176,34 @@ internal struct BTDaemonXPCClient {
         } command: { daemon in
             daemon.execute(
                 authData: BTAuthorization.toData(authRef: authRef),
-                command: BTDaemonCommProtocolCommands.removeLegacyHelperFiles.rawValue,
+                command: BTDaemonCommCommand.removeLegacyHelperFiles.rawValue,
                 reply: reply
+                )
+        }
+    }
+
+    @Sendable nonisolated private static func emptyErrorHandler(error: BTError.RawValue) {
+        //
+        // Deliberately ignore errors as this is an optional notification.
+        //
+    }
+
+    internal static func prepareUpdate() {
+        executeDaemonRetry(errorHandler: emptyErrorHandler) { daemon in
+            daemon.execute(
+                authData: nil,
+                command: BTDaemonCommCommand.prepareUpdate.rawValue,
+                reply: emptyErrorHandler
+                )
+        }
+    }
+
+    internal static func finishUpdate() {
+        executeDaemonRetry(errorHandler: emptyErrorHandler) { daemon in
+            daemon.execute(
+                authData: nil,
+                command: BTDaemonCommCommand.finishUpdate.rawValue,
+                reply: emptyErrorHandler
                 )
         }
     }

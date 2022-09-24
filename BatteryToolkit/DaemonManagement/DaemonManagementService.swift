@@ -73,6 +73,10 @@ internal struct BTDaemonManagementService {
 
     private static func forceRegister(run: UInt8, reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
         guard run < 6 else {
+            DispatchQueue.main.async {
+                BTDaemonXPCClient.finishUpdate()
+            }
+
             reply(.notRegistered)
             return
         }
@@ -85,14 +89,21 @@ internal struct BTDaemonManagementService {
             DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 0.5) {
                 forceRegister(run: run + 1, reply: reply)
             }
+
             return
+        }
+
+        DispatchQueue.main.async {
+            BTDaemonXPCClient.finishUpdate()
         }
 
         reply(BTDaemonManagement.Status(fromSMStatus: appService.status))
     }
 
-    private static func update(reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
+    @MainActor private static func update(reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
         os_log("Updating daemon service")
+
+        BTDaemonXPCClient.prepareUpdate()
 
         unregisterService { _ in
             forceRegister(run: 0, reply: reply)
@@ -163,7 +174,9 @@ internal struct BTDaemonManagementService {
                     return
                 }
 
-                update(reply: reply)
+                DispatchQueue.main.async {
+                    update(reply: reply)
+                }
             }
         }
     }

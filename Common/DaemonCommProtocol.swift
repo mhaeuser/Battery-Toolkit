@@ -5,13 +5,15 @@
 
 import Foundation
 
-enum BTDaemonCommProtocolCommands: UInt8 {
+enum BTDaemonCommCommand: UInt8 {
     case disablePowerAdapter
     case enablePowerAdapter
     case chargeToFull
     case chargeToMaximum
     case disableCharging
     case removeLegacyHelperFiles
+    case prepareUpdate
+    case finishUpdate
 }
 
 @objc internal protocol BTDaemonCommProtocol {

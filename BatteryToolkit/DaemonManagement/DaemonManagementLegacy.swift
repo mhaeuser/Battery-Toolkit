@@ -29,22 +29,32 @@ internal struct BTDaemonManagementLegacy {
                 return
             }
 
-            var error: Unmanaged<CFError>?
-            let success = SMJobBless(
-                kSMDomainSystemLaunchd,
-                BT_DAEMON_NAME as CFString,
-                auth,
-                &error
-                )
+            DispatchQueue.main.async {
+                BTDaemonXPCClient.prepareUpdate()
 
-            os_log("Legacy helper registering result: \(success), error: \(String(describing: error))")
+                DispatchQueue.global(qos: .userInitiated).async {
+                    var error: Unmanaged<CFError>?
+                    let success = SMJobBless(
+                        kSMDomainSystemLaunchd,
+                        BT_DAEMON_NAME as CFString,
+                        auth,
+                        &error
+                        )
 
-            let status = AuthorizationFree(auth, [.destroyRights])
-            if status != errSecSuccess {
-                os_log("Freeing authorization error: \(status)")
+                    DispatchQueue.main.async {
+                        BTDaemonXPCClient.finishUpdate()
+                    }
+
+                    os_log("Legacy helper registering result: \(success), error: \(String(describing: error))")
+
+                    let status = AuthorizationFree(auth, [.destroyRights])
+                    if status != errSecSuccess {
+                        os_log("Freeing authorization error: \(status)")
+                    }
+
+                    reply(BTDaemonManagement.Status(fromLegacySuccess: success))
+                }
             }
-
-            reply(BTDaemonManagement.Status(fromLegacySuccess: success))
         }
     }
 
