@@ -9,20 +9,6 @@ import BTPreprocessor
 
 @MainActor
 internal struct BTDaemonXPCClient {
-    private struct Handlers {
-        fileprivate static func interruption() {
-            os_log("XPC client connection interrupted")
-        }
-
-        fileprivate static func invalidation() {
-            DispatchQueue.main.async {
-                BTDaemonXPCClient.connect = nil
-            }
-
-            os_log("XPC client connection invalidated")
-        }
-    }
-
     private static var connect: NSXPCConnection? = nil
 
     private static func connectDaemon() -> NSXPCConnection {
@@ -34,14 +20,8 @@ internal struct BTDaemonXPCClient {
             machServiceName: BT_DAEMON_NAME,
             options: .privileged
             )
-
         connect.remoteObjectInterface = NSXPCInterface(with: BTDaemonCommProtocol.self)
-        
-        connect.invalidationHandler = BTDaemonXPCClient.Handlers.invalidation
-        connect.interruptionHandler = BTDaemonXPCClient.Handlers.interruption
-        
         connect.resume()
-
         BTDaemonXPCClient.connect = connect
 
         os_log("XPC client connected")
@@ -49,28 +29,36 @@ internal struct BTDaemonXPCClient {
         return connect
     }
 
-    private static func getDaemon(errorHandler: @escaping @Sendable (BTError.RawValue) -> Void) -> BTDaemonCommProtocol {
+
+    private static func executeDaemon(command: @MainActor @escaping @Sendable (BTDaemonCommProtocol) -> Void, errorHandler: @escaping @Sendable (any Error) -> Void) {
         let connect = connectDaemon()
-
-        let daemon = connect.remoteObjectProxyWithErrorHandler({ error in
-            // FIXME: Properly handle errors, e.g. force reinstall daemon.
-
-            os_log("XPC client remote object error: \(error.localizedDescription)")
-            errorHandler(BTError.commFailed.rawValue)
-        }) as! BTDaemonCommProtocol
-
-        return daemon
+        let daemon = connect.remoteObjectProxyWithErrorHandler(errorHandler) as! BTDaemonCommProtocol
+        command(daemon)
     }
 
-    private static func getDaemonManage(errorHandler: @escaping @Sendable (BTError.RawValue) -> Void, reply: @MainActor @escaping @Sendable (BTDaemonCommProtocol, AuthorizationRef) -> Void) {
+    private static func executeDaemonRetry(errorHandler: @escaping @Sendable (BTError.RawValue) -> Void, command: @MainActor @escaping @Sendable (BTDaemonCommProtocol) -> Void) {
+        executeDaemon(command: command) { error in
+            os_log("XPC client remote error, retrying: \(error.localizedDescription)")
+            DispatchQueue.main.async {
+                disconnectDaemon()
+                executeDaemon(command: command) { error in
+                    os_log("XPC client remote object error: \(error.localizedDescription)")
+                    errorHandler(BTError.commFailed.rawValue)
+                }
+            }
+        }
+    }
+
+    private static func executeDaemonManageRetry(errorHandler: @escaping @Sendable (BTError.RawValue) -> Void, command: @MainActor @escaping @Sendable (BTDaemonCommProtocol, AuthorizationRef) -> Void) {
         BTAuthorizationService.manage() { authRef in
             guard let authRef = authRef else {
                 errorHandler(BTError.notAuthorized.rawValue)
                 return
             }
 
-            let daemon = getDaemon(errorHandler: errorHandler)
-            reply(daemon, authRef)
+            executeDaemonRetry(errorHandler: errorHandler) { daemon in
+                command(daemon, authRef)
+            }
         }
     }
 
@@ -94,23 +82,23 @@ internal struct BTDaemonXPCClient {
     }
 
     internal static func getUniqueId(reply: @Sendable @escaping (NSData?) -> Void) -> Void {
-        let daemon = getDaemon() { _ in
+        executeDaemonRetry() { _ in
             reply(nil)
+        } command: { daemon in
+            daemon.getUniqueId(reply: reply)
         }
-
-        daemon.getUniqueId(reply: reply)
     }
 
     internal static func getState(reply: @Sendable @escaping ([String: AnyObject]) -> Void) -> Void {
-        let daemon = getDaemon() { _ in
+        executeDaemonRetry() { _ in
             reply([:])
+        } command: { daemon in
+            daemon.getState(reply: reply)
         }
-
-        daemon.getState(reply: reply)
     }
 
     internal static func disablePowerAdapter(reply: @Sendable @escaping (BTError.RawValue) -> Void) -> Void {
-        getDaemonManage(errorHandler: reply) { (daemon, authRef) in
+        executeDaemonManageRetry(errorHandler: reply) { (daemon, authRef) in
             daemon.execute(
                 authData: BTAuthorization.toData(authRef: authRef),
                 command: BTDaemonCommProtocolCommands.disablePowerAdapter.rawValue,
@@ -120,7 +108,7 @@ internal struct BTDaemonXPCClient {
     }
 
     internal static func enablePowerAdapter(reply: @Sendable @escaping (BTError.RawValue) -> Void) -> Void {
-        getDaemonManage(errorHandler: reply) { (daemon, authRef) in
+        executeDaemonManageRetry(errorHandler: reply) { (daemon, authRef) in
             daemon.execute(
                 authData: BTAuthorization.toData(authRef: authRef),
                 command: BTDaemonCommProtocolCommands.enablePowerAdapter.rawValue,
@@ -130,7 +118,7 @@ internal struct BTDaemonXPCClient {
     }
 
     internal static func chargeToMaximum(reply: @Sendable @escaping (BTError.RawValue) -> Void) -> Void {
-        getDaemonManage(errorHandler: reply) { (daemon, authRef) in
+        executeDaemonManageRetry(errorHandler: reply) { (daemon, authRef) in
             daemon.execute(
                 authData: BTAuthorization.toData(authRef: authRef),
                 command: BTDaemonCommProtocolCommands.chargeToMaximum.rawValue,
@@ -140,7 +128,7 @@ internal struct BTDaemonXPCClient {
     }
 
     internal static func chargeToFull(reply: @Sendable @escaping (BTError.RawValue) -> Void) -> Void {
-        getDaemonManage(errorHandler: reply) { (daemon, authRef) in
+        executeDaemonManageRetry(errorHandler: reply) { (daemon, authRef) in
             daemon.execute(
                 authData: BTAuthorization.toData(authRef: authRef),
                 command: BTDaemonCommProtocolCommands.chargeToFull.rawValue,
@@ -150,7 +138,7 @@ internal struct BTDaemonXPCClient {
     }
 
     internal static func disableCharging(reply: @Sendable @escaping (BTError.RawValue) -> Void) -> Void {
-        getDaemonManage(errorHandler: reply) { (daemon, authRef) in
+        executeDaemonManageRetry(errorHandler: reply) { (daemon, authRef) in
             daemon.execute(
                 authData: BTAuthorization.toData(authRef: authRef),
                 command: BTDaemonCommProtocolCommands.disableCharging.rawValue,
@@ -160,15 +148,15 @@ internal struct BTDaemonXPCClient {
     }
 
     internal static func getSettings(reply: @Sendable @escaping ([String: AnyObject]) -> Void) {
-        let daemon = getDaemon() { _ in
+        executeDaemonRetry() { _ in
             reply([:])
+        } command: { daemon in
+            daemon.getSettings(reply: reply)
         }
-
-        daemon.getSettings(reply: reply)
     }
     
     internal static func setSettings(settings: [String: AnyObject], reply: @Sendable @escaping (BTError.RawValue) -> Void) -> Void {
-        getDaemonManage(errorHandler: reply) { (daemon, authRef) in
+        executeDaemonManageRetry(errorHandler: reply) { (daemon, authRef) in
             daemon.setSettings(
                 authData: BTAuthorization.toData(authRef: authRef),
                 settings: settings,
@@ -178,14 +166,14 @@ internal struct BTDaemonXPCClient {
     }
 
     internal static func removeLegacyHelperFiles(authRef: AuthorizationRef, reply: @Sendable @escaping (BTError.RawValue) -> Void) {
-        let daemon = getDaemon() { error in
+        executeDaemonRetry() { error in
             reply(error)
+        } command: { daemon in
+            daemon.execute(
+                authData: BTAuthorization.toData(authRef: authRef),
+                command: BTDaemonCommProtocolCommands.removeLegacyHelperFiles.rawValue,
+                reply: reply
+                )
         }
-
-        daemon.execute(
-            authData: BTAuthorization.toData(authRef: authRef),
-            command: BTDaemonCommProtocolCommands.removeLegacyHelperFiles.rawValue,
-            reply: reply
-            )
     }
 }
