@@ -9,15 +9,44 @@ import BTPreprocessor
 
 @MainActor
 internal struct BTAuthorizationService {
-    internal static func createEmptyAuthorization(reply: @Sendable @escaping (AuthorizationRef?) -> Void) {
+    private static var manageAuthRef: AuthorizationRef? = nil
+
+    internal static func empty(reply: @Sendable @escaping (AuthorizationRef?) -> Void) {
         BTAppXPCClient.createEmptyAuthorization { (authData) -> Void in
             reply(BTAuthorization.fromData(authData: authData))
         }
     }
 
-    internal static func createDaemonAuthorization(reply: @Sendable @escaping (AuthorizationRef?) -> Void) {
+    internal static func daemonManagement(reply: @Sendable @escaping (AuthorizationRef?) -> Void) {
         BTAppXPCClient.createDaemonAuthorization { (authData) -> Void in
             reply(BTAuthorization.fromData(authData: authData))
+        }
+    }
+
+    internal static func manage(reply: @MainActor @Sendable @escaping (AuthorizationRef?) -> Void) {
+        let authData = BTAuthorization.toData(
+            authRef: BTAuthorizationService.manageAuthRef
+            )
+        guard let authData = authData else {
+            BTAppXPCClient.createManageAuthorization { authData in
+                let authRef = BTAuthorization.fromData(authData: authData)
+
+                DispatchQueue.main.async {
+                    if authRef != nil {
+                        BTAuthorizationService.manageAuthRef = authRef
+                    }
+
+                    reply(authRef)
+                }
+            }
+
+            return
+        }
+
+        BTAppXPCClient.acquireManageAuthorization(authData: authData) { _ in
+            DispatchQueue.main.async {
+                reply(BTAuthorizationService.manageAuthRef)
+            }
         }
     }
 }

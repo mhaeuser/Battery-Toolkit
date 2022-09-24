@@ -9,11 +9,6 @@ import BTPreprocessor
 
 internal struct BTAuthorization {
     private static func toReply(authRef: AuthorizationRef?, reply: @Sendable @escaping (NSData?) -> Void) {
-        guard let authRef = authRef else {
-            reply(nil)
-            return
-        }
-
         reply(toData(authRef: authRef))
     }
 
@@ -31,12 +26,7 @@ internal struct BTAuthorization {
         toReply(authRef: empty(), reply: reply)
     }
 
-    internal static func interactive(rightName: String) -> AuthorizationRef? {
-        let authRef = empty()
-        guard let authRef = authRef else {
-            return nil
-        }
-
+    private static func copyRight(authRef: AuthorizationRef, rightName: String, flags: AuthorizationFlags) -> Bool {
         var item = AuthorizationItem(
             name: rightName,
             valueLength: 0,
@@ -49,10 +39,25 @@ internal struct BTAuthorization {
             authRef,
             &rights,
             nil,
-            [.interactionAllowed, .extendRights, .preAuthorize],
+            flags,
             nil
             )
-        guard status == errAuthorizationSuccess else {
+        return status == errAuthorizationSuccess
+    }
+
+    internal static func interactive(rightName: String) -> AuthorizationRef? {
+        let authRef = empty()
+        guard let authRef = authRef else {
+            return nil
+        }
+
+        let success = copyRight(
+            authRef: authRef,
+            rightName: rightName,
+            flags: [.interactionAllowed, .extendRights, .preAuthorize]
+            )
+        guard success else {
+            AuthorizationFree(authRef, [.destroyRights])
             return nil
         }
 
@@ -63,7 +68,27 @@ internal struct BTAuthorization {
         toReply(authRef: interactive(rightName: rightName), reply: reply)
     }
 
-    private static func toData(authRef: AuthorizationRef) -> NSData? {
+    internal static func acquireInteractive(authRef: AuthorizationRef, rightName: String) -> Bool {
+        return copyRight(
+            authRef: authRef,
+            rightName: rightName,
+            flags: [.interactionAllowed, .extendRights, .preAuthorize]
+            )
+    }
+
+    internal static func checkRight(authRef: AuthorizationRef, rightName: String) -> Bool {
+        return copyRight(
+            authRef: authRef,
+            rightName: rightName,
+            flags: [.destroyRights]
+            )
+    }
+
+    internal static func toData(authRef: AuthorizationRef?) -> NSData? {
+        guard let authRef = authRef else {
+            return nil
+        }
+
         var extAuth = AuthorizationExternalForm()
         let status  = AuthorizationMakeExternalForm(authRef, &extAuth)
         guard status == errAuthorizationSuccess else {

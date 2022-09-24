@@ -5,13 +5,43 @@
 
 import Foundation
 import os.log
+import ServiceManagement
 
 internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
     @MainActor func getUniqueId(reply: @Sendable @escaping (NSData?) -> Void) -> Void {
         reply(BTIdentification.getUniqueId())
     }
 
-    @MainActor internal func execute(command: UInt8, reply: @Sendable @escaping (Bool) -> Void) -> Void {
+    @MainActor internal func execute(authData: NSData?, command: UInt8, reply: @Sendable @escaping (Bool) -> Void) -> Void {
+        let authRef = BTAuthorization.fromData(authData: authData)
+        guard let authRef = authRef else {
+            reply(false)
+            return
+        }
+
+        guard command != BTDaemonCommProtocolCommands.removeLegacyHelperFiles.rawValue else {
+            let authorized = BTAuthorization.checkRight(
+                authRef: authRef,
+                rightName: kSMRightModifySystemDaemons
+                )
+            guard authorized else {
+                reply(false)
+                return
+            }
+
+            reply(BTDaemonManagement.removeLegacyHelperFiles())
+            return
+        }
+
+        let authorized = BTAuthorization.checkRight(
+            authRef: authRef,
+            rightName: BTAuthorizationRights.manage
+            )
+        guard authorized else {
+            reply(false)
+            return
+        }
+
         var success = false
         switch command {
             case BTDaemonCommProtocolCommands.disablePowerAdapter.rawValue:
@@ -29,9 +59,6 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
             case BTDaemonCommProtocolCommands.disableCharging.rawValue:
                 success = BTPowerEvents.disableCharging()
 
-            case BTDaemonCommProtocolCommands.removeLegacyHelperFiles.rawValue:
-                success = BTDaemonManagement.removeLegacyHelperFiles()
-
             default:
                 os_log("Unknown command: \(command)")
         }
@@ -47,7 +74,22 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
         reply(BTSettings.getSettings())
     }
 
-    @MainActor internal func setSettings(settings: [String: AnyObject], reply: @Sendable @escaping (Bool) -> Void) -> Void {
+    @MainActor internal func setSettings(authData: NSData?, settings: [String: AnyObject], reply: @Sendable @escaping (Bool) -> Void) -> Void {
+        let authRef = BTAuthorization.fromData(authData: authData)
+        guard let authRef = authRef else {
+            reply(false)
+            return
+        }
+
+        let authorized = BTAuthorization.checkRight(
+            authRef: authRef,
+            rightName: BTAuthorizationRights.manage
+            )
+        guard authorized else {
+            reply(false)
+            return
+        }
+
         BTSettings.setSettings(settings: settings, reply: reply)
     }
 }

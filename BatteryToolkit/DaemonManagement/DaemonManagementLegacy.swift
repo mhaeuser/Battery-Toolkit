@@ -21,7 +21,7 @@ internal struct BTDaemonManagementLegacy {
     @MainActor internal static func register(reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
         os_log("Registering legacy helper")
 
-        BTAuthorizationService.createEmptyAuthorization() { (auth) -> Void in
+        BTAuthorizationService.empty() { (auth) -> Void in
             assert(!Thread.isMainThread)
 
             guard let auth = auth else {
@@ -35,7 +35,7 @@ internal struct BTDaemonManagementLegacy {
                 BT_DAEMON_NAME as CFString,
                 auth,
                 &error
-            )
+                )
 
             os_log("Legacy helper registering result: \(success), error: \(String(describing: error))")
 
@@ -59,7 +59,7 @@ internal struct BTDaemonManagementLegacy {
     @MainActor internal static func unregister(reply: @Sendable @escaping (Bool) -> Void) {
         os_log("Unregistering legacy helper")
 
-        BTAuthorizationService.createDaemonAuthorization() { (auth) -> Void in
+        BTAuthorizationService.daemonManagement() { (auth) -> Void in
             assert(!Thread.isMainThread)
 
             guard let auth = auth else {
@@ -68,7 +68,7 @@ internal struct BTDaemonManagementLegacy {
             }
 
             DispatchQueue.main.async {
-                BTDaemonXPCClient.removeLegacyHelperFiles() { success in
+                BTDaemonXPCClient.removeLegacyHelperFiles(authRef: auth) { success in
                     // FIXME: Handle error
 
                     if success {

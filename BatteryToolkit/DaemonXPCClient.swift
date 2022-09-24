@@ -62,6 +62,18 @@ internal struct BTDaemonXPCClient {
         return daemon
     }
 
+    private static func getDaemonManage(reply: @MainActor @escaping @Sendable (BTDaemonCommProtocol, AuthorizationRef) -> Void, errorHandler: @escaping @Sendable () -> Void) {
+        BTAuthorizationService.manage() { authRef in
+            guard let authRef = authRef else {
+                errorHandler()
+                return
+            }
+
+            let daemon = getDaemon(errorHandler: errorHandler)
+            reply(daemon, authRef)
+        }
+    }
+
     internal static func disconnectDaemon() {
         guard let connect = BTDaemonXPCClient.connect else {
             return
@@ -98,58 +110,63 @@ internal struct BTDaemonXPCClient {
     }
 
     internal static func disablePowerAdapter(reply: @Sendable @escaping (Bool) -> Void) -> Void {
-        let daemon = getDaemon() {
+        getDaemonManage() { (daemon, authRef) in
+            daemon.execute(
+                authData: BTAuthorization.toData(authRef: authRef),
+                command: BTDaemonCommProtocolCommands.disablePowerAdapter.rawValue,
+                reply: reply
+                )
+        } errorHandler: {
             reply(false)
         }
-
-        daemon.execute(
-            command: BTDaemonCommProtocolCommands.disablePowerAdapter.rawValue,
-            reply: reply
-            )
     }
 
     internal static func enablePowerAdapter(reply: @Sendable @escaping (Bool) -> Void) -> Void {
-        let daemon = getDaemon() {
+        getDaemonManage() { (daemon, authRef) in
+            daemon.execute(
+                authData: BTAuthorization.toData(authRef: authRef),
+                command: BTDaemonCommProtocolCommands.enablePowerAdapter.rawValue,
+                reply: reply
+                )
+        } errorHandler: {
             reply(false)
         }
-
-        daemon.execute(
-            command: BTDaemonCommProtocolCommands.enablePowerAdapter.rawValue,
-            reply: reply
-            )
     }
 
     internal static func chargeToMaximum(reply: @Sendable @escaping (Bool) -> Void) -> Void {
-        let daemon = getDaemon() {
+        getDaemonManage() { (daemon, authRef) in
+            daemon.execute(
+                authData: BTAuthorization.toData(authRef: authRef),
+                command: BTDaemonCommProtocolCommands.chargeToMaximum.rawValue,
+                reply: reply
+                )
+        } errorHandler: {
             reply(false)
         }
-
-        daemon.execute(
-            command: BTDaemonCommProtocolCommands.chargeToMaximum.rawValue,
-            reply: reply
-            )
     }
 
     internal static func chargeToFull(reply: @Sendable @escaping (Bool) -> Void) -> Void {
-        let daemon = getDaemon() {
+        getDaemonManage() { (daemon, authRef) in
+            daemon.execute(
+                authData: BTAuthorization.toData(authRef: authRef),
+                command: BTDaemonCommProtocolCommands.chargeToFull.rawValue,
+                reply: reply
+                )
+        } errorHandler: {
             reply(false)
         }
-
-        daemon.execute(
-            command: BTDaemonCommProtocolCommands.chargeToFull.rawValue,
-            reply: reply
-            )
     }
 
     internal static func disableCharging(reply: @Sendable @escaping (Bool) -> Void) -> Void {
-        let daemon = getDaemon() {
+        getDaemonManage() { (daemon, authRef) in
+            daemon.execute(
+                authData: BTAuthorization.toData(authRef: authRef),
+                command: BTDaemonCommProtocolCommands.disableCharging.rawValue,
+                reply: reply
+                )
+        } errorHandler: {
             reply(false)
         }
-
-        daemon.execute(
-            command: BTDaemonCommProtocolCommands.disableCharging.rawValue,
-            reply: reply
-            )
     }
 
     internal static func getSettings(reply: @Sendable @escaping ([String: AnyObject]) -> Void) {
@@ -161,19 +178,24 @@ internal struct BTDaemonXPCClient {
     }
     
     internal static func setSettings(settings: [String: AnyObject], reply: @Sendable @escaping (Bool) -> Void) -> Void {
-        let daemon = getDaemon() {
+        getDaemonManage() { (daemon, authRef) in
+            daemon.setSettings(
+                authData: BTAuthorization.toData(authRef: authRef),
+                settings: settings,
+                reply: reply
+                )
+        } errorHandler: {
             reply(false)
         }
-
-        daemon.setSettings(settings: settings, reply: reply)
     }
 
-    internal static func removeLegacyHelperFiles(reply: @Sendable @escaping (Bool) -> Void) {
+    internal static func removeLegacyHelperFiles(authRef: AuthorizationRef, reply: @Sendable @escaping (Bool) -> Void) {
         let daemon = getDaemon() {
             reply(false)
         }
 
         daemon.execute(
+            authData: BTAuthorization.toData(authRef: authRef),
             command: BTDaemonCommProtocolCommands.removeLegacyHelperFiles.rawValue,
             reply: reply
             )

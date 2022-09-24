@@ -55,6 +55,10 @@
 		CE5E5AE928DE31EB00AF1D07 /* SettingsMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5E5AE728DE31EB00AF1D07 /* SettingsMenuItem.swift */; };
 		CE5E5AED28DE442900AF1D07 /* CompletionHandlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5E5AEC28DE442900AF1D07 /* CompletionHandlers.swift */; };
 		CE5E5AEE28DE442900AF1D07 /* CompletionHandlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5E5AEC28DE442900AF1D07 /* CompletionHandlers.swift */; };
+		CE5E5AF328DF183E00AF1D07 /* AuthorizationRights.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5E5AF228DF183E00AF1D07 /* AuthorizationRights.swift */; };
+		CE5E5AF428DF183E00AF1D07 /* AuthorizationRights.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5E5AF228DF183E00AF1D07 /* AuthorizationRights.swift */; };
+		CE5E5AF528DF183E00AF1D07 /* AuthorizationRights.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5E5AF228DF183E00AF1D07 /* AuthorizationRights.swift */; };
+		CE5E5AF628DF187C00AF1D07 /* AuthorizationRights.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5E5AF228DF183E00AF1D07 /* AuthorizationRights.swift */; };
 		CE6B75F928BC18EA008DF170 /* DaemonCommProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA80FDA285A57030064ADEA /* DaemonCommProtocol.swift */; };
 		CE6B75FA28BC1908008DF170 /* DaemonCommProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA80FDA285A57030064ADEA /* DaemonCommProtocol.swift */; };
 		CE6B75FC28BC196C008DF170 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6C06A028A8398600D76CC8 /* Foundation.framework */; };
@@ -190,6 +194,7 @@
 		CE5E5AE428DE292D00AF1D07 /* CommandsMenuDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandsMenuDelegate.swift; sourceTree = "<group>"; };
 		CE5E5AE728DE31EB00AF1D07 /* SettingsMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMenuItem.swift; sourceTree = "<group>"; };
 		CE5E5AEC28DE442900AF1D07 /* CompletionHandlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletionHandlers.swift; sourceTree = "<group>"; };
+		CE5E5AF228DF183E00AF1D07 /* AuthorizationRights.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationRights.swift; sourceTree = "<group>"; };
 		CE675D9528C7E81600F05929 /* me.mhaeuser.batterytoolkitd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = me.mhaeuser.batterytoolkitd.plist; sourceTree = "<group>"; };
 		CE675D9628C7E82E00F05929 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE6B75FF28BC1995008DF170 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
@@ -391,6 +396,7 @@
 				CEB4A42728D3B184004FA277 /* StateInfo.swift */,
 				CE50557028D65B48000E4387 /* XPCValidation.swift */,
 				CE1F5E3B28D760D400F61F67 /* Localization.swift */,
+				CE5E5AF228DF183E00AF1D07 /* AuthorizationRights.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -624,6 +630,7 @@
 				CE54510228D9FE9D00D6EB5F /* DaemonManagement.swift in Sources */,
 				CEF3497528DDA55800A1CECD /* BTIdentification.swift in Sources */,
 				CE397472285A2396002D0EC9 /* DaemonXPCServer.swift in Sources */,
+				CE5E5AF428DF183E00AF1D07 /* AuthorizationRights.swift in Sources */,
 				CEF3497128DCD75F00A1CECD /* SecCodeEx.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -636,6 +643,7 @@
 				CE7F623328B95A7300EF58F9 /* BTPreprocessor.m in Sources */,
 				CE8ED7F528C16A5800398581 /* PowerEvents.swift in Sources */,
 				CE8ED7F728C16AA200398581 /* Dispatcher.swift in Sources */,
+				CE5E5AF528DF183E00AF1D07 /* AuthorizationRights.swift in Sources */,
 				CE0DB56528BEB4E600B8FC4C /* SettingsInfo.swift in Sources */,
 				CE1F5E3D28D760D400F61F67 /* Localization.swift in Sources */,
 				CE39745A285A2193002D0EC9 /* SMCKit.swift in Sources */,
@@ -669,6 +677,7 @@
 				CEB4A42F28D4D4D0004FA277 /* SettingsWindowController.swift in Sources */,
 				CE397478285A25A1002D0EC9 /* DaemonXPCClient.swift in Sources */,
 				CE0DB56328BEB4E600B8FC4C /* SettingsInfo.swift in Sources */,
+				CE5E5AF328DF183E00AF1D07 /* AuthorizationRights.swift in Sources */,
 				CE30CBA128C48995001E2AC6 /* SettingsViewController.swift in Sources */,
 				CE5E5AE528DE292D00AF1D07 /* CommandsMenuDelegate.swift in Sources */,
 				CE85D05F28D7B7E6005D1E0C /* DaemonManagementService.swift in Sources */,
@@ -697,6 +706,7 @@
 				CE3179EA28DB540600E9C121 /* Authorization.swift in Sources */,
 				CEECE33328BB745B00821A3B /* ServiceComm.swift in Sources */,
 				CEF3497228DCD77000A1CECD /* SecCodeEx.c in Sources */,
+				CE5E5AF628DF187C00AF1D07 /* AuthorizationRights.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
