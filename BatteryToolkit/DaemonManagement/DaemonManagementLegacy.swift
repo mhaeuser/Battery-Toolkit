@@ -95,10 +95,10 @@ internal struct BTDaemonManagementLegacy {
                     if status != errSecSuccess {
                         os_log("Freeing authorization error: \(status)")
                     }
+
+                    reply(true)
                 }
             }
-
-            reply(true)
         }
     }
 }
