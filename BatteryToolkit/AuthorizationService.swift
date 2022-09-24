@@ -29,6 +29,10 @@ internal struct BTAuthorizationService {
 
             DispatchQueue.main.async {
                 if authRef != nil {
+                    if let authRef = BTAuthorizationService.manageAuthRef {
+                        AuthorizationFree(authRef, [.destroyRights])
+                    }
+
                     BTAuthorizationService.manageAuthRef = authRef
                 }
 
