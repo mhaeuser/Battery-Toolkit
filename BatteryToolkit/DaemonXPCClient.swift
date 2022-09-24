@@ -89,11 +89,13 @@ internal struct BTDaemonXPCClient {
         }
     }
 
-    internal static func getState(reply: @Sendable @escaping ([String: AnyObject]) -> Void) -> Void {
-        executeDaemonRetry() { _ in
-            reply([:])
+    internal static func getState(reply: @Sendable @escaping (BTError.RawValue, [String: AnyObject]) -> Void) -> Void {
+        executeDaemonRetry() { error in
+            reply(error, [:])
         } command: { daemon in
-            daemon.getState(reply: reply)
+            daemon.getState { state in
+                reply(BTError.success.rawValue, state)
+            }
         }
     }
 
@@ -147,11 +149,13 @@ internal struct BTDaemonXPCClient {
         }
     }
 
-    internal static func getSettings(reply: @Sendable @escaping ([String: AnyObject]) -> Void) {
-        executeDaemonRetry() { _ in
-            reply([:])
+    internal static func getSettings(reply: @Sendable @escaping (BTError.RawValue, [String: AnyObject]) -> Void) {
+        executeDaemonRetry() { error in
+            reply(error, [:])
         } command: { daemon in
-            daemon.getSettings(reply: reply)
+            daemon.getSettings() { settings in
+                reply(BTError.success.rawValue, settings)
+            }
         }
     }
     

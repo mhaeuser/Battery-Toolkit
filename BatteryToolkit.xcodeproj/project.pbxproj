@@ -53,8 +53,8 @@
 		CE5E5AE628DE292D00AF1D07 /* CommandsMenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5E5AE428DE292D00AF1D07 /* CommandsMenuDelegate.swift */; };
 		CE5E5AE828DE31EB00AF1D07 /* SettingsMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5E5AE728DE31EB00AF1D07 /* SettingsMenuItem.swift */; };
 		CE5E5AE928DE31EB00AF1D07 /* SettingsMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5E5AE728DE31EB00AF1D07 /* SettingsMenuItem.swift */; };
-		CE5E5AED28DE442900AF1D07 /* CompletionHandlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5E5AEC28DE442900AF1D07 /* CompletionHandlers.swift */; };
-		CE5E5AEE28DE442900AF1D07 /* CompletionHandlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5E5AEC28DE442900AF1D07 /* CompletionHandlers.swift */; };
+		CE5E5AED28DE442900AF1D07 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5E5AEC28DE442900AF1D07 /* ErrorHandler.swift */; };
+		CE5E5AEE28DE442900AF1D07 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5E5AEC28DE442900AF1D07 /* ErrorHandler.swift */; };
 		CE5E5AF328DF183E00AF1D07 /* AuthorizationRights.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5E5AF228DF183E00AF1D07 /* AuthorizationRights.swift */; };
 		CE5E5AF428DF183E00AF1D07 /* AuthorizationRights.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5E5AF228DF183E00AF1D07 /* AuthorizationRights.swift */; };
 		CE5E5AF528DF183E00AF1D07 /* AuthorizationRights.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5E5AF228DF183E00AF1D07 /* AuthorizationRights.swift */; };
@@ -196,7 +196,7 @@
 		CE5E5AE228DE214200AF1D07 /* AccessoryMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryMode.swift; sourceTree = "<group>"; };
 		CE5E5AE428DE292D00AF1D07 /* CommandsMenuDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandsMenuDelegate.swift; sourceTree = "<group>"; };
 		CE5E5AE728DE31EB00AF1D07 /* SettingsMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMenuItem.swift; sourceTree = "<group>"; };
-		CE5E5AEC28DE442900AF1D07 /* CompletionHandlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletionHandlers.swift; sourceTree = "<group>"; };
+		CE5E5AEC28DE442900AF1D07 /* ErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
 		CE5E5AF228DF183E00AF1D07 /* AuthorizationRights.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationRights.swift; sourceTree = "<group>"; };
 		CE5E5AF728DF1CB100AF1D07 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		CE675D9528C7E81600F05929 /* me.mhaeuser.batterytoolkitd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = me.mhaeuser.batterytoolkitd.plist; sourceTree = "<group>"; };
@@ -374,7 +374,7 @@
 				CE3179F428DC72D800E9C121 /* UpgradingViewController.swift */,
 				CE5E5AE228DE214200AF1D07 /* AccessoryMode.swift */,
 				CE5E5AE728DE31EB00AF1D07 /* SettingsMenuItem.swift */,
-				CE5E5AEC28DE442900AF1D07 /* CompletionHandlers.swift */,
+				CE5E5AEC28DE442900AF1D07 /* ErrorHandler.swift */,
 			);
 			path = BatteryToolkit;
 			sourceTree = "<group>";
@@ -660,7 +660,7 @@
 				CE397470285A22BB002D0EC9 /* BatteryToolkit.swift in Sources */,
 				CE5E5AE928DE31EB00AF1D07 /* SettingsMenuItem.swift in Sources */,
 				CE397461285A2193002D0EC9 /* AppDelegate.swift in Sources */,
-				CE5E5AEE28DE442900AF1D07 /* CompletionHandlers.swift in Sources */,
+				CE5E5AEE28DE442900AF1D07 /* ErrorHandler.swift in Sources */,
 				CEB4A43028D4D4D0004FA277 /* SettingsWindowController.swift in Sources */,
 				CE5E5AE628DE292D00AF1D07 /* CommandsMenuDelegate.swift in Sources */,
 				CE5E5AFA28DF1CB100AF1D07 /* Error.swift in Sources */,
@@ -693,7 +693,7 @@
 				CE3179ED28DB543600E9C121 /* Authorization.swift in Sources */,
 				CE39746E285A229F002D0EC9 /* BatteryToolkit.swift in Sources */,
 				CE52868628298CA300860C7B /* AppDelegate.swift in Sources */,
-				CE5E5AED28DE442900AF1D07 /* CompletionHandlers.swift in Sources */,
+				CE5E5AED28DE442900AF1D07 /* ErrorHandler.swift in Sources */,
 				CE1F5E3C28D760D400F61F67 /* Localization.swift in Sources */,
 				CE3C1DA728CA33FD008A0F7D /* LegacyHelperInfo.swift in Sources */,
 				CEB4A42828D3B184004FA277 /* StateInfo.swift in Sources */,

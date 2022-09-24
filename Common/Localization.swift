@@ -83,6 +83,11 @@ public struct BTLocalization {
                 comment: "Prompt caption informing of failure to disable background activity"
                 )
 
+            public static let commFailMessage = NSLocalizedString(
+                "Failed to communicate with the background service.",
+                comment: "Prompt caption informing the user that the app failed to communicate with its background service"
+                )
+
             public static let commFailInfo = NSLocalizedString(
                 "Please restart your Mac and try again. If the problem persists, contact the developers.",
                 comment: "Prompt text instructing the user to restart the machine and try again"

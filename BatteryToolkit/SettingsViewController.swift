@@ -98,8 +98,13 @@ final class SettingsViewController: NSViewController {
     }
     
     private func initSettingsState() {
-        BatteryToolkit.getSettings { (settings) -> Void in
+        BatteryToolkit.getSettings { (error, settings) in
             DispatchQueue.main.async {
+                guard error == BTError.success.rawValue else {
+                    BTErrorHandler.errorHandler(error: error)
+                    return
+                }
+
                 let minChargeNum   = settings[BTSettingsInfo.Keys.minCharge] as? NSNumber
                 let maxChargeNum   = settings[BTSettingsInfo.Keys.maxCharge] as? NSNumber
                 let adapterInfoNum = settings[BTSettingsInfo.Keys.adapterSleep] as? NSNumber
@@ -135,19 +140,15 @@ final class SettingsViewController: NSViewController {
         ]
         BTDaemonXPCClient.setSettings(settings: settings) { error in
             DispatchQueue.main.async {
-                switch error {
-                    case BTError.success.rawValue:
-                        self.view.window!.windowController!.close()
-
-                    case BTError.notAuthorized.rawValue:
-                        BTAppPrompts.promptDaemonCommFailed(window: self.view.window!)
-
-                    case BTError.commFailed.rawValue:
-                        BTAppPrompts.promptDaemonCommFailed(window: self.view.window!)
-
-                    default:
-                        BTAppPrompts.promptUnexpectedError(window: self.view.window!)
+                guard error != BTError.success.rawValue else {
+                    self.view.window!.windowController!.close()
+                    return
                 }
+
+                BTErrorHandler.errorHandler(
+                    error: error,
+                    window: self.view.window
+                    )
             }
         }
     }

@@ -30,13 +30,21 @@ internal struct BTAppPrompts {
         return response
     }
 
-    private static func runPromptNoResponse(alert: NSAlert, window: NSWindow? = nil) {
+    private static func runPrompt(alert: NSAlert, window: NSWindow? = nil, reply: @MainActor @escaping @Sendable (NSApplication.ModalResponse) -> Void) {
         guard let window = window else {
-            _ = runPromptStandalone(alert: alert)
+            let response = runPromptStandalone(alert: alert)
+            reply(response)
             return
         }
+        //
+        // The warning about losing MainActor is misleading because
+        // completionHandler is always executed on the main thread.
+        //
+        alert.beginSheetModal(for: window, completionHandler: reply)
+    }
 
-        _ = alert.beginSheetModal(for: window)
+    private static func runPrompt(alert: NSAlert, window: NSWindow? = nil) {
+        runPrompt(alert: alert, window: window) { _ in }
     }
 
     internal static func promptApproveDaemon(timeout: UInt8, reply: @escaping @Sendable (Bool) -> Void) {
@@ -108,60 +116,31 @@ internal struct BTAppPrompts {
         }
     }
 
-    private static func unexpectedErrorAlert() -> NSAlert {
+    internal static func promptUnexpectedError(window: NSWindow?) {
         let alert         = NSAlert()
         alert.messageText = BTLocalization.Prompts.unexpectedErrorMessage
         alert.alertStyle  = NSAlert.Style.critical
         _ = alert.addButton(withTitle: BTLocalization.Prompts.ok)
-        return alert
+        runPrompt(alert: alert, window: window)
     }
 
-    internal static func promptUnexpectedError() {
-        let alert = unexpectedErrorAlert()
-        _ = runPromptStandalone(alert: alert)
-    }
-
-    internal static func promptUnexpectedError(window: NSWindow) {
-        let alert = unexpectedErrorAlert()
-        _ = alert.beginSheetModal(for: window)
-    }
-
-    private static func notAuthorizedAlert() -> NSAlert {
+    internal static func promptNotAuthorized(window: NSWindow? = nil) {
         let alert         = NSAlert()
         alert.messageText = BTLocalization.Prompts.notAuthorizedMessage
         alert.alertStyle  = NSAlert.Style.critical
         _ = alert.addButton(withTitle: BTLocalization.Prompts.ok)
-        return alert
+        runPrompt(alert: alert, window: window)
     }
 
-    internal static func promptNotAuthorized() {
-        let alert = notAuthorizedAlert()
-        _ = runPromptStandalone(alert: alert)
-    }
-
-    internal static func promptNotAuthorized(window: NSWindow) {
-        let alert = notAuthorizedAlert()
-        _ = alert.beginSheetModal(for: window)
-    }
-
-    internal static func daemonCommFailedAlert() -> NSAlert {
+    internal static func promptDaemonCommFailed(window: NSWindow? = nil) {
         let alert         = NSAlert()
-        alert.messageText = "Failed to communicate with the background service."
-        alert.informativeText = BTLocalization.Prompts.Daemon.requiredInfo + "\n\n" + "Please restart your Mac and try again. If the probblem persists, contact the developers."
+        alert.messageText = BTLocalization.Prompts.Daemon.commFailMessage
+        alert.informativeText = BTLocalization.Prompts.Daemon.requiredInfo +
+            "\n\n" + BTLocalization.Prompts.Daemon.commFailInfo
         alert.alertStyle  = NSAlert.Style.critical
         _ = alert.addButton(withTitle: BTLocalization.Prompts.quit)
-        return alert
-    }
-
-    internal static func promptDaemonCommFailed() {
-        let alert = daemonCommFailedAlert()
-        _ = runPromptStandalone(alert: alert)
-        NSApp.terminate(self)
-    }
-
-    internal static func promptDaemonCommFailed(window: NSWindow) {
-        let alert = daemonCommFailedAlert()
-        _ = alert.beginSheetModal(for: window) { _ in
+        runPrompt(alert: alert, window: window) { _ in
+            assert(Thread.isMainThread)
             NSApp.terminate(self)
         }
     }

@@ -35,8 +35,13 @@ final class CommandsMenuDelegate: NSObject, NSMenuDelegate {
     private var refreshTimer: DispatchSourceTimer? = nil
 
     @MainActor private func refresh() {
-        BatteryToolkit.getState { (state) -> Void in
+        BatteryToolkit.getState { (error, state) in
             DispatchQueue.main.async {
+                guard error == BTError.success.rawValue else {
+                    BTErrorHandler.errorHandler(error: error)
+                    return
+                }
+
                 let powerNum        = state[BTStateInfo.Keys.power] as? NSNumber
                 let connectedNum    = state[BTStateInfo.Keys.connected] as? NSNumber
                 let chargingNum     = state[BTStateInfo.Keys.charging] as? NSNumber
@@ -222,22 +227,22 @@ final class CommandsMenuDelegate: NSObject, NSMenuDelegate {
     }
 
     @IBAction private func disablePowerAdapterHandler(sender: NSMenuItem) {
-        BatteryToolkit.disablePowerAdapter(reply: BTCompletionHandlers.commandError)
+        BatteryToolkit.disablePowerAdapter(reply: BTErrorHandler.completionHandler)
     }
 
     @IBAction private func enablePowerAdapterHandler(sender: NSMenuItem) {
-        BatteryToolkit.enablePowerAdapter(reply: BTCompletionHandlers.commandError)
+        BatteryToolkit.enablePowerAdapter(reply: BTErrorHandler.completionHandler)
     }
 
     @IBAction private func chargeToMaximumHandler(sender: NSMenuItem) {
-        BatteryToolkit.chargeToMaximum(reply: BTCompletionHandlers.commandError)
+        BatteryToolkit.chargeToMaximum(reply: BTErrorHandler.completionHandler)
     }
 
     @IBAction private func chargeToFullHandler(sender: NSMenuItem) {
-        BatteryToolkit.chargeToFull(reply: BTCompletionHandlers.commandError)
+        BatteryToolkit.chargeToFull(reply: BTErrorHandler.completionHandler)
     }
 
     @IBAction private func disableChargingHandler(sender: NSMenuItem) {
-        BatteryToolkit.disableCharging(reply: BTCompletionHandlers.commandError)
+        BatteryToolkit.disableCharging(reply: BTErrorHandler.completionHandler)
     }
 }

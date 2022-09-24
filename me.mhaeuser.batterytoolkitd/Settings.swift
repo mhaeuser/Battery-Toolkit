@@ -83,7 +83,7 @@ internal struct BTSettings {
         let minCharge    = NSNumber(value: BTSettings.minCharge)
         let maxCharge    = NSNumber(value: BTSettings.maxCharge)
         let adapterSleep = NSNumber(value: BTSettings.adapterSleep)
-        let settings: [String : AnyObject] = [
+        let settings: [String: AnyObject] = [
             BTSettingsInfo.Keys.minCharge: minCharge,
             BTSettingsInfo.Keys.maxCharge: maxCharge,
             BTSettingsInfo.Keys.adapterSleep: adapterSleep
@@ -94,10 +94,10 @@ internal struct BTSettings {
 
     internal static func setSettings(settings: [String: AnyObject], reply: @Sendable @escaping (BTError.RawValue) -> Void) {
         let minChargeNum = settings[BTSettingsInfo.Keys.minCharge] as? NSNumber
-        let minCharge    = minChargeNum?.intValue    ?? Int(BTSettingsInfo.Defaults.minCharge)
+        let minCharge    = minChargeNum?.intValue ?? Int(BTSettingsInfo.Defaults.minCharge)
 
         let maxChargeNum = settings[BTSettingsInfo.Keys.maxCharge] as? NSNumber
-        let maxCharge    = maxChargeNum?.intValue    ?? Int(BTSettingsInfo.Defaults.maxCharge)
+        let maxCharge    = maxChargeNum?.intValue ?? Int(BTSettingsInfo.Defaults.maxCharge)
 
         let success = setChargeLimits(minCharge: minCharge, maxCharge: maxCharge)
         guard success else {

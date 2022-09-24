@@ -39,11 +39,11 @@ internal struct BatteryToolkit {
         BTDaemonXPCClient.disableCharging(reply: reply)
     }
 
-    @MainActor internal static func getState(reply: @Sendable @escaping ([String: AnyObject]) -> Void) {
+    @MainActor internal static func getState(reply: @Sendable @escaping (BTError.RawValue, [String: AnyObject]) -> Void) {
         BTDaemonXPCClient.getState(reply: reply)
     }
 
-    @MainActor internal static func getSettings(reply: @Sendable @escaping ([String: AnyObject]) -> Void) {
+    @MainActor internal static func getSettings(reply: @Sendable @escaping (BTError.RawValue, [String: AnyObject]) -> Void) {
         BTDaemonXPCClient.getSettings(reply: reply)
     }
 
