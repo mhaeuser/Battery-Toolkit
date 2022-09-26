@@ -13,7 +13,17 @@ import Security
 internal struct BTDaemonXPCServer {
     private final class Delegate: NSObject, NSXPCListenerDelegate {
         fileprivate func listener(_ listener: NSXPCListener, shouldAcceptNewConnection newConnection: NSXPCConnection) -> Bool {
-            return BTDaemonXPCServer.accept(newConnection: newConnection)
+            guard BTXPCValidation.isValidClient(connection: newConnection) else {
+                os_log("XPC server connection by invalid client")
+                return false
+            }
+
+            newConnection.exportedInterface = BTDaemonXPCServer.daemonInterface
+            newConnection.exportedObject    = BTDaemonXPCServer.daemonComm
+
+            newConnection.resume()
+
+            return true
         }
     }
 
@@ -27,19 +37,5 @@ internal struct BTDaemonXPCServer {
     @MainActor internal static func start() {
         listener.delegate = delegate
         listener.resume()
-    }
-    
-    private static func accept(newConnection: NSXPCConnection) -> Bool {
-        guard BTXPCValidation.isValidClient(connection: newConnection) else {
-            os_log("XPC server connection by invalid client")
-            return false
-        }
-
-        newConnection.exportedInterface = BTDaemonXPCServer.daemonInterface
-        newConnection.exportedObject    = BTDaemonXPCServer.daemonComm
-        
-        newConnection.resume()
-        
-        return true
     }
 }
