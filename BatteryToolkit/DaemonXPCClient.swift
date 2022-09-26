@@ -171,18 +171,6 @@ internal struct BTDaemonXPCClient {
         }
     }
 
-    internal static func removeLegacyHelperFiles(authRef: AuthorizationRef, reply: @Sendable @escaping (BTError.RawValue) -> Void) {
-        executeDaemonRetry() { error in
-            reply(error)
-        } command: { daemon in
-            daemon.execute(
-                authData: BTAuthorization.toData(authRef: authRef),
-                command: BTDaemonCommCommand.removeLegacyHelperFiles.rawValue,
-                reply: reply
-                )
-        }
-    }
-
     @Sendable nonisolated private static func emptyErrorHandler(error: BTError.RawValue) {
         //
         // Deliberately ignore errors as this is an optional notification.
@@ -205,6 +193,30 @@ internal struct BTDaemonXPCClient {
                 authData: nil,
                 command: BTDaemonCommCommand.finishUpdate.rawValue,
                 reply: emptyErrorHandler
+                )
+        }
+    }
+
+    internal static func removeLegacyHelperFiles(authRef: AuthorizationRef, reply: @Sendable @escaping (BTError.RawValue) -> Void) {
+        executeDaemonRetry() { error in
+            reply(error)
+        } command: { daemon in
+            daemon.execute(
+                authData: BTAuthorization.toData(authRef: authRef),
+                command: BTDaemonCommCommand.removeLegacyHelperFiles.rawValue,
+                reply: reply
+                )
+        }
+    }
+
+    internal static func prepareDisable(authRef: AuthorizationRef, reply: @Sendable @escaping (BTError.RawValue) -> Void) {
+        executeDaemonRetry() { error in
+            reply(error)
+        } command: { daemon in
+            daemon.execute(
+                authData: BTAuthorization.toData(authRef: authRef),
+                command: BTDaemonCommCommand.prepareDisable.rawValue,
+                reply: reply
                 )
         }
     }

@@ -56,6 +56,14 @@ internal struct BTSettings {
         BTSettings.minCharge = UInt8(minCharge)
         BTSettings.maxCharge = UInt8(maxCharge)
     }
+
+    internal static func removeDefaults() {
+        UserDefaults.standard.removeObject(forKey: BTSettingsInfo.Keys.adapterSleep)
+        UserDefaults.standard.removeObject(forKey: BTSettingsInfo.Keys.minCharge)
+        UserDefaults.standard.removeObject(forKey: BTSettingsInfo.Keys.maxCharge)
+
+        _ = CFPreferencesAppSynchronize(kCFPreferencesCurrentApplication)
+    }
     
     private static func setChargeLimits(minCharge: Int, maxCharge: Int) -> Bool {
         guard BTSettingsInfo.chargeLimitsValid(minCharge: minCharge, maxCharge: maxCharge) else {

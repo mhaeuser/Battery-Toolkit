@@ -56,7 +56,7 @@ internal struct BatteryToolkit {
         BTDaemonXPCClient.setSettings(settings: settings, reply: reply)
     }
     
-    internal static func unregisterDaemon(reply: @Sendable @escaping (BTError.RawValue) -> Void) {
-        BTDaemonManagement.unregister(reply: reply)
+    internal static func removeDaemon(reply: @Sendable @escaping (BTError.RawValue) -> Void) {
+        BTDaemonManagement.remove(reply: reply)
     }
 }

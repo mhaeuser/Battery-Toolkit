@@ -11,9 +11,10 @@ enum BTDaemonCommCommand: UInt8 {
     case chargeToFull
     case chargeToMaximum
     case disableCharging
-    case removeLegacyHelperFiles
     case prepareUpdate
     case finishUpdate
+    case removeLegacyHelperFiles
+    case prepareDisable
 }
 
 @objc internal protocol BTDaemonCommProtocol {

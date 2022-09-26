@@ -9,11 +9,11 @@ import Cocoa
 internal struct BTAppPrompts {
     internal private(set) static var open: UInt8 = 0
 
-    private static func unregisterDaemon() {
-        BatteryToolkit.unregisterDaemon() { error in
+    private static func removeDaemon() {
+        BatteryToolkit.removeDaemon() { error in
             DispatchQueue.main.async {
                 guard error == BTError.success.rawValue else {
-                    promptUnregisterDaemonError()
+                    promptremoveDaemonError()
                     return
                 }
 
@@ -91,7 +91,7 @@ internal struct BTAppPrompts {
         return false
     }
 
-    internal static func promptUnregisterDaemon() {
+    internal static func promptremoveDaemon() {
         let alert             = NSAlert()
         alert.messageText     = BTLocalization.Prompts.Daemon.disableMessage
         alert.informativeText = BTLocalization.Prompts.Daemon.requiredInfo +
@@ -101,11 +101,11 @@ internal struct BTAppPrompts {
         _ = alert.addButton(withTitle: BTLocalization.Prompts.cancel)
         let response = runPromptStandalone(alert: alert)
         if response == NSApplication.ModalResponse.alertFirstButtonReturn {
-            unregisterDaemon()
+            removeDaemon()
         }
     }
 
-    internal static func promptUnregisterDaemonError() {
+    internal static func promptremoveDaemonError() {
         let alert         = NSAlert()
         alert.messageText = BTLocalization.Prompts.Daemon.disableFailMessage
         alert.alertStyle  = NSAlert.Style.critical
@@ -113,7 +113,7 @@ internal struct BTAppPrompts {
         _ = alert.addButton(withTitle: BTLocalization.Prompts.cancel)
         let response = runPromptStandalone(alert: alert)
         if response == NSApplication.ModalResponse.alertFirstButtonReturn {
-            unregisterDaemon()
+            removeDaemon()
         }
     }
 

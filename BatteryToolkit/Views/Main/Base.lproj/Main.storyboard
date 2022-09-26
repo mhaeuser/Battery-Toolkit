@@ -30,7 +30,7 @@
                                         <menuItem title="Disable Background Activity" enabled="NO" id="oaJ-hp-PXw">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="unregisterDaemonHandlerWithSender:" target="Voe-Tx-rLC" id="op0-U1-2YE"/>
+                                                <action selector="removeDaemonHandlerWithSender:" target="Voe-Tx-rLC" id="op0-U1-2YE"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="wFC-TO-SCJ"/>

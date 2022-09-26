@@ -220,7 +220,6 @@ internal struct BTPowerEvents {
             return false
         }
 
-        // FIXME: Remove when disabling the daemon
         let status = BTAuthorization.duplicateRight(
             rightName: BTAuthorizationRights.manage,
             templateName: kAuthorizationRuleAuthenticateAsAdmin

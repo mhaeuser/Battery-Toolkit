@@ -44,6 +44,21 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
             return
         }
 
+        guard command != BTDaemonCommCommand.prepareDisable.rawValue else {
+            let authorized = BTAuthorization.checkRight(
+                authRef: authRef,
+                rightName: kSMRightModifySystemDaemons
+                )
+            guard authorized else {
+                reply(BTError.notAuthorized.rawValue)
+                return
+            }
+
+            let success = BTDaemonManagement.prepareDisable()
+            reply(BTError(fromBool: success).rawValue)
+            return
+        }
+
         let authorized = BTAuthorization.checkRight(
             authRef: authRef,
             rightName: BTAuthorizationRights.manage

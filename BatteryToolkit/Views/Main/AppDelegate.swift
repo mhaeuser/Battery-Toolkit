@@ -14,8 +14,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     @MainActor @IBOutlet var settingsItem: NSMenuItem!
     @MainActor @IBOutlet var disableBackgroundItem: NSMenuItem!
 
-    @MainActor @IBAction private func unregisterDaemonHandler(sender: NSMenuItem) {
-        BTAppPrompts.promptUnregisterDaemon()
+    @MainActor @IBAction private func removeDaemonHandler(sender: NSMenuItem) {
+        BTAppPrompts.promptremoveDaemon()
     }
 
     @Sendable private func daemonStatusHandler(status: BTDaemonManagement.Status) {

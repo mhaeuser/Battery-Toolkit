@@ -60,11 +60,25 @@ internal struct BTDaemonManagement {
         }
     }
     
-    @MainActor internal static func unregister(reply: @Sendable @escaping (BTError.RawValue) -> Void) {
-        if #available(macOS 13.0, *) {
-            BTDaemonManagementService.unregister(reply: reply)
-        } else {
-            BTDaemonManagementLegacy.unregister(reply: reply)
+    @MainActor internal static func remove(reply: @Sendable @escaping (BTError.RawValue) -> Void) {
+        BTAuthorizationService.daemonManagement() { authRef in
+            assert(!Thread.isMainThread)
+
+            guard let authRef = authRef else {
+                reply(BTError.notAuthorized.rawValue)
+                return
+            }
+
+            DispatchQueue.main.async {
+                BTDaemonXPCClient.prepareDisable(authRef: authRef) { _ in
+                    if #available(macOS 13.0, *) {
+                        BTDaemonManagementService.unregister(reply: reply)
+                    } else {
+                        BTDaemonManagementLegacy.unregister(authRef: authRef)
+                        reply(BTError.success.rawValue)
+                    }
+                }
+            }
         }
     }
 }

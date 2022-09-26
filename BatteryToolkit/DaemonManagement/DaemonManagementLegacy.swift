@@ -66,10 +66,37 @@ internal struct BTDaemonManagementLegacy {
         assert(false)
     }
 
-    @MainActor internal static func unregister(reply: @Sendable @escaping (BTError.RawValue) -> Void) {
+    internal static func unregister(authRef: AuthorizationRef) {
         os_log("Unregistering legacy helper")
 
-        BTAuthorizationService.daemonManagement() { (auth) -> Void in
+        assert(!Thread.isMainThread)
+
+        DispatchQueue.main.async {
+            BTDaemonXPCClient.disconnectDaemon()
+        }
+
+        var error: Unmanaged<CFError>? = nil
+        let success = SMJobRemove(
+            kSMDomainSystemLaunchd,
+            BT_DAEMON_NAME as CFString,
+            authRef,
+            true,
+            &error
+            )
+
+        os_log(
+            "Legacy helper unregistering result: \(success), error: \(String(describing: error))"
+            )
+        //
+        // Errors are not returned because the legacy helper PLIST has already
+        // been deleted and next time we will not detect it anyway.
+        //
+    }
+
+    @MainActor internal static func unregisterCleanup(reply: @Sendable @escaping (BTError.RawValue) -> Void) {
+        os_log("Unregistering legacy helper")
+
+        BTAuthorizationService.daemonManagement() { auth in
             assert(!Thread.isMainThread)
 
             guard let auth = auth else {
@@ -80,22 +107,7 @@ internal struct BTDaemonManagementLegacy {
             DispatchQueue.main.async {
                 BTDaemonXPCClient.removeLegacyHelperFiles(authRef: auth) { error in
                     if error == BTError.success.rawValue {
-                        DispatchQueue.main.async {
-                            BTDaemonXPCClient.disconnectDaemon()
-                        }
-
-                        var error: Unmanaged<CFError>? = nil
-                        let success = SMJobRemove(
-                            kSMDomainSystemLaunchd,
-                            BT_DAEMON_NAME as CFString,
-                            auth,
-                            true,
-                            &error
-                            )
-
-                        os_log(
-                            "Legacy helper unregistering result: \(success), error: \(String(describing: error))"
-                            )
+                        unregister(authRef: auth)
                     }
 
                     let status = AuthorizationFree(auth, [.destroyRights])

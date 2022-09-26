@@ -164,7 +164,7 @@ internal struct BTDaemonManagementService {
     @MainActor internal static func upgrade(reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
         os_log("Upgrading daemon service")
 
-        BTDaemonManagementLegacy.unregister() { error in
+        BTDaemonManagementLegacy.unregisterCleanup() { error in
             guard error == BTError.success.rawValue else {
                 reply(.notRegistered)
                 return
