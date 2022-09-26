@@ -23,9 +23,9 @@ internal struct BTPowerState {
         
         let powerDisabled = SMCPowerKit.isPowerAdapterDisabled()
         BTPowerState.powerDisabled = powerDisabled
-        if powerDisabled {
+        if powerDisabled && !BTSettings.adapterSleep {
             //
-            // Sleep must always be disabled when external power is disabled.
+            // Sleep must be disabled when external power is disabled.
             //
             SleepKit.disableSleep()
         }
