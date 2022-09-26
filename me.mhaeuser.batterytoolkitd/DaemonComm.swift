@@ -14,11 +14,11 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
 
     @MainActor internal func execute(authData: NSData?, command: UInt8, reply: @Sendable @escaping (BTError.RawValue) -> Void) -> Void {
         if command == BTDaemonCommCommand.prepareUpdate.rawValue {
-            os_log("Preparing upgrade")
+            os_log("Preparing update")
             BTPowerEvents.upgrading = true
             return
         } else if command == BTDaemonCommCommand.finishUpdate.rawValue {
-            os_log("Upgrade finished")
+            os_log("Update finished")
             BTPowerEvents.upgrading = false
             return
         }
