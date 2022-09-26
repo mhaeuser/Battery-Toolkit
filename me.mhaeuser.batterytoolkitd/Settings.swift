@@ -32,6 +32,8 @@ internal struct BTSettings {
             BTSettings.adapterSleep,
             forKey: BTSettingsInfo.Keys.adapterSleep
             )
+
+        _ = CFPreferencesAppSynchronize(kCFPreferencesCurrentApplication)
     }
     
     internal static func readDefaults() {
