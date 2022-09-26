@@ -153,15 +153,17 @@ internal struct BTDaemonManagementService {
             at: BTLegacyHelperInfo.legacyHelperPlist
             )
         guard registered(status: status) else {
-            os_log("Legacy helper is not registered")
             update(reply: reply)
             return
         }
 
+        os_log("Legacy helper registered")
         reply(.requiresUpgrade)
     }
 
     @MainActor internal static func upgrade(reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
+        os_log("Upgrading daemon service")
+
         BTDaemonManagementLegacy.unregister() { error in
             guard error == BTError.success.rawValue else {
                 reply(.notRegistered)
