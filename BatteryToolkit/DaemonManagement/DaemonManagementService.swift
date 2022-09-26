@@ -44,7 +44,7 @@ internal struct BTDaemonManagementService {
         }
     }
 
-    private static func unregisterService(reply: @Sendable @escaping (BTError.RawValue) -> Void) {
+    internal static func unregister(reply: @Sendable @escaping (BTError.RawValue) -> Void) {
         os_log("Unregistering daemon service")
         //
         // Any other status code makes unregister() loop indefinitely.
@@ -105,7 +105,7 @@ internal struct BTDaemonManagementService {
 
         BTDaemonXPCClient.prepareUpdate()
 
-        unregisterService { _ in
+        unregister { _ in
             forceRegister(run: 0, reply: reply)
         }
     }
@@ -186,9 +186,5 @@ internal struct BTDaemonManagementService {
     internal static func approve(timeout: UInt8, reply: @escaping @Sendable (Bool) -> Void) {
         SMAppService.openSystemSettingsLoginItems()
         awaitApproval(run: 0, timeout: timeout, reply: reply)
-    }
-
-    internal static func unregister(reply: @Sendable @escaping (BTError.RawValue) -> Void) {
-        unregisterService(reply: reply)
     }
 }
