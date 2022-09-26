@@ -20,6 +20,9 @@ internal struct BTDaemonXPCServer {
     @MainActor private static var listener: NSXPCListener = NSXPCListener(machServiceName: BT_DAEMON_NAME)
 
     private static let delegate: NSXPCListenerDelegate = Delegate()
+
+    private static let daemonInterface = NSXPCInterface(with: BTDaemonCommProtocol.self)
+    private static let daemonComm      = BTDaemonComm()
     
     @MainActor internal static func start() {
         listener.delegate = delegate
@@ -32,8 +35,8 @@ internal struct BTDaemonXPCServer {
             return false
         }
 
-        newConnection.exportedInterface = NSXPCInterface(with: BTDaemonCommProtocol.self)
-        newConnection.exportedObject    = BTDaemonComm()
+        newConnection.exportedInterface = BTDaemonXPCServer.daemonInterface
+        newConnection.exportedObject    = BTDaemonXPCServer.daemonComm
         
         newConnection.resume()
         
