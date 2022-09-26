@@ -4,8 +4,8 @@
 */
 
 import Foundation
+import BTPreprocessor
 
 internal struct BTAuthorizationRights {
-    // FIXME: Custom right
-    internal static let manage = kAuthorizationRuleAuthenticateAsAdmin
+    internal static let manage = BT_DAEMON_NAME + ".manage"
 }

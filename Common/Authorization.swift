@@ -6,6 +6,7 @@
 import Foundation
 import ServiceManagement
 import BTPreprocessor
+import os.log
 
 internal struct BTAuthorization {
     private static func toReply(authRef: AuthorizationRef?, reply: @Sendable @escaping (NSData?) -> Void) {
@@ -82,6 +83,39 @@ internal struct BTAuthorization {
             rightName: rightName,
             flags: [.destroyRights]
             )
+    }
+
+    internal static func duplicateRight(rightName: String, templateName: String) -> OSStatus {
+        let authRef = empty()
+        guard let authRef = authRef else {
+            return errAuthorizationInternal
+        }
+
+        let status = AuthorizationRightSet(
+            authRef,
+            rightName,
+            templateName as CFString,
+            nil,
+            nil,
+            nil
+            )
+
+        AuthorizationFree(authRef, [.destroyRights])
+
+        return status
+    }
+
+    internal static func removeRight(rightName: String) -> OSStatus {
+        let authRef = empty()
+        guard let authRef = authRef else {
+            return errAuthorizationInternal
+        }
+
+        let status = AuthorizationRightRemove(authRef, rightName)
+
+        AuthorizationFree(authRef, [.destroyRights])
+
+        return status
     }
 
     internal static func toData(authRef: AuthorizationRef?) -> NSData? {

@@ -219,6 +219,15 @@ internal struct BTPowerEvents {
             SMCKit.stop()
             return false
         }
+
+        // FIXME: Remove when disabling the daemon
+        let status = BTAuthorization.duplicateRight(
+            rightName: BTAuthorizationRights.manage,
+            templateName: kAuthorizationRuleAuthenticateAsAdmin
+            )
+        if status != errSecSuccess {
+            os_log("Error adding manage right: \(status)")
+        }
         
         return true
     }

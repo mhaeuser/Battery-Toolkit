@@ -16,6 +16,7 @@ private func main() -> Never {
         exit(-1)
     }
 
+    // FIXME: Report an error to the user app and let it remove the daemon
     let supported = BTPowerEvents.supported()
     guard supported else {
         os_log("Machine is unsupported")
