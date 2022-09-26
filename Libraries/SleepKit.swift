@@ -57,7 +57,7 @@ public struct SleepKit {
         assert(SleepKit.sleepDisabledCounter > 0)
         SleepKit.sleepDisabledCounter -= 1
 
-        guard SleepKit.sleepDisabledCounter <= 0 else {
+        guard SleepKit.sleepDisabledCounter == 0 else {
             return
         }
 
@@ -68,7 +68,7 @@ public struct SleepKit {
         assert(SleepKit.sleepDisabledCounter >= 0)
         SleepKit.sleepDisabledCounter += 1
 
-        guard SleepKit.sleepDisabledCounter <= 1 else {
+        guard SleepKit.sleepDisabledCounter == 1 else {
             return
         }
         
