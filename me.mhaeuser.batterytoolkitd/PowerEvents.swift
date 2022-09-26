@@ -150,6 +150,14 @@ internal struct BTPowerEvents {
         
         return percent
     }
+
+    private static func drawingUnlimitedPower() -> Bool {
+        //
+        // macOS may falsely report drawing unlimited power when the power
+        // adapter is actually disabled.
+        //
+        return !BTPowerState.isPowerAdapterDisabled() && IOPSDrawingUnlimitedPower()
+    }
     
     private static func handleLimitedPower() {
         //
@@ -157,7 +165,7 @@ internal struct BTPowerEvents {
         //
         SleepKit.disableSleep()
 
-        let unlimitedPower = IOPSDrawingUnlimitedPower()
+        let unlimitedPower = drawingUnlimitedPower()
         BTPowerEvents.unlimitedPower = unlimitedPower
         if unlimitedPower{
             let result = registerPercentChangedHandler()
