@@ -68,10 +68,10 @@ public struct SMCPowerKit {
         }
     }
     
-    public static func isChargingEnabled() -> Bool {
+    public static func isChargingDisabled() -> Bool {
         do {
             let value = try SMCKit.ReadKeyUI8(key: SMCPowerKit.Keys.CH0C)
-            return value == 0x00
+            return value != 0x00
         } catch {
             return false
         }
@@ -95,10 +95,10 @@ public struct SMCPowerKit {
         }
     }
     
-    public static func isPowerAdapterEnabled() -> Bool {
+    public static func isPowerAdapterDisabled() -> Bool {
         do {
             let value = try SMCKit.ReadKeyUI8(key: SMCPowerKit.Keys.CH0J)
-            return value == 0x00
+            return value != 0x00
         } catch {
             return false
         }

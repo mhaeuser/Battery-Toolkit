@@ -12,18 +12,18 @@ internal struct BTPowerState {
     private static var powerDisabled    = false
 
     internal static func initSleepState() {
-        let chargeEnabled = SMCPowerKit.isChargingEnabled()
-        BTPowerState.chargingDisabled = !chargeEnabled
-        if chargeEnabled {
+        let chargeDisabled = SMCPowerKit.isChargingDisabled()
+        BTPowerState.chargingDisabled = chargeDisabled
+        if !chargeDisabled {
             //
-            // Sleep must always be disabled when charging.
+            // Sleep must always be disabled when charging is enabled.
             //
             SleepKit.disableSleep()
         }
         
-        let powerEnabled = SMCPowerKit.isPowerAdapterEnabled()
-        BTPowerState.powerDisabled = !powerEnabled
-        if !powerEnabled {
+        let powerDisabled = SMCPowerKit.isPowerAdapterDisabled()
+        BTPowerState.powerDisabled = powerDisabled
+        if powerDisabled {
             //
             // Sleep must always be disabled when external power is disabled.
             //
