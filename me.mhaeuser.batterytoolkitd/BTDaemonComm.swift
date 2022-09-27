@@ -24,11 +24,11 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
 
         if command == BTDaemonCommCommand.prepareUpdate.rawValue {
             os_log("Preparing update")
-            BTPowerEvents.upgrading = true
+            BTPowerEvents.updating = true
             return
         } else if command == BTDaemonCommCommand.finishUpdate.rawValue {
             os_log("Update finished")
-            BTPowerEvents.upgrading = false
+            BTPowerEvents.updating = false
             return
         }
 

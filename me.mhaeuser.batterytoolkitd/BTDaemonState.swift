@@ -12,7 +12,7 @@ internal struct BTDaemonState {
         let connected        = BTPowerEvents.unlimitedPower
         let powerDisabled    = BTPowerState.isPowerAdapterDisabled()
         let progress         = BTPowerEvents.getChargingProgress()
-        let mode             = BTPowerEvents.chargeMode
+        let mode             = BTPowerEvents.chargingMode
 
         return [
             BTStateInfo.Keys.powerDisabled: NSNumber(value: powerDisabled),
