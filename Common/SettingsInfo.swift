@@ -24,8 +24,9 @@ public struct BTSettingsInfo {
     }
 
     public static func chargeLimitsValid(minCharge: Int, maxCharge: Int) -> Bool {
-        return minCharge <= maxCharge &&
-               minCharge >= BTSettingsInfo.Bounds.minChargeMin && minCharge <= 100 &&
-               maxCharge >= BTSettingsInfo.Bounds.maxChargeMin && maxCharge <= 100
+        return BTSettingsInfo.Bounds.minChargeMin <= minCharge &&
+            minCharge <= maxCharge &&
+            maxCharge <= 100 &&
+            BTSettingsInfo.Bounds.maxChargeMin <= maxCharge
     }
 }
