@@ -247,6 +247,7 @@
                 </application>
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Battery_Toolkit" customModuleProvider="target">
                     <connections>
+                        <outlet property="commandsMenuItem" destination="67P-gA-Pem" id="jWr-9p-qLe"/>
                         <outlet property="disableBackgroundItem" destination="oaJ-hp-PXw" id="RQ8-BD-wMQ"/>
                         <outlet property="menuBarExtraMenu" destination="95L-Hg-MpQ" id="qx9-JK-hzr"/>
                         <outlet property="settingsItem" destination="BOF-NM-1cW" id="y0F-VK-O7S"/>
