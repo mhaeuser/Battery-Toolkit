@@ -92,6 +92,16 @@ public struct BTLocalization {
                 "Please restart your Mac and try again. If the problem persists, contact the developers.",
                 comment: "Prompt text instructing the user to restart the machine and try again"
                 )
+
+            public static let unsupportedMessage = NSLocalizedString(
+                "Your Mac is not supported.",
+                comment: "Prompt caption informing the user that the app does not support this machine"
+                )
+
+            public static let unsupportedInfo = NSLocalizedString(
+                "Battery Toolkit does not support managing the power state of your Mac. Background activity will be disabled.",
+                comment: "Prompt text informing the user the app does not support this machine and that background activity will be disabled in response"
+                )
         }
     }
 
