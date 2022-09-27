@@ -373,7 +373,7 @@
                                 <action selector="disableChargingHandlerWithSender:" target="Yoz-Et-jXW" id="LUb-fi-hvv"/>
                             </connections>
                         </menuItem>
-                        <menuItem isSeparatorItem="YES" hidden="YES" id="sGg-wU-dOW"/>
+                        <menuItem isSeparatorItem="YES" id="sGg-wU-dOW"/>
                         <menuItem title="Settings..." keyEquivalent="," id="78l-zk-UHb" customClass="SettingsMenuItem" customModule="Battery_Toolkit" customModuleProvider="target">
                             <connections>
                                 <segue destination="Lf9-ud-Dh4" kind="show" id="UU8-oN-xdh"/>
