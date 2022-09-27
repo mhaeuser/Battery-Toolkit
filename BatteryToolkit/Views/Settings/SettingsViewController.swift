@@ -120,12 +120,6 @@ final class SettingsViewController: NSViewController {
         }
     }
     
-    @IBAction func restoreDefaultsButtonAction(_ sender: NSButton) {
-        setMinCharge(value: Int(BTSettingsInfo.Defaults.minCharge))
-        setMaxCharge(value: Int(BTSettingsInfo.Defaults.maxCharge))
-        setAdapterSleep(value: BTSettingsInfo.Defaults.adapterSleep)
-    }
-    
     @IBAction func cancelButtonAction(_ sender: NSButton) {
         self.view.window?.windowController?.close()
     }
