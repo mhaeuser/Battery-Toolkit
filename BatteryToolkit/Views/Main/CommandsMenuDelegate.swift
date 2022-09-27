@@ -38,6 +38,27 @@ final class CommandsMenuDelegate: NSObject, NSMenuDelegate {
         BatteryToolkit.getState { (error, state) in
             DispatchQueue.main.async {
                 guard error == BTError.success.rawValue else {
+                    self.infoPowerAdapterEnabledItem.isHidden        = true
+                    self.infoPowerAdapterDisabledItem.isHidden       = true
+                    self.infoChargingToMaximumItem.isHidden          = true
+                    self.infoChargingToFullItem.isHidden             = true
+                    self.infoChargingUnknownModeItem.isHidden        = true
+                    self.infoNotChargingItem.isHidden                = true
+                    self.infoRequestedChargingToMaximumItem.isHidden = true
+                    self.infoRequestedChargingToFullItem.isHidden    = true
+                    self.infoNotChargingUnknownModeItem.isHidden     = true
+
+                    self.disablePowerAdapterItem.isHidden      = true
+                    self.enablePowerAdapterItem.isHidden       = true
+                    self.chargeToFullNowItem.isHidden          = true
+                    self.chargeToMaximumNowItem.isHidden       = true
+                    self.disableChargingItem.isHidden          = true
+                    self.requestChargingToFullItem.isHidden    = true
+                    self.requestChargingToMaximumItem.isHidden = true
+                    self.cancelChargingRequestItem.isHidden    = true
+
+                    self.infoUnknownStateItem.isHidden = false
+
                     BTErrorHandler.errorHandler(error: error)
                     return
                 }
