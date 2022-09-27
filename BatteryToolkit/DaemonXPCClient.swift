@@ -220,4 +220,16 @@ internal struct BTDaemonXPCClient {
                 )
         }
     }
+
+    internal static func isSupported(reply: @Sendable @escaping (BTError.RawValue) -> Void) {
+        executeDaemonRetry() { error in
+            reply(error)
+        } command: { daemon in
+            daemon.execute(
+                authData: nil,
+                command: BTDaemonCommCommand.isSupported.rawValue,
+                reply: reply
+            )
+        }
+    }
 }

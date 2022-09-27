@@ -15,6 +15,7 @@ enum BTDaemonCommCommand: UInt8 {
     case finishUpdate
     case removeLegacyHelperFiles
     case prepareDisable
+    case isSupported
 }
 
 @objc internal protocol BTDaemonCommProtocol {

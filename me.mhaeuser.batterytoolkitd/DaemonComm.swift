@@ -13,6 +13,15 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
     }
 
     @MainActor internal func execute(authData: NSData?, command: UInt8, reply: @Sendable @escaping (BTError.RawValue) -> Void) -> Void {
+        if command == BTDaemonCommCommand.isSupported.rawValue {
+            reply(
+                BTPowerEvents.supported ?
+                    BTError.success.rawValue :
+                    BTError.unsupported.rawValue
+                )
+            return
+        }
+
         if command == BTDaemonCommCommand.prepareUpdate.rawValue {
             os_log("Preparing update")
             BTPowerEvents.upgrading = true
@@ -59,6 +68,11 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
             return
         }
 
+        guard BTPowerEvents.supported else {
+            reply(BTError.unsupported.rawValue)
+            return
+        }
+
         let authorized = BTAuthorization.checkRight(
             authRef: authRef,
             rightName: BTAuthorizationRights.manage
@@ -93,14 +107,29 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
     }
 
     @MainActor internal func getState(reply: @Sendable @escaping ([String: AnyObject]) -> Void) -> Void {
+        guard BTPowerEvents.supported else {
+            reply([:])
+            return
+        }
+
         reply(BTDaemonState.getState())
     }
 
     @MainActor internal func getSettings(reply: @Sendable @escaping ([String: AnyObject]) -> Void) {
+        guard BTPowerEvents.supported else {
+            reply([:])
+            return
+        }
+
         reply(BTSettings.getSettings())
     }
 
     @MainActor internal func setSettings(authData: NSData?, settings: [String: AnyObject], reply: @Sendable @escaping (BTError.RawValue) -> Void) -> Void {
+        guard BTPowerEvents.supported else {
+            reply(BTError.unsupported.rawValue)
+            return
+        }
+
         let authRef = BTAuthorization.fromData(authData: authData)
         guard let authRef = authRef else {
             reply(BTError.notAuthorized.rawValue)

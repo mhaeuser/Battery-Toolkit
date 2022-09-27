@@ -13,7 +13,7 @@ internal struct BTAppPrompts {
         BatteryToolkit.removeDaemon() { error in
             DispatchQueue.main.async {
                 guard error == BTError.success.rawValue else {
-                    promptremoveDaemonError()
+                    promptRemoveDaemonError()
                     return
                 }
 
@@ -105,7 +105,7 @@ internal struct BTAppPrompts {
         }
     }
 
-    internal static func promptremoveDaemonError() {
+    internal static func promptRemoveDaemonError() {
         let alert         = NSAlert()
         alert.messageText = BTLocalization.Prompts.Daemon.disableFailMessage
         alert.alertStyle  = NSAlert.Style.critical

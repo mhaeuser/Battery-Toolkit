@@ -11,6 +11,7 @@ internal enum BTError: UInt8, Sendable {
     case notAuthorized
     case commFailed
     case malformedData
+    case unsupported
 
     init(fromBool: Bool) {
         self = fromBool ? .success : .unknown

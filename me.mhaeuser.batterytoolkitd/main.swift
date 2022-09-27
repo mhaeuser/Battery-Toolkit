@@ -10,19 +10,6 @@ import os.log
 private func main() -> Never {
     BTIdentification.cacheUniqueId()
 
-    let prepareResult = BTPowerEvents.prepare()
-    guard prepareResult else {
-        os_log("Power events preparation failed")
-        exit(-1)
-    }
-
-    // FIXME: Report an error to the user app and let it remove the daemon
-    let supported = BTPowerEvents.supported()
-    guard supported else {
-        os_log("Machine is unsupported")
-        exit(0)
-    }
-
     let startResult = BTPowerEvents.start()
     guard startResult else {
         os_log("Power events start failed")

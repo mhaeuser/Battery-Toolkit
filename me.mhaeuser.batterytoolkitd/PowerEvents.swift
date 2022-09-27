@@ -15,6 +15,8 @@ internal struct BTPowerEvents {
     internal private(set) static var chargeMode: BTStateInfo.ChargingMode = .standard
 
     internal private(set) static var unlimitedPower = false
+
+    internal private(set)static var supported: Bool = false
     
     private static var powerCreated: Bool   = false
     private static var percentCreated: Bool = false
@@ -198,20 +200,24 @@ internal struct BTPowerEvents {
         #endif
     }
 
-    internal static func prepare() -> Bool {
-        return SMCKit.start()
-    }
-
-    internal static func supported() -> Bool {
-        let supported = SMCPowerKit.supported()
-        if !supported {
-            SMCKit.stop()
+    internal static func start() -> Bool {
+        let smcSuccess = SMCKit.start()
+        guard smcSuccess else {
+            return false
         }
 
-        return supported
-    }
+        let supported = SMCPowerKit.supported()
+        BTPowerEvents.supported = supported
+        guard supported else {
+            os_log("Machine is unsupported")
+            SMCKit.stop()
+            //
+            // Still run the XPC server to cleanly uninstall the daemon, but
+            // don't initialize the rest of the stack.
+            //
+            return true
+        }
 
-    internal static func start() -> Bool {
         BTSettings.readDefaults()
         
         let registerSuccess = registerLimitedPowerHandler()
@@ -232,6 +238,10 @@ internal struct BTPowerEvents {
     }
 
     internal static func exit() {
+        guard BTPowerEvents.supported else {
+            return
+        }
+
         if !BTPowerEvents.upgrading {
             restoreDefaults()
         }
@@ -240,6 +250,10 @@ internal struct BTPowerEvents {
     }
 
     internal static func stop() {
+        guard BTPowerEvents.supported else {
+            return
+        }
+
         unregisterLimitedPowerHandler()
         unregisterPercentChangedHandler()
 
