@@ -9,7 +9,7 @@
         <!--SettingsWindowController-->
         <scene sceneID="SPA-xe-0ME">
             <objects>
-                <windowController storyboardIdentifier="SettingsWindowController" showSeguePresentationStyle="single" id="Svp-Rd-cF3" userLabel="SettingsWindowController" customClass="SettingsWindowController" customModule="BatteryToolkitStandalone" customModuleProvider="target" sceneMemberID="viewController">
+                <windowController storyboardIdentifier="SettingsWindowController" showSeguePresentationStyle="single" id="Svp-Rd-cF3" userLabel="SettingsWindowController" customClass="SettingsWindowController" customModule="Battery_Toolkit" customModuleProvider="target" sceneMemberID="viewController">
                     <window key="window" title="Battery Toolkit Settings" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="utilityWindow" tabbingMode="disallowed" id="zbj-Ah-uH1">
                         <windowStyleMask key="styleMask" titled="YES"/>
                         <windowCollectionBehavior key="collectionBehavior" fullScreenNone="YES" fullScreenDisallowsTiling="YES"/>
@@ -35,7 +35,7 @@
         <!--SettingsViewController-->
         <scene sceneID="vWP-bX-OzO">
             <objects>
-                <viewController storyboardIdentifier="SettingsViewController" showSeguePresentationStyle="single" id="qK6-EM-YZH" userLabel="SettingsViewController" customClass="SettingsViewController" customModule="BatteryToolkitStandalone" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SettingsViewController" showSeguePresentationStyle="single" id="qK6-EM-YZH" userLabel="SettingsViewController" customClass="SettingsViewController" customModule="Battery_Toolkit" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="IvC-q3-fvl">
                         <rect key="frame" x="0.0" y="0.0" width="475" height="208"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -52,7 +52,7 @@
                                 </textFieldCell>
                             </textField>
                             <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SDG-Je-dsF" userLabel="Min Slider">
-                                <rect key="frame" x="18" y="138" width="371" height="28"/>
+                                <rect key="frame" x="18" y="138" width="366" height="28"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="1jg-gj-6c8"/>
                                 </constraints>
@@ -62,10 +62,10 @@
                                 </connections>
                             </slider>
                             <textField verticalHuggingPriority="750" preferredMaxLayoutWidth="30" translatesAutoresizingMaskIntoConstraints="NO" id="uFA-ER-wv7" userLabel="Min Charge ">
-                                <rect key="frame" x="395" y="144" width="30" height="21"/>
+                                <rect key="frame" x="390" y="144" width="35" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="rsv-Oj-MN1"/>
-                                    <constraint firstAttribute="width" constant="30" id="zsc-xi-mpZ"/>
+                                    <constraint firstAttribute="width" constant="35" id="zsc-xi-mpZ"/>
                                 </constraints>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" title="70" drawsBackground="YES" id="elh-5S-Rel">
                                     <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="2zy-eb-0h8"/>
@@ -113,7 +113,7 @@
                                 </textFieldCell>
                             </textField>
                             <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Xty-jA-1OE" userLabel="Max Slider">
-                                <rect key="frame" x="18" y="86" width="371" height="28"/>
+                                <rect key="frame" x="18" y="86" width="366" height="28"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="s3w-rC-Zwp"/>
                                 </constraints>
@@ -122,22 +122,6 @@
                                     <binding destination="qK6-EM-YZH" name="value" keyPath="self.maxChargeNum" id="JVo-aZ-HI8"/>
                                 </connections>
                             </slider>
-                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Bax-qM-FEc" userLabel="Max Charge">
-                                <rect key="frame" x="395" y="92" width="30" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="30" id="L5G-Jm-a22"/>
-                                    <constraint firstAttribute="height" constant="21" id="LcJ-uM-8qd"/>
-                                </constraints>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" title="80" drawsBackground="YES" id="GKW-RL-L6O">
-                                    <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="mBa-Eo-6ty"/>
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                                <connections>
-                                    <binding destination="qK6-EM-YZH" name="value" keyPath="self.maxChargeNum" id="qIv-C4-Bzw"/>
-                                </connections>
-                            </textField>
                             <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hlb-sP-3Ne" userLabel="Max Stepper">
                                 <rect key="frame" x="422" y="88" width="19" height="28"/>
                                 <constraints>
@@ -216,6 +200,22 @@ DQ
                                     <action selector="doneButtonAction:" target="qK6-EM-YZH" id="Bkx-3c-Vju"/>
                                 </connections>
                             </button>
+                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Bax-qM-FEc" userLabel="Max Charge">
+                                <rect key="frame" x="390" y="92" width="35" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="35" id="L5G-Jm-a22"/>
+                                    <constraint firstAttribute="height" constant="21" id="LcJ-uM-8qd"/>
+                                </constraints>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" title="80" drawsBackground="YES" id="GKW-RL-L6O">
+                                    <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="mBa-Eo-6ty"/>
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <binding destination="qK6-EM-YZH" name="value" keyPath="self.maxChargeNum" id="qIv-C4-Bzw"/>
+                                </connections>
+                            </textField>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="Sz5-Nz-eFd" secondAttribute="bottom" constant="20" symbolic="YES" id="0iI-2H-kBC"/>
