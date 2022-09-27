@@ -156,6 +156,7 @@ final class SettingsViewController: NSViewController {
     override func viewWillAppear() {
         super.viewWillAppear()
         initSettingsState()
+        self.view.window?.center()
         NSApp.activate(ignoringOtherApps: true)
     }
 }
