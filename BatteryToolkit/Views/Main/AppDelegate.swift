@@ -13,6 +13,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     @MainActor @IBOutlet var settingsItem: NSMenuItem!
     @MainActor @IBOutlet var disableBackgroundItem: NSMenuItem!
+    @MainActor @IBOutlet var commandsMenuItem: NSMenuItem!
 
     @MainActor @IBAction private func removeDaemonHandler(sender: NSMenuItem) {
         BTAppPrompts.promptremoveDaemon()
@@ -31,21 +32,31 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 case .enabled:
                     os_log("Daemon is enabled")
 
-                    self.disableBackgroundItem.isEnabled = true
-                    self.settingsItem.isEnabled          = true
+                    BTDaemonXPCClient.isSupported() { error in
+                        DispatchQueue.main.async {
+                            guard error != BTError.unsupported.rawValue else {
+                                BTAppPrompts.promptMachineUnsupported()
+                                return
+                            }
 
-                    let image = NSImage(named: NSImage.Name("ExtraItemIcon"))
-                    image?.isTemplate = true
+                            self.disableBackgroundItem.isEnabled = true
+                            self.settingsItem.isEnabled          = true
+                            self.commandsMenuItem.isHidden       = false
 
-                    let extraItem = NSStatusBar.system.statusItem(
-                        withLength: NSStatusItem.squareLength
-                        )
-                    extraItem.button?.image = image
-                    extraItem.menu          = self.menuBarExtraMenu
-                    self.menuBarExtraItem   = extraItem
+                            let image = NSImage(named: NSImage.Name("ExtraItemIcon"))
+                            image?.isTemplate = true
 
-                    if !NSApp.isActive {
-                        BTAccessoryMode.activate()
+                            let extraItem = NSStatusBar.system.statusItem(
+                                withLength: NSStatusItem.squareLength
+                                )
+                            extraItem.button?.image = image
+                            extraItem.menu          = self.menuBarExtraMenu
+                            self.menuBarExtraItem   = extraItem
+
+                            if !NSApp.isActive {
+                                BTAccessoryMode.activate()
+                            }
+                        }
                     }
 
                 case .requiresApproval:

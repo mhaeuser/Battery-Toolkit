@@ -145,7 +145,7 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Window" systemMenu="window" id="vc5-Ja-Aou"/>
                             </menuItem>
-                            <menuItem title="Commands" id="67P-gA-Pem">
+                            <menuItem title="Commands" hidden="YES" id="67P-gA-Pem">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Commands" autoenablesItems="NO" id="Y6Y-O7-JEX">
                                     <items>
