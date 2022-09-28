@@ -23,11 +23,11 @@ internal struct BTPowerState {
         
         let powerDisabled = SMCPowerKit.isPowerAdapterDisabled()
         BTPowerState.powerDisabled = powerDisabled
-        if powerDisabled && !BTSettings.adapterSleep {
+        if powerDisabled {
             //
             // Sleep must be disabled when external power is disabled.
             //
-            SleepKit.disableSleep()
+            BTPowerState.disableAdapterSleep()
         }
     }
 
@@ -85,17 +85,12 @@ internal struct BTPowerState {
             return true
         }
 
-        if !BTSettings.adapterSleep {
-            SleepKit.disableSleep()
-        }
+        disableAdapterSleep()
 
         let success = SMCPowerKit.disablePowerAdapter()
         guard success else {
-            if !BTSettings.adapterSleep {
-                SleepKit.restoreSleep()
-            }
-
             os_log("Failed to disable power adapter")
+            restoreAdapterSleep()
             return false
         }
 
@@ -114,9 +109,7 @@ internal struct BTPowerState {
             return false
         }
         
-        if !BTSettings.adapterSleep {
-            SleepKit.restoreSleep()
-        }
+        restoreAdapterSleep()
 
         BTPowerState.powerDisabled = false
         return true
@@ -128,5 +121,17 @@ internal struct BTPowerState {
 
     internal static func isPowerAdapterDisabled() -> Bool {
         return BTPowerState.powerDisabled
+    }
+
+    private static func disableAdapterSleep() {
+        if !BTSettings.adapterSleep {
+            SleepKit.disableSleep()
+        }
+    }
+
+    private static func restoreAdapterSleep() {
+        if !BTSettings.adapterSleep {
+            SleepKit.restoreSleep()
+        }
     }
 }
