@@ -9,13 +9,13 @@ import ServiceManagement
 
 internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
     @MainActor func getUniqueId(reply: @Sendable @escaping (NSData?) -> Void) -> Void {
-        reply(BTIdentification.getUniqueId())
+        reply(BTDaemon.getUniqueId())
     }
 
     @MainActor internal func execute(authData: NSData?, command: UInt8, reply: @Sendable @escaping (BTError.RawValue) -> Void) -> Void {
         if command == BTDaemonCommCommand.isSupported.rawValue {
             reply(
-                BTPowerEvents.supported ?
+                BTDaemon.supported ?
                     BTError.success.rawValue :
                     BTError.unsupported.rawValue
                 )
@@ -68,7 +68,7 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
             return
         }
 
-        guard BTPowerEvents.supported else {
+        guard BTDaemon.supported else {
             reply(BTError.unsupported.rawValue)
             return
         }
@@ -107,16 +107,16 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
     }
 
     @MainActor internal func getState(reply: @Sendable @escaping ([String: AnyObject]) -> Void) -> Void {
-        guard BTPowerEvents.supported else {
+        guard BTDaemon.supported else {
             reply([:])
             return
         }
 
-        reply(BTDaemonState.getState())
+        reply(BTDaemon.getState())
     }
 
     @MainActor internal func getSettings(reply: @Sendable @escaping ([String: AnyObject]) -> Void) {
-        guard BTPowerEvents.supported else {
+        guard BTDaemon.supported else {
             reply([:])
             return
         }
@@ -125,7 +125,7 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
     }
 
     @MainActor internal func setSettings(authData: NSData?, settings: [String: AnyObject], reply: @Sendable @escaping (BTError.RawValue) -> Void) -> Void {
-        guard BTPowerEvents.supported else {
+        guard BTDaemon.supported else {
             reply(BTError.unsupported.rawValue)
             return
         }

@@ -8,23 +8,122 @@ import os.log
 import IOKit.ps
 import IOPMPrivate
 
+/// Handler for power events. Automatically manages the battery charging state based on factors like
+/// battery charging level and user inputs.
 @MainActor
 internal struct BTPowerEvents {
-    internal static var upgrading = false
+    /// Indicates whether an update is in progress.
+    internal static var updating = false
 
-    internal private(set) static var chargeMode: BTStateInfo.ChargingMode = .standard
+    /// The current mode for battery charging.
+    internal private(set) static var chargingMode = BTStateInfo.ChargingMode.standard
 
+    /// Whether the system is drawing external power.
     internal private(set) static var unlimitedPower = false
 
-    internal private(set)static var supported: Bool = false
-    
-    private static var powerCreated: Bool   = false
-    private static var percentCreated: Bool = false
+    /// Whether the Limited Power notification has been created.
+    private static var powerCreated = false
 
+    /// Whether the Percent Change notification has been created
+    private static var percentCreated = false
+
+    internal static func start() -> BTError {
+        let smcSuccess = SMCKit.start()
+        guard smcSuccess else {
+            return BTError.unknown
+        }
+
+        let supported = SMCPowerKit.supported()
+        guard supported else {
+            os_log("Machine is unsupported")
+            SMCKit.stop()
+            return BTError.unsupported
+        }
+
+        let registerSuccess = registerLimitedPowerHandler()
+        guard registerSuccess else {
+            SMCKit.stop()
+            return BTError.unknown
+        }
+
+        return BTError.success
+    }
+
+    /// Stops the service as part of termination. Hence, not all acquired resources are released.
+    internal static func exit() {
+        if !BTPowerEvents.updating {
+            restoreDefaults()
+        }
+
+        SleepKit.forceRestoreSleep()
+    }
+
+    /// Notification handler for changed settings.
+    internal static func settingsChanged() {
+        guard BTPowerEvents.percentCreated else {
+            return
+        }
+
+        _ = handleChargeHysteresis()
+    }
+
+    /// Charge the battery to the configured maximum next time it is connected to external power and then
+    /// disable charging.
+    ///
+    /// - Returns: Whether the operation was completed successfully.
+    internal static func chargeToMaximum() -> Bool {
+        BTPowerEvents.chargingMode = .toMaximum
+        return enableBelowThresholdMode(threshold: BTSettings.maxCharge)
+    }
+
+    /// Disable battery charging.
+    ///
+    /// - Returns: Whether the operation was completed successfully.
+    internal static func disableCharging() -> Bool {
+        BTPowerEvents.chargingMode = .standard
+        return BTPowerState.disableCharging()
+    }
+
+    /// Charge the battery to 100 % next time it is connected to external power.
+    ///
+    /// - Returns: Whether the operation was completed successfully.
+    internal static func chargeToFull() -> Bool {
+        BTPowerEvents.chargingMode = .toFull
+        return enableBelowThresholdMode(threshold: 100)
+    }
+
+    /// Gets the battery charging progress.
+    internal static func getChargingProgress() -> BTStateInfo.ChargingProgress {
+        var percent: Int32 = 100
+        let result = IOPSGetPercentRemaining(&percent, nil, nil)
+        guard result == kIOReturnSuccess else {
+            os_log("Failed to retrieve battery percent")
+            return .full;
+        }
+
+        if percent < BTSettings.maxCharge {
+            return .belowMax
+        }
+
+        if percent < 100 {
+            return .belowFull
+        }
+
+        return .full
+    }
+
+    /// Handler for the Limited Power notification.
+    ///
+    /// - Parameters:
+    ///     - token: The registration token.
     private static func limitedPowerHandler(token: Int32) {
         handleLimitedPower()
     }
 
+    /// Handler for the Percent Change notification.
+    ///
+    /// - Parameters:
+    ///     - token: The registration token.
     private static func percentChangeHandler(token: Int32) {
         //
         // An unlucky dispatching order of LimitedPower and PercentChanged
@@ -38,9 +137,6 @@ internal struct BTPowerEvents {
     }
 
     private static func registerLimitedPowerHandler() -> Bool {
-        guard !BTPowerEvents.powerCreated else {
-            return true
-        }
         //
         // The charging state has no default value when starting the daemon.
         // We do not want to default to enabled, because this may cause many
@@ -54,25 +150,16 @@ internal struct BTPowerEvents {
         //
         BTPowerState.initSleepState()
 
-        BTPowerEvents.powerCreated = BTDispatcher.registerLimitedPowerNotification(
+        let success = BTDispatcher.registerLimitedPowerNotification(
             BTPowerEvents.limitedPowerHandler
             )
-        guard BTPowerEvents.powerCreated else {
+        guard success else {
             return false
         }
 
         handleLimitedPower()
         
         return true
-    }
-    
-    private static func unregisterLimitedPowerHandler() {
-        guard BTPowerEvents.powerCreated else {
-            return
-        }
-
-        BTDispatcher.unregisterLimitedPowerNotification()
-        BTPowerEvents.powerCreated = false
     }
 
     private static func registerPercentChangedHandler() -> Bool {
@@ -92,7 +179,7 @@ internal struct BTPowerEvents {
         // In case charging to maximum or full were requested while the device
         // was on battery, enable it now if appropriate.
         //
-        switch BTPowerEvents.chargeMode {
+        switch BTPowerEvents.chargingMode {
             case .toMaximum:
                 if percent < BTSettings.maxCharge {
                     _ = BTPowerState.enableCharging()
@@ -139,11 +226,11 @@ internal struct BTPowerEvents {
             // charging to full was requested. Charging to maximum is handled
             // implicitly, as it only forces charging in [min, max).
             //
-            if BTPowerEvents.chargeMode != .toFull || percent >= 100 {
+            if BTPowerEvents.chargingMode != .toFull || percent >= 100 {
                 //
                 // Charging modes are reset once we disable charging.
                 //
-                BTPowerEvents.chargeMode = .standard
+                BTPowerEvents.chargingMode = .standard
                 _ = BTPowerState.disableCharging()
             }
         } else if percent < BTSettings.minCharge {
@@ -153,14 +240,19 @@ internal struct BTPowerEvents {
         return percent
     }
 
+    /// Returns whether the system is drawing external power.
     private static func drawingUnlimitedPower() -> Bool {
         //
         // macOS may falsely report drawing unlimited power when the power
         // adapter is actually disabled.
         //
-        return !BTPowerState.isPowerAdapterDisabled() && IOPSDrawingUnlimitedPower()
+        return !BTPowerState.isPowerAdapterDisabled() &&
+            IOPSDrawingUnlimitedPower()
     }
-    
+
+    /// Adapts to changes to external power. If external power is connected, monitors changes to the
+    /// battery charge level and reacts accordingly. If external power is disconnected, disables battery
+    /// charging.
     private static func handleLimitedPower() {
         //
         // Immediately disable sleep to not interrupt the setup phase.
@@ -169,7 +261,8 @@ internal struct BTPowerEvents {
 
         let unlimitedPower = drawingUnlimitedPower()
         BTPowerEvents.unlimitedPower = unlimitedPower
-        if unlimitedPower{
+
+        if unlimitedPower {
             let result = registerPercentChangedHandler()
             if !result {
                 os_log("Failed to register percent changed handler")
@@ -189,6 +282,8 @@ internal struct BTPowerEvents {
         SleepKit.restoreSleep()
     }
 
+    /// Restores the default platform power configuration. Battery charging and the power adapter are
+    /// enabled. To ease debugging, this function has no effect when compiling with the DEBUG flag.
     private static func restoreDefaults() {
         //
         // Do not reset to defaults when debugging to not stress the batteries
@@ -200,76 +295,10 @@ internal struct BTPowerEvents {
         #endif
     }
 
-    internal static func start() -> Bool {
-        let smcSuccess = SMCKit.start()
-        guard smcSuccess else {
-            return false
-        }
-
-        let supported = SMCPowerKit.supported()
-        BTPowerEvents.supported = supported
-        guard supported else {
-            os_log("Machine is unsupported")
-            SMCKit.stop()
-            //
-            // Still run the XPC server to cleanly uninstall the daemon, but
-            // don't initialize the rest of the stack.
-            //
-            return true
-        }
-
-        BTSettings.readDefaults()
-        
-        let registerSuccess = registerLimitedPowerHandler()
-        guard registerSuccess else {
-            SMCKit.stop()
-            return false
-        }
-
-        let status = BTAuthorization.duplicateRight(
-            rightName: BTAuthorizationRights.manage,
-            templateName: kAuthorizationRuleAuthenticateAsAdmin
-            )
-        if status != errSecSuccess {
-            os_log("Error adding manage right: \(status)")
-        }
-        
-        return true
-    }
-
-    internal static func exit() {
-        guard BTPowerEvents.supported else {
-            return
-        }
-
-        if !BTPowerEvents.upgrading {
-            restoreDefaults()
-        }
-
-        SleepKit.forceRestoreSleep()
-    }
-
-    internal static func stop() {
-        guard BTPowerEvents.supported else {
-            return
-        }
-
-        unregisterLimitedPowerHandler()
-        unregisterPercentChangedHandler()
-
-        exit()
-
-        SMCKit.stop()
-    }
-    
-    internal static func settingsChanged() {
-        guard BTPowerEvents.percentCreated else {
-            return
-        }
-
-        _ = handleChargeHysteresis()
-    }
-    
+    /// Enables battery charging, if the battery charge level is below the threshold.
+    ///
+    /// - Parameters:
+    ///     - threshold: The battery charge level threshold below which charging should be enabled.
     private static func enableBelowThresholdMode(threshold: UInt8) -> Bool {
         //
         // When the percent loop is inactive, this currently means that the
@@ -280,7 +309,7 @@ internal struct BTPowerEvents {
         guard BTPowerEvents.percentCreated else {
             return true
         }
-        
+
         var percent: Int32 = 100
         let result = IOPSGetPercentRemaining(&percent, nil, nil)
         guard result == kIOReturnSuccess else {
@@ -293,39 +322,5 @@ internal struct BTPowerEvents {
         }
 
         return true
-    }
-    
-    internal static func chargeToMaximum() -> Bool {
-        BTPowerEvents.chargeMode = .toMaximum
-        return enableBelowThresholdMode(threshold: BTSettings.maxCharge)
-    }
-
-    internal static func disableCharging() -> Bool {
-        BTPowerEvents.chargeMode = .standard
-        return BTPowerState.disableCharging()
-    }
-    
-    internal static func chargeToFull() -> Bool {
-        BTPowerEvents.chargeMode = .toFull
-        return enableBelowThresholdMode(threshold: 100)
-    }
-
-    internal static func getChargingProgress() -> BTStateInfo.ChargingProgress {
-        var percent: Int32 = 100
-        let result = IOPSGetPercentRemaining(&percent, nil, nil)
-        guard result == kIOReturnSuccess else {
-            os_log("Failed to retrieve battery percent")
-            return .full;
-        }
-
-        if percent < BTSettings.maxCharge {
-            return .belowMax
-        }
-
-        if percent < 100 {
-            return .belowFull
-        }
-
-        return .full
     }
 }

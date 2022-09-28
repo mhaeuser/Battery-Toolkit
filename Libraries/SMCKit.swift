@@ -103,7 +103,7 @@ public enum SMCKitError: Error {
 
 @MainActor
 public struct SMCKit {
-    private static var connect: io_connect_t = IO_OBJECT_NULL
+    private static var connect = IO_OBJECT_NULL
     
     public static func start() -> Bool {
         assert(SMCKit.connect == IO_OBJECT_NULL)
