@@ -121,7 +121,7 @@ internal struct BTDaemonXPCClient {
         }
     }
 
-    internal static func getState(reply: @Sendable @escaping (BTError.RawValue, [String: AnyObject]) -> Void) -> Void {
+    internal static func getState(reply: @Sendable @escaping (BTError.RawValue, [String: NSObject]) -> Void) -> Void {
         executeDaemonRetry() { error in
             reply(error, [:])
         } command: { daemon in
@@ -151,7 +151,7 @@ internal struct BTDaemonXPCClient {
         runExecute(command: BTDaemonCommCommand.disableCharging, reply: reply)
     }
 
-    internal static func getSettings(reply: @Sendable @escaping (BTError.RawValue, [String: AnyObject]) -> Void) {
+    internal static func getSettings(reply: @Sendable @escaping (BTError.RawValue, [String: NSObject]) -> Void) {
         executeDaemonRetry() { error in
             reply(error, [:])
         } command: { daemon in
@@ -161,7 +161,7 @@ internal struct BTDaemonXPCClient {
         }
     }
     
-    internal static func setSettings(settings: [String: AnyObject], reply: @Sendable @escaping (BTError.RawValue) -> Void) -> Void {
+    internal static func setSettings(settings: [String: NSObject], reply: @Sendable @escaping (BTError.RawValue) -> Void) -> Void {
         executeDaemonManageRetry(reply: reply) { (daemon, authRef, reply) in
             daemon.setSettings(
                 authData: BTAuthorization.toData(authRef: authRef),

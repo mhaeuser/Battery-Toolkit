@@ -125,7 +125,7 @@ final class SettingsViewController: NSViewController {
     }
     
     @IBAction func doneButtonAction(_ sender: NSButton) {
-        let settings: [String : AnyObject] = [
+        let settings: [String: NSObject] = [
             BTSettingsInfo.Keys.minCharge: self.minChargeNum,
             BTSettingsInfo.Keys.maxCharge: self.maxChargeNum,
             BTSettingsInfo.Keys.adapterSleep: NSNumber(

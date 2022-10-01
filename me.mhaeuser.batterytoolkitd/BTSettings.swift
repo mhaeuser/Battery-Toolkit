@@ -89,11 +89,11 @@ internal struct BTSettings {
         BTPowerState.adapterSleepPreferenceToggled()
     }
 
-    internal static func getSettings() -> [String: AnyObject] {
+    internal static func getSettings() -> [String: NSObject] {
         let minCharge    = NSNumber(value: BTSettings.minCharge)
         let maxCharge    = NSNumber(value: BTSettings.maxCharge)
         let adapterSleep = NSNumber(value: BTSettings.adapterSleep)
-        let settings: [String: AnyObject] = [
+        let settings: [String: NSObject] = [
             BTSettingsInfo.Keys.minCharge: minCharge,
             BTSettingsInfo.Keys.maxCharge: maxCharge,
             BTSettingsInfo.Keys.adapterSleep: adapterSleep
@@ -102,7 +102,7 @@ internal struct BTSettings {
         return settings
     }
 
-    internal static func setSettings(settings: [String: AnyObject], reply: @Sendable @escaping (BTError.RawValue) -> Void) {
+    internal static func setSettings(settings: [String: NSObject], reply: @Sendable @escaping (BTError.RawValue) -> Void) {
         let minChargeNum = settings[BTSettingsInfo.Keys.minCharge] as? NSNumber
         let minCharge    = minChargeNum?.intValue ?? Int(BTSettingsInfo.Defaults.minCharge)
 

@@ -61,7 +61,7 @@ internal struct BTDaemon {
         return BTDaemon.uniqueId
     }
 
-    internal static func getState() -> [String: AnyObject] {
+    internal static func getState() -> [String: NSObject] {
         let chargingDisabled = BTPowerState.isChargingDisabled()
         let connected        = BTPowerEvents.unlimitedPower
         let powerDisabled    = BTPowerState.isPowerAdapterDisabled()

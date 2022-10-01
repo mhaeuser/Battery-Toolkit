@@ -106,7 +106,7 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
         reply(BTError(fromBool: success).rawValue)
     }
 
-    @MainActor internal func getState(reply: @Sendable @escaping ([String: AnyObject]) -> Void) -> Void {
+    @MainActor internal func getState(reply: @Sendable @escaping ([String: NSObject]) -> Void) -> Void {
         guard BTDaemon.supported else {
             reply([:])
             return
@@ -115,7 +115,7 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
         reply(BTDaemon.getState())
     }
 
-    @MainActor internal func getSettings(reply: @Sendable @escaping ([String: AnyObject]) -> Void) {
+    @MainActor internal func getSettings(reply: @Sendable @escaping ([String: NSObject]) -> Void) {
         guard BTDaemon.supported else {
             reply([:])
             return
@@ -124,7 +124,7 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
         reply(BTSettings.getSettings())
     }
 
-    @MainActor internal func setSettings(authData: NSData?, settings: [String: AnyObject], reply: @Sendable @escaping (BTError.RawValue) -> Void) -> Void {
+    @MainActor internal func setSettings(authData: NSData?, settings: [String: NSObject], reply: @Sendable @escaping (BTError.RawValue) -> Void) -> Void {
         guard BTDaemon.supported else {
             reply(BTError.unsupported.rawValue)
             return
