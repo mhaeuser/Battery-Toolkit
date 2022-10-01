@@ -325,7 +325,7 @@
 				CEF3496D28DCD34900A1CECD /* SecCodeEx */,
 				CE3C1D8128C7F950008A0F7D /* uninstall.sh */,
 				CED8DD3628C364D60082C02A /* NSXPCConnectionAuditToken */,
-				CEECE31928BB648F00821A3B /* BatteryToolkitXPC */,
+				CEECE31928BB648F00821A3B /* BatteryToolkitService */,
 				CE6B75F728BC18DD008DF170 /* Common */,
 				CE6C06B828A84C2400D76CC8 /* Preprocessor */,
 				CEB4671C2843C80D00D7CB01 /* SMCPrivate */,
@@ -477,7 +477,7 @@
 			path = NSXPCConnectionAuditToken;
 			sourceTree = "<group>";
 		};
-		CEECE31928BB648F00821A3B /* BatteryToolkitXPC */ = {
+		CEECE31928BB648F00821A3B /* BatteryToolkitService */ = {
 			isa = PBXGroup;
 			children = (
 				CEECE32028BB648F00821A3B /* Info.plist */,
@@ -486,7 +486,7 @@
 				CEECE33228BB745B00821A3B /* BTServiceComm.swift */,
 				CE6B760828BC1D15008DF170 /* BTServiceXPCServer.swift */,
 			);
-			path = BatteryToolkitXPC;
+			path = BatteryToolkitService;
 			sourceTree = "<group>";
 		};
 		CEF3496D28DCD34900A1CECD /* SecCodeEx */ = {
@@ -856,7 +856,7 @@
 				BT_AUTOSTART_NAME = me.mhaeuser.BatteryToolkitAutostart;
 				BT_CODE_SIGN_CN = "Apple Development: mhaeuser@posteo.de (FK3MXHN3BX)";
 				BT_DAEMON_NAME = me.mhaeuser.batterytoolkitd;
-				BT_SERVICE_NAME = me.mhaeuser.BatteryToolkitXPC;
+				BT_SERVICE_NAME = me.mhaeuser.BatteryToolkitService;
 				CLANG_ANALYZER_GCD_PERFORMANCE = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_EMPTY_CONTEXT = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -987,7 +987,7 @@
 				BT_AUTOSTART_NAME = me.mhaeuser.BatteryToolkitAutostart;
 				BT_CODE_SIGN_CN = "Apple Development: mhaeuser@posteo.de (FK3MXHN3BX)";
 				BT_DAEMON_NAME = me.mhaeuser.batterytoolkitd;
-				BT_SERVICE_NAME = me.mhaeuser.BatteryToolkitXPC;
+				BT_SERVICE_NAME = me.mhaeuser.BatteryToolkitService;
 				CLANG_ANALYZER_GCD_PERFORMANCE = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_EMPTY_CONTEXT = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -1185,9 +1185,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = BatteryToolkitXPC/Info.plist;
+				INFOPLIST_FILE = BatteryToolkitService/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				PRODUCT_BUNDLE_IDENTIFIER = me.mhaeuser.BatteryToolkitXPC;
+				PRODUCT_BUNDLE_IDENTIFIER = me.mhaeuser.BatteryToolkitService;
 				SKIP_INSTALL = YES;
 				STRIP_STYLE = all;
 			};
@@ -1197,9 +1197,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = BatteryToolkitXPC/Info.plist;
+				INFOPLIST_FILE = BatteryToolkitService/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				PRODUCT_BUNDLE_IDENTIFIER = me.mhaeuser.BatteryToolkitXPC;
+				PRODUCT_BUNDLE_IDENTIFIER = me.mhaeuser.BatteryToolkitService;
 				SKIP_INSTALL = YES;
 				STRIP_STYLE = all;
 			};
