@@ -25,7 +25,6 @@ internal struct BTLoginItem {
         }
     }
 
-    // FIXME: Share with daemon?
     @available(macOS 13.0, *)
     private static func registered(status: SMAppService.Status) -> Bool {
         return status != .notRegistered && status != .notFound

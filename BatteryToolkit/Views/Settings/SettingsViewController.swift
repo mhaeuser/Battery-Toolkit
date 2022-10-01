@@ -156,6 +156,11 @@ final class SettingsViewController: NSViewController {
                 disableAutostart,
                 forKey: BTSettingsInfo.Keys.disableAutostart
                 )
+        } else {
+            BTErrorHandler.errorHandler(
+                error: BTError.unknown.rawValue,
+                window: self.view.window
+                )
         }
 
         let settings: [String: NSObject] = [
@@ -168,12 +173,27 @@ final class SettingsViewController: NSViewController {
 
         guard settings != currentSettings else {
             os_log("Background Activity settings have not changed, ignoring")
-            self.view.window?.windowController?.close()
+            //
+            // If the previous operations failed, we displayed an error prompt
+            // and must not close the window.
+            //
+            if !success {
+                self.view.window?.windowController?.close()
+            }
+
             return
         }
 
         BTDaemonXPCClient.setSettings(settings: settings) { error in
             DispatchQueue.main.async {
+                //
+                // If the previous operations failed, we already displayed an
+                // error prompt and must not close the window.
+                //
+                guard success else {
+                    return
+                }
+
                 guard error != BTError.success.rawValue else {
                     self.view.window?.windowController?.close()
                     return
