@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "CE9BD24528E8908000B6C61D"
-               BuildableName = "Battery Toolkit Autostart.app"
-               BlueprintName = "Battery Toolkit Autostart"
+               BuildableName = "AutostartHelper.app"
+               BlueprintName = "AutostartHelper"
                ReferencedContainer = "container:BatteryToolkit.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,8 +45,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "CE9BD24528E8908000B6C61D"
-            BuildableName = "Battery Toolkit Autostart.app"
-            BlueprintName = "Battery Toolkit Autostart"
+            BuildableName = "AutostartHelper.app"
+            BlueprintName = "AutostartHelper"
             ReferencedContainer = "container:BatteryToolkit.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -62,8 +62,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "CE9BD24528E8908000B6C61D"
-            BuildableName = "Battery Toolkit Autostart.app"
-            BlueprintName = "Battery Toolkit Autostart"
+            BuildableName = "AutostartHelper.app"
+            BlueprintName = "AutostartHelper"
             ReferencedContainer = "container:BatteryToolkit.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
