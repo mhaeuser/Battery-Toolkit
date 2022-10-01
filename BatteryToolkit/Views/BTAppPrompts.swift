@@ -9,6 +9,16 @@ import Cocoa
 internal struct BTAppPrompts {
     internal private(set) static var open: UInt8 = 0
 
+    private static func cleanupAndTerminate() {
+        _ = BTLoginItem.disable()
+
+        if let domain = Bundle.main.bundleIdentifier {
+            UserDefaults.standard.removePersistentDomain(forName: domain)
+        }
+
+        NSApp.terminate(nil)
+    }
+
     private static func tryRemoveDaemon() {
         BatteryToolkit.removeDaemon() { error in
             DispatchQueue.main.async {
@@ -17,7 +27,7 @@ internal struct BTAppPrompts {
                     return
                 }
 
-                NSApp.terminate(self)
+                cleanupAndTerminate()
             }
         }
     }
@@ -30,7 +40,7 @@ internal struct BTAppPrompts {
                     return
                 }
 
-                NSApp.terminate(self)
+                cleanupAndTerminate()
             }
         }
     }
@@ -114,7 +124,7 @@ internal struct BTAppPrompts {
         return false
     }
 
-    internal static func promptremoveDaemon() {
+    internal static func promptRemoveDaemon() {
         let alert             = NSAlert()
         alert.messageText     = BTLocalization.Prompts.Daemon.disableMessage
         alert.informativeText = BTLocalization.Prompts.Daemon.requiredInfo +
@@ -152,7 +162,7 @@ internal struct BTAppPrompts {
             return
         }
 
-        NSApp.terminate(self)
+        cleanupAndTerminate()
     }
 
     internal static func promptUnexpectedError(window: NSWindow?) {

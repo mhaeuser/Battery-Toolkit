@@ -16,7 +16,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     @MainActor @IBOutlet var commandsMenuItem: NSMenuItem!
 
     @MainActor @IBAction private func removeDaemonHandler(sender: NSMenuItem) {
-        BTAppPrompts.promptremoveDaemon()
+        BTAppPrompts.promptRemoveDaemon()
     }
 
     @Sendable private func daemonStatusHandler(status: BTDaemonManagement.Status) {
