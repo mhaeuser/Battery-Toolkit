@@ -66,14 +66,14 @@ internal struct BTLoginItem {
     @available(macOS, deprecated: 13.0)
     private static func enableLegacy() -> Bool {
         return SMLoginItemSetEnabled(
-            "me.mhaeuser.BatteryToolkitAutostart" as CFString,
+            BT_AUTOSTART_NAME as CFString,
             true
             )
     }
 
     private static func disableLegacy() -> Bool {
         return SMLoginItemSetEnabled(
-            "me.mhaeuser.BatteryToolkitAutostart" as CFString,
+            BT_AUTOSTART_NAME as CFString,
             false
             )
     }
