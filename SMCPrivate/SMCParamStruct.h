@@ -21,13 +21,15 @@
  * @APPLE_LICENSE_HEADER_END@
  */
 
-#ifndef SMCParamStruct_h
-#define SMCParamStruct_h
+#ifndef _SMCParamStruct_h_
+#define _SMCParamStruct_h_
 
 #include <stdint.h>
 
 #include <IOKit/IOTypes.h>
 #include <IOKit/IOKitLib.h>
+
+__BEGIN_DECLS
 
 // Todo: verify kSMCKeyNotFound
 enum {
@@ -90,5 +92,7 @@ typedef struct {
     uint32_t            data32;
     uint8_t             bytes[32];
 }  SMCParamStruct;
+
+__END_DECLS
 
 #endif /* SMCParamStruct_h */
