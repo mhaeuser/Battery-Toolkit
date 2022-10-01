@@ -327,7 +327,7 @@
 				CED8DD3628C364D60082C02A /* NSXPCConnectionAuditToken */,
 				CEECE31928BB648F00821A3B /* BatteryToolkitService */,
 				CE6B75F728BC18DD008DF170 /* Common */,
-				CE6C06B828A84C2400D76CC8 /* Preprocessor */,
+				CE6C06B828A84C2400D76CC8 /* BTPreprocessor */,
 				CEB4671C2843C80D00D7CB01 /* SMCPrivate */,
 				CE6C06A328A84A9200D76CC8 /* IOPMPrivate */,
 				CE555D89285D2A0B0031A6F9 /* Libraries */,
@@ -397,14 +397,14 @@
 			path = IOPMPrivate;
 			sourceTree = "<group>";
 		};
-		CE6C06B828A84C2400D76CC8 /* Preprocessor */ = {
+		CE6C06B828A84C2400D76CC8 /* BTPreprocessor */ = {
 			isa = PBXGroup;
 			children = (
 				CE2B96C328A81CB900FE3DDB /* module.modulemap */,
 				CE2B96C228A81C5100FE3DDB /* BTPreprocessor.h */,
 				CEE387BD28A836AA00C2007C /* BTPreprocessor.m */,
 			);
-			path = Preprocessor;
+			path = BTPreprocessor;
 			sourceTree = "<group>";
 		};
 		CE9BD24728E8908000B6C61D /* BatteryToolkitAutostart */ = {
