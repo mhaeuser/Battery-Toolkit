@@ -12,25 +12,17 @@ internal struct BTLoginItem {
     internal static func enable() -> Bool {
         if #available(macOS 13.0, *) {
             return enableService()
+        } else {
+            return enableLegacy()
         }
-
-        return false
     }
 
-    internal static func isEnabled() -> Bool {
+    internal static func disable() -> Bool {
         if #available(macOS 13.0, *) {
-            return isEnabledService()
+            return disableService()
+        } else {
+            return disableLegacy()
         }
-
-        return false
-    }
-
-    internal static func unregister() -> Bool {
-        if #available(macOS 13.0, *) {
-            return unregisterService()
-        }
-
-        return false
     }
 
     // FIXME: Share with daemon?
@@ -57,12 +49,9 @@ internal struct BTLoginItem {
     }
 
     @available(macOS 13.0, *)
-    private static func isEnabledService() -> Bool {
-        return registered(status: SMAppService.mainApp.status)
-    }
+    private static func disableService() -> Bool {
+        _ = disableLegacy()
 
-    @available(macOS 13.0, *)
-    private static func unregisterService() -> Bool {
         guard registered(status: SMAppService.mainApp.status) else {
             return true
         }
@@ -73,5 +62,20 @@ internal struct BTLoginItem {
         } catch {
             return false
         }
+    }
+
+    @available(macOS, deprecated: 13.0)
+    private static func enableLegacy() -> Bool {
+        return SMLoginItemSetEnabled(
+            "me.mhaeuser.BatteryToolkitAutostart" as CFString,
+            true
+            )
+    }
+
+    private static func disableLegacy() -> Bool {
+        return SMLoginItemSetEnabled(
+            "me.mhaeuser.BatteryToolkitAutostart" as CFString,
+            false
+            )
     }
 }

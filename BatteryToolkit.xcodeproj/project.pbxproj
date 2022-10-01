@@ -62,6 +62,8 @@
 		CE7F623528B95A8200EF58F9 /* BTPreprocessor.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE387BD28A836AA00C2007C /* BTPreprocessor.m */; };
 		CE85D05F28D7B7E6005D1E0C /* BTDaemonManagementService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE85D05E28D7B7E6005D1E0C /* BTDaemonManagementService.swift */; };
 		CE8ED7F428C144EE00398581 /* BTDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8ED7F328C144EE00398581 /* BTDispatcher.swift */; };
+		CE9BD24928E8908000B6C61D /* BTAutostart.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9BD24828E8908000B6C61D /* BTAutostart.swift */; };
+		CE9BD25728E8977F00B6C61D /* Battery Toolkit Autostart.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE9BD24628E8908000B6C61D /* Battery Toolkit Autostart.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		CEA3909328DFAE1C0023261A /* BTXPCValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE50557028D65B48000E4387 /* BTXPCValidation.swift */; };
 		CEA80FCB285A27CF0064ADEA /* SMCKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE37DD0D283F86F90060C43F /* SMCKit.swift */; };
 		CEA80FCC285A27D20064ADEA /* SMCPowerKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE37DD0F284164160060C43F /* SMCPowerKit.swift */; };
@@ -95,6 +97,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = CE3974402859E518002D0EC9;
 			remoteInfo = batterytoolkitd;
+		};
+		CE9BD25828E899E600B6C61D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE52866B28298B6D00860C7B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CE9BD24528E8908000B6C61D;
+			remoteInfo = "Battery Toolkit Autostart";
 		};
 		CEECE32128BB648F00821A3B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -137,6 +146,16 @@
 			name = "Embed XPC Services";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CE9BD25628E8975C00B6C61D /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Contents/Library/LoginItems;
+			dstSubfolderSpec = 1;
+			files = (
+				CE9BD25728E8977F00B6C61D /* Battery Toolkit Autostart.app in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -165,7 +184,7 @@
 		CE397477285A25A1002D0EC9 /* BTDaemonXPCClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTDaemonXPCClient.swift; sourceTree = "<group>"; };
 		CE3A8F6C284D056D00A9E373 /* BTSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTSettings.swift; sourceTree = "<group>"; };
 		CE3C1D8028C7F622008A0F7D /* launchd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = launchd.plist; sourceTree = "<group>"; };
-		CE3C1D8128C7F950008A0F7D /* uninstall_legacy.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = uninstall_legacy.sh; sourceTree = "<group>"; };
+		CE3C1D8128C7F950008A0F7D /* uninstall.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = uninstall.sh; sourceTree = "<group>"; };
 		CE3C1DA228C9329F008A0F7D /* BTDaemonManagement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTDaemonManagement.swift; sourceTree = "<group>"; };
 		CE3C1DA428CA2FF5008A0F7D /* BTAuthorizationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTAuthorizationService.swift; sourceTree = "<group>"; };
 		CE3C1DA628CA33FD008A0F7D /* BTLegacyHelperInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTLegacyHelperInfo.swift; sourceTree = "<group>"; };
@@ -191,6 +210,9 @@
 		CE6C06A428A84AAB00D76CC8 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		CE85D05E28D7B7E6005D1E0C /* BTDaemonManagementService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTDaemonManagementService.swift; sourceTree = "<group>"; };
 		CE8ED7F328C144EE00398581 /* BTDispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTDispatcher.swift; sourceTree = "<group>"; };
+		CE9BD24628E8908000B6C61D /* Battery Toolkit Autostart.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Battery Toolkit Autostart.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE9BD24828E8908000B6C61D /* BTAutostart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTAutostart.swift; sourceTree = "<group>"; };
+		CE9BD25128E8908100B6C61D /* BatteryToolkitAutostart.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BatteryToolkitAutostart.entitlements; sourceTree = "<group>"; };
 		CEA80FD3285A51600064ADEA /* NSXPCConnectionAuditToken.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSXPCConnectionAuditToken.h; sourceTree = "<group>"; };
 		CEA80FD5285A565C0064ADEA /* BTDaemonComm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTDaemonComm.swift; sourceTree = "<group>"; };
 		CEA80FD7285A56B50064ADEA /* BTDaemon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTDaemon.swift; sourceTree = "<group>"; };
@@ -301,7 +323,7 @@
 			isa = PBXGroup;
 			children = (
 				CEF3496D28DCD34900A1CECD /* SecCodeEx */,
-				CE3C1D8128C7F950008A0F7D /* uninstall_legacy.sh */,
+				CE3C1D8128C7F950008A0F7D /* uninstall.sh */,
 				CED8DD3628C364D60082C02A /* NSXPCConnectionAuditToken */,
 				CEECE31928BB648F00821A3B /* BatteryToolkitXPC */,
 				CE6B75F728BC18DD008DF170 /* Common */,
@@ -311,11 +333,13 @@
 				CE555D89285D2A0B0031A6F9 /* Libraries */,
 				CE52867528298B6D00860C7B /* BatteryToolkit */,
 				CE3974422859E518002D0EC9 /* me.mhaeuser.batterytoolkitd */,
+				CE9BD24728E8908000B6C61D /* BatteryToolkitAutostart */,
 				CE3A8F6E284D26BA00A9E373 /* Frameworks */,
 				CE39744B2859E6D3002D0EC9 /* me.mhaeuser.batterytoolkitd */,
 				CE39744C285A1D35002D0EC9 /* Battery Toolkit.app */,
 				CEECE31828BB648F00821A3B /* Battery Toolkit Service.xpc */,
 				CEE1654F28E4B65B00DC2443 /* libSecCodeEx.a */,
+				CE9BD24628E8908000B6C61D /* Battery Toolkit Autostart.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -381,6 +405,15 @@
 				CEE387BD28A836AA00C2007C /* BTPreprocessor.m */,
 			);
 			path = Preprocessor;
+			sourceTree = "<group>";
+		};
+		CE9BD24728E8908000B6C61D /* BatteryToolkitAutostart */ = {
+			isa = PBXGroup;
+			children = (
+				CE9BD24828E8908000B6C61D /* BTAutostart.swift */,
+				CE9BD25128E8908100B6C61D /* BatteryToolkitAutostart.entitlements */,
+			);
+			path = BatteryToolkitAutostart;
 			sourceTree = "<group>";
 		};
 		CEA3908728DF94ED0023261A /* Settings */ = {
@@ -506,16 +539,33 @@
 				CE3D5ADC285DE59100705842 /* Embed XPC Services */,
 				CE3C1D8428C7FB09008A0F7D /* CopyFiles */,
 				CE3C1DA028C92A3A008A0F7D /* CopyFiles */,
+				CE9BD25628E8975C00B6C61D /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				CE9BD25928E899E600B6C61D /* PBXTargetDependency */,
 				CE397451285A2100002D0EC9 /* PBXTargetDependency */,
 				CEECE32228BB648F00821A3B /* PBXTargetDependency */,
 			);
 			name = "Battery Toolkit";
 			productName = BatteryToolkit;
 			productReference = CE39744C285A1D35002D0EC9 /* Battery Toolkit.app */;
+			productType = "com.apple.product-type.application";
+		};
+		CE9BD24528E8908000B6C61D /* Battery Toolkit Autostart */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CE9BD25228E8908100B6C61D /* Build configuration list for PBXNativeTarget "Battery Toolkit Autostart" */;
+			buildPhases = (
+				CE9BD24228E8908000B6C61D /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Battery Toolkit Autostart";
+			productName = BatteryToolkitAutostart;
+			productReference = CE9BD24628E8908000B6C61D /* Battery Toolkit Autostart.app */;
 			productType = "com.apple.product-type.application";
 		};
 		CEE1654E28E4B65B00DC2443 /* SecCodeEx */ = {
@@ -557,7 +607,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1340;
+				LastSwiftUpdateCheck = 1410;
 				LastUpgradeCheck = 1410;
 				TargetAttributes = {
 					CE3974402859E518002D0EC9 = {
@@ -567,6 +617,9 @@
 					CE52867228298B6D00860C7B = {
 						CreatedOnToolsVersion = 13.3.1;
 						LastSwiftMigration = 1340;
+					};
+					CE9BD24528E8908000B6C61D = {
+						CreatedOnToolsVersion = 14.1;
 					};
 					CEE1654E28E4B65B00DC2443 = {
 						CreatedOnToolsVersion = 14.1;
@@ -595,6 +648,7 @@
 				CE3974402859E518002D0EC9 /* me.mhaeuser.batterytoolkitd */,
 				CEECE31728BB648F00821A3B /* Battery Toolkit Service */,
 				CEE1654E28E4B65B00DC2443 /* SecCodeEx */,
+				CE9BD24528E8908000B6C61D /* Battery Toolkit Autostart */,
 			);
 		};
 /* End PBXProject section */
@@ -679,6 +733,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CE9BD24228E8908000B6C61D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE9BD24928E8908000B6C61D /* BTAutostart.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CEE1654C28E4B65B00DC2443 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -709,6 +771,11 @@
 			isa = PBXTargetDependency;
 			target = CE3974402859E518002D0EC9 /* me.mhaeuser.batterytoolkitd */;
 			targetProxy = CE397450285A2100002D0EC9 /* PBXContainerItemProxy */;
+		};
+		CE9BD25928E899E600B6C61D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CE9BD24528E8908000B6C61D /* Battery Toolkit Autostart */;
+			targetProxy = CE9BD25828E899E600B6C61D /* PBXContainerItemProxy */;
 		};
 		CEECE32228BB648F00821A3B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -786,6 +853,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				BT_APP_NAME = me.mhaeuser.BatteryToolkit;
+				BT_AUTOSTART_NAME = me.mhaeuser.BatteryToolkitAutostart;
 				BT_CODE_SIGN_CN = "Apple Development: mhaeuser@posteo.de (FK3MXHN3BX)";
 				BT_DAEMON_NAME = me.mhaeuser.batterytoolkitd;
 				BT_SERVICE_NAME = me.mhaeuser.BatteryToolkitXPC;
@@ -864,6 +932,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"\"BT_APP_NAME_=\\\"$(BT_APP_NAME)\\\"\"",
+					"\"BT_AUTOSTART_NAME_=\\\"$(BT_AUTOSTART_NAME)\\\"\"",
 					"\"BT_DAEMON_NAME_=\\\"$(BT_DAEMON_NAME)\\\"\"",
 					"\"BT_CODE_SIGN_CN_=\\\"$(BT_CODE_SIGN_CN)\\\"\"",
 					"\"BT_SERVICE_NAME_=\\\"$(BT_SERVICE_NAME)\\\"\"",
@@ -915,6 +984,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				BT_APP_NAME = me.mhaeuser.BatteryToolkit;
+				BT_AUTOSTART_NAME = me.mhaeuser.BatteryToolkitAutostart;
 				BT_CODE_SIGN_CN = "Apple Development: mhaeuser@posteo.de (FK3MXHN3BX)";
 				BT_DAEMON_NAME = me.mhaeuser.batterytoolkitd;
 				BT_SERVICE_NAME = me.mhaeuser.BatteryToolkitXPC;
@@ -991,6 +1061,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"\"BT_APP_NAME_=\\\"$(BT_APP_NAME)\\\"\"",
+					"\"BT_AUTOSTART_NAME_=\\\"$(BT_AUTOSTART_NAME)\\\"\"",
 					"\"BT_DAEMON_NAME_=\\\"$(BT_DAEMON_NAME)\\\"\"",
 					"\"BT_CODE_SIGN_CN_=\\\"$(BT_CODE_SIGN_CN)\\\"\"",
 					"\"BT_SERVICE_NAME_=\\\"$(BT_SERVICE_NAME)\\\"\"",
@@ -1066,10 +1137,37 @@
 			};
 			name = Release;
 		};
+		CE9BD25328E8908100B6C61D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = BatteryToolkitAutostart/BatteryToolkitAutostart.entitlements;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Battery Toolkit Autostart";
+				INFOPLIST_KEY_LSBackgroundOnly = YES;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				PRODUCT_BUNDLE_IDENTIFIER = me.mhaeuser.BatteryToolkitAutostart;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		CE9BD25428E8908100B6C61D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = BatteryToolkitAutostart/BatteryToolkitAutostart.entitlements;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Battery Toolkit Autostart";
+				INFOPLIST_KEY_LSBackgroundOnly = YES;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				PRODUCT_BUNDLE_IDENTIFIER = me.mhaeuser.BatteryToolkitAutostart;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 		CEE1655028E4B65C00DC2443 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -1078,6 +1176,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
@@ -1132,6 +1231,15 @@
 			buildConfigurations = (
 				CE52868328298B6E00860C7B /* Debug */,
 				CE52868428298B6E00860C7B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CE9BD25228E8908100B6C61D /* Build configuration list for PBXNativeTarget "Battery Toolkit Autostart" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CE9BD25328E8908100B6C61D /* Debug */,
+				CE9BD25428E8908100B6C61D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

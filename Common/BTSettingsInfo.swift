@@ -10,6 +10,8 @@ public struct BTSettingsInfo {
         public static let minCharge: UInt8   = 70
         public static let maxCharge: UInt8   = 80
         public static let adapterSleep: Bool = false
+
+        public static let disableAutostart: Bool = false
     }
 
     public struct Bounds {
@@ -21,6 +23,8 @@ public struct BTSettingsInfo {
         public static let minCharge    = "MinCharge"
         public static let maxCharge    = "MaxCharge"
         public static let adapterSleep = "AdapterSleep"
+
+        public static let disableAutostart = "DisableAutostart"
     }
 
     public static func chargeLimitsValid(minCharge: Int, maxCharge: Int) -> Bool {
