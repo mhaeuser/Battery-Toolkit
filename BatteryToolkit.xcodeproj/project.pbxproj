@@ -84,7 +84,7 @@
 		CEE1655728E58DBF00DC2443 /* libSecCodeEx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CEE1654F28E4B65B00DC2443 /* libSecCodeEx.a */; };
 		CEECE31128BAB12000821A3B /* BTPowerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEECE31028BAB12000821A3B /* BTPowerState.swift */; };
 		CEECE32328BB648F00821A3B /* Battery Toolkit Service.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = CEECE31828BB648F00821A3B /* Battery Toolkit Service.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		CEECE32828BB652400821A3B /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEECE32728BB652400821A3B /* main.swift */; };
+		CEECE32828BB652400821A3B /* BTService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEECE32728BB652400821A3B /* BTService.swift */; };
 		CEECE33028BB742500821A3B /* BTServiceCommProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEECE32F28BB742500821A3B /* BTServiceCommProtocol.swift */; };
 		CEECE33128BB742500821A3B /* BTServiceCommProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEECE32F28BB742500821A3B /* BTServiceCommProtocol.swift */; };
 		CEECE33328BB745B00821A3B /* BTServiceComm.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEECE33228BB745B00821A3B /* BTServiceComm.swift */; };
@@ -233,7 +233,7 @@
 		CEECE31028BAB12000821A3B /* BTPowerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTPowerState.swift; sourceTree = "<group>"; };
 		CEECE31828BB648F00821A3B /* Battery Toolkit Service.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = "Battery Toolkit Service.xpc"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEECE32028BB648F00821A3B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CEECE32728BB652400821A3B /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		CEECE32728BB652400821A3B /* BTService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTService.swift; sourceTree = "<group>"; };
 		CEECE32F28BB742500821A3B /* BTServiceCommProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTServiceCommProtocol.swift; sourceTree = "<group>"; };
 		CEECE33228BB745B00821A3B /* BTServiceComm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTServiceComm.swift; sourceTree = "<group>"; };
 		CEF3496E28DCD36100A1CECD /* SecCodeEx.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = SecCodeEx.c; sourceTree = "<group>"; };
@@ -481,7 +481,7 @@
 			isa = PBXGroup;
 			children = (
 				CEECE32028BB648F00821A3B /* Info.plist */,
-				CEECE32728BB652400821A3B /* main.swift */,
+				CEECE32728BB652400821A3B /* BTService.swift */,
 				CEECE32F28BB742500821A3B /* BTServiceCommProtocol.swift */,
 				CEECE33228BB745B00821A3B /* BTServiceComm.swift */,
 				CE6B760828BC1D15008DF170 /* BTServiceXPCServer.swift */,
@@ -756,7 +756,7 @@
 				CE50557328D65C6D000E4387 /* BTPreprocessor.m in Sources */,
 				CEECE33128BB742500821A3B /* BTServiceCommProtocol.swift in Sources */,
 				CE6B760928BC1D15008DF170 /* BTServiceXPCServer.swift in Sources */,
-				CEECE32828BB652400821A3B /* main.swift in Sources */,
+				CEECE32828BB652400821A3B /* BTService.swift in Sources */,
 				CE50557228D65B48000E4387 /* BTXPCValidation.swift in Sources */,
 				CE3179EA28DB540600E9C121 /* BTAuthorization.swift in Sources */,
 				CEECE33328BB745B00821A3B /* BTServiceComm.swift in Sources */,

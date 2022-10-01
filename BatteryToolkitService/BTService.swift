@@ -5,4 +5,9 @@
 
 import Foundation
 
-BTServiceXPCServer.start()
+@main
+private struct BTService {
+    private static func main() {
+        BTServiceXPCServer.start()
+    }
+}
