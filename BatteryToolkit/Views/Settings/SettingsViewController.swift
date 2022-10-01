@@ -4,9 +4,16 @@
 */
 
 import Cocoa
+import os.log
 
 final class SettingsViewController: NSViewController {
     private var currentSettings: [String: NSObject]? = nil
+
+    @IBOutlet var tabView: NSTabView!
+    @IBOutlet var generalTab: NSTabViewItem!
+    @IBOutlet var backgroundActivityTab: NSTabViewItem!
+
+    @IBOutlet var autostartButton: NSButton!
 
     @IBOutlet var minChargeTextField: NSTextField!
     @IBOutlet var minChargeSlider: NSSlider!
@@ -98,8 +105,14 @@ final class SettingsViewController: NSViewController {
             NSControl.StateValue.off :
             NSControl.StateValue.on
     }
+
+    private func initGeneralState() {
+        self.autostartButton.state = BTLoginItem.isEnabled() ?
+            NSControl.StateValue.on :
+            NSControl.StateValue.off
+    }
     
-    private func initSettingsState() {
+    private func initBackgroundActivityState() {
         BatteryToolkit.getSettings { (error, settings) in
             DispatchQueue.main.async {
                 self.currentSettings = settings
@@ -160,8 +173,18 @@ final class SettingsViewController: NSViewController {
 
     override func viewWillAppear() {
         super.viewWillAppear()
-        initSettingsState()
+        initGeneralState()
+        initBackgroundActivityState()
         self.view.window?.center()
         NSApp.activate(ignoringOtherApps: true)
+    }
+
+    internal func selectGeneralTab() {
+        self.tabView.selectTabViewItem(self.generalTab)
+    }
+
+    internal func selectBackgroundActivityTab() {
+        self.tabView.selectTabViewItem(self.backgroundActivityTab)
+        self.updateViewConstraints()
     }
 }

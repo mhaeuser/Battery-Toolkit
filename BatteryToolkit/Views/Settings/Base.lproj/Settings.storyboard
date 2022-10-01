@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="21503.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="Svp-Rd-cF3">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="21506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="Svp-Rd-cF3">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21503.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21506"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -10,21 +12,45 @@
         <scene sceneID="SPA-xe-0ME">
             <objects>
                 <windowController storyboardIdentifier="SettingsWindowController" showSeguePresentationStyle="single" id="Svp-Rd-cF3" userLabel="SettingsWindowController" customClass="SettingsWindowController" customModule="Battery_Toolkit" customModuleProvider="target" sceneMemberID="viewController">
-                    <window key="window" title="Battery Toolkit Settings" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="utilityWindow" tabbingMode="disallowed" id="zbj-Ah-uH1">
+                    <window key="window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="utilityWindow" tabbingMode="disallowed" toolbarStyle="preference" id="zbj-Ah-uH1">
                         <windowStyleMask key="styleMask" titled="YES"/>
                         <windowCollectionBehavior key="collectionBehavior" fullScreenNone="YES" fullScreenDisallowsTiling="YES"/>
-                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-                        <rect key="contentRect" x="196" y="240" width="480" height="270"/>
+                        <rect key="contentRect" x="2080" y="983" width="480" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1415"/>
                         <view key="contentView" id="zIT-84-1ZB">
                             <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </view>
+                        <toolbar key="toolbar" implicitIdentifier="139CDA02-1562-4BA9-8D5C-8C3CA70163F7" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconAndLabel" sizeMode="regular" id="w28-jh-n04">
+                            <allowedToolbarItems>
+                                <toolbarItem implicitItemIdentifier="77906F38-36A2-4C77-8E44-8C229DD720C5" explicitItemIdentifier="general" label="General" paletteLabel="General" tag="-1" selectable="YES" id="iVB-Bu-n4M">
+                                    <imageReference key="image" image="person.crop.circle" catalog="system" symbolScale="default"/>
+                                    <size key="minSize" width="32" height="25"/>
+                                    <size key="maxSize" width="32" height="25"/>
+                                    <connections>
+                                        <action selector="generalAction:" target="Svp-Rd-cF3" id="0NC-hc-TZn"/>
+                                    </connections>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="F161A659-3DEF-459F-B2F6-302E483C07F5" explicitItemIdentifier="power" label="Power" paletteLabel="Power" tag="-1" selectable="YES" id="ZWd-cD-Dlp">
+                                    <imageReference key="image" image="bolt.circle" catalog="system" symbolScale="default"/>
+                                    <size key="minSize" width="37" height="25"/>
+                                    <size key="maxSize" width="37" height="25"/>
+                                    <connections>
+                                        <action selector="backgroundActivityAction:" target="Svp-Rd-cF3" id="nfZ-sf-9mx"/>
+                                    </connections>
+                                </toolbarItem>
+                            </allowedToolbarItems>
+                            <defaultToolbarItems>
+                                <toolbarItem reference="iVB-Bu-n4M"/>
+                                <toolbarItem reference="ZWd-cD-Dlp"/>
+                            </defaultToolbarItems>
+                        </toolbar>
                         <connections>
                             <outlet property="delegate" destination="Svp-Rd-cF3" id="Oun-qy-7b5"/>
                         </connections>
                     </window>
                     <connections>
+                        <outlet property="toolbar" destination="w28-jh-n04" id="8tL-Q2-sfG"/>
                         <segue destination="qK6-EM-YZH" kind="relationship" relationship="window.shadowedContentViewController" id="ZpT-TF-bjb"/>
                     </connections>
                 </windowController>
@@ -36,131 +62,235 @@
         <scene sceneID="vWP-bX-OzO">
             <objects>
                 <viewController storyboardIdentifier="SettingsViewController" showSeguePresentationStyle="single" id="qK6-EM-YZH" userLabel="SettingsViewController" customClass="SettingsViewController" customModule="Battery_Toolkit" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="IvC-q3-fvl">
-                        <rect key="frame" x="0.0" y="0.0" width="475" height="208"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                    <view key="view" translatesAutoresizingMaskIntoConstraints="NO" id="IvC-q3-fvl" userLabel="General View">
+                        <rect key="frame" x="0.0" y="0.0" width="515" height="218"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lUQ-Vd-Jgv" userLabel="Min Text">
-                                <rect key="frame" x="18" y="172" width="197" height="16"/>
+                            <tabView allowsTruncatedLabels="NO" type="noTabsNoBorder" translatesAutoresizingMaskIntoConstraints="NO" id="NXG-fh-uCo">
+                                <rect key="frame" x="0.0" y="69" width="515" height="149"/>
+                                <font key="font" metaFont="system"/>
+                                <tabViewItems>
+                                    <tabViewItem label="General" identifier="" id="r6x-U7-0zu" userLabel="General">
+                                        <view key="view" id="j3z-8d-YbE">
+                                            <rect key="frame" x="0.0" y="0.0" width="515" height="36"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QDm-L7-ymC">
+                                                    <rect key="frame" x="18" y="-1" width="408" height="18"/>
+                                                    <buttonCell key="cell" type="check" title="Open Battery Toolkit automatically when you log in to your Mac" bezelStyle="regularSquare" imagePosition="left" inset="2" id="sXH-cF-vcD">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                    </buttonCell>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="QDm-L7-ymC" firstAttribute="leading" secondItem="j3z-8d-YbE" secondAttribute="leading" constant="20" symbolic="YES" id="4wM-89-27y"/>
+                                                <constraint firstAttribute="trailing" secondItem="QDm-L7-ymC" secondAttribute="trailing" constant="20" symbolic="YES" id="6qo-5I-nct"/>
+                                                <constraint firstAttribute="bottom" secondItem="QDm-L7-ymC" secondAttribute="bottom" id="bcW-9Y-OhE"/>
+                                                <constraint firstItem="QDm-L7-ymC" firstAttribute="top" secondItem="j3z-8d-YbE" secondAttribute="top" constant="20" symbolic="YES" id="kj7-7c-URO"/>
+                                                <constraint firstAttribute="trailing" secondItem="QDm-L7-ymC" secondAttribute="trailing" constant="20" symbolic="YES" id="ky1-Y5-gfL"/>
+                                            </constraints>
+                                        </view>
+                                    </tabViewItem>
+                                    <tabViewItem label="Power" identifier="" id="IMi-pw-cwy" userLabel="Power">
+                                        <view key="view" id="Blc-dd-9Qv">
+                                            <rect key="frame" x="0.0" y="0.0" width="515" height="149"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nq7-TF-yL4" userLabel="Max Stepper">
+                                                    <rect key="frame" x="462" y="29" width="19" height="28"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="20" id="CgW-fv-xEB"/>
+                                                        <constraint firstAttribute="width" constant="13" id="LgR-Wb-JpC"/>
+                                                    </constraints>
+                                                    <stepperCell key="cell" continuous="YES" alignment="left" maxValue="100" id="4tl-Ng-hyq"/>
+                                                    <connections>
+                                                        <binding destination="qK6-EM-YZH" name="value" keyPath="self.maxChargeNum" id="cm5-lb-m9T"/>
+                                                    </connections>
+                                                </stepper>
+                                                <textField verticalHuggingPriority="750" preferredMaxLayoutWidth="30" translatesAutoresizingMaskIntoConstraints="NO" id="UVz-So-HqI" userLabel="Min Charge ">
+                                                    <rect key="frame" x="430" y="85" width="35" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="Kuf-Hs-zxF"/>
+                                                        <constraint firstAttribute="width" constant="35" id="MRL-G0-91Y"/>
+                                                    </constraints>
+                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" title="70" drawsBackground="YES" id="SrC-Z2-byQ">
+                                                        <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="Ufs-Cu-5R1"/>
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                    <connections>
+                                                        <binding destination="qK6-EM-YZH" name="value" keyPath="self.minChargeNum" id="nnI-Ek-gCl"/>
+                                                    </connections>
+                                                </textField>
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zNI-F1-3zH" userLabel="Max Text">
+                                                    <rect key="frame" x="18" y="61" width="199" height="16"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="16" id="EuL-L8-25Q"/>
+                                                        <constraint firstAttribute="height" constant="16" id="gnV-QU-pzo"/>
+                                                    </constraints>
+                                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Turn battery charging off above:" id="Wuy-t5-ID5">
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TZ0-RS-ZgS" userLabel="Adapter Sleep">
+                                                    <rect key="frame" x="18" y="-1" width="477" height="18"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="16" id="j6C-qS-fZ0"/>
+                                                    </constraints>
+                                                    <buttonCell key="cell" type="check" title="Prevent your Mac from sleeping when the power adapter is disabled" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="DsZ-rF-Ott">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                    </buttonCell>
+                                                </button>
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" preferredMaxLayoutWidth="16" translatesAutoresizingMaskIntoConstraints="NO" id="kwg-mE-JId" userLabel="Max %">
+                                                    <rect key="frame" x="481" y="35" width="16" height="16"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="12" id="PgQ-Jv-j8D"/>
+                                                        <constraint firstAttribute="height" constant="16" id="y7M-IN-ZLF"/>
+                                                    </constraints>
+                                                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="%" id="0sD-aV-92m">
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                                <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BRS-K5-tS0" userLabel="Min Stepper">
+                                                    <rect key="frame" x="462" y="81" width="19" height="28"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="20" id="1ax-0q-HUH"/>
+                                                        <constraint firstAttribute="width" constant="13" id="G5f-Ks-aX5"/>
+                                                    </constraints>
+                                                    <stepperCell key="cell" continuous="YES" alignment="left" maxValue="100" id="MX2-oM-Nxs"/>
+                                                    <connections>
+                                                        <binding destination="qK6-EM-YZH" name="value" keyPath="self.minChargeNum" id="3y9-Yj-f6y"/>
+                                                    </connections>
+                                                </stepper>
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" preferredMaxLayoutWidth="16" translatesAutoresizingMaskIntoConstraints="NO" id="cpE-XY-Cm8" userLabel="Min %">
+                                                    <rect key="frame" x="481" y="87" width="16" height="16"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="16" id="YOG-qc-MNm"/>
+                                                        <constraint firstAttribute="width" constant="12" id="fxa-jc-NFy"/>
+                                                    </constraints>
+                                                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="%" id="WC9-iw-C9D">
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                                <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9gz-yn-SNi" userLabel="Max Slider">
+                                                    <rect key="frame" x="18" y="27" width="406" height="28"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="20" id="1lj-SG-3et"/>
+                                                    </constraints>
+                                                    <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="100" doubleValue="80" tickMarkPosition="above" sliderType="linear" id="q5H-ZA-2Hz"/>
+                                                    <connections>
+                                                        <binding destination="qK6-EM-YZH" name="value" keyPath="self.maxChargeNum" id="D0u-LQ-jVe"/>
+                                                    </connections>
+                                                </slider>
+                                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jVr-RT-V0O" userLabel="Max Charge">
+                                                    <rect key="frame" x="430" y="33" width="35" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="35" id="hfS-3E-kvP"/>
+                                                        <constraint firstAttribute="height" constant="21" id="inl-id-yxn"/>
+                                                    </constraints>
+                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" title="80" drawsBackground="YES" id="sW6-EL-lV5">
+                                                        <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="fXe-NS-oN3"/>
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                    <connections>
+                                                        <binding destination="qK6-EM-YZH" name="value" keyPath="self.maxChargeNum" id="KDY-di-0UJ"/>
+                                                    </connections>
+                                                </textField>
+                                                <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GpU-47-1gg" userLabel="Min Slider">
+                                                    <rect key="frame" x="18" y="79" width="406" height="28"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="20" id="8u8-ge-GfV"/>
+                                                    </constraints>
+                                                    <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="100" doubleValue="70" tickMarkPosition="above" sliderType="linear" id="zVa-Aa-vAN"/>
+                                                    <connections>
+                                                        <binding destination="qK6-EM-YZH" name="value" keyPath="self.minChargeNum" id="zJb-gs-jH2"/>
+                                                    </connections>
+                                                </slider>
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xbB-Gg-5TD" userLabel="Min Text">
+                                                    <rect key="frame" x="18" y="113" width="197" height="16"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="16" id="CJk-Zk-wNS"/>
+                                                    </constraints>
+                                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Turn battery charging on below:" id="YrV-xe-P4m">
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                                <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="Z0P-wM-ijd">
+                                                    <rect key="frame" x="20" y="22" width="475" height="5"/>
+                                                </box>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="cpE-XY-Cm8" firstAttribute="centerY" secondItem="GpU-47-1gg" secondAttribute="centerY" id="1dl-YS-6Zu"/>
+                                                <constraint firstItem="nq7-TF-yL4" firstAttribute="leading" secondItem="jVr-RT-V0O" secondAttribute="trailing" id="48j-SF-AGL"/>
+                                                <constraint firstItem="cpE-XY-Cm8" firstAttribute="leading" secondItem="BRS-K5-tS0" secondAttribute="trailing" constant="5" id="5BV-JP-wks"/>
+                                                <constraint firstItem="jVr-RT-V0O" firstAttribute="centerY" secondItem="9gz-yn-SNi" secondAttribute="centerY" id="7Rl-Gj-COU"/>
+                                                <constraint firstItem="nq7-TF-yL4" firstAttribute="centerY" secondItem="9gz-yn-SNi" secondAttribute="centerY" id="8ev-xd-I2H"/>
+                                                <constraint firstItem="Z0P-wM-ijd" firstAttribute="top" secondItem="nq7-TF-yL4" secondAttribute="bottom" constant="8" symbolic="YES" id="AOB-F8-qtX"/>
+                                                <constraint firstItem="BRS-K5-tS0" firstAttribute="centerY" secondItem="GpU-47-1gg" secondAttribute="centerY" id="B0V-0o-CzJ"/>
+                                                <constraint firstItem="UVz-So-HqI" firstAttribute="leading" secondItem="GpU-47-1gg" secondAttribute="trailing" constant="8" symbolic="YES" id="GGc-ca-f1c"/>
+                                                <constraint firstItem="xbB-Gg-5TD" firstAttribute="top" secondItem="Blc-dd-9Qv" secondAttribute="top" constant="20" symbolic="YES" id="GUv-KX-cgU"/>
+                                                <constraint firstItem="GpU-47-1gg" firstAttribute="top" secondItem="xbB-Gg-5TD" secondAttribute="bottom" constant="8" symbolic="YES" id="HJY-El-CV7"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="zNI-F1-3zH" secondAttribute="trailing" constant="20" symbolic="YES" id="Hq4-Jc-hce"/>
+                                                <constraint firstItem="jVr-RT-V0O" firstAttribute="width" secondItem="UVz-So-HqI" secondAttribute="width" id="Jhg-b8-0QC"/>
+                                                <constraint firstItem="kwg-mE-JId" firstAttribute="centerY" secondItem="9gz-yn-SNi" secondAttribute="centerY" id="Jti-qG-eyX"/>
+                                                <constraint firstItem="9gz-yn-SNi" firstAttribute="leading" secondItem="Blc-dd-9Qv" secondAttribute="leading" constant="20" symbolic="YES" id="Q20-yh-euj"/>
+                                                <constraint firstAttribute="trailing" secondItem="cpE-XY-Cm8" secondAttribute="trailing" constant="20" symbolic="YES" id="Te3-hT-ilx"/>
+                                                <constraint firstAttribute="trailing" secondItem="TZ0-RS-ZgS" secondAttribute="trailing" constant="20" symbolic="YES" id="Tsu-lP-OoC"/>
+                                                <constraint firstItem="jVr-RT-V0O" firstAttribute="height" secondItem="UVz-So-HqI" secondAttribute="height" id="Vso-fw-dlC"/>
+                                                <constraint firstItem="BRS-K5-tS0" firstAttribute="leading" secondItem="UVz-So-HqI" secondAttribute="trailing" id="WE7-wV-Qsy"/>
+                                                <constraint firstItem="TZ0-RS-ZgS" firstAttribute="leading" secondItem="Blc-dd-9Qv" secondAttribute="leading" constant="20" symbolic="YES" id="WqS-nj-yTd"/>
+                                                <constraint firstItem="9gz-yn-SNi" firstAttribute="top" secondItem="zNI-F1-3zH" secondAttribute="bottom" constant="8" symbolic="YES" id="Zu6-zf-Np0"/>
+                                                <constraint firstItem="GpU-47-1gg" firstAttribute="leading" secondItem="Blc-dd-9Qv" secondAttribute="leading" constant="20" symbolic="YES" id="alr-Si-237"/>
+                                                <constraint firstItem="xbB-Gg-5TD" firstAttribute="leading" secondItem="Blc-dd-9Qv" secondAttribute="leading" constant="20" symbolic="YES" id="cZK-Uh-Yci"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="xbB-Gg-5TD" secondAttribute="trailing" constant="20" symbolic="YES" id="cjw-eH-9lo"/>
+                                                <constraint firstAttribute="trailing" secondItem="Z0P-wM-ijd" secondAttribute="trailing" constant="20" symbolic="YES" id="df3-4V-POG"/>
+                                                <constraint firstItem="Z0P-wM-ijd" firstAttribute="leading" secondItem="Blc-dd-9Qv" secondAttribute="leading" constant="20" symbolic="YES" id="g5d-KP-936"/>
+                                                <constraint firstAttribute="bottom" secondItem="TZ0-RS-ZgS" secondAttribute="bottom" id="hLg-kf-nHa"/>
+                                                <constraint firstItem="kwg-mE-JId" firstAttribute="leading" secondItem="nq7-TF-yL4" secondAttribute="trailing" constant="5" id="iJT-WO-ahy"/>
+                                                <constraint firstItem="TZ0-RS-ZgS" firstAttribute="top" secondItem="Z0P-wM-ijd" secondAttribute="bottom" constant="8" symbolic="YES" id="kSC-QH-Cj4"/>
+                                                <constraint firstAttribute="trailing" secondItem="cpE-XY-Cm8" secondAttribute="trailing" constant="20" symbolic="YES" id="oke-SA-KVP"/>
+                                                <constraint firstAttribute="trailing" secondItem="kwg-mE-JId" secondAttribute="trailing" constant="20" symbolic="YES" id="qzf-2H-ZeH"/>
+                                                <constraint firstItem="jVr-RT-V0O" firstAttribute="leading" secondItem="9gz-yn-SNi" secondAttribute="trailing" constant="8" symbolic="YES" id="sfe-IQ-HFX"/>
+                                                <constraint firstItem="zNI-F1-3zH" firstAttribute="top" secondItem="GpU-47-1gg" secondAttribute="bottom" constant="8" symbolic="YES" id="uJV-HU-RAa"/>
+                                                <constraint firstItem="UVz-So-HqI" firstAttribute="centerY" secondItem="GpU-47-1gg" secondAttribute="centerY" id="yDc-YR-IUQ"/>
+                                                <constraint firstItem="zNI-F1-3zH" firstAttribute="leading" secondItem="Blc-dd-9Qv" secondAttribute="leading" constant="20" symbolic="YES" id="zPY-hG-OHc"/>
+                                            </constraints>
+                                        </view>
+                                    </tabViewItem>
+                                </tabViewItems>
+                            </tabView>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tMo-Nt-MJE">
+                                <rect key="frame" x="426" y="13" width="76" height="32"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="16" id="XIO-8r-ETW"/>
+                                    <constraint firstAttribute="height" constant="20" id="po9-PZ-BZ9"/>
                                 </constraints>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="Turn battery charging on below:" id="jjv-BR-yX0">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SDG-Je-dsF" userLabel="Min Slider">
-                                <rect key="frame" x="18" y="138" width="366" height="28"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="20" id="1jg-gj-6c8"/>
-                                </constraints>
-                                <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="100" doubleValue="70" tickMarkPosition="above" sliderType="linear" id="whK-Bc-jaa"/>
-                                <connections>
-                                    <binding destination="qK6-EM-YZH" name="value" keyPath="self.minChargeNum" id="Jef-yw-V5y"/>
-                                </connections>
-                            </slider>
-                            <textField verticalHuggingPriority="750" preferredMaxLayoutWidth="30" translatesAutoresizingMaskIntoConstraints="NO" id="uFA-ER-wv7" userLabel="Min Charge ">
-                                <rect key="frame" x="390" y="144" width="35" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="rsv-Oj-MN1"/>
-                                    <constraint firstAttribute="width" constant="35" id="zsc-xi-mpZ"/>
-                                </constraints>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" title="70" drawsBackground="YES" id="elh-5S-Rel">
-                                    <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="2zy-eb-0h8"/>
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                                <connections>
-                                    <binding destination="qK6-EM-YZH" name="value" keyPath="self.minChargeNum" id="wXT-UC-8qc"/>
-                                </connections>
-                            </textField>
-                            <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qn3-Ik-Lg8" userLabel="Min Stepper">
-                                <rect key="frame" x="422" y="140" width="19" height="28"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="13" id="1xX-gF-vH8"/>
-                                    <constraint firstAttribute="height" constant="20" id="TI3-No-TpF"/>
-                                </constraints>
-                                <stepperCell key="cell" continuous="YES" alignment="left" maxValue="100" id="UPW-Ne-FAB"/>
-                                <connections>
-                                    <binding destination="qK6-EM-YZH" name="value" keyPath="self.minChargeNum" id="sos-Wr-Rcf"/>
-                                </connections>
-                            </stepper>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" preferredMaxLayoutWidth="16" translatesAutoresizingMaskIntoConstraints="NO" id="nKj-ho-7ff" userLabel="Min %">
-                                <rect key="frame" x="441" y="146" width="16" height="16"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="16" id="CW3-NJ-eSQ"/>
-                                    <constraint firstAttribute="width" constant="12" id="lAD-le-KIf"/>
-                                </constraints>
-                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="%" id="DhN-yL-7ok">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SgF-fv-FBx" userLabel="Max Text">
-                                <rect key="frame" x="18" y="120" width="199" height="16"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="16" id="AHM-Zp-xKh"/>
-                                    <constraint firstAttribute="height" constant="16" id="SsB-yd-gl3"/>
-                                </constraints>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="Turn battery charging off above:" id="Mfo-a1-Po4">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Xty-jA-1OE" userLabel="Max Slider">
-                                <rect key="frame" x="18" y="86" width="366" height="28"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="20" id="s3w-rC-Zwp"/>
-                                </constraints>
-                                <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="100" doubleValue="80" tickMarkPosition="above" sliderType="linear" id="JV9-YM-QNo"/>
-                                <connections>
-                                    <binding destination="qK6-EM-YZH" name="value" keyPath="self.maxChargeNum" id="JVo-aZ-HI8"/>
-                                </connections>
-                            </slider>
-                            <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hlb-sP-3Ne" userLabel="Max Stepper">
-                                <rect key="frame" x="422" y="88" width="19" height="28"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="13" id="7dl-Qo-heJ"/>
-                                    <constraint firstAttribute="height" constant="20" id="DRj-Fs-3lx"/>
-                                </constraints>
-                                <stepperCell key="cell" continuous="YES" alignment="left" maxValue="100" id="9Dp-2r-guY"/>
-                                <connections>
-                                    <binding destination="qK6-EM-YZH" name="value" keyPath="self.maxChargeNum" id="bGF-la-1FQ"/>
-                                </connections>
-                            </stepper>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" preferredMaxLayoutWidth="16" translatesAutoresizingMaskIntoConstraints="NO" id="hO8-t3-fVI" userLabel="Max %">
-                                <rect key="frame" x="441" y="94" width="16" height="16"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="12" id="8j8-0I-Bqf"/>
-                                    <constraint firstAttribute="height" constant="16" id="weZ-IJ-LzO"/>
-                                </constraints>
-                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="%" id="byb-kY-h4i">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tBh-b6-8D3" userLabel="Adapter Sleep">
-                                <rect key="frame" x="18" y="59" width="437" height="18"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="16" id="XLW-Ez-IX2"/>
-                                </constraints>
-                                <buttonCell key="cell" type="check" title="Prevent your Mac from sleeping when the power adapter is disabled" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="nEv-f9-szW">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" inset="2" id="cnq-Zd-qMS">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <color key="bezelColor" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                <connections>
+                                    <action selector="doneButtonAction:" target="qK6-EM-YZH" id="0PC-jQ-0PY"/>
+                                </connections>
                             </button>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Sz5-Nz-eFd">
-                                <rect key="frame" x="312" y="13" width="76" height="32"/>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1wm-Dj-FSo">
+                                <rect key="frame" x="352" y="13" width="76" height="32"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="20" id="Hza-Ub-Xrm"/>
+                                    <constraint firstAttribute="height" constant="20" id="dN6-cM-IvN"/>
                                 </constraints>
-                                <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" inset="2" id="iaY-rK-9AZ">
+                                <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" inset="2" id="dqT-oI-86h">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                     <string key="keyEquivalent" base64-UTF8="YES">
@@ -168,113 +298,45 @@ Gw
 </string>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="cancelButtonAction:" target="qK6-EM-YZH" id="F6p-jt-Y8b"/>
+                                    <action selector="cancelButtonAction:" target="qK6-EM-YZH" id="Pcw-Dd-b8G"/>
                                 </connections>
                             </button>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dZl-9v-IF1">
-                                <rect key="frame" x="386" y="13" width="76" height="32"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="20" id="BhX-ub-3xB"/>
-                                </constraints>
-                                <buttonCell key="cell" type="push" title="Done" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" inset="2" id="Vxl-hW-i75">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                    <string key="keyEquivalent" base64-UTF8="YES">
-DQ
-</string>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="doneButtonAction:" target="qK6-EM-YZH" id="Bkx-3c-Vju"/>
-                                </connections>
-                            </button>
-                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Bax-qM-FEc" userLabel="Max Charge">
-                                <rect key="frame" x="390" y="92" width="35" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="35" id="L5G-Jm-a22"/>
-                                    <constraint firstAttribute="height" constant="21" id="LcJ-uM-8qd"/>
-                                </constraints>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" title="80" drawsBackground="YES" id="GKW-RL-L6O">
-                                    <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="mBa-Eo-6ty"/>
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                                <connections>
-                                    <binding destination="qK6-EM-YZH" name="value" keyPath="self.maxChargeNum" id="qIv-C4-Bzw"/>
-                                </connections>
-                            </textField>
+                            <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="ZwQ-iO-Z8h">
+                                <rect key="frame" x="0.0" y="58" width="515" height="5"/>
+                            </box>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="Sz5-Nz-eFd" secondAttribute="bottom" constant="20" symbolic="YES" id="0iI-2H-kBC"/>
-                            <constraint firstItem="lUQ-Vd-Jgv" firstAttribute="top" secondItem="IvC-q3-fvl" secondAttribute="top" constant="20" id="2yN-AV-Hgg"/>
-                            <constraint firstItem="lUQ-Vd-Jgv" firstAttribute="leading" secondItem="IvC-q3-fvl" secondAttribute="leading" constant="20" symbolic="YES" id="6u5-Wk-Kzx"/>
-                            <constraint firstItem="tBh-b6-8D3" firstAttribute="leading" secondItem="IvC-q3-fvl" secondAttribute="leading" constant="20" symbolic="YES" id="7fZ-ba-ihP"/>
-                            <constraint firstItem="tBh-b6-8D3" firstAttribute="top" secondItem="Xty-jA-1OE" secondAttribute="bottom" constant="16" id="BVK-l2-W1U"/>
-                            <constraint firstItem="Xty-jA-1OE" firstAttribute="leading" secondItem="SDG-Je-dsF" secondAttribute="leading" id="C3Q-Ul-3D7"/>
-                            <constraint firstItem="Xty-jA-1OE" firstAttribute="width" secondItem="SDG-Je-dsF" secondAttribute="width" id="C7s-g5-6i8"/>
-                            <constraint firstItem="Bax-qM-FEc" firstAttribute="height" secondItem="uFA-ER-wv7" secondAttribute="height" id="CPO-tB-Bgn"/>
-                            <constraint firstAttribute="trailing" secondItem="nKj-ho-7ff" secondAttribute="trailing" constant="20" id="EyE-b7-SiV"/>
-                            <constraint firstItem="Xty-jA-1OE" firstAttribute="leading" secondItem="lUQ-Vd-Jgv" secondAttribute="leading" id="F2B-J5-uqw"/>
-                            <constraint firstItem="uFA-ER-wv7" firstAttribute="leading" secondItem="SDG-Je-dsF" secondAttribute="trailing" constant="8" symbolic="YES" id="FRh-13-gNh"/>
-                            <constraint firstItem="tBh-b6-8D3" firstAttribute="leading" secondItem="lUQ-Vd-Jgv" secondAttribute="leading" id="H5U-Ju-c0v"/>
-                            <constraint firstItem="hlb-sP-3Ne" firstAttribute="centerY" secondItem="Xty-jA-1OE" secondAttribute="centerY" id="JRn-TR-iCG"/>
-                            <constraint firstItem="hO8-t3-fVI" firstAttribute="trailing" secondItem="nKj-ho-7ff" secondAttribute="trailing" id="Maq-Tr-5ny"/>
-                            <constraint firstItem="hO8-t3-fVI" firstAttribute="leading" secondItem="hlb-sP-3Ne" secondAttribute="trailing" constant="5" id="N8e-r2-NRV"/>
-                            <constraint firstItem="SgF-fv-FBx" firstAttribute="top" secondItem="SDG-Je-dsF" secondAttribute="bottom" constant="8" symbolic="YES" id="Nd9-T2-VCK"/>
-                            <constraint firstItem="SDG-Je-dsF" firstAttribute="leading" secondItem="lUQ-Vd-Jgv" secondAttribute="leading" id="Odt-tQ-GwM"/>
-                            <constraint firstItem="Bax-qM-FEc" firstAttribute="width" secondItem="uFA-ER-wv7" secondAttribute="width" id="PVn-Gr-Lc6"/>
-                            <constraint firstItem="qn3-Ik-Lg8" firstAttribute="centerY" secondItem="uFA-ER-wv7" secondAttribute="centerY" id="Pcf-gF-JTm"/>
-                            <constraint firstItem="nKj-ho-7ff" firstAttribute="centerY" secondItem="SDG-Je-dsF" secondAttribute="centerY" id="Q20-Wi-63l"/>
-                            <constraint firstItem="Xty-jA-1OE" firstAttribute="top" secondItem="SgF-fv-FBx" secondAttribute="bottom" constant="8" symbolic="YES" id="QHL-OE-XGl"/>
-                            <constraint firstItem="hO8-t3-fVI" firstAttribute="centerY" secondItem="hlb-sP-3Ne" secondAttribute="centerY" id="R5S-5s-eD2"/>
-                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="tBh-b6-8D3" secondAttribute="trailing" constant="20" symbolic="YES" id="Rge-IL-73B"/>
-                            <constraint firstItem="uFA-ER-wv7" firstAttribute="centerY" secondItem="SDG-Je-dsF" secondAttribute="centerY" id="Sdu-CP-8aK"/>
-                            <constraint firstAttribute="bottom" secondItem="dZl-9v-IF1" secondAttribute="bottom" constant="20" symbolic="YES" id="TgC-6I-XMm"/>
-                            <constraint firstItem="SgF-fv-FBx" firstAttribute="leading" secondItem="lUQ-Vd-Jgv" secondAttribute="leading" id="URG-UN-Y9h"/>
-                            <constraint firstItem="Xty-jA-1OE" firstAttribute="height" secondItem="SDG-Je-dsF" secondAttribute="height" id="Uf4-UQ-qm9"/>
-                            <constraint firstItem="Xty-jA-1OE" firstAttribute="trailing" secondItem="SDG-Je-dsF" secondAttribute="trailing" id="Umj-eI-Bsh"/>
-                            <constraint firstItem="qn3-Ik-Lg8" firstAttribute="centerY" secondItem="SDG-Je-dsF" secondAttribute="centerY" id="UoB-O9-Xk7"/>
-                            <constraint firstItem="Xty-jA-1OE" firstAttribute="leading" secondItem="IvC-q3-fvl" secondAttribute="leading" constant="20" symbolic="YES" id="VtW-Td-jBS"/>
-                            <constraint firstItem="hO8-t3-fVI" firstAttribute="height" secondItem="nKj-ho-7ff" secondAttribute="height" id="WTe-S8-V3c"/>
-                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="lUQ-Vd-Jgv" secondAttribute="trailing" constant="20" symbolic="YES" id="bVt-qc-UnK"/>
-                            <constraint firstItem="hO8-t3-fVI" firstAttribute="width" secondItem="nKj-ho-7ff" secondAttribute="width" id="cqI-XK-mi7"/>
-                            <constraint firstItem="dZl-9v-IF1" firstAttribute="trailing" secondItem="tBh-b6-8D3" secondAttribute="trailing" id="dXc-EP-CuI"/>
-                            <constraint firstItem="hlb-sP-3Ne" firstAttribute="centerY" secondItem="Bax-qM-FEc" secondAttribute="centerY" id="fSg-h6-QA1"/>
-                            <constraint firstAttribute="trailing" secondItem="dZl-9v-IF1" secondAttribute="trailing" constant="20" id="gBK-qm-oix"/>
-                            <constraint firstItem="hlb-sP-3Ne" firstAttribute="leading" secondItem="Bax-qM-FEc" secondAttribute="trailing" id="gJB-1E-qik"/>
-                            <constraint firstItem="nKj-ho-7ff" firstAttribute="height" secondItem="lUQ-Vd-Jgv" secondAttribute="height" id="hHn-uP-DSF"/>
-                            <constraint firstItem="dZl-9v-IF1" firstAttribute="leading" secondItem="Sz5-Nz-eFd" secondAttribute="trailing" constant="12" symbolic="YES" id="hKk-rg-hOc"/>
-                            <constraint firstItem="hO8-t3-fVI" firstAttribute="height" secondItem="lUQ-Vd-Jgv" secondAttribute="height" id="hdC-fn-ZF2"/>
-                            <constraint firstItem="qn3-Ik-Lg8" firstAttribute="leading" secondItem="uFA-ER-wv7" secondAttribute="trailing" id="hm7-z9-fdf"/>
-                            <constraint firstItem="hlb-sP-3Ne" firstAttribute="width" secondItem="qn3-Ik-Lg8" secondAttribute="width" id="hz2-PJ-1Wo"/>
-                            <constraint firstItem="dZl-9v-IF1" firstAttribute="top" secondItem="tBh-b6-8D3" secondAttribute="bottom" constant="20" symbolic="YES" id="iZ4-to-p9x"/>
-                            <constraint firstItem="nKj-ho-7ff" firstAttribute="centerY" secondItem="uFA-ER-wv7" secondAttribute="centerY" id="jCV-LK-DAk"/>
-                            <constraint firstItem="SgF-fv-FBx" firstAttribute="leading" secondItem="IvC-q3-fvl" secondAttribute="leading" constant="20" symbolic="YES" id="jbq-gd-hz5"/>
-                            <constraint firstAttribute="trailing" secondItem="hO8-t3-fVI" secondAttribute="trailing" constant="20" id="jsD-6j-sJJ"/>
-                            <constraint firstItem="SDG-Je-dsF" firstAttribute="leading" secondItem="IvC-q3-fvl" secondAttribute="leading" constant="20" symbolic="YES" id="kcJ-wl-A7i"/>
-                            <constraint firstItem="Sz5-Nz-eFd" firstAttribute="top" secondItem="tBh-b6-8D3" secondAttribute="bottom" constant="20" symbolic="YES" id="mkJ-0B-W07"/>
-                            <constraint firstItem="hO8-t3-fVI" firstAttribute="centerY" secondItem="Bax-qM-FEc" secondAttribute="centerY" id="ngv-ei-4Gz"/>
-                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="SgF-fv-FBx" secondAttribute="trailing" constant="20" symbolic="YES" id="o78-Q2-CWB"/>
-                            <constraint firstItem="hlb-sP-3Ne" firstAttribute="height" secondItem="qn3-Ik-Lg8" secondAttribute="height" id="rFJ-TY-pAr"/>
-                            <constraint firstItem="SDG-Je-dsF" firstAttribute="top" secondItem="lUQ-Vd-Jgv" secondAttribute="bottom" constant="8" symbolic="YES" id="swq-if-WER"/>
-                            <constraint firstItem="nKj-ho-7ff" firstAttribute="centerY" secondItem="qn3-Ik-Lg8" secondAttribute="centerY" id="t6F-IV-5tF"/>
-                            <constraint firstItem="Bax-qM-FEc" firstAttribute="leading" secondItem="Xty-jA-1OE" secondAttribute="trailing" constant="8" symbolic="YES" id="uiy-R0-mFu"/>
-                            <constraint firstItem="dZl-9v-IF1" firstAttribute="width" secondItem="Sz5-Nz-eFd" secondAttribute="width" id="v4y-JO-AKa"/>
-                            <constraint firstItem="SgF-fv-FBx" firstAttribute="height" secondItem="lUQ-Vd-Jgv" secondAttribute="height" id="veY-ce-wl8"/>
-                            <constraint firstItem="Bax-qM-FEc" firstAttribute="centerY" secondItem="Xty-jA-1OE" secondAttribute="centerY" id="wjA-6m-VJN"/>
-                            <constraint firstItem="hO8-t3-fVI" firstAttribute="centerY" secondItem="Xty-jA-1OE" secondAttribute="centerY" id="zCa-z8-sJE"/>
-                            <constraint firstItem="nKj-ho-7ff" firstAttribute="leading" secondItem="qn3-Ik-Lg8" secondAttribute="trailing" constant="5" id="zMS-3D-RRf"/>
+                            <constraint firstItem="NXG-fh-uCo" firstAttribute="top" secondItem="IvC-q3-fvl" secondAttribute="top" id="0Zo-dx-hPZ"/>
+                            <constraint firstAttribute="bottom" secondItem="tMo-Nt-MJE" secondAttribute="bottom" constant="20" symbolic="YES" id="7W1-oq-p80"/>
+                            <constraint firstAttribute="trailing" secondItem="tMo-Nt-MJE" secondAttribute="trailing" constant="20" symbolic="YES" id="8kL-GN-lPe"/>
+                            <constraint firstItem="1wm-Dj-FSo" firstAttribute="top" secondItem="ZwQ-iO-Z8h" secondAttribute="bottom" constant="20" symbolic="YES" id="KYw-Oj-YoS"/>
+                            <constraint firstItem="NXG-fh-uCo" firstAttribute="leading" secondItem="IvC-q3-fvl" secondAttribute="leading" id="Kxc-t4-mXl"/>
+                            <constraint firstAttribute="trailing" secondItem="ZwQ-iO-Z8h" secondAttribute="trailing" id="Qvc-zH-qu1"/>
+                            <constraint firstItem="1wm-Dj-FSo" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="IvC-q3-fvl" secondAttribute="leading" constant="20" symbolic="YES" id="UOy-wt-LQj"/>
+                            <constraint firstItem="ZwQ-iO-Z8h" firstAttribute="top" secondItem="NXG-fh-uCo" secondAttribute="bottom" constant="8" symbolic="YES" id="UR5-Kx-Z76"/>
+                            <constraint firstItem="tMo-Nt-MJE" firstAttribute="top" secondItem="ZwQ-iO-Z8h" secondAttribute="bottom" constant="20" symbolic="YES" id="kTa-F5-4uP"/>
+                            <constraint firstItem="ZwQ-iO-Z8h" firstAttribute="leading" secondItem="IvC-q3-fvl" secondAttribute="leading" id="ocA-RY-q69"/>
+                            <constraint firstAttribute="bottom" secondItem="1wm-Dj-FSo" secondAttribute="bottom" constant="20" symbolic="YES" id="rGW-mh-YIb"/>
+                            <constraint firstAttribute="trailing" secondItem="NXG-fh-uCo" secondAttribute="trailing" id="rf0-Z5-ikW"/>
+                            <constraint firstItem="tMo-Nt-MJE" firstAttribute="width" secondItem="1wm-Dj-FSo" secondAttribute="width" id="rml-rE-4df"/>
+                            <constraint firstItem="tMo-Nt-MJE" firstAttribute="leading" secondItem="1wm-Dj-FSo" secondAttribute="trailing" constant="12" symbolic="YES" id="vaA-kn-vNp"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="adapterSleepButton" destination="tBh-b6-8D3" id="k7m-5C-wLv"/>
-                        <outlet property="minChargeSlider" destination="SDG-Je-dsF" id="bqR-B5-YSJ"/>
-                        <outlet property="minChargeTextField" destination="uFA-ER-wv7" id="u2N-mI-gyL"/>
+                        <outlet property="adapterSleepButton" destination="TZ0-RS-ZgS" id="YV8-zg-QVa"/>
+                        <outlet property="autostartButton" destination="QDm-L7-ymC" id="Tjc-5g-T8L"/>
+                        <outlet property="backgroundActivityTab" destination="IMi-pw-cwy" id="9fR-1S-DaG"/>
+                        <outlet property="generalTab" destination="r6x-U7-0zu" id="6f2-AH-ze8"/>
+                        <outlet property="tabView" destination="NXG-fh-uCo" id="DNX-YP-mN9"/>
                     </connections>
                 </viewController>
                 <customObject id="a1t-lO-i7f" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="72.5" y="624"/>
+            <point key="canvasLocation" x="72.5" y="805"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="bolt.circle" catalog="system" width="15" height="15"/>
+        <image name="person.crop.circle" catalog="system" width="15" height="15"/>
+    </resources>
 </document>
