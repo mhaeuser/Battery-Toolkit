@@ -10,6 +10,7 @@ sudo rm /Library/PrivilegedHelperTools/me.mhaeuser.batterytoolkitd
 sudo launchctl remove me.mhaeuser.batterytoolkitd
 
 sudo defaults delete me.mhaeuser.batterytoolkitd
+sudo security authorizationdb remove me.mhaeuser.batterytoolkitd.manage
 
 launchctl remove me.mhaeuser.BatteryToolkitAutostart
 

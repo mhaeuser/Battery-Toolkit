@@ -46,10 +46,10 @@ internal struct BTAppPrompts {
     }
 
     private static func runPromptStandalone(alert: NSAlert) -> NSApplication.ModalResponse {
-        open += 1
+        BTAppPrompts.open += 1
         NSApp.activate(ignoringOtherApps: true)
         let response = alert.runModal()
-        open -= 1
+        BTAppPrompts.open -= 1
 
         return response
     }
