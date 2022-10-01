@@ -4,5 +4,5 @@
 */
 
 module NSXPCConnectionAuditToken {
-    header "NSXPCConnectionAuditToken.h"
+    header "NSXPCConnection+AuditToken.h"
 }

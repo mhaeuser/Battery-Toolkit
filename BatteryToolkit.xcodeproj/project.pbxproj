@@ -213,7 +213,7 @@
 		CE85D05E28D7B7E6005D1E0C /* BTDaemonManagementService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTDaemonManagementService.swift; sourceTree = "<group>"; };
 		CE8ED7F328C144EE00398581 /* BTDispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTDispatcher.swift; sourceTree = "<group>"; };
 		CE9BD24628E8908000B6C61D /* AutostartHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AutostartHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		CEA80FD3285A51600064ADEA /* NSXPCConnectionAuditToken.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSXPCConnectionAuditToken.h; sourceTree = "<group>"; };
+		CEA80FD3285A51600064ADEA /* NSXPCConnection+AuditToken.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSXPCConnection+AuditToken.h"; sourceTree = "<group>"; };
 		CEA80FD5285A565C0064ADEA /* BTDaemonComm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTDaemonComm.swift; sourceTree = "<group>"; };
 		CEA80FD7285A56B50064ADEA /* BTDaemon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTDaemon.swift; sourceTree = "<group>"; };
 		CEA80FDA285A57030064ADEA /* BTDaemonCommProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTDaemonCommProtocol.swift; sourceTree = "<group>"; };
@@ -324,7 +324,7 @@
 			children = (
 				CEF3496D28DCD34900A1CECD /* SecCodeEx */,
 				CE3C1D8128C7F950008A0F7D /* uninstall.sh */,
-				CED8DD3628C364D60082C02A /* NSXPCConnectionAuditToken */,
+				CED8DD3628C364D60082C02A /* NSXPCConnection+AuditToken */,
 				CEECE31928BB648F00821A3B /* BatteryToolkitService */,
 				CE6B75F728BC18DD008DF170 /* Common */,
 				CE6C06B828A84C2400D76CC8 /* BTPreprocessor */,
@@ -468,13 +468,13 @@
 			path = SMCPrivate;
 			sourceTree = "<group>";
 		};
-		CED8DD3628C364D60082C02A /* NSXPCConnectionAuditToken */ = {
+		CED8DD3628C364D60082C02A /* NSXPCConnection+AuditToken */ = {
 			isa = PBXGroup;
 			children = (
-				CEA80FD3285A51600064ADEA /* NSXPCConnectionAuditToken.h */,
+				CEA80FD3285A51600064ADEA /* NSXPCConnection+AuditToken.h */,
 				CED8DD3728C364FA0082C02A /* module.modulemap */,
 			);
-			path = NSXPCConnectionAuditToken;
+			path = "NSXPCConnection+AuditToken";
 			sourceTree = "<group>";
 		};
 		CEECE31928BB648F00821A3B /* BatteryToolkitService */ = {
