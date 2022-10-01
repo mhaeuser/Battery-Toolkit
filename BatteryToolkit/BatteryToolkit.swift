@@ -44,15 +44,15 @@ internal struct BatteryToolkit {
         BTDaemonXPCClient.disableCharging(reply: reply)
     }
 
-    internal static func getState(reply: @Sendable @escaping (BTError.RawValue, [String: AnyObject]) -> Void) {
+    internal static func getState(reply: @Sendable @escaping (BTError.RawValue, [String: NSObject]) -> Void) {
         BTDaemonXPCClient.getState(reply: reply)
     }
 
-    internal static func getSettings(reply: @Sendable @escaping (BTError.RawValue, [String: AnyObject]) -> Void) {
+    internal static func getSettings(reply: @Sendable @escaping (BTError.RawValue, [String: NSObject]) -> Void) {
         BTDaemonXPCClient.getSettings(reply: reply)
     }
 
-    internal static func setSettings(settings: [String: AnyObject], reply: @Sendable @escaping (BTError.RawValue) -> Void) {
+    internal static func setSettings(settings: [String: NSObject], reply: @Sendable @escaping (BTError.RawValue) -> Void) {
         BTDaemonXPCClient.setSettings(settings: settings, reply: reply)
     }
     

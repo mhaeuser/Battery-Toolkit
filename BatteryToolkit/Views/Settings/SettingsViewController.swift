@@ -6,6 +6,8 @@
 import Cocoa
 
 final class SettingsViewController: NSViewController {
+    private var currentSettings: [String: NSObject]? = nil
+
     @IBOutlet var minChargeTextField: NSTextField!
     @IBOutlet var minChargeSlider: NSSlider!
     
@@ -100,6 +102,8 @@ final class SettingsViewController: NSViewController {
     private func initSettingsState() {
         BatteryToolkit.getSettings { (error, settings) in
             DispatchQueue.main.async {
+                self.currentSettings = settings
+
                 guard error == BTError.success.rawValue else {
                     BTErrorHandler.errorHandler(error: error)
                     return
@@ -132,10 +136,17 @@ final class SettingsViewController: NSViewController {
                 value: self.adapterSleepButton.state == NSControl.StateValue.off
                 )
         ]
+
+        guard settings != currentSettings else {
+            os_log("Background Activity settings have not changed, ignoring")
+            self.view.window?.windowController?.close()
+            return
+        }
+
         BTDaemonXPCClient.setSettings(settings: settings) { error in
             DispatchQueue.main.async {
                 guard error != BTError.success.rawValue else {
-                    self.view.window!.windowController!.close()
+                    self.view.window?.windowController?.close()
                     return
                 }
 
