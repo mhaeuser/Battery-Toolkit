@@ -95,6 +95,11 @@ extension SMCKitKeyInfoData: Equatable {
     }
 }
 
+public struct SMCKitKeyInfo {
+    let key: SMCId;
+    let info: SMCKitKeyInfoData
+}
+
 public enum SMCKitError: Error {
     case invalidDataSize
 

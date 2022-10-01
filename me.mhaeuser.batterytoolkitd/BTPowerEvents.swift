@@ -33,7 +33,7 @@ internal struct BTPowerEvents {
             return BTError.unknown
         }
 
-        let supported = SMCPowerKit.supported()
+        let supported = SMCKit.Power.supported()
         guard supported else {
             os_log("Machine is unsupported")
             SMCKit.stop()
