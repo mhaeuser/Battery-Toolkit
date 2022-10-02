@@ -51,13 +51,14 @@ internal enum BTAppXPCClient {
         return connect
     }
 
-    private static func getService(reply _: @escaping @Sendable () -> Void)
+    private static func getService(errorHandler: @escaping @Sendable () -> Void)
         -> BTServiceCommProtocol
     {
         let connect = BTAppXPCClient.connectService()
 
         let service = connect.remoteObjectProxyWithErrorHandler { error in
             os_log("XPC app remote object error: \(error.localizedDescription)")
+            errorHandler()
         } as! BTServiceCommProtocol
 
         return service
