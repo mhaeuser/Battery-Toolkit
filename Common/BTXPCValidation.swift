@@ -3,20 +3,20 @@
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
-import Foundation
-import os.log
-import NSXPCConnectionAuditToken
 import BTPreprocessor
+import Foundation
+import NSXPCConnectionAuditToken
+import os.log
 import SecCodeEx
 
-public struct BTXPCValidation {
+public enum BTXPCValidation {
     private static func verifyCsStatus(code: SecCode) -> Bool {
         var signInfo: CFDictionary? = nil
         let infoStatus = SecCodeCopySigningInformationDynamic(
             code,
             [SecCSFlags(rawValue: kSecCSDynamicInformation)],
             &signInfo
-            )
+        )
         guard infoStatus == errSecSuccess else {
             os_log("Failed to retrieve signing information")
             return false
@@ -27,7 +27,10 @@ public struct BTXPCValidation {
             return false
         }
 
-        guard let signStatus = signInfo[kSecCodeInfoStatus as String] as? UInt32 else {
+        guard
+            let signStatus =
+            signInfo[kSecCodeInfoStatus as String] as? UInt32
+        else {
             os_log("Failed to retrieve signature status")
             return false
         }
@@ -44,24 +47,31 @@ public struct BTXPCValidation {
         //
         var reqStatus: SecCodeStatus = [
             .valid,
-            .hard, .kill,
+            .hard,
+            .kill,
             SecCodeStatus(rawValue: SecCodeSignatureFlags.restrict.rawValue),
             SecCodeStatus(rawValue: SecCodeSignatureFlags.enforcement.rawValue),
-            SecCodeStatus(rawValue: SecCodeSignatureFlags.libraryValidation.rawValue),
-            SecCodeStatus(rawValue: SecCodeSignatureFlags.runtime.rawValue)
+            SecCodeStatus(
+                rawValue: SecCodeSignatureFlags.libraryValidation.rawValue
+            ),
+            SecCodeStatus(rawValue: SecCodeSignatureFlags.runtime.rawValue),
         ]
 
         if codeStatus.contains(.debugged) {
             #if !DEBUG
-            os_log("Signature status constraints violated: Code has been debugged")
-            return false
+                os_log(
+                    "Signature status constraints violated: Code has been debugged"
+                )
+                return false
             #endif
 
             reqStatus.remove([.valid, .hard, .kill])
         }
 
         guard codeStatus.contains(reqStatus) else {
-            os_log("Signature status constraints violated: \(signStatus) vs \(reqStatus.rawValue)")
+            os_log(
+                "Signature status constraints violated: \(signStatus) vs \(reqStatus.rawValue)"
+            )
             return false
         }
 
@@ -78,7 +88,8 @@ public struct BTXPCValidation {
             " and !(entitlement[\"com.apple.security.cs.allow-unsigned-executable-memory\"] /* exists */)" +
             " and !(entitlement[\"com.apple.security.cs.allow-jit\"] /* exists */)"
         #if !DEBUG
-        text += " and !(entitlement[\"com.apple.security.get-task-allow\"] /* exists */)"
+            text +=
+                " and !(entitlement[\"com.apple.security.get-task-allow\"] /* exists */)"
         #endif
 
         return text
@@ -88,7 +99,7 @@ public struct BTXPCValidation {
         if #available(macOS 13.0, *) {
             connection.setCodeSigningRequirement(
                 requirementsTextFromId(identifier: BT_SERVICE_NAME)
-                )
+            )
         }
     }
 
@@ -101,11 +112,11 @@ public struct BTXPCValidation {
     }
 
     public static func isValidClient(connection: NSXPCConnection) -> Bool {
-        var token = connection.auditToken;
+        var token = connection.auditToken
         let tokenData = Data(
             bytes: &token,
             count: MemoryLayout.size(ofValue: token)
-            )
+        )
         let attributes = [kSecGuestAttributeAudit: tokenData]
 
         var code: SecCode? = nil
@@ -114,16 +125,17 @@ public struct BTXPCValidation {
             attributes as CFDictionary,
             [],
             &code
-            )
-        guard codeStatus == errSecSuccess, let code = code else {
+        )
+        guard codeStatus == errSecSuccess, let code else {
             return false
         }
 
-        guard verifyCsStatus(code: code) else {
+        guard self.verifyCsStatus(code: code) else {
             return false
         }
 
-        let requirementText = requirementsTextFromId(identifier: BT_APP_NAME)
+        let requirementText = self
+            .requirementsTextFromId(identifier: BT_APP_NAME)
         if #available(macOS 13.0, *) {
             connection.setCodeSigningRequirement(requirementText)
             return true
@@ -133,8 +145,8 @@ public struct BTXPCValidation {
                 requirementText as CFString,
                 [],
                 &requirement
-                )
-            guard reqStatus == errSecSuccess, let requirement = requirement else {
+            )
+            guard reqStatus == errSecSuccess, let requirement else {
                 return false
             }
 
@@ -143,10 +155,10 @@ public struct BTXPCValidation {
                 [
                     .enforceRevocationChecks,
                     SecCSFlags(rawValue: kSecCSRestrictSidebandData),
-                    SecCSFlags(rawValue: kSecCSStrictValidate)
+                    SecCSFlags(rawValue: kSecCSStrictValidate),
                 ],
                 requirement
-                )
+            )
             return validStatus == errSecSuccess
         }
     }

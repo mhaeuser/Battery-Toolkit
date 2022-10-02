@@ -3,27 +3,33 @@
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
+import BTPreprocessor
 import Foundation
 import os.log
-import BTPreprocessor
 
 @MainActor
-internal struct BTAuthorizationService {
+internal enum BTAuthorizationService {
     private static var manageAuthRef: AuthorizationRef? = nil
 
-    internal static func empty(reply: @Sendable @escaping (AuthorizationRef?) -> Void) {
-        BTAppXPCClient.createEmptyAuthorization { (authData) -> Void in
+    internal static func empty(
+        reply: @Sendable @escaping (AuthorizationRef?) -> Void
+    ) {
+        BTAppXPCClient.createEmptyAuthorization { authData in
             reply(BTAuthorization.fromData(authData: authData))
         }
     }
 
-    internal static func daemonManagement(reply: @Sendable @escaping (AuthorizationRef?) -> Void) {
-        BTAppXPCClient.createDaemonAuthorization { (authData) -> Void in
+    internal static func daemonManagement(
+        reply: @Sendable @escaping (AuthorizationRef?) -> Void
+    ) {
+        BTAppXPCClient.createDaemonAuthorization { authData in
             reply(BTAuthorization.fromData(authData: authData))
         }
     }
 
-    private static func acquireManage(reply: @MainActor @Sendable @escaping (AuthorizationRef?) -> Void) {
+    private static func acquireManage(
+        reply: @MainActor @Sendable @escaping (AuthorizationRef?) -> Void
+    ) {
         BTAppXPCClient.createManageAuthorization { authData in
             let authRef = BTAuthorization.fromData(authData: authData)
 
@@ -41,12 +47,14 @@ internal struct BTAuthorizationService {
         }
     }
 
-    internal static func reacquireManage(reply: @MainActor @Sendable @escaping (AuthorizationRef?) -> Void) {
+    internal static func reacquireManage(
+        reply: @MainActor @Sendable @escaping (AuthorizationRef?) -> Void
+    ) {
         let authData = BTAuthorization.toData(
             authRef: BTAuthorizationService.manageAuthRef
-            )
-        guard let authData = authData else {
-            acquireManage(reply: reply)
+        )
+        guard let authData else {
+            self.acquireManage(reply: reply)
             return
         }
 
@@ -57,9 +65,11 @@ internal struct BTAuthorizationService {
         }
     }
 
-    internal static func manage(reply: @MainActor @Sendable @escaping (AuthorizationRef?) -> Void) {
+    internal static func manage(
+        reply: @MainActor @Sendable @escaping (AuthorizationRef?) -> Void
+    ) {
         guard let authRef = BTAuthorizationService.manageAuthRef else {
-            acquireManage(reply: reply)
+            self.acquireManage(reply: reply)
             return
         }
 

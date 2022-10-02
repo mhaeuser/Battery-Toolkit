@@ -7,27 +7,36 @@ import Foundation
 import ServiceManagement
 
 internal final class BTServiceComm: NSObject, BTServiceCommProtocol {
-    func createEmptyAuthorization(reply: @Sendable @escaping (NSData?) -> Void) -> Void {
+    func createEmptyAuthorization(
+        reply: @Sendable @escaping (NSData?) -> Void
+    ) {
         BTAuthorization.empty(reply: reply)
     }
 
-    func createDaemonAuthorization(reply: @Sendable @escaping (NSData?) -> Void) -> Void {
+    func createDaemonAuthorization(
+        reply: @Sendable @escaping (NSData?) -> Void
+    ) {
         BTAuthorization.interactive(
             rightName: kSMRightModifySystemDaemons,
             reply: reply
-            )
+        )
     }
 
-    func createManageAuthorization(reply: @Sendable @escaping (NSData?) -> Void) -> Void {
+    func createManageAuthorization(
+        reply: @Sendable @escaping (NSData?) -> Void
+    ) {
         BTAuthorization.interactive(
             rightName: BTAuthorizationRights.manage,
             reply: reply
-            )
+        )
     }
 
-    func acquireManageAuthorization(authData: NSData, reply: @Sendable @escaping (Bool) -> Void) {
+    func acquireManageAuthorization(
+        authData: NSData,
+        reply: @Sendable @escaping (Bool) -> Void
+    ) {
         let authRef = BTAuthorization.fromData(authData: authData)
-        guard let authRef = authRef else {
+        guard let authRef else {
             reply(false)
             return
         }
@@ -35,7 +44,7 @@ internal final class BTServiceComm: NSObject, BTServiceCommProtocol {
         let success = BTAuthorization.acquireInteractive(
             authRef: authRef,
             rightName: BTAuthorizationRights.manage
-            )
+        )
         reply(success)
     }
 }

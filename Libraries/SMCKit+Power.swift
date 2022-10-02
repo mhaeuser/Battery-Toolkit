@@ -5,31 +5,31 @@
 
 public extension SMCKit {
     @MainActor
-    struct Power {
-        private struct Keys {
+    enum Power {
+        private enum Keys {
             fileprivate static let CH0C = SMCKitKey("C", "H", "0", "C")
             fileprivate static let CH0J = SMCKitKey("C", "H", "0", "J")
         }
 
         private static let keys =
-        [
-            SMCKitKeyInfo(
-                key: SMCKit.Power.Keys.CH0C,
-                info: SMCKitKeyInfoData(
-                    dataSize: 1,
-                    dataType: SMCKitType.hex,
-                    dataAttributes: 0xD4
+            [
+                SMCKitKeyInfo(
+                    key: SMCKit.Power.Keys.CH0C,
+                    info: SMCKitKeyInfoData(
+                        dataSize: 1,
+                        dataType: SMCKitType.hex,
+                        dataAttributes: 0xD4
                     )
-            ),
-            SMCKitKeyInfo(
-                key: SMCKit.Power.Keys.CH0J,
-                info: SMCKitKeyInfoData(
-                    dataSize: 1,
-                    dataType: SMCKitType.ui8,
-                    dataAttributes: 0xD4
+                ),
+                SMCKitKeyInfo(
+                    key: SMCKit.Power.Keys.CH0J,
+                    info: SMCKitKeyInfoData(
+                        dataSize: 1,
+                        dataType: SMCKitType.ui8,
+                        dataAttributes: 0xD4
                     )
-            )
-        ]
+                ),
+            ]
 
         public static func supported() -> Bool {
             for keyInfo in SMCKit.Power.keys {

@@ -3,8 +3,8 @@
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
-import IOKit
 import Foundation
+import IOKit
 import os
 
 import SMCPrivate
@@ -14,7 +14,7 @@ private func packUInt32(
     _ byte1: UInt8,
     _ byte2: UInt8,
     _ byte3: UInt8
-    ) -> UInt32 {
+) -> UInt32 {
     let comp0 = UInt32(byte0) << 24
     let comp1 = UInt32(byte1) << 16
     let comp2 = UInt32(byte2) << 8
@@ -25,28 +25,28 @@ private func packUInt32(
 
 private func SMCParamStructInfo(key: SMCKitKey) -> SMCParamStruct {
     var paramStruct = SMCParamStruct()
-    paramStruct.key   = key
+    paramStruct.key = key
     paramStruct.data8 = UInt8(kSMCGetKeyInfo)
     return paramStruct
 }
 
 private func SMCParamStructReadUI8(key: SMCKitKey) -> SMCParamStruct {
     var paramStruct = SMCParamStruct()
-    paramStruct.key              = key
+    paramStruct.key = key
     paramStruct.keyInfo.dataSize = 1
-    paramStruct.data8            = UInt8(kSMCReadKey)
+    paramStruct.data8 = UInt8(kSMCReadKey)
     return paramStruct
 }
 
 private func SMCParamStructWriteUI8(
     key: SMCKitKey,
     value: UInt8
-    ) -> SMCParamStruct {
+) -> SMCParamStruct {
     var paramStruct = SMCParamStruct()
-    paramStruct.key              = key
+    paramStruct.key = key
     paramStruct.keyInfo.dataSize = 1
-    paramStruct.data8            = UInt8(kSMCWriteKey)
-    paramStruct.bytes.0          = value
+    paramStruct.data8 = UInt8(kSMCWriteKey)
+    paramStruct.bytes.0 = value
     return paramStruct
 }
 
@@ -62,20 +62,20 @@ public extension SMCId {
         _ char1: Character,
         _ char2: Character,
         _ char3: Character
-        ) {
+    ) {
         assert(char0.isASCII && char1.isASCII && char2.isASCII && char3.isASCII)
-        
-        self = packUInt32 (
+
+        self = packUInt32(
             char0.asciiValue!,
             char1.asciiValue!,
             char2.asciiValue!,
             char3.asciiValue!
-            )
+        )
     }
 }
 
 public typealias SMCKitType = SMCId
-public typealias SMCKitKey  = SMCId
+public typealias SMCKitKey = SMCId
 
 public extension SMCKitType {
     static let ui8 = SMCKitType("u", "i", "8", " ")
@@ -88,7 +88,7 @@ extension SMCKitKeyInfoData: Equatable {
     public static func == (
         lhs: SMCKitKeyInfoData,
         rhs: SMCKitKeyInfoData
-        ) -> Bool {
+    ) -> Bool {
         return lhs.dataSize == rhs.dataSize &&
             lhs.dataType == rhs.dataType &&
             lhs.dataAttributes == rhs.dataAttributes
@@ -96,7 +96,7 @@ extension SMCKitKeyInfoData: Equatable {
 }
 
 public struct SMCKitKeyInfo {
-    let key: SMCId;
+    let key: SMCId
     let info: SMCKitKeyInfoData
 }
 
@@ -107,16 +107,16 @@ public enum SMCKitError: Error {
 }
 
 @MainActor
-public struct SMCKit {
+public enum SMCKit {
     private static var connect = IO_OBJECT_NULL
-    
+
     public static func start() -> Bool {
         assert(SMCKit.connect == IO_OBJECT_NULL)
-        
+
         let smc = IOServiceGetMatchingService(
             kIOMasterPortDefault,
             IOServiceMatching("AppleSMC")
-            )
+        )
         guard smc != IO_OBJECT_NULL else {
             return false
         }
@@ -129,7 +129,7 @@ public struct SMCKit {
             mach_task_self_,
             1,
             &connect
-            )
+        )
         guard resultOpen == kIOReturnSuccess, connect != IO_OBJECT_NULL else {
             return false
         }
@@ -146,11 +146,11 @@ public struct SMCKit {
             nil,
             nil,
             nil
-            )
-        
+        )
+
         return true
     }
-    
+
     public static func stop() {
         assert(SMCKit.connect != IO_OBJECT_NULL)
         IOConnectCallMethod(
@@ -164,19 +164,19 @@ public struct SMCKit {
             nil,
             nil,
             nil
-            )
+        )
         IOServiceClose(SMCKit.connect)
         SMCKit.connect = IO_OBJECT_NULL
     }
 
     private static func callSMCFunctionYPC(
         params: inout SMCParamStruct
-        ) throws -> SMCParamStruct {
+    ) throws -> SMCParamStruct {
         assert(SMCKit.connect != IO_OBJECT_NULL)
 
         assert(MemoryLayout<SMCParamStruct>.stride == 80)
-            
-        var outputValues  = SMCParamStructOutput()
+
+        var outputValues = SMCParamStructOutput()
         var outStructSize = MemoryLayout<SMCParamStruct>.stride
 
         let resultCall = IOConnectCallStructMethod(
@@ -186,15 +186,17 @@ public struct SMCKit {
             MemoryLayout<SMCParamStruct>.stride,
             &outputValues,
             &outStructSize
-            )
-        guard resultCall == kIOReturnSuccess &&
-                outputValues.result == UInt8(kSMCSuccess) else {
+        )
+        guard
+            resultCall == kIOReturnSuccess,
+            outputValues.result == UInt8(kSMCSuccess)
+        else {
             throw SMCKitError.native(
                 kIOReturn: resultCall,
                 SMCResult: outputValues.result
-                )
+            )
         }
-            
+
         return outputValues
     }
 
@@ -217,6 +219,6 @@ public struct SMCKit {
     public static func WriteKeyUI8(key: SMCKitKey, value: UInt8) throws {
         var inputStruct = SMCParamStructWriteUI8(key: key, value: value)
 
-        _ = try callSMCFunctionYPC(params: &inputStruct)
+        _ = try self.callSMCFunctionYPC(params: &inputStruct)
     }
 }

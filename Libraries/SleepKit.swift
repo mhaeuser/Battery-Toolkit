@@ -9,17 +9,20 @@ import os.log
 import IOPMPrivate
 
 @MainActor
-public struct SleepKit {
+public enum SleepKit {
     private static var sleepDisabledCounter: UInt8 = 0
-    private static var sleepRestore: Bool          = false
-    
+    private static var sleepRestore = false
+
     private static func sleepDisabledIOPMValue() -> Bool {
         guard let settingsRef = IOPMCopySystemPowerSettings() else {
             os_log("System power settings could not be retrieved")
             return false
         }
-        
-        guard let settings = settingsRef.takeUnretainedValue() as? [String: AnyObject] else {
+
+        guard
+            let settings =
+            settingsRef.takeUnretainedValue() as? [String: AnyObject]
+        else {
             os_log("System power settings are malformed")
             return false
         }
@@ -31,28 +34,30 @@ public struct SleepKit {
 
         return sleepDisable
     }
-    
+
     private static func restorePreviousSleepState() {
         let result = IOPMSetSystemPowerSetting(
             kIOPMSleepDisabledKey as CFString,
             SleepKit.sleepRestore ? kCFBooleanTrue : kCFBooleanFalse
-            )
+        )
         if result != kIOReturnSuccess {
-            os_log("Failed to restore sleep disable to \(SleepKit.sleepRestore)")
+            os_log(
+                "Failed to restore sleep disable to \(SleepKit.sleepRestore)"
+            )
         }
-        
+
         SleepKit.sleepRestore = false
     }
-    
+
     public static func forceRestoreSleep() {
         guard SleepKit.sleepDisabledCounter > 0 else {
             return
         }
 
         SleepKit.sleepDisabledCounter = 0
-        restorePreviousSleepState()
+        self.restorePreviousSleepState()
     }
-    
+
     public static func restoreSleep() {
         assert(SleepKit.sleepDisabledCounter > 0)
         SleepKit.sleepDisabledCounter -= 1
@@ -61,9 +66,9 @@ public struct SleepKit {
             return
         }
 
-        restorePreviousSleepState()
+        self.restorePreviousSleepState()
     }
-    
+
     public static func disableSleep() {
         assert(SleepKit.sleepDisabledCounter >= 0)
         SleepKit.sleepDisabledCounter += 1
@@ -71,13 +76,13 @@ public struct SleepKit {
         guard SleepKit.sleepDisabledCounter == 1 else {
             return
         }
-        
-        SleepKit.sleepRestore = sleepDisabledIOPMValue()
+
+        SleepKit.sleepRestore = self.sleepDisabledIOPMValue()
 
         let result = IOPMSetSystemPowerSetting(
             kIOPMSleepDisabledKey as CFString,
             kCFBooleanTrue
-            )
+        )
         if result != kIOReturnSuccess {
             os_log("Failed to disable sleep")
         }

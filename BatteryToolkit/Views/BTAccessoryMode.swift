@@ -6,8 +6,8 @@
 import Cocoa
 
 @MainActor
-internal struct BTAccessoryMode {
-    private static var accessory  = false
+internal enum BTAccessoryMode {
+    private static var accessory = false
     private static var ignoreCall = false
 
     private static func inactivateApp() {
@@ -18,7 +18,7 @@ internal struct BTAccessoryMode {
         //
         let dockApps = NSRunningApplication.runningApplications(
             withBundleIdentifier: "com.apple.dock"
-            )
+        )
         guard !dockApps.isEmpty else {
             return
         }
@@ -44,7 +44,7 @@ internal struct BTAccessoryMode {
             return
         }
 
-        BTAccessoryMode.accessory  = false
+        BTAccessoryMode.accessory = false
         //
         // As we trigger the current app to re-activate, ignore requests from
         // BecomeActive and ResignActive handlers.
@@ -56,7 +56,7 @@ internal struct BTAccessoryMode {
         // Re-activate the app because otherwise the menu bar will not respond
         // to interaction.
         //
-        inactivateApp()
+        self.inactivateApp()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             NSApp.activate(ignoringOtherApps: true)
             BTAccessoryMode.ignoreCall = false

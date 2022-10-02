@@ -1,0 +1,27 @@
+#
+# Copyright (C) 2022 Marvin Häuser. All rights reserved.
+# SPDX-License-Identifier: BSD-3-Clause
+#
+
+--swiftversion 5.7
+
+--maxwidth 80
+
+--self insert
+
+--wraparguments before-first
+--wrapparameters before-first
+--wrapcollections before-first
+--wrapconditions before-first
+--wraptypealiases before-first
+
+--enable blankLineAfterImports
+--enable blockComments
+--enable isEmpty
+--enable wrapConditionalBodies
+--enable wrapEnumCases
+--enable wrapSwitchCases
+
+--disable redundantNilInit
+--disable redundantRawValues
+--disable redundantReturn

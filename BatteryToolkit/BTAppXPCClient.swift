@@ -3,14 +3,14 @@
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
+import BTPreprocessor
 import Foundation
 import os.log
-import BTPreprocessor
 import ServiceManagement
 
 @MainActor
-internal struct BTAppXPCClient {
-    private struct Handlers {
+internal enum BTAppXPCClient {
+    private enum Handlers {
         fileprivate static func interruption() {
             os_log("XPC app connection interrupted")
         }
@@ -33,7 +33,9 @@ internal struct BTAppXPCClient {
 
         let connect = NSXPCConnection(serviceName: BT_SERVICE_NAME)
 
-        connect.remoteObjectInterface = NSXPCInterface(with: BTServiceCommProtocol.self)
+        connect.remoteObjectInterface = NSXPCInterface(
+            with: BTServiceCommProtocol.self
+        )
 
         connect.invalidationHandler = BTAppXPCClient.Handlers.invalidation
         connect.interruptionHandler = BTAppXPCClient.Handlers.interruption
@@ -49,42 +51,53 @@ internal struct BTAppXPCClient {
         return connect
     }
 
-    private static func getService(reply: @escaping @Sendable () -> Void) -> BTServiceCommProtocol {
+    private static func getService(reply _: @escaping @Sendable () -> Void)
+        -> BTServiceCommProtocol
+    {
         let connect = BTAppXPCClient.connectService()
 
-        let service = connect.remoteObjectProxyWithErrorHandler({ error in
+        let service = connect.remoteObjectProxyWithErrorHandler { error in
             os_log("XPC app remote object error: \(error.localizedDescription)")
-        }) as! BTServiceCommProtocol
+        } as! BTServiceCommProtocol
 
         return service
     }
 
-    internal static func createEmptyAuthorization(reply: @Sendable @escaping (NSData?) -> Void) -> Void {
-        let service = BTAppXPCClient.getService() {
+    internal static func createEmptyAuthorization(
+        reply: @Sendable @escaping (NSData?) -> Void
+    ) {
+        let service = BTAppXPCClient.getService {
             reply(nil)
         }
 
         service.createEmptyAuthorization(reply: reply)
     }
 
-    internal static func createDaemonAuthorization(reply: @Sendable @escaping (NSData?) -> Void) -> Void {
-        let service = BTAppXPCClient.getService() {
+    internal static func createDaemonAuthorization(
+        reply: @Sendable @escaping (NSData?) -> Void
+    ) {
+        let service = BTAppXPCClient.getService {
             reply(nil)
         }
 
         service.createDaemonAuthorization(reply: reply)
     }
 
-    internal static func createManageAuthorization(reply: @Sendable @escaping (NSData?) -> Void) -> Void {
-        let service = BTAppXPCClient.getService() {
+    internal static func createManageAuthorization(
+        reply: @Sendable @escaping (NSData?) -> Void
+    ) {
+        let service = BTAppXPCClient.getService {
             reply(nil)
         }
 
         service.createManageAuthorization(reply: reply)
     }
 
-    internal static func acquireManageAuthorization(authData: NSData, reply: @Sendable @escaping (Bool) -> Void) {
-        let service = BTAppXPCClient.getService() {
+    internal static func acquireManageAuthorization(
+        authData: NSData,
+        reply: @Sendable @escaping (Bool) -> Void
+    ) {
+        let service = BTAppXPCClient.getService {
             reply(false)
         }
 

@@ -6,16 +6,22 @@
 import Foundation
 import os.log
 
-internal struct BTServiceXPCServer {
+internal enum BTServiceXPCServer {
     private final class Delegate: NSObject, NSXPCListenerDelegate {
-        fileprivate func listener(_ listener: NSXPCListener, shouldAcceptNewConnection newConnection: NSXPCConnection) -> Bool {
-            guard BTXPCValidation.isValidClient(connection: newConnection) else {
+        fileprivate func listener(
+            _: NSXPCListener,
+            shouldAcceptNewConnection newConnection: NSXPCConnection
+        ) -> Bool {
+            guard BTXPCValidation.isValidClient(connection: newConnection)
+            else {
                 os_log("XPC service connection by invalid client")
                 return false
             }
 
-            newConnection.exportedInterface = NSXPCInterface(with: BTServiceCommProtocol.self)
-            newConnection.exportedObject    = BTServiceComm()
+            newConnection.exportedInterface = NSXPCInterface(
+                with: BTServiceCommProtocol.self
+            )
+            newConnection.exportedObject = BTServiceComm()
 
             newConnection.resume()
 
@@ -25,9 +31,9 @@ internal struct BTServiceXPCServer {
 
     private static let delegate = BTServiceXPCServer.Delegate()
     private static let listener = NSXPCListener.service()
-    
+
     internal static func start() {
-        listener.delegate = delegate
-        listener.resume()
+        self.listener.delegate = self.delegate
+        self.listener.resume()
     }
 }

@@ -5,7 +5,7 @@
 
 import Foundation
 
-public struct BTStateInfo {
+public enum BTStateInfo {
     public enum ChargingMode: UInt8 {
         case standard
         case toMaximum
@@ -18,11 +18,11 @@ public struct BTStateInfo {
         case full
     }
 
-    public struct Keys {
-        public static let powerDisabled    = "PowerDisabled"
-        public static let connected        = "Connected"
+    public enum Keys {
+        public static let powerDisabled = "PowerDisabled"
+        public static let connected = "Connected"
         public static let chargingDisabled = "ChargingDisabled"
-        public static let progress         = "Progress"
-        public static let chargingMode     = "Mode"
+        public static let progress = "Progress"
+        public static let chargingMode = "Mode"
     }
 }

@@ -7,9 +7,9 @@ import Foundation
 import os.log
 
 @MainActor
-internal struct BTPowerState {
+internal enum BTPowerState {
     private static var chargingDisabled = false
-    private static var powerDisabled    = false
+    private static var powerDisabled = false
 
     internal static func initSleepState() {
         let chargeDisabled = SMCKit.Power.isChargingDisabled()
@@ -20,7 +20,7 @@ internal struct BTPowerState {
             //
             SleepKit.disableSleep()
         }
-        
+
         let powerDisabled = SMCKit.Power.isPowerAdapterDisabled()
         BTPowerState.powerDisabled = powerDisabled
         if powerDisabled {
@@ -56,13 +56,13 @@ internal struct BTPowerState {
             os_log("Failed to disable charging")
             return false
         }
-        
+
         SleepKit.restoreSleep()
-        
+
         BTPowerState.chargingDisabled = true
         return true
     }
-    
+
     internal static func enableCharging() -> Bool {
         guard BTPowerState.chargingDisabled else {
             return true
@@ -73,9 +73,9 @@ internal struct BTPowerState {
             os_log("Failed to enable charging")
             return false
         }
-        
+
         SleepKit.disableSleep()
-        
+
         BTPowerState.chargingDisabled = false
         return true
     }
@@ -85,12 +85,12 @@ internal struct BTPowerState {
             return true
         }
 
-        disableAdapterSleep()
+        self.disableAdapterSleep()
 
         let success = SMCKit.Power.disablePowerAdapter()
         guard success else {
             os_log("Failed to disable power adapter")
-            restoreAdapterSleep()
+            self.restoreAdapterSleep()
             return false
         }
 
@@ -108,8 +108,8 @@ internal struct BTPowerState {
             os_log("Failed to enable power adapter")
             return false
         }
-        
-        restoreAdapterSleep()
+
+        self.restoreAdapterSleep()
 
         BTPowerState.powerDisabled = false
         return true

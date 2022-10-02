@@ -10,16 +10,20 @@ import BTPreprocessor
 import NSXPCConnectionAuditToken
 import Security
 
-internal struct BTDaemonXPCServer {
+internal enum BTDaemonXPCServer {
     private final class Delegate: NSObject, NSXPCListenerDelegate {
-        fileprivate func listener(_ listener: NSXPCListener, shouldAcceptNewConnection newConnection: NSXPCConnection) -> Bool {
-            guard BTXPCValidation.isValidClient(connection: newConnection) else {
+        fileprivate func listener(
+            _: NSXPCListener,
+            shouldAcceptNewConnection newConnection: NSXPCConnection
+        ) -> Bool {
+            guard BTXPCValidation.isValidClient(connection: newConnection)
+            else {
                 os_log("XPC server connection by invalid client")
                 return false
             }
 
             newConnection.exportedInterface = BTDaemonXPCServer.daemonInterface
-            newConnection.exportedObject    = BTDaemonXPCServer.daemonComm
+            newConnection.exportedObject = BTDaemonXPCServer.daemonComm
 
             newConnection.resume()
 
@@ -27,15 +31,18 @@ internal struct BTDaemonXPCServer {
         }
     }
 
-    @MainActor private static var listener: NSXPCListener = NSXPCListener(machServiceName: BT_DAEMON_NAME)
+    @MainActor private static var listener = NSXPCListener(
+        machServiceName: BT_DAEMON_NAME
+    )
 
     private static let delegate: NSXPCListenerDelegate = Delegate()
 
-    private static let daemonInterface = NSXPCInterface(with: BTDaemonCommProtocol.self)
-    private static let daemonComm      = BTDaemonComm()
-    
+    private static let daemonInterface =
+        NSXPCInterface(with: BTDaemonCommProtocol.self)
+    private static let daemonComm = BTDaemonComm()
+
     @MainActor internal static func start() {
-        listener.delegate = delegate
-        listener.resume()
+        self.listener.delegate = self.delegate
+        self.listener.resume()
     }
 }

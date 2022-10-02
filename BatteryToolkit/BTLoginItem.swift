@@ -3,17 +3,17 @@
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
+import BTPreprocessor
 import Foundation
 import os.log
 import ServiceManagement
-import BTPreprocessor
 
-internal struct BTLoginItem {
+internal enum BTLoginItem {
     internal static func enable() -> Bool {
         if #available(macOS 13.0, *) {
             return enableService()
         } else {
-            return enableLegacy()
+            return self.enableLegacy()
         }
     }
 
@@ -21,7 +21,7 @@ internal struct BTLoginItem {
         if #available(macOS 13.0, *) {
             return disableService()
         } else {
-            return disableLegacy()
+            return self.disableLegacy()
         }
     }
 
@@ -32,8 +32,10 @@ internal struct BTLoginItem {
 
     @available(macOS 13.0, *)
     private static func enableService() -> Bool {
-        guard !registered(status: SMAppService.mainApp.status) else {
-            os_log("Already registered login item: \(SMAppService.mainApp.status.rawValue)")
+        guard !self.registered(status: SMAppService.mainApp.status) else {
+            os_log(
+                "Already registered login item: \(SMAppService.mainApp.status.rawValue)"
+            )
             return true
         }
 
@@ -49,9 +51,9 @@ internal struct BTLoginItem {
 
     @available(macOS 13.0, *)
     private static func disableService() -> Bool {
-        _ = disableLegacy()
+        _ = self.disableLegacy()
 
-        guard registered(status: SMAppService.mainApp.status) else {
+        guard self.registered(status: SMAppService.mainApp.status) else {
             return true
         }
 
@@ -68,13 +70,13 @@ internal struct BTLoginItem {
         return SMLoginItemSetEnabled(
             BT_AUTOSTART_NAME as CFString,
             true
-            )
+        )
     }
 
     private static func disableLegacy() -> Bool {
         return SMLoginItemSetEnabled(
             BT_AUTOSTART_NAME as CFString,
             false
-            )
+        )
     }
 }

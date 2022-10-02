@@ -3,9 +3,9 @@
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
-import Foundation
 import BTPreprocessor
+import Foundation
 
-internal struct BTAuthorizationRights {
+internal enum BTAuthorizationRights {
     internal static let manage = BT_DAEMON_NAME + ".manage"
 }

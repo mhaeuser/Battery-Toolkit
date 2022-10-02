@@ -3,12 +3,12 @@
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
+import BTPreprocessor
 import Foundation
 import os.log
-import BTPreprocessor
 
 @MainActor
-internal struct BTDaemonXPCClient {
+internal enum BTDaemonXPCClient {
     private static var connect: NSXPCConnection? = nil
 
     private static func connectDaemon() -> NSXPCConnection {
@@ -19,8 +19,10 @@ internal struct BTDaemonXPCClient {
         let connect = NSXPCConnection(
             machServiceName: BT_DAEMON_NAME,
             options: .privileged
-            )
-        connect.remoteObjectInterface = NSXPCInterface(with: BTDaemonCommProtocol.self)
+        )
+        connect.remoteObjectInterface = NSXPCInterface(
+            with: BTDaemonCommProtocol.self
+        )
 
         BTXPCValidation.protectDaemon(connection: connect)
 
@@ -32,29 +34,47 @@ internal struct BTDaemonXPCClient {
         return connect
     }
 
-
-    private static func executeDaemon(command: @MainActor @escaping @Sendable (BTDaemonCommProtocol) -> Void, errorHandler: @escaping @Sendable (any Error) -> Void) {
-        let connect = connectDaemon()
-        let daemon = connect.remoteObjectProxyWithErrorHandler(errorHandler) as! BTDaemonCommProtocol
+    private static func executeDaemon(
+        command: @MainActor @escaping @Sendable (BTDaemonCommProtocol) -> Void,
+        errorHandler: @escaping @Sendable (any Error) -> Void
+    ) {
+        let connect = self.connectDaemon()
+        let daemon = connect.remoteObjectProxyWithErrorHandler(
+            errorHandler
+        ) as! BTDaemonCommProtocol
         command(daemon)
     }
 
-    private static func executeDaemonRetry(errorHandler: @escaping @Sendable (BTError.RawValue) -> Void, command: @MainActor @escaping @Sendable (BTDaemonCommProtocol) -> Void) {
-        executeDaemon(command: command) { error in
-            os_log("XPC client remote error, retrying: \(error.localizedDescription)")
+    private static func executeDaemonRetry(
+        errorHandler: @escaping @Sendable (BTError.RawValue) -> Void,
+        command: @MainActor @escaping @Sendable (BTDaemonCommProtocol) -> Void
+    ) {
+        self.executeDaemon(command: command) { error in
+            os_log(
+                "XPC client remote error, retrying: \(error.localizedDescription)"
+            )
             DispatchQueue.main.async {
                 disconnectDaemon()
                 executeDaemon(command: command) { error in
-                    os_log("XPC client remote object error: \(error.localizedDescription)")
+                    os_log(
+                        "XPC client remote object error: \(error.localizedDescription)"
+                    )
                     errorHandler(BTError.commFailed.rawValue)
                 }
             }
         }
     }
 
-    private static func executeDaemonManageRetry(reply: @escaping @Sendable (BTError.RawValue) -> Void, command: @MainActor @escaping @Sendable (BTDaemonCommProtocol, AuthorizationRef, @Sendable @escaping (BTError.RawValue) -> Void) -> Void) {
-        BTAuthorizationService.manage() { authRef in
-            guard let authRef = authRef else {
+    private static func executeDaemonManageRetry(
+        reply: @escaping @Sendable (BTError.RawValue) -> Void,
+        command: @MainActor @escaping @Sendable (
+            BTDaemonCommProtocol,
+            AuthorizationRef,
+            @Sendable @escaping (BTError.RawValue) -> Void
+        ) -> Void
+    ) {
+        BTAuthorizationService.manage { authRef in
+            guard let authRef else {
                 reply(BTError.notAuthorized.rawValue)
                 return
             }
@@ -69,7 +89,7 @@ internal struct BTDaemonXPCClient {
                     os_log("Authorization expired, re-aquire")
                     DispatchQueue.main.async {
                         BTAuthorizationService.reacquireManage { authRef in
-                            guard let authRef = authRef else {
+                            guard let authRef else {
                                 reply(BTError.notAuthorized.rawValue)
                                 return
                             }
@@ -84,13 +104,16 @@ internal struct BTDaemonXPCClient {
         }
     }
 
-    private static func runExecute(command: BTDaemonCommCommand, reply: @Sendable @escaping (BTError.RawValue) -> Void) {
-        executeDaemonManageRetry(reply: reply) { (daemon, authRef, reply) in
+    private static func runExecute(
+        command: BTDaemonCommCommand,
+        reply: @Sendable @escaping (BTError.RawValue) -> Void
+    ) {
+        self.executeDaemonManageRetry(reply: reply) { daemon, authRef, reply in
             daemon.execute(
                 authData: BTAuthorization.toData(authRef: authRef),
                 command: command.rawValue,
                 reply: reply
-                )
+            )
         }
     }
 
@@ -113,16 +136,21 @@ internal struct BTDaemonXPCClient {
         connect.invalidate()
     }
 
-    internal static func getUniqueId(reply: @Sendable @escaping (NSData?) -> Void) -> Void {
-        executeDaemonRetry() { _ in
+    internal static func getUniqueId(
+        reply: @Sendable @escaping (NSData?) -> Void
+    ) {
+        self.executeDaemonRetry { _ in
             reply(nil)
         } command: { daemon in
             daemon.getUniqueId(reply: reply)
         }
     }
 
-    internal static func getState(reply: @Sendable @escaping (BTError.RawValue, [String: NSObject]) -> Void) -> Void {
-        executeDaemonRetry() { error in
+    internal static func getState(
+        reply: @Sendable @escaping (BTError.RawValue, [String: NSObject])
+            -> Void
+    ) {
+        self.executeDaemonRetry { error in
             reply(error, [:])
         } command: { daemon in
             daemon.getState { state in
@@ -131,98 +159,140 @@ internal struct BTDaemonXPCClient {
         }
     }
 
-    internal static func disablePowerAdapter(reply: @Sendable @escaping (BTError.RawValue) -> Void) -> Void {
-        runExecute(command: BTDaemonCommCommand.disablePowerAdapter, reply: reply)
+    internal static func disablePowerAdapter(
+        reply: @Sendable @escaping (BTError.RawValue) -> Void
+    ) {
+        self.runExecute(
+            command: BTDaemonCommCommand.disablePowerAdapter,
+            reply: reply
+        )
     }
 
-    internal static func enablePowerAdapter(reply: @Sendable @escaping (BTError.RawValue) -> Void) -> Void {
-        runExecute(command: BTDaemonCommCommand.enablePowerAdapter, reply: reply)
+    internal static func enablePowerAdapter(
+        reply: @Sendable @escaping (BTError.RawValue) -> Void
+    ) {
+        self.runExecute(
+            command: BTDaemonCommCommand.enablePowerAdapter,
+            reply: reply
+        )
     }
 
-    internal static func chargeToMaximum(reply: @Sendable @escaping (BTError.RawValue) -> Void) -> Void {
-        runExecute(command: BTDaemonCommCommand.chargeToMaximum, reply: reply)
+    internal static func chargeToMaximum(
+        reply: @Sendable @escaping (BTError.RawValue) -> Void
+    ) {
+        self.runExecute(
+            command: BTDaemonCommCommand.chargeToMaximum,
+            reply: reply
+        )
     }
 
-    internal static func chargeToFull(reply: @Sendable @escaping (BTError.RawValue) -> Void) -> Void {
-        runExecute(command: BTDaemonCommCommand.chargeToFull, reply: reply)
+    internal static func chargeToFull(
+        reply: @Sendable @escaping (BTError.RawValue) -> Void
+    ) {
+        self.runExecute(command: BTDaemonCommCommand.chargeToFull, reply: reply)
     }
 
-    internal static func disableCharging(reply: @Sendable @escaping (BTError.RawValue) -> Void) -> Void {
-        runExecute(command: BTDaemonCommCommand.disableCharging, reply: reply)
+    internal static func disableCharging(
+        reply: @Sendable @escaping (BTError.RawValue) -> Void
+    ) {
+        self.runExecute(
+            command: BTDaemonCommCommand.disableCharging,
+            reply: reply
+        )
     }
 
-    internal static func getSettings(reply: @Sendable @escaping (BTError.RawValue, [String: NSObject]) -> Void) {
-        executeDaemonRetry() { error in
+    internal static func getSettings(
+        reply: @Sendable @escaping (BTError.RawValue, [String: NSObject])
+            -> Void
+    ) {
+        self.executeDaemonRetry { error in
             reply(error, [:])
         } command: { daemon in
-            daemon.getSettings() { settings in
+            daemon.getSettings { settings in
                 reply(BTError.success.rawValue, settings)
             }
         }
     }
-    
-    internal static func setSettings(settings: [String: NSObject], reply: @Sendable @escaping (BTError.RawValue) -> Void) -> Void {
-        executeDaemonManageRetry(reply: reply) { (daemon, authRef, reply) in
+
+    internal static func setSettings(
+        settings: [String: NSObject],
+        reply: @Sendable @escaping (BTError.RawValue) -> Void
+    ) {
+        self.executeDaemonManageRetry(reply: reply) { daemon, authRef, reply in
             daemon.setSettings(
                 authData: BTAuthorization.toData(authRef: authRef),
                 settings: settings,
                 reply: reply
-                )
+            )
         }
     }
 
-    @Sendable nonisolated private static func emptyErrorHandler(error: BTError.RawValue) {
+    @Sendable private nonisolated static func emptyErrorHandler(
+        error _: BTError.RawValue
+    ) {
         //
         // Deliberately ignore errors as this is an optional notification.
         //
     }
 
     internal static func prepareUpdate() {
-        executeDaemonRetry(errorHandler: emptyErrorHandler) { daemon in
+        self.executeDaemonRetry(
+            errorHandler: self.emptyErrorHandler
+        ) { daemon in
             daemon.execute(
                 authData: nil,
                 command: BTDaemonCommCommand.prepareUpdate.rawValue,
                 reply: emptyErrorHandler
-                )
+            )
         }
     }
 
     internal static func finishUpdate() {
-        executeDaemonRetry(errorHandler: emptyErrorHandler) { daemon in
+        self.executeDaemonRetry(
+            errorHandler: self.emptyErrorHandler
+        ) { daemon in
             daemon.execute(
                 authData: nil,
                 command: BTDaemonCommCommand.finishUpdate.rawValue,
                 reply: emptyErrorHandler
-                )
+            )
         }
     }
 
-    internal static func removeLegacyHelperFiles(authRef: AuthorizationRef, reply: @Sendable @escaping (BTError.RawValue) -> Void) {
-        executeDaemonRetry() { error in
+    internal static func removeLegacyHelperFiles(
+        authRef: AuthorizationRef,
+        reply: @Sendable @escaping (BTError.RawValue) -> Void
+    ) {
+        self.executeDaemonRetry { error in
             reply(error)
         } command: { daemon in
             daemon.execute(
                 authData: BTAuthorization.toData(authRef: authRef),
                 command: BTDaemonCommCommand.removeLegacyHelperFiles.rawValue,
                 reply: reply
-                )
+            )
         }
     }
 
-    internal static func prepareDisable(authRef: AuthorizationRef, reply: @Sendable @escaping (BTError.RawValue) -> Void) {
-        executeDaemonRetry() { error in
+    internal static func prepareDisable(
+        authRef: AuthorizationRef,
+        reply: @Sendable @escaping (BTError.RawValue) -> Void
+    ) {
+        self.executeDaemonRetry { error in
             reply(error)
         } command: { daemon in
             daemon.execute(
                 authData: BTAuthorization.toData(authRef: authRef),
                 command: BTDaemonCommCommand.prepareDisable.rawValue,
                 reply: reply
-                )
+            )
         }
     }
 
-    internal static func isSupported(reply: @Sendable @escaping (BTError.RawValue) -> Void) {
-        executeDaemonRetry() { error in
+    internal static func isSupported(
+        reply: @Sendable @escaping (BTError.RawValue) -> Void
+    ) {
+        self.executeDaemonRetry { error in
             reply(error)
         } command: { daemon in
             daemon.execute(

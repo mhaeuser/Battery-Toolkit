@@ -3,8 +3,8 @@
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
-import Foundation
 import AppKit
+import Foundation
 
 final class SettingsWindowController: NSWindowController {
     private static var currentTab = NSToolbarItem.Identifier("general")
@@ -14,11 +14,12 @@ final class SettingsWindowController: NSWindowController {
     override func windowDidLoad() {
         super.windowDidLoad()
 
-        self.toolbar.selectedItemIdentifier = SettingsWindowController.currentTab
+        self.toolbar.selectedItemIdentifier = SettingsWindowController
+            .currentTab
         for item in self.toolbar.items {
             if item.itemIdentifier == self.toolbar.selectedItemIdentifier {
                 guard let action = item.action else {
-                    assert(false)
+                    assertionFailure()
                     return
                 }
 
@@ -39,7 +40,10 @@ final class SettingsWindowController: NSWindowController {
     }
 
     @IBAction func generalAction(_ sender: NSToolbarItem) {
-        guard let settingsViewControler = self.contentViewController as? SettingsViewController else {
+        guard
+            let settingsViewControler = self
+                .contentViewController as? SettingsViewController
+        else {
             return
         }
 
@@ -47,9 +51,11 @@ final class SettingsWindowController: NSWindowController {
         self.window?.title = sender.label
     }
 
-
     @IBAction func backgroundActivityAction(_ sender: NSToolbarItem) {
-        guard let settingsViewControler = self.contentViewController as? SettingsViewController else {
+        guard
+            let settingsViewControler = self
+                .contentViewController as? SettingsViewController
+        else {
             return
         }
 

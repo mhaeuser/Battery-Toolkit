@@ -8,17 +8,23 @@ import os.log
 import ServiceManagement
 
 internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
-    @MainActor func getUniqueId(reply: @Sendable @escaping (NSData?) -> Void) -> Void {
+    @MainActor func getUniqueId(
+        reply: @Sendable @escaping (NSData?) -> Void
+    ) {
         reply(BTDaemon.getUniqueId())
     }
 
-    @MainActor internal func execute(authData: NSData?, command: UInt8, reply: @Sendable @escaping (BTError.RawValue) -> Void) -> Void {
+    @MainActor internal func execute(
+        authData: NSData?,
+        command: UInt8,
+        reply: @Sendable @escaping (BTError.RawValue) -> Void
+    ) {
         if command == BTDaemonCommCommand.isSupported.rawValue {
             reply(
                 BTDaemon.supported ?
                     BTError.success.rawValue :
                     BTError.unsupported.rawValue
-                )
+            )
             return
         }
 
@@ -33,16 +39,17 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
         }
 
         let authRef = BTAuthorization.fromData(authData: authData)
-        guard let authRef = authRef else {
+        guard let authRef else {
             reply(BTError.notAuthorized.rawValue)
             return
         }
 
-        guard command != BTDaemonCommCommand.removeLegacyHelperFiles.rawValue else {
+        guard command != BTDaemonCommCommand.removeLegacyHelperFiles.rawValue
+        else {
             let authorized = BTAuthorization.checkRight(
                 authRef: authRef,
                 rightName: kSMRightModifySystemDaemons
-                )
+            )
             guard authorized else {
                 reply(BTError.notAuthorized.rawValue)
                 return
@@ -57,7 +64,7 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
             let authorized = BTAuthorization.checkRight(
                 authRef: authRef,
                 rightName: kSMRightModifySystemDaemons
-                )
+            )
             guard authorized else {
                 reply(BTError.notAuthorized.rawValue)
                 return
@@ -76,7 +83,7 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
         let authorized = BTAuthorization.checkRight(
             authRef: authRef,
             rightName: BTAuthorizationRights.manage
-            )
+        )
         guard authorized else {
             reply(BTError.notAuthorized.rawValue)
             return
@@ -84,29 +91,31 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
 
         var success = false
         switch command {
-            case BTDaemonCommCommand.disablePowerAdapter.rawValue:
-                success = BTPowerState.disablePowerAdapter()
+        case BTDaemonCommCommand.disablePowerAdapter.rawValue:
+            success = BTPowerState.disablePowerAdapter()
 
-            case BTDaemonCommCommand.enablePowerAdapter.rawValue:
-                success = BTPowerState.enablePowerAdapter()
+        case BTDaemonCommCommand.enablePowerAdapter.rawValue:
+            success = BTPowerState.enablePowerAdapter()
 
-            case BTDaemonCommCommand.chargeToFull.rawValue:
-                success = BTPowerEvents.chargeToFull()
+        case BTDaemonCommCommand.chargeToFull.rawValue:
+            success = BTPowerEvents.chargeToFull()
 
-            case BTDaemonCommCommand.chargeToMaximum.rawValue:
-                success = BTPowerEvents.chargeToMaximum()
+        case BTDaemonCommCommand.chargeToMaximum.rawValue:
+            success = BTPowerEvents.chargeToMaximum()
 
-            case BTDaemonCommCommand.disableCharging.rawValue:
-                success = BTPowerEvents.disableCharging()
+        case BTDaemonCommCommand.disableCharging.rawValue:
+            success = BTPowerEvents.disableCharging()
 
-            default:
-                os_log("Unknown command: \(command)")
+        default:
+            os_log("Unknown command: \(command)")
         }
 
         reply(BTError(fromBool: success).rawValue)
     }
 
-    @MainActor internal func getState(reply: @Sendable @escaping ([String: NSObject]) -> Void) -> Void {
+    @MainActor internal func getState(
+        reply: @Sendable @escaping ([String: NSObject]) -> Void
+    ) {
         guard BTDaemon.supported else {
             reply([:])
             return
@@ -115,7 +124,9 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
         reply(BTDaemon.getState())
     }
 
-    @MainActor internal func getSettings(reply: @Sendable @escaping ([String: NSObject]) -> Void) {
+    @MainActor internal func getSettings(
+        reply: @Sendable @escaping ([String: NSObject]) -> Void
+    ) {
         guard BTDaemon.supported else {
             reply([:])
             return
@@ -124,14 +135,18 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
         reply(BTSettings.getSettings())
     }
 
-    @MainActor internal func setSettings(authData: NSData?, settings: [String: NSObject], reply: @Sendable @escaping (BTError.RawValue) -> Void) -> Void {
+    @MainActor internal func setSettings(
+        authData: NSData?,
+        settings: [String: NSObject],
+        reply: @Sendable @escaping (BTError.RawValue) -> Void
+    ) {
         guard BTDaemon.supported else {
             reply(BTError.unsupported.rawValue)
             return
         }
 
         let authRef = BTAuthorization.fromData(authData: authData)
-        guard let authRef = authRef else {
+        guard let authRef else {
             reply(BTError.notAuthorized.rawValue)
             return
         }
@@ -139,7 +154,7 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
         let authorized = BTAuthorization.checkRight(
             authRef: authRef,
             rightName: BTAuthorizationRights.manage
-            )
+        )
         guard authorized else {
             reply(BTError.notAuthorized.rawValue)
             return

@@ -7,7 +7,7 @@ import Foundation
 import os.log
 
 @MainActor
-internal struct BTDaemonManagement {
+internal enum BTDaemonManagement {
     private static func removeFile(path: URL) -> Bool {
         do {
             try FileManager.default.removeItem(at: path)
@@ -21,8 +21,10 @@ internal struct BTDaemonManagement {
     }
 
     internal static func removeLegacyHelperFiles() -> Bool {
-        let success1 = removeFile(path: BTLegacyHelperInfo.legacyHelperPlist)
-        let success2 = removeFile(path: BTLegacyHelperInfo.legacyHelperExec)
+        let success1 = self
+            .removeFile(path: BTLegacyHelperInfo.legacyHelperPlist)
+        let success2 = self
+            .removeFile(path: BTLegacyHelperInfo.legacyHelperExec)
 
         let success = success1 && success2
         os_log("Legacy helper removal: \(success)")
@@ -31,11 +33,11 @@ internal struct BTDaemonManagement {
     }
 
     internal static func prepareDisable() -> Bool {
-        let legacySuccess = removeLegacyHelperFiles()
+        let legacySuccess = self.removeLegacyHelperFiles()
 
         let rightStatus = BTAuthorization.removeRight(
             rightName: BTAuthorizationRights.manage
-            )
+        )
         os_log("Manage right removal: \(rightStatus)")
 
         BTSettings.removeDefaults()

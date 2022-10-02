@@ -8,9 +8,9 @@ import os.log
 
 @main
 @MainActor
-internal struct BTDaemon {
+internal enum BTDaemon {
     /// Whether the machine is supported.
-    internal private(set)static var supported = false
+    internal private(set) static var supported = false
 
     private static var uniqueId: NSData? = nil
 
@@ -37,7 +37,7 @@ internal struct BTDaemon {
             let status = BTAuthorization.duplicateRight(
                 rightName: BTAuthorizationRights.manage,
                 templateName: kAuthorizationRuleAuthenticateAsAdmin
-                )
+            )
             if status != errSecSuccess {
                 os_log("Error adding manage right: \(status)")
             }
@@ -63,17 +63,18 @@ internal struct BTDaemon {
 
     internal static func getState() -> [String: NSObject] {
         let chargingDisabled = BTPowerState.isChargingDisabled()
-        let connected        = BTPowerEvents.unlimitedPower
-        let powerDisabled    = BTPowerState.isPowerAdapterDisabled()
-        let progress         = BTPowerEvents.getChargingProgress()
-        let mode             = BTPowerEvents.chargingMode
+        let connected = BTPowerEvents.unlimitedPower
+        let powerDisabled = BTPowerState.isPowerAdapterDisabled()
+        let progress = BTPowerEvents.getChargingProgress()
+        let mode = BTPowerEvents.chargingMode
 
         return [
             BTStateInfo.Keys.powerDisabled: NSNumber(value: powerDisabled),
             BTStateInfo.Keys.connected: NSNumber(value: connected),
-            BTStateInfo.Keys.chargingDisabled: NSNumber(value: chargingDisabled),
+            BTStateInfo.Keys
+                .chargingDisabled: NSNumber(value: chargingDisabled),
             BTStateInfo.Keys.progress: NSNumber(value: progress.rawValue),
-            BTStateInfo.Keys.chargingMode: NSNumber(value: mode.rawValue)
+            BTStateInfo.Keys.chargingMode: NSNumber(value: mode.rawValue),
         ]
     }
 }

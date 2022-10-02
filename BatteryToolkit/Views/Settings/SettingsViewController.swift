@@ -17,10 +17,10 @@ final class SettingsViewController: NSViewController {
 
     @IBOutlet var minChargeTextField: NSTextField!
     @IBOutlet var minChargeSlider: NSSlider!
-    
+
     @IBOutlet var maxChargeTextField: NSTextField!
     @IBOutlet var maxChargeSlider: NSSlider!
-    
+
     @IBOutlet var adapterSleepButton: NSButton!
 
     private var minChargeVal = BTSettingsInfo.Defaults.minCharge
@@ -28,7 +28,7 @@ final class SettingsViewController: NSViewController {
         get {
             return NSNumber(value: self.minChargeVal)
         }
-        
+
         set {
             let value = newValue.intValue
             //
@@ -41,7 +41,7 @@ final class SettingsViewController: NSViewController {
                 DispatchQueue.main.async {
                     self.minChargeNum = NSNumber(
                         value: BTSettingsInfo.Bounds.minChargeMin
-                        )
+                    )
                 }
             } else if value > 100 {
                 DispatchQueue.main.async {
@@ -58,13 +58,13 @@ final class SettingsViewController: NSViewController {
             }
         }
     }
-    
+
     private var maxChargeVal = BTSettingsInfo.Defaults.maxCharge
     @objc dynamic var maxChargeNum: NSNumber {
         get {
             return NSNumber(value: self.maxChargeVal)
         }
-        
+
         set {
             let value = newValue.intValue
             //
@@ -74,7 +74,7 @@ final class SettingsViewController: NSViewController {
                 DispatchQueue.main.async {
                     self.maxChargeNum = NSNumber(
                         value: BTSettingsInfo.Bounds.maxChargeMin
-                        )
+                    )
                 }
             } else if value > 100 {
                 DispatchQueue.main.async {
@@ -109,14 +109,14 @@ final class SettingsViewController: NSViewController {
     private func initGeneralState() {
         let disableAutostart = UserDefaults.standard.bool(
             forKey: BTSettingsInfo.Keys.disableAutostart
-            )
+        )
         self.autostartButton.state = disableAutostart ?
             NSControl.StateValue.off :
             NSControl.StateValue.on
     }
-    
+
     private func initBackgroundActivityState() {
-        BatteryToolkit.getSettings { (error, settings) in
+        BatteryToolkit.getSettings { error, settings in
             DispatchQueue.main.async {
                 self.currentSettings = settings
 
@@ -125,13 +125,19 @@ final class SettingsViewController: NSViewController {
                     return
                 }
 
-                let minChargeNum   = settings[BTSettingsInfo.Keys.minCharge] as? NSNumber
-                let maxChargeNum   = settings[BTSettingsInfo.Keys.maxCharge] as? NSNumber
-                let adapterInfoNum = settings[BTSettingsInfo.Keys.adapterSleep] as? NSNumber
+                let minChargeNum =
+                    settings[BTSettingsInfo.Keys.minCharge] as? NSNumber
+                let maxChargeNum =
+                    settings[BTSettingsInfo.Keys.maxCharge] as? NSNumber
+                let adapterInfoNum =
+                    settings[BTSettingsInfo.Keys.adapterSleep] as? NSNumber
 
-                let minCharge    = minChargeNum?.intValue    ?? Int(BTSettingsInfo.Defaults.minCharge)
-                let maxCharge    = maxChargeNum?.intValue    ?? Int(BTSettingsInfo.Defaults.maxCharge)
-                let adapterSleep = adapterInfoNum?.boolValue ?? BTSettingsInfo.Defaults.adapterSleep
+                let minCharge = minChargeNum?.intValue ??
+                    Int(BTSettingsInfo.Defaults.minCharge)
+                let maxCharge = maxChargeNum?.intValue ??
+                    Int(BTSettingsInfo.Defaults.maxCharge)
+                let adapterSleep = adapterInfoNum?.boolValue ??
+                    BTSettingsInfo.Defaults.adapterSleep
 
                 self.setMinCharge(value: minCharge)
                 self.setMaxCharge(value: maxCharge)
@@ -139,13 +145,13 @@ final class SettingsViewController: NSViewController {
             }
         }
     }
-    
-    @IBAction func cancelButtonAction(_ sender: NSButton) {
+
+    @IBAction func cancelButtonAction(_: NSButton) {
         self.view.window?.windowController?.close()
     }
-    
-    @IBAction func doneButtonAction(_ sender: NSButton) {
-        let disableAutostart = autostartButton.state != .on
+
+    @IBAction func doneButtonAction(_: NSButton) {
+        let disableAutostart = self.autostartButton.state != .on
         let success = disableAutostart ?
             BTLoginItem.disable() :
             BTLoginItem.enable()
@@ -155,12 +161,12 @@ final class SettingsViewController: NSViewController {
             UserDefaults.standard.setValue(
                 disableAutostart,
                 forKey: BTSettingsInfo.Keys.disableAutostart
-                )
+            )
         } else {
             BTErrorHandler.errorHandler(
                 error: BTError.unknown.rawValue,
                 window: self.view.window
-                )
+            )
         }
 
         let settings: [String: NSObject] = [
@@ -168,10 +174,10 @@ final class SettingsViewController: NSViewController {
             BTSettingsInfo.Keys.maxCharge: self.maxChargeNum,
             BTSettingsInfo.Keys.adapterSleep: NSNumber(
                 value: self.adapterSleepButton.state == NSControl.StateValue.off
-                )
+            ),
         ]
 
-        guard settings != currentSettings else {
+        guard settings != self.currentSettings else {
             os_log("Background Activity settings have not changed, ignoring")
             //
             // If the previous operations failed, we displayed an error prompt
@@ -202,15 +208,15 @@ final class SettingsViewController: NSViewController {
                 BTErrorHandler.errorHandler(
                     error: error,
                     window: self.view.window
-                    )
+                )
             }
         }
     }
 
     override func viewWillAppear() {
         super.viewWillAppear()
-        initGeneralState()
-        initBackgroundActivityState()
+        self.initGeneralState()
+        self.initBackgroundActivityState()
         self.view.window?.center()
         NSApp.activate(ignoringOtherApps: true)
     }

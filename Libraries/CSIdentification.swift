@@ -6,14 +6,14 @@
 import Foundation
 import os.log
 
-public struct CSIdentification {
+public enum CSIdentification {
     public static func getUniqueId(staticCode: SecStaticCode) -> NSData? {
         var signInfo: CFDictionary? = nil
         let infoStatus = SecCodeCopySigningInformation(
             staticCode,
             [],
             &signInfo
-            )
+        )
         guard infoStatus == errSecSuccess else {
             os_log("Failed to retrieve signing information")
             return nil
@@ -24,7 +24,8 @@ public struct CSIdentification {
             return nil
         }
 
-        guard let unique = signInfo[kSecCodeInfoUnique as String] as? NSData else {
+        guard let unique = signInfo[kSecCodeInfoUnique as String] as? NSData
+        else {
             os_log("Unique identifier is invalid")
             return nil
         }
@@ -35,18 +36,18 @@ public struct CSIdentification {
     public static func getUniqueIdSelf() -> NSData? {
         var code: SecCode? = nil
         let selfStatus = SecCodeCopySelf([], &code)
-        guard selfStatus == errSecSuccess, let code = code else {
+        guard selfStatus == errSecSuccess, let code else {
             return nil
         }
 
         var staticCode: SecStaticCode? = nil
         let staticStatus = SecCodeCopyStaticCode(code, [], &staticCode)
-        guard staticStatus == errSecSuccess, let staticCode = staticCode else {
+        guard staticStatus == errSecSuccess, let staticCode else {
             os_log("Failed to retrieve SecStaticCode")
             return nil
         }
 
-        return getUniqueId(staticCode: staticCode)
+        return self.getUniqueId(staticCode: staticCode)
     }
 
     public static func getBundleRelativeUniqueId(relative: String) -> NSData? {
@@ -56,12 +57,12 @@ public struct CSIdentification {
             pathURL as CFURL,
             [],
             &staticCode
-            )
-        guard status == errSecSuccess, let staticCode = staticCode else {
+        )
+        guard status == errSecSuccess, let staticCode else {
             os_log("Failed to retrieve SecStaticCode")
             return nil
         }
 
-        return getUniqueId(staticCode: staticCode)
+        return self.getUniqueId(staticCode: staticCode)
     }
 }
