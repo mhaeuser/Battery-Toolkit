@@ -30,9 +30,9 @@ internal struct BTDaemonManagement {
             guard daemonUpToDate(daemonId: daemonId) else {
                 DispatchQueue.main.async {
                     if #available(macOS 13.0, *) {
-                        BTDaemonManagementService.register(reply: reply)
+                        BTDaemonManagement.Service.register(reply: reply)
                     } else {
-                        BTDaemonManagementLegacy.register(reply: reply)
+                        BTDaemonManagement.Legacy.register(reply: reply)
                     }
                 }
 
@@ -46,17 +46,17 @@ internal struct BTDaemonManagement {
 
     @MainActor internal static func upgrade(reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void) {
         if #available(macOS 13.0, *) {
-            BTDaemonManagementService.upgrade(reply: reply)
+            BTDaemonManagement.Service.upgrade(reply: reply)
         } else  {
-            BTDaemonManagementLegacy.upgrade()
+            BTDaemonManagement.Legacy.upgrade()
         }
     }
     
     internal static func approve(timeout: UInt8, reply: @escaping @Sendable (Bool) -> Void) {
         if #available(macOS 13.0, *) {
-            BTDaemonManagementService.approve(timeout: timeout, reply: reply)
+            BTDaemonManagement.Service.approve(timeout: timeout, reply: reply)
         } else  {
-            BTDaemonManagementLegacy.approve()
+            BTDaemonManagement.Legacy.approve()
         }
     }
     
@@ -72,9 +72,9 @@ internal struct BTDaemonManagement {
             DispatchQueue.main.async {
                 BTDaemonXPCClient.prepareDisable(authRef: authRef) { _ in
                     if #available(macOS 13.0, *) {
-                        BTDaemonManagementService.unregister(reply: reply)
+                        BTDaemonManagement.Service.unregister(reply: reply)
                     } else {
-                        BTDaemonManagementLegacy.unregister(authRef: authRef)
+                        BTDaemonManagement.Legacy.unregister(authRef: authRef)
                         reply(BTError.success.rawValue)
                     }
                 }
