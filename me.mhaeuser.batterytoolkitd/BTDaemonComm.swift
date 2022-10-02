@@ -89,26 +89,28 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
             return
         }
 
-        var success = false
-        switch command {
-        case BTDaemonCommCommand.disablePowerAdapter.rawValue:
-            success = BTPowerState.disablePowerAdapter()
+        let success = {
+            switch command {
+            case BTDaemonCommCommand.disablePowerAdapter.rawValue:
+                return BTPowerState.disablePowerAdapter()
 
-        case BTDaemonCommCommand.enablePowerAdapter.rawValue:
-            success = BTPowerState.enablePowerAdapter()
+            case BTDaemonCommCommand.enablePowerAdapter.rawValue:
+                return BTPowerState.enablePowerAdapter()
 
-        case BTDaemonCommCommand.chargeToFull.rawValue:
-            success = BTPowerEvents.chargeToFull()
+            case BTDaemonCommCommand.chargeToFull.rawValue:
+                return BTPowerEvents.chargeToFull()
 
-        case BTDaemonCommCommand.chargeToMaximum.rawValue:
-            success = BTPowerEvents.chargeToMaximum()
+            case BTDaemonCommCommand.chargeToMaximum.rawValue:
+                return BTPowerEvents.chargeToMaximum()
 
-        case BTDaemonCommCommand.disableCharging.rawValue:
-            success = BTPowerEvents.disableCharging()
+            case BTDaemonCommCommand.disableCharging.rawValue:
+                return BTPowerEvents.disableCharging()
 
-        default:
-            os_log("Unknown command: \(command)")
-        }
+            default:
+                os_log("Unknown command: \(command)")
+                return false
+            }
+        }()
 
         reply(BTError(fromBool: success).rawValue)
     }

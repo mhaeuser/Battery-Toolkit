@@ -28,10 +28,11 @@ private enum AutostartHelper {
         //
         // Retrieve the URL of the containing app.
         //
-        var mainAppPath = Bundle.main.bundleURL
-        for _ in 0 ... 3 {
-            mainAppPath = mainAppPath.deletingLastPathComponent()
-        }
+        let mainAppPath = Bundle.main.bundleURL
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
         //
         // Start the containing app quietly.
         //

@@ -12,8 +12,18 @@ import os.log
 @MainActor
 internal enum BTDispatcher {
     fileprivate struct Registration {
-        fileprivate var valid = false
-        fileprivate var token: Int32 = 0
+        fileprivate let valid: Bool
+        fileprivate let token: Int32
+
+        init() {
+            self.valid = false
+            self.token = 0
+        }
+
+        init(valid: Bool, token: Int32) {
+            self.valid = valid
+            self.token = token
+        }
     }
 
     private static var percentRegistration = Registration()

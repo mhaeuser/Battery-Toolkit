@@ -31,7 +31,7 @@ internal enum BTDaemonXPCServer {
         }
     }
 
-    @MainActor private static var listener = NSXPCListener(
+    @MainActor private static let listener = NSXPCListener(
         machServiceName: BT_DAEMON_NAME
     )
 

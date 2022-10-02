@@ -79,7 +79,7 @@ public enum BTXPCValidation {
     }
 
     private static func requirementsTextFromId(identifier: String) -> String {
-        var text = "identifier \"" + identifier + "\"" +
+        let debugText = "identifier \"" + identifier + "\"" +
             " and anchor apple generic" +
             " and certificate leaf[subject.CN] = \"" + BT_CODE_SIGN_CN + "\"" +
             " and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */" +
@@ -87,12 +87,12 @@ public enum BTXPCValidation {
             " and !(entitlement[\"com.apple.security.cs.disable-library-validation\"] /* exists */)" +
             " and !(entitlement[\"com.apple.security.cs.allow-unsigned-executable-memory\"] /* exists */)" +
             " and !(entitlement[\"com.apple.security.cs.allow-jit\"] /* exists */)"
-        #if !DEBUG
-            text +=
+        #if DEBUG
+            return debugText
+        #else
+            return debugText +
                 " and !(entitlement[\"com.apple.security.get-task-allow\"] /* exists */)"
         #endif
-
-        return text
     }
 
     public static func protectService(connection: NSXPCConnection) {
