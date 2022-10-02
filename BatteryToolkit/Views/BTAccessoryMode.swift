@@ -19,7 +19,7 @@ internal struct BTAccessoryMode {
         let dockApps = NSRunningApplication.runningApplications(
             withBundleIdentifier: "com.apple.dock"
             )
-        guard dockApps.count > 0 else {
+        guard !dockApps.isEmpty else {
             return
         }
 

@@ -15,10 +15,11 @@ private struct AutostartHelper {
         // Ensure this helper is launched from an expected location.
         //
         let pathComponents = Bundle.main.bundleURL.pathComponents
-        guard pathComponents.count >= 4 &&
-                pathComponents[pathComponents.count - 4] == "Contents" &&
-                pathComponents[pathComponents.count - 3] == "Library" &&
-                pathComponents[pathComponents.count - 2] == "LoginItems" else {
+        let count          = pathComponents.count
+        guard count >= 4 &&
+                pathComponents[count - 4] == "Contents" &&
+                pathComponents[count - 3] == "Library" &&
+                pathComponents[count - 2] == "LoginItems" else {
             os_log("Unexpected bundle URL: \(pathComponents, privacy: .public)")
             return
         }
