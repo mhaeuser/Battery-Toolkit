@@ -3,6 +3,6 @@
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
-module SMCPrivate {
+module SMCParamStruct {
     header "SMCParamStruct.h"
 }

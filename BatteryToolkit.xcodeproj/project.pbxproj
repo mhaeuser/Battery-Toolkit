@@ -328,7 +328,7 @@
 				CEECE31928BB648F00821A3B /* BatteryToolkitService */,
 				CE6B75F728BC18DD008DF170 /* Common */,
 				CE6C06B828A84C2400D76CC8 /* BTPreprocessor */,
-				CEB4671C2843C80D00D7CB01 /* SMCPrivate */,
+				CEB4671C2843C80D00D7CB01 /* SMCParamStruct */,
 				CE6C06A328A84A9200D76CC8 /* IOPMPrivate */,
 				CE555D89285D2A0B0031A6F9 /* Libraries */,
 				CE52867528298B6D00860C7B /* BatteryToolkit */,
@@ -459,13 +459,13 @@
 			path = Main;
 			sourceTree = "<group>";
 		};
-		CEB4671C2843C80D00D7CB01 /* SMCPrivate */ = {
+		CEB4671C2843C80D00D7CB01 /* SMCParamStruct */ = {
 			isa = PBXGroup;
 			children = (
 				CEB4671B2843BFA000D7CB01 /* SMCParamStruct.h */,
 				CEB4671D2843C87200D7CB01 /* module.modulemap */,
 			);
-			path = SMCPrivate;
+			path = SMCParamStruct;
 			sourceTree = "<group>";
 		};
 		CED8DD3628C364D60082C02A /* NSXPCConnection+AuditToken */ = {
