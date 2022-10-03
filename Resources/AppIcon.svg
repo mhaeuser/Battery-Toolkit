@@ -7,7 +7,7 @@
    xml:space="preserve"
    style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2"
    id="svg40"
-   sodipodi:docname="AppIcon-shadow.svg"
+   sodipodi:docname="AppIcon.svg"
    inkscape:version="1.2.1 (9c6d41e, 2022-07-14)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -23,12 +23,12 @@
    inkscape:pagecheckerboard="true"
    inkscape:deskcolor="#d1d1d1"
    showgrid="false"
-   inkscape:zoom="0.86274693"
-   inkscape:cx="281.65849"
-   inkscape:cy="544.19203"
-   inkscape:window-width="1921"
+   inkscape:zoom="0.83372205"
+   inkscape:cx="567.33536"
+   inkscape:cy="503.16529"
+   inkscape:window-width="1527"
    inkscape:window-height="1205"
-   inkscape:window-x="528"
+   inkscape:window-x="922"
    inkscape:window-y="25"
    inkscape:window-maximized="0"
    inkscape:current-layer="Icon"
@@ -49,7 +49,7 @@
      style="display:inline;fill:url(#linearGradient6098);fill-opacity:1;fill-rule:evenodd"
      inkscape:label="Fill" /></g><g
    id="Icon"
-   style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;filter:url(#filter158);display:inline"
+   style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;display:inline;filter:url(#filter158)"
    transform="translate(-0.00174,-10.00174)">
             
             
@@ -59,9 +59,12 @@
    inkscape:label="Glow"
    style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;filter:url(#filter326)"
    transform="translate(0.00174,10.00174)"><g
-     id="Lower-Arrow"
-     transform="matrix(1.40087,0,0,1.40087,153.37728,153.37728)"
-     style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;display:inline">
+     id="g158"
+     inkscape:label="InnerShadow"
+     style="filter:url(#filter891)"><g
+       id="Lower-Arrow"
+       transform="matrix(1.40087,0,0,1.40087,153.37728,153.37728)"
+       style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;display:inline">
                 <path
    d="M 255.6,447.9 C 169.1,447.9 95.9,390.5 72.3,311.8 L 128.1,256 H 0 v 128.2 l 38.5,-38.5 c 35.4,84.2 119.5,144.7 217.1,144.7 114.8,0 210,-82.6 230.4,-191.9 h -43.3 c -19.6,85.7 -95.9,149.4 -187.1,149.4 z"
    style="display:inline;fill:#ffffff;fill-rule:nonzero"
@@ -75,9 +78,9 @@
    style="display:inline;fill:#ffffff;fill-rule:nonzero"
    id="path12" />
             </g><g
-     id="Battery"
-     transform="matrix(1.40087,0,0,1.40087,153.37728,153.37728)"
-     style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;display:inline">
+       id="Battery"
+       transform="matrix(1.40087,0,0,1.40087,153.37728,153.37728)"
+       style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;display:inline">
                 <path
    d="m 276.8,106.6 h -42.5 c -11.8,0 -21.2,9.4 -21.2,21.2 V 149 h -21.2 c -11.8,0 -21.2,9.4 -21.2,21.2 v 170.7 c 0,23.6 18.9,42.5 42.5,42.5 h 84.9 c 23.6,0 42.5,-18.9 42.5,-42.5 V 170.2 c 0,-11.8 -9.4,-21.2 -21.2,-21.2 h -21.3 l 0.1,-20.3 c -0.1,-11.9 -9.6,-22.1 -21.4,-22.1 z m 32.3,149.4 -74.7,84.9 v -63.7 h -32.2 l 74.7,-84.9 V 256 Z"
    style="fill:#ffffff;fill-rule:nonzero"
@@ -91,9 +94,9 @@
    style="fill:#ffffff;fill-rule:nonzero"
    id="path19" />
             </g><g
-     id="Upper-Arrow"
-     transform="matrix(1.40087,0,0,1.40087,153.37728,153.37728)"
-     style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;display:inline">
+       id="Upper-Arrow"
+       transform="matrix(1.40087,0,0,1.40087,153.37728,153.37728)"
+       style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;display:inline">
                 <path
    d="M 472.7,167.1 C 437.3,82.2 353.1,21.6 255.6,21.6 140.8,21.6 45.6,104.2 25.2,213.5 h 43.3 c 19.7,-84.9 96,-149.4 186.4,-149.4 86.5,0 159.7,57.4 183.3,136.1 L 383.8,256 H 512 V 128.6 Z"
    style="display:inline;fill:#ffffff;fill-rule:nonzero"
@@ -106,7 +109,7 @@
    d="M 472.7,167.1 C 437.3,82.2 353.1,21.6 255.6,21.6 140.8,21.6 45.6,104.2 25.2,213.5 h 43.3 c 19.7,-84.9 96,-149.4 186.4,-149.4 86.5,0 159.7,57.4 183.3,136.1 L 383.8,256 H 512 V 128.6 Z"
    style="display:inline;fill:#ffffff;fill-rule:nonzero"
    id="path26" />
-            </g></g></g>
+            </g></g></g></g>
     <defs
    id="defs38">
         <linearGradient
@@ -125,12 +128,12 @@
      id="stop35" /></linearGradient>
     <filter
    style="color-interpolation-filters:sRGB"
-   inkscape:label="Icon Shadow"
+   inkscape:label="Icon-Shadow"
    id="filter158"
-   x="-0.10038404"
-   y="-0.14008846"
-   width="1.2007681"
-   height="1.280177"><feFlood
+   x="-0.066922696"
+   y="-0.10354365"
+   width="1.1338454"
+   height="1.2070874"><feFlood
      flood-opacity="0.2"
      flood-color="rgb(0,0,0)"
      result="flood"
@@ -182,13 +185,13 @@
    y2="823.25012"
    gradientUnits="userSpaceOnUse" /><filter
    style="color-interpolation-filters:sRGB;"
-   inkscape:label="Icon Glow"
+   inkscape:label="Icon-Glow"
    id="filter326"
    x="-0.033461349"
    y="-0.066998833"
    width="1.0669227"
    height="1.1035437"><feFlood
-     flood-opacity="0.301961"
+     flood-opacity="0.30000000000000004"
      flood-color="rgb(0,255,133)"
      result="flood"
      id="feFlood316" /><feComposite
@@ -209,5 +212,34 @@
      in2="SourceGraphic"
      operator="atop"
      result="composite2"
-     id="feComposite324" /></filter></defs>
+     id="feComposite324" /></filter><filter
+   style="color-interpolation-filters:sRGB;"
+   inkscape:label="Icon-Inner-Shadow"
+   id="filter891"
+   x="-0.033461349"
+   y="-0.044158322"
+   width="1.0669227"
+   height="1.0807031"><feFlood
+     flood-opacity="0.30000000000000004"
+     flood-color="rgb(0,0,0)"
+     result="flood"
+     id="feFlood881" /><feComposite
+     in="flood"
+     in2="SourceGraphic"
+     operator="out"
+     result="composite1"
+     id="feComposite883" /><feGaussianBlur
+     in="composite1"
+     stdDeviation="10"
+     result="blur"
+     id="feGaussianBlur885" /><feOffset
+     dx="0"
+     dy="-5"
+     result="offset"
+     id="feOffset887" /><feComposite
+     in="offset"
+     in2="SourceGraphic"
+     operator="atop"
+     result="composite2"
+     id="feComposite889" /></filter></defs>
 </svg>
