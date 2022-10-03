@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="100%"
+   height="100%"
+   viewBox="0 0 512 512"
+   version="1.1"
+   xml:space="preserve"
+   style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"
+   id="svg5"
+   sodipodi:docname="ExtraItemIcon.svg"
+   inkscape:version="1.2.1 (9c6d41e, 2022-07-14)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs9" /><sodipodi:namedview
+   id="namedview7"
+   pagecolor="#ffffff"
+   bordercolor="#000000"
+   borderopacity="0.25"
+   inkscape:showpageshadow="false"
+   inkscape:pageopacity="0.0"
+   inkscape:pagecheckerboard="true"
+   inkscape:deskcolor="#d1d1d1"
+   showgrid="false"
+   inkscape:zoom="2.0058594"
+   inkscape:cx="200.16358"
+   inkscape:cy="258.4927"
+   inkscape:window-width="2092"
+   inkscape:window-height="1205"
+   inkscape:window-x="0"
+   inkscape:window-y="25"
+   inkscape:window-maximized="0"
+   inkscape:current-layer="svg5" />
+    <path
+   d="M276.8,106.6L234.3,106.6C222.5,106.6 213.1,116 213.1,127.8L213.1,149L191.9,149C180.1,149 170.7,158.4 170.7,170.2L170.7,340.9C170.7,364.5 189.6,383.4 213.2,383.4L298.1,383.4C321.7,383.4 340.6,364.5 340.6,340.9L340.6,170.2C340.6,158.4 331.2,149 319.4,149L298.2,149L298.2,128.7C298.1,116.8 288.6,106.6 276.8,106.6ZM309.1,256L234.4,340.9L234.4,277.2L202.2,277.2L276.9,192.3L276.9,256L309.1,256Z"
+   style="fill-rule:nonzero;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2"
+   id="path2"
+   inkscape:label="Battery"
+   transform="matrix(0,1.84971,-1.84971,0,709.179,-227.664)" />
+</svg>
