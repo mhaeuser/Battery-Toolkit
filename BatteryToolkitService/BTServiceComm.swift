@@ -30,21 +30,4 @@ internal final class BTServiceComm: NSObject, BTServiceCommProtocol {
             reply: reply
         )
     }
-
-    func acquireManageAuthorization(
-        authData: NSData,
-        reply: @Sendable @escaping (Bool) -> Void
-    ) {
-        let authRef = BTAuthorization.fromData(authData: authData)
-        guard let authRef else {
-            reply(false)
-            return
-        }
-
-        let success = BTAuthorization.acquireInteractive(
-            authRef: authRef,
-            rightName: BTAuthorizationRights.manage
-        )
-        reply(success)
-    }
 }

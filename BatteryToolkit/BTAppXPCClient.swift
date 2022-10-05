@@ -93,15 +93,4 @@ internal enum BTAppXPCClient {
 
         service.createManageAuthorization(reply: reply)
     }
-
-    internal static func acquireManageAuthorization(
-        authData: NSData,
-        reply: @Sendable @escaping (Bool) -> Void
-    ) {
-        let service = BTAppXPCClient.getService {
-            reply(false)
-        }
-
-        service.acquireManageAuthorization(authData: authData, reply: reply)
-    }
 }

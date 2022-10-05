@@ -17,9 +17,4 @@ import Foundation
     func createManageAuthorization(
         reply: @Sendable @escaping (NSData?) -> Void
     )
-
-    func acquireManageAuthorization(
-        authData: NSData,
-        reply: @Sendable @escaping (Bool) -> Void
-    )
 }

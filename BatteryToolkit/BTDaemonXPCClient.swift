@@ -79,26 +79,9 @@ internal enum BTDaemonXPCClient {
                 return
             }
 
-            executeDaemonRetry(errorHandler: reply) { daemon in
-                command(daemon, authRef) { error in
-                    guard error == BTError.notAuthorized.rawValue else {
-                        reply(error)
-                        return
-                    }
-
-                    os_log("Authorization expired, re-aquire")
-                    DispatchQueue.main.async {
-                        BTAuthorizationService.reacquireManage { authRef in
-                            guard let authRef else {
-                                reply(BTError.notAuthorized.rawValue)
-                                return
-                            }
-
-                            executeDaemonRetry(errorHandler: reply) { daemon in
-                                command(daemon, authRef, reply)
-                            }
-                        }
-                    }
+            DispatchQueue.main.async {
+                self.executeDaemonRetry(errorHandler: reply) { daemon in
+                    command(daemon, authRef, reply)
                 }
             }
         }
