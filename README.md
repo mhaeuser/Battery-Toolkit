@@ -54,3 +54,6 @@ Battery Toolkit currently supports only Apple Silicon Macs.
 * Privileged operations are authenticated by the daemon
 * Privileged daemon exposes only a minimal protocol via XPC
 * XPC communication uses the latest macOS codesign features
+
+# Credits
+* Icon based on [reference by Streamline](https://seekicon.com/free-icon/rechargable-battery_1)
