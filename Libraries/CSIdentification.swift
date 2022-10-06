@@ -7,7 +7,7 @@ import Foundation
 import os.log
 
 public enum CSIdentification {
-    public static func getUniqueId(staticCode: SecStaticCode) -> NSData? {
+    public static func getUniqueId(staticCode: SecStaticCode) -> Data? {
         var signInfo: CFDictionary? = nil
         let infoStatus = SecCodeCopySigningInformation(
             staticCode,
@@ -24,7 +24,7 @@ public enum CSIdentification {
             return nil
         }
 
-        guard let unique = signInfo[kSecCodeInfoUnique as String] as? NSData
+        guard let unique = signInfo[kSecCodeInfoUnique as String] as? Data
         else {
             os_log("Unique identifier is invalid")
             return nil
@@ -33,7 +33,7 @@ public enum CSIdentification {
         return unique
     }
 
-    public static func getUniqueIdSelf() -> NSData? {
+    public static func getUniqueIdSelf() -> Data? {
         var code: SecCode? = nil
         let selfStatus = SecCodeCopySelf([], &code)
         guard selfStatus == errSecSuccess, let code else {
@@ -50,7 +50,7 @@ public enum CSIdentification {
         return self.getUniqueId(staticCode: staticCode)
     }
 
-    public static func getBundleRelativeUniqueId(relative: String) -> NSData? {
+    public static func getBundleRelativeUniqueId(relative: String) -> Data? {
         let pathURL = Bundle.main.bundleURL.appendingPathComponent(relative)
         var staticCode: SecStaticCode? = nil
         let status = SecStaticCodeCreateWithPath(

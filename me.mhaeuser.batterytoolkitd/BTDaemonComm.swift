@@ -9,13 +9,13 @@ import ServiceManagement
 
 internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
     @MainActor func getUniqueId(
-        reply: @Sendable @escaping (NSData?) -> Void
+        reply: @Sendable @escaping (Data?) -> Void
     ) {
         reply(BTDaemon.getUniqueId())
     }
 
     @MainActor internal func execute(
-        authData: NSData?,
+        authData: Data?,
         command: UInt8,
         reply: @Sendable @escaping (BTError.RawValue) -> Void
     ) {
@@ -139,7 +139,7 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
     }
 
     @MainActor internal func setSettings(
-        authData: NSData?,
+        authData: Data?,
         settings: [String: NSObject],
         reply: @Sendable @escaping (BTError.RawValue) -> Void
     ) {

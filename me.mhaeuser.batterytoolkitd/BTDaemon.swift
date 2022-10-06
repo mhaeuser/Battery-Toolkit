@@ -12,7 +12,7 @@ internal enum BTDaemon {
     /// Whether the machine is supported.
     internal private(set) static var supported = false
 
-    private static var uniqueId: NSData? = nil
+    private static var uniqueId: Data? = nil
 
     private static func main() {
         BTDaemon.uniqueId = CSIdentification.getUniqueIdSelf()
@@ -57,7 +57,7 @@ internal enum BTDaemon {
         dispatchMain()
     }
 
-    internal static func getUniqueId() -> NSData? {
+    internal static func getUniqueId() -> Data? {
         return BTDaemon.uniqueId
     }
 

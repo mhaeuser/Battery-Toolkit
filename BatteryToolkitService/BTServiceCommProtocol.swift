@@ -7,14 +7,14 @@ import Foundation
 
 @objc internal protocol BTServiceCommProtocol {
     func createEmptyAuthorization(
-        reply: @Sendable @escaping (NSData?) -> Void
+        reply: @Sendable @escaping (Data?) -> Void
     )
 
     func createDaemonAuthorization(
-        reply: @Sendable @escaping (NSData?) -> Void
+        reply: @Sendable @escaping (Data?) -> Void
     )
 
     func createManageAuthorization(
-        reply: @Sendable @escaping (NSData?) -> Void
+        reply: @Sendable @escaping (Data?) -> Void
     )
 }

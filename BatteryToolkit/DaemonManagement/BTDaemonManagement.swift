@@ -8,7 +8,7 @@ import Foundation
 import os.log
 
 internal enum BTDaemonManagement {
-    private static func daemonUpToDate(daemonId: NSData?) -> Bool {
+    private static func daemonUpToDate(daemonId: Data?) -> Bool {
         guard let daemonId else {
             os_log("Daemon unique ID is nil")
             return false
@@ -22,7 +22,7 @@ internal enum BTDaemonManagement {
             return false
         }
 
-        return bundleId.isEqual(to: daemonId)
+        return bundleId == daemonId
     }
 
     @MainActor internal static func start(

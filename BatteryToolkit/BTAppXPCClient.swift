@@ -65,7 +65,7 @@ internal enum BTAppXPCClient {
     }
 
     internal static func createEmptyAuthorization(
-        reply: @Sendable @escaping (NSData?) -> Void
+        reply: @Sendable @escaping (Data?) -> Void
     ) {
         let service = BTAppXPCClient.getService {
             reply(nil)
@@ -75,7 +75,7 @@ internal enum BTAppXPCClient {
     }
 
     internal static func createDaemonAuthorization(
-        reply: @Sendable @escaping (NSData?) -> Void
+        reply: @Sendable @escaping (Data?) -> Void
     ) {
         let service = BTAppXPCClient.getService {
             reply(nil)
@@ -85,7 +85,7 @@ internal enum BTAppXPCClient {
     }
 
     internal static func createManageAuthorization(
-        reply: @Sendable @escaping (NSData?) -> Void
+        reply: @Sendable @escaping (Data?) -> Void
     ) {
         let service = BTAppXPCClient.getService {
             reply(nil)

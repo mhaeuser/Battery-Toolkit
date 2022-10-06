@@ -69,7 +69,7 @@ internal enum BTDaemonXPCClient {
         reply: @escaping @Sendable (BTError.RawValue) -> Void,
         command: @MainActor @escaping @Sendable (
             BTDaemonCommProtocol,
-            NSData,
+            Data,
             @Sendable @escaping (BTError.RawValue) -> Void
         ) -> Void
     ) {
@@ -122,7 +122,7 @@ internal enum BTDaemonXPCClient {
     }
 
     internal static func getUniqueId(
-        reply: @Sendable @escaping (NSData?) -> Void
+        reply: @Sendable @escaping (Data?) -> Void
     ) {
         self.executeDaemonRetry { _ in
             reply(nil)
@@ -245,7 +245,7 @@ internal enum BTDaemonXPCClient {
     }
 
     internal static func removeLegacyHelperFiles(
-        authData: NSData,
+        authData: Data,
         reply: @Sendable @escaping (BTError.RawValue) -> Void
     ) {
         self.executeDaemonRetry { error in
@@ -260,7 +260,7 @@ internal enum BTDaemonXPCClient {
     }
 
     internal static func prepareDisable(
-        authData: NSData,
+        authData: Data,
         reply: @Sendable @escaping (BTError.RawValue) -> Void
     ) {
         self.executeDaemonRetry { error in

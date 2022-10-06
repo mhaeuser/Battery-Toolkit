@@ -8,13 +8,13 @@ import ServiceManagement
 
 internal final class BTServiceComm: NSObject, BTServiceCommProtocol {
     func createEmptyAuthorization(
-        reply: @Sendable @escaping (NSData?) -> Void
+        reply: @Sendable @escaping (Data?) -> Void
     ) {
         BTAuthorization.empty(reply: reply)
     }
 
     func createDaemonAuthorization(
-        reply: @Sendable @escaping (NSData?) -> Void
+        reply: @Sendable @escaping (Data?) -> Void
     ) {
         BTAuthorization.interactive(
             rightName: kSMRightModifySystemDaemons,
@@ -23,7 +23,7 @@ internal final class BTServiceComm: NSObject, BTServiceCommProtocol {
     }
 
     func createManageAuthorization(
-        reply: @Sendable @escaping (NSData?) -> Void
+        reply: @Sendable @escaping (Data?) -> Void
     ) {
         BTAuthorization.interactive(
             rightName: BTAuthorizationRights.manage,

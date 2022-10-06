@@ -11,7 +11,7 @@ import ServiceManagement
 internal enum BTAuthorization {
     private static func toReply(
         authRef: AuthorizationRef?,
-        reply: @Sendable @escaping (NSData?) -> Void
+        reply: @Sendable @escaping (Data?) -> Void
     ) {
         reply(self.toData(authRef: authRef))
     }
@@ -27,7 +27,7 @@ internal enum BTAuthorization {
     }
 
     internal static func empty(
-        reply: @Sendable @escaping (NSData?) -> Void
+        reply: @Sendable @escaping (Data?) -> Void
     ) {
         self.toReply(authRef: self.empty(), reply: reply)
     }
@@ -76,7 +76,7 @@ internal enum BTAuthorization {
 
     internal static func interactive(
         rightName: String,
-        reply: @Sendable @escaping (NSData?) -> Void
+        reply: @Sendable @escaping (Data?) -> Void
     ) {
         self.toReply(
             authRef: self.interactive(rightName: rightName),
@@ -142,7 +142,7 @@ internal enum BTAuthorization {
         return status
     }
 
-    internal static func toData(authRef: AuthorizationRef?) -> NSData? {
+    internal static func toData(authRef: AuthorizationRef?) -> Data? {
         guard let authRef else {
             return nil
         }
@@ -153,13 +153,13 @@ internal enum BTAuthorization {
             return nil
         }
 
-        return NSData(
+        return Data(
             bytes: &extAuth.bytes,
-            length: Int(kAuthorizationExternalFormLength)
+            count: Int(kAuthorizationExternalFormLength)
         )
     }
 
-    internal static func fromData(authData: NSData?) -> AuthorizationRef? {
+    internal static func fromData(authData: Data?) -> AuthorizationRef? {
         guard
             let authData,
             authData.count == kAuthorizationExternalFormLength
@@ -168,7 +168,9 @@ internal enum BTAuthorization {
         }
 
         var extAuth = AuthorizationExternalForm()
-        memcpy(&extAuth, authData.bytes, Int(kAuthorizationExternalFormLength))
+        _ = withUnsafeMutableBytes(of: &extAuth) { extBuf in
+            authData.copyBytes(to: extBuf)
+        }
 
         var authRef: AuthorizationRef? = nil
         let status = AuthorizationCreateFromExternalForm(&extAuth, &authRef)
