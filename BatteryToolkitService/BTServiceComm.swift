@@ -72,7 +72,10 @@ internal final class BTServiceComm: NSObject, BTServiceCommProtocol {
         guard let authRef = self.authRef else {
             return
         }
-
-        AuthorizationFree(authRef, [.destroyRights])
+        //
+        // Do not destroy rights, so if the service is quit due to resource
+        // pressure, a password prompt may be avoided when it is relaunched.
+        //
+        AuthorizationFree(authRef, [])
     }
 }
