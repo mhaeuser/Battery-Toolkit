@@ -9,7 +9,7 @@ import os.log
 import IOPMPrivate
 
 @MainActor
-public enum SleepKit {
+public enum GlobalSleep {
     private static var sleepDisabledCounter: UInt8 = 0
     private static var sleepRestore = false
 
@@ -38,31 +38,31 @@ public enum SleepKit {
     private static func restorePreviousSleepState() {
         let result = IOPMSetSystemPowerSetting(
             kIOPMSleepDisabledKey as CFString,
-            SleepKit.sleepRestore ? kCFBooleanTrue : kCFBooleanFalse
+            GlobalSleep.sleepRestore ? kCFBooleanTrue : kCFBooleanFalse
         )
         if result != kIOReturnSuccess {
             os_log(
-                "Failed to restore sleep disable to \(SleepKit.sleepRestore)"
+                "Failed to restore sleep disable to \(GlobalSleep.sleepRestore)"
             )
         }
 
-        SleepKit.sleepRestore = false
+        GlobalSleep.sleepRestore = false
     }
 
     public static func forceRestoreSleep() {
-        guard SleepKit.sleepDisabledCounter > 0 else {
+        guard GlobalSleep.sleepDisabledCounter > 0 else {
             return
         }
 
-        SleepKit.sleepDisabledCounter = 0
+        GlobalSleep.sleepDisabledCounter = 0
         self.restorePreviousSleepState()
     }
 
     public static func restoreSleep() {
-        assert(SleepKit.sleepDisabledCounter > 0)
-        SleepKit.sleepDisabledCounter -= 1
+        assert(GlobalSleep.sleepDisabledCounter > 0)
+        GlobalSleep.sleepDisabledCounter -= 1
 
-        guard SleepKit.sleepDisabledCounter == 0 else {
+        guard GlobalSleep.sleepDisabledCounter == 0 else {
             return
         }
 
@@ -70,14 +70,14 @@ public enum SleepKit {
     }
 
     public static func disableSleep() {
-        assert(SleepKit.sleepDisabledCounter >= 0)
-        SleepKit.sleepDisabledCounter += 1
+        assert(GlobalSleep.sleepDisabledCounter >= 0)
+        GlobalSleep.sleepDisabledCounter += 1
 
-        guard SleepKit.sleepDisabledCounter == 1 else {
+        guard GlobalSleep.sleepDisabledCounter == 1 else {
             return
         }
 
-        SleepKit.sleepRestore = self.sleepDisabledIOPMValue()
+        GlobalSleep.sleepRestore = self.sleepDisabledIOPMValue()
 
         let result = IOPMSetSystemPowerSetting(
             kIOPMSleepDisabledKey as CFString,

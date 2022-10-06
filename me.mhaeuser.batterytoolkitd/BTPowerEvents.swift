@@ -58,7 +58,7 @@ internal enum BTPowerEvents {
             self.restoreDefaults()
         }
 
-        SleepKit.forceRestoreSleep()
+        GlobalSleep.forceRestoreSleep()
     }
 
     /// Notification handler for changed settings.
@@ -261,7 +261,7 @@ internal enum BTPowerEvents {
         //
         // Immediately disable sleep to not interrupt the setup phase.
         //
-        SleepKit.disableSleep()
+        GlobalSleep.disableSleep()
 
         let unlimitedPower = self.drawingUnlimitedPower()
         BTPowerEvents.unlimitedPower = unlimitedPower
@@ -283,7 +283,7 @@ internal enum BTPowerEvents {
         //
         // Restore sleep from the setup phase.
         //
-        SleepKit.restoreSleep()
+        GlobalSleep.restoreSleep()
     }
 
     /// Restores the default platform power configuration. Battery charging and

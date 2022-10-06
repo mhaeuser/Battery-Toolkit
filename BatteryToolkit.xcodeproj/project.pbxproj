@@ -16,7 +16,7 @@
 		CE1F5E3C28D760D400F61F67 /* BTLocalization.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1F5E3B28D760D400F61F67 /* BTLocalization.swift */; };
 		CE1F5E3E28D76C6D00F61F67 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE1F5E4128D76C6D00F61F67 /* Settings.storyboard */; };
 		CE2322D428E5EB8B00874CDE /* BTLoginItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2322D328E5EB8B00874CDE /* BTLoginItem.swift */; };
-		CE2B96C028A7E2BB00FE3DDB /* SleepKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2B96BF28A7E2BB00FE3DDB /* SleepKit.swift */; };
+		CE2B96C028A7E2BB00FE3DDB /* GlobalSleep.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2B96BF28A7E2BB00FE3DDB /* GlobalSleep.swift */; };
 		CE30CBA128C48995001E2AC6 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE30CBA028C48995001E2AC6 /* SettingsViewController.swift */; };
 		CE3179EA28DB540600E9C121 /* BTAuthorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3179E928DB540600E9C121 /* BTAuthorization.swift */; };
 		CE3179EC28DB543200E9C121 /* BTAuthorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3179E928DB540600E9C121 /* BTAuthorization.swift */; };
@@ -168,7 +168,7 @@
 		CE1F5E4028D76C6D00F61F67 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Settings.storyboard; sourceTree = "<group>"; };
 		CE2322D328E5EB8B00874CDE /* BTLoginItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTLoginItem.swift; sourceTree = "<group>"; };
 		CE2B96BD28A7CEFE00FE3DDB /* IOPMLibPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOPMLibPrivate.h; sourceTree = "<group>"; };
-		CE2B96BF28A7E2BB00FE3DDB /* SleepKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepKit.swift; sourceTree = "<group>"; };
+		CE2B96BF28A7E2BB00FE3DDB /* GlobalSleep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalSleep.swift; sourceTree = "<group>"; };
 		CE2B96C228A81C5100FE3DDB /* BTPreprocessor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BTPreprocessor.h; sourceTree = "<group>"; };
 		CE2B96C328A81CB900FE3DDB /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		CE30CBA028C48995001E2AC6 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -363,7 +363,7 @@
 				CE1F5E3528D7339D00F61F67 /* CSIdentification.swift */,
 				CE37DD0D283F86F90060C43F /* SmcComm.swift */,
 				CE37DD0F284164160060C43F /* SmcComm+Power.swift */,
-				CE2B96BF28A7E2BB00FE3DDB /* SleepKit.swift */,
+				CE2B96BF28A7E2BB00FE3DDB /* GlobalSleep.swift */,
 			);
 			path = Libraries;
 			sourceTree = "<group>";
@@ -675,7 +675,7 @@
 				CEA80FD2285A28230064ADEA /* BTSettings.swift in Sources */,
 				CEB4A42928D3B184004FA277 /* BTStateInfo.swift in Sources */,
 				CE50557128D65B48000E4387 /* BTXPCValidation.swift in Sources */,
-				CE2B96C028A7E2BB00FE3DDB /* SleepKit.swift in Sources */,
+				CE2B96C028A7E2BB00FE3DDB /* GlobalSleep.swift in Sources */,
 				CE3179EC28DB543200E9C121 /* BTAuthorization.swift in Sources */,
 				CEA80FD0285A27FB0064ADEA /* BTPowerEvents.swift in Sources */,
 				CE3C1DA828CA33FD008A0F7D /* BTLegacyHelperInfo.swift in Sources */,
