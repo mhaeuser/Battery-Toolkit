@@ -24,10 +24,11 @@ internal extension BTDaemonManagement {
         ) {
             os_log("Registering legacy helper")
 
-            BTAuthorizationService.empty { auth in
+            BTAppXPCClient.createEmptyAuthorization { authData in
                 assert(!Thread.isMainThread)
 
-                guard let auth else {
+                let authRef = BTAuthorization.fromData(authData: authData)
+                guard let authRef else {
                     reply(.notRegistered)
                     return
                 }
@@ -40,7 +41,7 @@ internal extension BTDaemonManagement {
                         let success = SMJobBless(
                             kSMDomainSystemLaunchd,
                             BT_DAEMON_NAME as CFString,
-                            auth,
+                            authRef,
                             &error
                         )
 
@@ -52,10 +53,7 @@ internal extension BTDaemonManagement {
                             "Legacy helper registering result: \(success), error: \(String(describing: error))"
                         )
 
-                        let status = AuthorizationFree(auth, [.destroyRights])
-                        if status != errSecSuccess {
-                            os_log("Freeing authorization error: \(status)")
-                        }
+                        AuthorizationFree(authRef, [.destroyRights])
 
                         reply(
                             BTDaemonManagement.Status(fromBool: success)
@@ -105,28 +103,27 @@ internal extension BTDaemonManagement {
         ) {
             os_log("Unregistering legacy helper")
 
-            BTAuthorizationService.daemonManagement { auth in
+            BTAppXPCClient.createDaemonAuthorization { authData in
                 assert(!Thread.isMainThread)
 
-                guard let auth else {
+                let authRef = BTAuthorization.fromData(authData: authData)
+                guard let authRef else {
                     reply(BTError.notAuthorized.rawValue)
                     return
                 }
 
                 DispatchQueue.main.async {
+                    //
+                    // Force-unwrap is safe as authRef would be nil if authData
+                    // was nil.
+                    //
                     BTDaemonXPCClient
-                        .removeLegacyHelperFiles(authRef: auth) { error in
+                        .removeLegacyHelperFiles(authData: authData!) { error in
                             if error == BTError.success.rawValue {
-                                unregister(authRef: auth)
+                                unregister(authRef: authRef)
                             }
 
-                            let status = AuthorizationFree(
-                                auth,
-                                [.destroyRights]
-                            )
-                            if status != errSecSuccess {
-                                os_log("Freeing authorization error: \(status)")
-                            }
+                            AuthorizationFree(authRef, [.destroyRights])
 
                             reply(error)
                         }

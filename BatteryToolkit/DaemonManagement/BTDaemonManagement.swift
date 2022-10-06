@@ -70,20 +70,31 @@ internal enum BTDaemonManagement {
     @MainActor internal static func remove(
         reply: @Sendable @escaping (BTError.RawValue) -> Void
     ) {
-        BTAuthorizationService.daemonManagement { authRef in
+        BTAppXPCClient.createDaemonAuthorization { authData in
             assert(!Thread.isMainThread)
 
-            guard let authRef else {
+            guard let authData else {
                 reply(BTError.notAuthorized.rawValue)
                 return
             }
 
             DispatchQueue.main.async {
-                BTDaemonXPCClient.prepareDisable(authRef: authRef) { _ in
+                BTDaemonXPCClient.prepareDisable(authData: authData) { _ in
                     if #available(macOS 13.0, *) {
                         BTDaemonManagement.Service.unregister(reply: reply)
                     } else {
+                        let authRef = BTAuthorization.fromData(
+                            authData: authData
+                        )
+                        guard let authRef else {
+                            reply(BTError.notAuthorized.rawValue)
+                            return
+                        }
+
                         BTDaemonManagement.Legacy.unregister(authRef: authRef)
+
+                        AuthorizationFree(authRef, [.destroyRights])
+
                         reply(BTError.success.rawValue)
                     }
                 }

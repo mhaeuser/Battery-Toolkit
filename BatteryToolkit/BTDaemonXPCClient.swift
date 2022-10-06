@@ -69,19 +69,21 @@ internal enum BTDaemonXPCClient {
         reply: @escaping @Sendable (BTError.RawValue) -> Void,
         command: @MainActor @escaping @Sendable (
             BTDaemonCommProtocol,
-            AuthorizationRef,
+            NSData,
             @Sendable @escaping (BTError.RawValue) -> Void
         ) -> Void
     ) {
-        BTAuthorizationService.manage { authRef in
-            guard let authRef else {
+        BTAppXPCClient.createManageAuthorization { authData in
+            guard let authData else {
                 reply(BTError.notAuthorized.rawValue)
                 return
             }
 
             DispatchQueue.main.async {
                 self.executeDaemonRetry(errorHandler: reply) { daemon in
-                    command(daemon, authRef, reply)
+                    command(daemon, authData) { error in
+                        reply(error)
+                    }
                 }
             }
         }
@@ -91,9 +93,9 @@ internal enum BTDaemonXPCClient {
         command: BTDaemonCommCommand,
         reply: @Sendable @escaping (BTError.RawValue) -> Void
     ) {
-        self.executeDaemonManageRetry(reply: reply) { daemon, authRef, reply in
+        self.executeDaemonManageRetry(reply: reply) { daemon, authData, reply in
             daemon.execute(
-                authData: BTAuthorization.toData(authRef: authRef),
+                authData: authData,
                 command: command.rawValue,
                 reply: reply
             )
@@ -201,9 +203,9 @@ internal enum BTDaemonXPCClient {
         settings: [String: NSObject],
         reply: @Sendable @escaping (BTError.RawValue) -> Void
     ) {
-        self.executeDaemonManageRetry(reply: reply) { daemon, authRef, reply in
+        self.executeDaemonManageRetry(reply: reply) { daemon, authData, reply in
             daemon.setSettings(
-                authData: BTAuthorization.toData(authRef: authRef),
+                authData: authData,
                 settings: settings,
                 reply: reply
             )
@@ -243,14 +245,14 @@ internal enum BTDaemonXPCClient {
     }
 
     internal static func removeLegacyHelperFiles(
-        authRef: AuthorizationRef,
+        authData: NSData,
         reply: @Sendable @escaping (BTError.RawValue) -> Void
     ) {
         self.executeDaemonRetry { error in
             reply(error)
         } command: { daemon in
             daemon.execute(
-                authData: BTAuthorization.toData(authRef: authRef),
+                authData: authData,
                 command: BTDaemonCommCommand.removeLegacyHelperFiles.rawValue,
                 reply: reply
             )
@@ -258,14 +260,14 @@ internal enum BTDaemonXPCClient {
     }
 
     internal static func prepareDisable(
-        authRef: AuthorizationRef,
+        authData: NSData,
         reply: @Sendable @escaping (BTError.RawValue) -> Void
     ) {
         self.executeDaemonRetry { error in
             reply(error)
         } command: { daemon in
             daemon.execute(
-                authData: BTAuthorization.toData(authRef: authRef),
+                authData: authData,
                 command: BTDaemonCommCommand.prepareDisable.rawValue,
                 reply: reply
             )
