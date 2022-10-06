@@ -12,7 +12,7 @@ internal enum BTPowerState {
     private static var powerDisabled = false
 
     internal static func initSleepState() {
-        let chargeDisabled = SMCKit.Power.isChargingDisabled()
+        let chargeDisabled = SmcComm.Power.isChargingDisabled()
         BTPowerState.chargingDisabled = chargeDisabled
         if !chargeDisabled {
             //
@@ -21,7 +21,7 @@ internal enum BTPowerState {
             SleepKit.disableSleep()
         }
 
-        let powerDisabled = SMCKit.Power.isPowerAdapterDisabled()
+        let powerDisabled = SmcComm.Power.isPowerAdapterDisabled()
         BTPowerState.powerDisabled = powerDisabled
         if powerDisabled {
             //
@@ -51,7 +51,7 @@ internal enum BTPowerState {
             return true
         }
 
-        let success = SMCKit.Power.disableCharging()
+        let success = SmcComm.Power.disableCharging()
         guard success else {
             os_log("Failed to disable charging")
             return false
@@ -68,7 +68,7 @@ internal enum BTPowerState {
             return true
         }
 
-        let result = SMCKit.Power.enableCharging()
+        let result = SmcComm.Power.enableCharging()
         if !result {
             os_log("Failed to enable charging")
             return false
@@ -87,7 +87,7 @@ internal enum BTPowerState {
 
         self.disableAdapterSleep()
 
-        let success = SMCKit.Power.disablePowerAdapter()
+        let success = SmcComm.Power.disablePowerAdapter()
         guard success else {
             os_log("Failed to disable power adapter")
             self.restoreAdapterSleep()
@@ -103,7 +103,7 @@ internal enum BTPowerState {
             return true
         }
 
-        let success = SMCKit.Power.enablePowerAdapter()
+        let success = SmcComm.Power.enablePowerAdapter()
         guard success else {
             os_log("Failed to enable power adapter")
             return false
