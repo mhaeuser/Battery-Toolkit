@@ -73,7 +73,7 @@ internal enum BTDaemonXPCClient {
             @Sendable @escaping (BTError.RawValue) -> Void
         ) -> Void
     ) {
-        BTAppXPCClient.createManageAuthorization { authData in
+        BTAppXPCClient.getManageAuthorization { authData in
             guard let authData else {
                 reply(BTError.notAuthorized.rawValue)
                 return
@@ -220,7 +220,9 @@ internal enum BTDaemonXPCClient {
         //
     }
 
-    internal static func prepareUpdate(reply: @Sendable @escaping (BTError.RawValue) -> Void) {
+    internal static func prepareUpdate(
+        reply: @Sendable @escaping (BTError.RawValue) -> Void
+    ) {
         self.executeDaemonRetry(
             errorHandler: reply
         ) { daemon in

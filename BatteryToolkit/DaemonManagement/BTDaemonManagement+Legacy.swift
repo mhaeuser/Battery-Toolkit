@@ -24,7 +24,7 @@ internal extension BTDaemonManagement {
         ) {
             os_log("Registering legacy helper")
 
-            BTAppXPCClient.createEmptyAuthorization { authData in
+            BTAppXPCClient.getAuthorization { authData in
                 assert(!Thread.isMainThread)
 
                 let authRef = BTAuthorization.fromData(authData: authData)
@@ -51,7 +51,7 @@ internal extension BTDaemonManagement {
                             "Legacy helper registering result: \(success), error: \(String(describing: error))"
                         )
 
-                        AuthorizationFree(authRef, [.destroyRights])
+                        AuthorizationFree(authRef, [])
 
                         reply(
                             BTDaemonManagement.Status(fromBool: success)
@@ -101,7 +101,7 @@ internal extension BTDaemonManagement {
         ) {
             os_log("Unregistering legacy helper")
 
-            BTAppXPCClient.createDaemonAuthorization { authData in
+            BTAppXPCClient.getDaemonAuthorization { authData in
                 assert(!Thread.isMainThread)
 
                 let authRef = BTAuthorization.fromData(authData: authData)
@@ -121,7 +121,7 @@ internal extension BTDaemonManagement {
                                 unregister(authRef: authRef)
                             }
 
-                            AuthorizationFree(authRef, [.destroyRights])
+                            AuthorizationFree(authRef, [])
 
                             reply(error)
                         }

@@ -9,13 +9,6 @@ import os.log
 import ServiceManagement
 
 internal enum BTAuthorization {
-    private static func toReply(
-        authRef: AuthorizationRef?,
-        reply: @Sendable @escaping (Data?) -> Void
-    ) {
-        reply(self.toData(authRef: authRef))
-    }
-
     internal static func empty() -> AuthorizationRef? {
         var authRef: AuthorizationRef? = nil
         let status = AuthorizationCreate(nil, nil, [], &authRef)
@@ -24,12 +17,6 @@ internal enum BTAuthorization {
         }
 
         return authRef
-    }
-
-    internal static func empty(
-        reply: @Sendable @escaping (Data?) -> Void
-    ) {
-        self.toReply(authRef: self.empty(), reply: reply)
     }
 
     private static func copyRight(
@@ -72,16 +59,6 @@ internal enum BTAuthorization {
         }
 
         return authRef
-    }
-
-    internal static func interactive(
-        rightName: String,
-        reply: @Sendable @escaping (Data?) -> Void
-    ) {
-        self.toReply(
-            authRef: self.interactive(rightName: rightName),
-            reply: reply
-        )
     }
 
     internal static func acquireInteractive(

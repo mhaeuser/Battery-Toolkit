@@ -64,33 +64,33 @@ internal enum BTAppXPCClient {
         return service
     }
 
-    internal static func createEmptyAuthorization(
+    internal static func getAuthorization(
         reply: @Sendable @escaping (Data?) -> Void
     ) {
         let service = BTAppXPCClient.getService {
             reply(nil)
         }
 
-        service.createEmptyAuthorization(reply: reply)
+        service.getAuthorization(reply: reply)
     }
 
-    internal static func createDaemonAuthorization(
+    internal static func getDaemonAuthorization(
         reply: @Sendable @escaping (Data?) -> Void
     ) {
         let service = BTAppXPCClient.getService {
             reply(nil)
         }
 
-        service.createDaemonAuthorization(reply: reply)
+        service.getDaemonAuthorization(reply: reply)
     }
 
-    internal static func createManageAuthorization(
+    internal static func getManageAuthorization(
         reply: @Sendable @escaping (Data?) -> Void
     ) {
         let service = BTAppXPCClient.getService {
             reply(nil)
         }
 
-        service.createManageAuthorization(reply: reply)
+        service.getManageAuthorization(reply: reply)
     }
 }

@@ -7,27 +7,72 @@ import Foundation
 import ServiceManagement
 
 internal final class BTServiceComm: NSObject, BTServiceCommProtocol {
-    func createEmptyAuthorization(
-        reply: @Sendable @escaping (Data?) -> Void
-    ) {
-        BTAuthorization.empty(reply: reply)
+    private var authRef: AuthorizationRef? = nil
+
+    private func getAuthRef() -> AuthorizationRef? {
+        guard let authRef = self.authRef else {
+            let authRef = BTAuthorization.empty()
+            self.authRef = authRef
+            return authRef
+        }
+
+        return authRef
     }
 
-    func createDaemonAuthorization(
+    func getAuthorization(
         reply: @Sendable @escaping (Data?) -> Void
     ) {
-        BTAuthorization.interactive(
-            rightName: kSMRightModifySystemDaemons,
-            reply: reply
-        )
+        let authRef = self.getAuthRef()
+        reply(BTAuthorization.toData(authRef: authRef))
     }
 
-    func createManageAuthorization(
+    func getDaemonAuthorization(
         reply: @Sendable @escaping (Data?) -> Void
     ) {
-        BTAuthorization.interactive(
-            rightName: BTAuthorizationRights.manage,
-            reply: reply
+        let authRef = self.getAuthRef()
+        guard let authRef else {
+            reply(nil)
+            return
+        }
+
+        let success = BTAuthorization.acquireInteractive(
+            authRef: authRef,
+            rightName: kSMRightModifySystemDaemons
         )
+        guard success else {
+            reply(nil)
+            return
+        }
+
+        reply(BTAuthorization.toData(authRef: authRef))
+    }
+
+    func getManageAuthorization(
+        reply: @Sendable @escaping (Data?) -> Void
+    ) {
+        let authRef = self.getAuthRef()
+        guard let authRef else {
+            reply(nil)
+            return
+        }
+
+        let success = BTAuthorization.acquireInteractive(
+            authRef: authRef,
+            rightName: BTAuthorizationRights.manage
+        )
+        guard success else {
+            reply(nil)
+            return
+        }
+
+        reply(BTAuthorization.toData(authRef: authRef))
+    }
+
+    deinit {
+        guard let authRef = self.authRef else {
+            return
+        }
+
+        AuthorizationFree(authRef, [.destroyRights])
     }
 }

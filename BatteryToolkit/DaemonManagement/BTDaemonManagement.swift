@@ -70,7 +70,7 @@ internal enum BTDaemonManagement {
     @MainActor internal static func remove(
         reply: @Sendable @escaping (BTError.RawValue) -> Void
     ) {
-        BTAppXPCClient.createDaemonAuthorization { authData in
+        BTAppXPCClient.getDaemonAuthorization { authData in
             assert(!Thread.isMainThread)
 
             guard let authData else {
@@ -93,7 +93,7 @@ internal enum BTDaemonManagement {
 
                         BTDaemonManagement.Legacy.unregister(authRef: authRef)
 
-                        AuthorizationFree(authRef, [.destroyRights])
+                        AuthorizationFree(authRef, [])
 
                         reply(BTError.success.rawValue)
                     }
