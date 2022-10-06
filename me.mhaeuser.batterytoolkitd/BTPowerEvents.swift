@@ -58,7 +58,7 @@ internal enum BTPowerEvents {
             self.restoreDefaults()
         }
 
-        GlobalSleep.forceRestoreSleep()
+        GlobalSleep.forceRestore()
     }
 
     /// Notification handler for changed settings.
@@ -261,7 +261,7 @@ internal enum BTPowerEvents {
         //
         // Immediately disable sleep to not interrupt the setup phase.
         //
-        GlobalSleep.disableSleep()
+        GlobalSleep.disable()
 
         let unlimitedPower = self.drawingUnlimitedPower()
         BTPowerEvents.unlimitedPower = unlimitedPower
@@ -283,7 +283,7 @@ internal enum BTPowerEvents {
         //
         // Restore sleep from the setup phase.
         //
-        GlobalSleep.restoreSleep()
+        GlobalSleep.restore()
     }
 
     /// Restores the default platform power configuration. Battery charging and

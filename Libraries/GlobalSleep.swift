@@ -10,8 +10,8 @@ import IOPMPrivate
 
 @MainActor
 public enum GlobalSleep {
-    private static var sleepDisabledCounter: UInt8 = 0
-    private static var sleepRestore = false
+    private static var disabledCounter: UInt8 = 0
+    private static var previousState = false
 
     private static func sleepDisabledIOPMValue() -> Bool {
         guard let settingsRef = IOPMCopySystemPowerSettings() else {
@@ -35,49 +35,49 @@ public enum GlobalSleep {
         return sleepDisable
     }
 
-    private static func restorePreviousSleepState() {
+    private static func restorePrevious() {
         let result = IOPMSetSystemPowerSetting(
             kIOPMSleepDisabledKey as CFString,
-            GlobalSleep.sleepRestore ? kCFBooleanTrue : kCFBooleanFalse
+            GlobalSleep.previousState ? kCFBooleanTrue : kCFBooleanFalse
         )
         if result != kIOReturnSuccess {
             os_log(
-                "Failed to restore sleep disable to \(GlobalSleep.sleepRestore)"
+                "Failed to restore sleep disable to \(GlobalSleep.previousState)"
             )
         }
 
-        GlobalSleep.sleepRestore = false
+        GlobalSleep.previousState = false
     }
 
-    public static func forceRestoreSleep() {
-        guard GlobalSleep.sleepDisabledCounter > 0 else {
+    public static func forceRestore() {
+        guard GlobalSleep.disabledCounter > 0 else {
             return
         }
 
-        GlobalSleep.sleepDisabledCounter = 0
-        self.restorePreviousSleepState()
+        GlobalSleep.disabledCounter = 0
+        self.restorePrevious()
     }
 
-    public static func restoreSleep() {
-        assert(GlobalSleep.sleepDisabledCounter > 0)
-        GlobalSleep.sleepDisabledCounter -= 1
+    public static func restore() {
+        assert(GlobalSleep.disabledCounter > 0)
+        GlobalSleep.disabledCounter -= 1
 
-        guard GlobalSleep.sleepDisabledCounter == 0 else {
+        guard GlobalSleep.disabledCounter == 0 else {
             return
         }
 
-        self.restorePreviousSleepState()
+        self.restorePrevious()
     }
 
-    public static func disableSleep() {
-        assert(GlobalSleep.sleepDisabledCounter >= 0)
-        GlobalSleep.sleepDisabledCounter += 1
+    public static func disable() {
+        assert(GlobalSleep.disabledCounter >= 0)
+        GlobalSleep.disabledCounter += 1
 
-        guard GlobalSleep.sleepDisabledCounter == 1 else {
+        guard GlobalSleep.disabledCounter == 1 else {
             return
         }
 
-        GlobalSleep.sleepRestore = self.sleepDisabledIOPMValue()
+        GlobalSleep.previousState = self.sleepDisabledIOPMValue()
 
         let result = IOPMSetSystemPowerSetting(
             kIOPMSleepDisabledKey as CFString,

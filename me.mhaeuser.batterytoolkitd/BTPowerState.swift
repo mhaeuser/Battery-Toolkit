@@ -18,7 +18,7 @@ internal enum BTPowerState {
             //
             // Sleep must always be disabled when charging is enabled.
             //
-            GlobalSleep.disableSleep()
+            GlobalSleep.disable()
         }
 
         let powerDisabled = SmcComm.Power.isPowerAdapterDisabled()
@@ -40,9 +40,9 @@ internal enum BTPowerState {
         }
 
         if !BTSettings.adapterSleep {
-            GlobalSleep.disableSleep()
+            GlobalSleep.disable()
         } else {
-            GlobalSleep.restoreSleep()
+            GlobalSleep.restore()
         }
     }
 
@@ -57,7 +57,7 @@ internal enum BTPowerState {
             return false
         }
 
-        GlobalSleep.restoreSleep()
+        GlobalSleep.restore()
 
         BTPowerState.chargingDisabled = true
         return true
@@ -74,7 +74,7 @@ internal enum BTPowerState {
             return false
         }
 
-        GlobalSleep.disableSleep()
+        GlobalSleep.disable()
 
         BTPowerState.chargingDisabled = false
         return true
@@ -125,13 +125,13 @@ internal enum BTPowerState {
 
     private static func disableAdapterSleep() {
         if !BTSettings.adapterSleep {
-            GlobalSleep.disableSleep()
+            GlobalSleep.disable()
         }
     }
 
     private static func restoreAdapterSleep() {
         if !BTSettings.adapterSleep {
-            GlobalSleep.restoreSleep()
+            GlobalSleep.restore()
         }
     }
 }
