@@ -220,14 +220,14 @@ internal enum BTDaemonXPCClient {
         //
     }
 
-    internal static func prepareUpdate() {
+    internal static func prepareUpdate(reply: @Sendable @escaping (BTError.RawValue) -> Void) {
         self.executeDaemonRetry(
-            errorHandler: self.emptyErrorHandler
+            errorHandler: reply
         ) { daemon in
             daemon.execute(
                 authData: nil,
                 command: BTDaemonCommCommand.prepareUpdate.rawValue,
-                reply: emptyErrorHandler
+                reply: reply
             )
         }
     }

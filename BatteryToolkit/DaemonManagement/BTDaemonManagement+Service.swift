@@ -120,10 +120,12 @@ internal extension BTDaemonManagement {
         ) {
             os_log("Updating daemon service")
 
-            BTDaemonXPCClient.prepareUpdate()
-
-            self.unregister { _ in
-                forceRegister(run: 0, reply: reply)
+            BTDaemonXPCClient.prepareUpdate { _ in
+                DispatchQueue.main.async {
+                    self.unregister { _ in
+                        forceRegister(run: 0, reply: reply)
+                    }
+                }
             }
         }
 

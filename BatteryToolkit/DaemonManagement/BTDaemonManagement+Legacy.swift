@@ -34,9 +34,7 @@ internal extension BTDaemonManagement {
                 }
 
                 DispatchQueue.main.async {
-                    BTDaemonXPCClient.prepareUpdate()
-
-                    DispatchQueue.global(qos: .userInitiated).async {
+                    BTDaemonXPCClient.prepareUpdate { _ in
                         var error: Unmanaged<CFError>?
                         let success = SMJobBless(
                             kSMDomainSystemLaunchd,
