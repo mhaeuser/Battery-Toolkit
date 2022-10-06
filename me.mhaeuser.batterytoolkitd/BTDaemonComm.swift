@@ -36,6 +36,7 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
         } else if command == BTDaemonCommCommand.finishUpdate.rawValue {
             os_log("Update finished")
             BTPowerEvents.updating = false
+            reply(BTError.success.rawValue)
             return
         }
 
