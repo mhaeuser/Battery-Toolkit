@@ -45,6 +45,16 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
             return
         }
 
+        self.executeWithAuth(authRef: authRef, command: command, reply: reply)
+
+        AuthorizationFree(authRef, [])
+    }
+
+    @MainActor private func executeWithAuth(
+        authRef: AuthorizationRef,
+        command: UInt8,
+        reply: @Sendable @escaping (BTError.RawValue) -> Void
+    ) {
         guard command != BTDaemonCommCommand.removeLegacyHelperFiles.rawValue
         else {
             let authorized = BTAuthorization.checkRight(
@@ -158,6 +168,9 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
             authRef: authRef,
             rightName: BTAuthorizationRights.manage
         )
+
+        AuthorizationFree(authRef, [])
+
         guard authorized else {
             reply(BTError.notAuthorized.rawValue)
             return
