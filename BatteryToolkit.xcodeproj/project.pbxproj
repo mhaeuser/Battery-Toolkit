@@ -1155,6 +1155,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = AutostartHelper/AutostartHelper.entitlements;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSBackgroundOnly = YES;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				PRODUCT_BUNDLE_IDENTIFIER = me.mhaeuser.BatteryToolkitAutostart;
@@ -1167,6 +1168,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = AutostartHelper/AutostartHelper.entitlements;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSBackgroundOnly = YES;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				PRODUCT_BUNDLE_IDENTIFIER = me.mhaeuser.BatteryToolkitAutostart;
