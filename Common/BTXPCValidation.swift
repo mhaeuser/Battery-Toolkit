@@ -63,9 +63,9 @@ public enum BTXPCValidation {
                     "Signature status constraints violated: Code has been debugged"
                 )
                 return false
+            #else
+                reqStatus.remove([.valid, .hard, .kill])
             #endif
-
-            reqStatus.remove([.valid, .hard, .kill])
         }
 
         guard codeStatus.contains(reqStatus) else {
