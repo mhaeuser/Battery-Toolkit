@@ -102,13 +102,13 @@
                                                         <binding destination="qK6-EM-YZH" name="value" keyPath="self.maxChargeNum" id="cm5-lb-m9T"/>
                                                     </connections>
                                                 </stepper>
-                                                <textField verticalHuggingPriority="750" preferredMaxLayoutWidth="30" translatesAutoresizingMaskIntoConstraints="NO" id="UVz-So-HqI" userLabel="Min Charge ">
+                                                <textField verticalHuggingPriority="750" mirrorLayoutDirectionWhenInternationalizing="never" preferredMaxLayoutWidth="30" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UVz-So-HqI" userLabel="Min Charge ">
                                                     <rect key="frame" x="390" y="85" width="35" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="Kuf-Hs-zxF"/>
                                                         <constraint firstAttribute="width" constant="35" id="MRL-G0-91Y"/>
                                                     </constraints>
-                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" title="70" drawsBackground="YES" id="SrC-Z2-byQ">
+                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" truncatesLastVisibleLine="YES" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" baseWritingDirection="leftToRight" alignment="center" title="70" drawsBackground="YES" usesSingleLineMode="YES" id="SrC-Z2-byQ">
                                                         <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="Ufs-Cu-5R1"/>
                                                         <font key="font" metaFont="system"/>
                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -185,13 +185,13 @@
                                                         <binding destination="qK6-EM-YZH" name="value" keyPath="self.maxChargeNum" id="D0u-LQ-jVe"/>
                                                     </connections>
                                                 </slider>
-                                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jVr-RT-V0O" userLabel="Max Charge">
+                                                <textField verticalHuggingPriority="750" mirrorLayoutDirectionWhenInternationalizing="never" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jVr-RT-V0O" userLabel="Max Charge">
                                                     <rect key="frame" x="390" y="33" width="35" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="35" id="hfS-3E-kvP"/>
                                                         <constraint firstAttribute="height" constant="21" id="inl-id-yxn"/>
                                                     </constraints>
-                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" title="80" drawsBackground="YES" id="sW6-EL-lV5">
+                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" truncatesLastVisibleLine="YES" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" baseWritingDirection="leftToRight" alignment="center" title="80" drawsBackground="YES" usesSingleLineMode="YES" id="sW6-EL-lV5">
                                                         <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="fXe-NS-oN3"/>
                                                         <font key="font" metaFont="system"/>
                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
