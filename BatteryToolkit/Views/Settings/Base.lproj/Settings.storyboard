@@ -140,7 +140,7 @@
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
                                                 </button>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" preferredMaxLayoutWidth="16" translatesAutoresizingMaskIntoConstraints="NO" id="kwg-mE-JId" userLabel="Max %">
+                                                <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" preferredMaxLayoutWidth="16" translatesAutoresizingMaskIntoConstraints="NO" id="kwg-mE-JId" userLabel="Max %">
                                                     <rect key="frame" x="441" y="35" width="16" height="16"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="12" id="PgQ-Jv-j8D"/>
@@ -163,7 +163,7 @@
                                                         <binding destination="qK6-EM-YZH" name="value" keyPath="self.minChargeNum" id="3y9-Yj-f6y"/>
                                                     </connections>
                                                 </stepper>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" preferredMaxLayoutWidth="16" translatesAutoresizingMaskIntoConstraints="NO" id="cpE-XY-Cm8" userLabel="Min %">
+                                                <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" preferredMaxLayoutWidth="16" translatesAutoresizingMaskIntoConstraints="NO" id="cpE-XY-Cm8" userLabel="Min %">
                                                     <rect key="frame" x="441" y="87" width="16" height="16"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="16" id="YOG-qc-MNm"/>
