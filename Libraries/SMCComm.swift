@@ -23,14 +23,14 @@ private func packUInt32(
     return comp0 | comp1 | comp2 | comp3
 }
 
-private func SMCParamStructInfo(key: SmcCommKey) -> SMCParamStruct {
+private func SMCParamStructInfo(key: SMCCommKey) -> SMCParamStruct {
     var paramStruct = SMCParamStruct()
     paramStruct.key = key
     paramStruct.data8 = UInt8(kSMCGetKeyInfo)
     return paramStruct
 }
 
-private func SMCParamStructReadUI8(key: SmcCommKey) -> SMCParamStruct {
+private func SMCParamStructReadUI8(key: SMCCommKey) -> SMCParamStruct {
     var paramStruct = SMCParamStruct()
     paramStruct.key = key
     paramStruct.keyInfo.dataSize = 1
@@ -39,7 +39,7 @@ private func SMCParamStructReadUI8(key: SmcCommKey) -> SMCParamStruct {
 }
 
 private func SMCParamStructWriteUI8(
-    key: SmcCommKey,
+    key: SMCCommKey,
     value: UInt8
 ) -> SMCParamStruct {
     var paramStruct = SMCParamStruct()
@@ -74,20 +74,20 @@ public extension SMCId {
     }
 }
 
-public typealias SmcCommType = SMCId
-public typealias SmcCommKey = SMCId
+public typealias SMCCommType = SMCId
+public typealias SMCCommKey = SMCId
 
-public extension SmcCommType {
-    static let ui8 = SmcCommType("u", "i", "8", " ")
-    static let hex = SmcCommType("h", "e", "x", "_")
+public extension SMCCommType {
+    static let ui8 = SMCCommType("u", "i", "8", " ")
+    static let hex = SMCCommType("h", "e", "x", "_")
 }
 
-public typealias SmcCommKeyInfoData = SMCKeyInfoData
+public typealias SMCCommKeyInfoData = SMCKeyInfoData
 
-extension SmcCommKeyInfoData: Equatable {
+extension SMCCommKeyInfoData: Equatable {
     public static func == (
-        lhs: SmcCommKeyInfoData,
-        rhs: SmcCommKeyInfoData
+        lhs: SMCCommKeyInfoData,
+        rhs: SMCCommKeyInfoData
     ) -> Bool {
         return lhs.dataSize == rhs.dataSize &&
             lhs.dataType == rhs.dataType &&
@@ -95,23 +95,23 @@ extension SmcCommKeyInfoData: Equatable {
     }
 }
 
-public struct SmcCommKeyInfo {
+public struct SMCCommKeyInfo {
     let key: SMCId
-    let info: SmcCommKeyInfoData
+    let info: SMCCommKeyInfoData
 }
 
-public enum SmcCommError: Error {
+public enum SMCCommError: Error {
     case invalidDataSize
 
     case native(kIOReturn: kern_return_t, SMCResult: UInt8)
 }
 
 @MainActor
-public enum SmcComm {
+public enum SMCComm {
     private static var connect = IO_OBJECT_NULL
 
     public static func start() -> Bool {
-        assert(SmcComm.connect == IO_OBJECT_NULL)
+        assert(SMCComm.connect == IO_OBJECT_NULL)
 
         let smc = IOServiceGetMatchingService(
             kIOMasterPortDefault,
@@ -134,7 +134,7 @@ public enum SmcComm {
             return false
         }
 
-        SmcComm.connect = connect
+        SMCComm.connect = connect
         IOConnectCallMethod(
             connect,
             UInt32(kSMCUserClientOpen),
@@ -152,9 +152,9 @@ public enum SmcComm {
     }
 
     public static func stop() {
-        assert(SmcComm.connect != IO_OBJECT_NULL)
+        assert(SMCComm.connect != IO_OBJECT_NULL)
         IOConnectCallMethod(
-            SmcComm.connect,
+            SMCComm.connect,
             UInt32(kSMCUserClientClose),
             nil,
             0,
@@ -165,14 +165,14 @@ public enum SmcComm {
             nil,
             nil
         )
-        IOServiceClose(SmcComm.connect)
-        SmcComm.connect = IO_OBJECT_NULL
+        IOServiceClose(SMCComm.connect)
+        SMCComm.connect = IO_OBJECT_NULL
     }
 
     private static func callSMCFunctionYPC(
         params: inout SMCParamStruct
     ) throws -> SMCParamStruct {
-        assert(SmcComm.connect != IO_OBJECT_NULL)
+        assert(SMCComm.connect != IO_OBJECT_NULL)
 
         assert(MemoryLayout<SMCParamStruct>.stride == 80)
 
@@ -180,7 +180,7 @@ public enum SmcComm {
         var outStructSize = MemoryLayout<SMCParamStruct>.stride
 
         let resultCall = IOConnectCallStructMethod(
-            SmcComm.connect,
+            SMCComm.connect,
             UInt32(kSMCHandleYPCEvent),
             &params,
             MemoryLayout<SMCParamStruct>.stride,
@@ -191,7 +191,7 @@ public enum SmcComm {
             resultCall == kIOReturnSuccess,
             outputValues.result == UInt8(kSMCSuccess)
         else {
-            throw SmcCommError.native(
+            throw SMCCommError.native(
                 kIOReturn: resultCall,
                 SMCResult: outputValues.result
             )
@@ -200,8 +200,8 @@ public enum SmcComm {
         return outputValues
     }
 
-    public static func GetKeyInfo(key: SmcCommKey) throws
-        -> SmcCommKeyInfoData
+    public static func GetKeyInfo(key: SMCCommKey) throws
+        -> SMCCommKeyInfoData
     {
         var inputStruct = SMCParamStructInfo(key: key)
 
@@ -210,7 +210,7 @@ public enum SmcComm {
         return outputStruct.keyInfo
     }
 
-    public static func ReadKeyUI8(key: SmcCommKey) throws -> UInt8 {
+    public static func ReadKeyUI8(key: SMCCommKey) throws -> UInt8 {
         var inputStruct = SMCParamStructReadUI8(key: key)
 
         let outputStruct = try callSMCFunctionYPC(params: &inputStruct)
@@ -218,7 +218,7 @@ public enum SmcComm {
         return outputStruct.bytes.0
     }
 
-    public static func WriteKeyUI8(key: SmcCommKey, value: UInt8) throws {
+    public static func WriteKeyUI8(key: SMCCommKey, value: UInt8) throws {
         var inputStruct = SMCParamStructWriteUI8(key: key, value: value)
 
         _ = try self.callSMCFunctionYPC(params: &inputStruct)

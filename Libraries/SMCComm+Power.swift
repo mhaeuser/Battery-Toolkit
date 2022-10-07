@@ -3,38 +3,38 @@
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
-public extension SmcComm {
+public extension SMCComm {
     @MainActor
     enum Power {
         private enum Keys {
-            fileprivate static let CH0C = SmcCommKey("C", "H", "0", "C")
-            fileprivate static let CH0J = SmcCommKey("C", "H", "0", "J")
+            fileprivate static let CH0C = SMCCommKey("C", "H", "0", "C")
+            fileprivate static let CH0J = SMCCommKey("C", "H", "0", "J")
         }
 
         private static let keys =
             [
-                SmcCommKeyInfo(
-                    key: SmcComm.Power.Keys.CH0C,
-                    info: SmcCommKeyInfoData(
+                SMCCommKeyInfo(
+                    key: SMCComm.Power.Keys.CH0C,
+                    info: SMCCommKeyInfoData(
                         dataSize: 1,
-                        dataType: SmcCommType.hex,
+                        dataType: SMCCommType.hex,
                         dataAttributes: 0xD4
                     )
                 ),
-                SmcCommKeyInfo(
-                    key: SmcComm.Power.Keys.CH0J,
-                    info: SmcCommKeyInfoData(
+                SMCCommKeyInfo(
+                    key: SMCComm.Power.Keys.CH0J,
+                    info: SMCCommKeyInfoData(
                         dataSize: 1,
-                        dataType: SmcCommType.ui8,
+                        dataType: SMCCommType.ui8,
                         dataAttributes: 0xD4
                     )
                 ),
             ]
 
         public static func supported() -> Bool {
-            for keyInfo in SmcComm.Power.keys {
+            for keyInfo in SMCComm.Power.keys {
                 do {
-                    let info = try SmcComm.GetKeyInfo(key: keyInfo.key)
+                    let info = try SMCComm.GetKeyInfo(key: keyInfo.key)
                     guard keyInfo.info == info else {
                         return false
                     }
@@ -48,8 +48,8 @@ public extension SmcComm {
 
         public static func enableCharging() -> Bool {
             do {
-                try SmcComm.WriteKeyUI8(
-                    key: SmcComm.Power.Keys.CH0C,
+                try SMCComm.WriteKeyUI8(
+                    key: SMCComm.Power.Keys.CH0C,
                     value: 0x00
                 )
                 return true
@@ -60,8 +60,8 @@ public extension SmcComm {
 
         public static func disableCharging() -> Bool {
             do {
-                try SmcComm.WriteKeyUI8(
-                    key: SmcComm.Power.Keys.CH0C,
+                try SMCComm.WriteKeyUI8(
+                    key: SMCComm.Power.Keys.CH0C,
                     value: 0x01
                 )
                 return true
@@ -72,7 +72,7 @@ public extension SmcComm {
 
         public static func isChargingDisabled() -> Bool {
             do {
-                let value = try SmcComm.ReadKeyUI8(key: SmcComm.Power.Keys.CH0C)
+                let value = try SMCComm.ReadKeyUI8(key: SMCComm.Power.Keys.CH0C)
                 return value != 0x00
             } catch {
                 return false
@@ -81,8 +81,8 @@ public extension SmcComm {
 
         public static func enablePowerAdapter() -> Bool {
             do {
-                try SmcComm.WriteKeyUI8(
-                    key: SmcComm.Power.Keys.CH0J,
+                try SMCComm.WriteKeyUI8(
+                    key: SMCComm.Power.Keys.CH0J,
                     value: 0x00
                 )
                 return true
@@ -93,8 +93,8 @@ public extension SmcComm {
 
         public static func disablePowerAdapter() -> Bool {
             do {
-                try SmcComm.WriteKeyUI8(
-                    key: SmcComm.Power.Keys.CH0J,
+                try SMCComm.WriteKeyUI8(
+                    key: SMCComm.Power.Keys.CH0J,
                     value: 0x20
                 )
                 return true
@@ -105,7 +105,7 @@ public extension SmcComm {
 
         public static func isPowerAdapterDisabled() -> Bool {
             do {
-                let value = try SmcComm.ReadKeyUI8(key: SmcComm.Power.Keys.CH0J)
+                let value = try SMCComm.ReadKeyUI8(key: SMCComm.Power.Keys.CH0J)
                 return value != 0x00
             } catch {
                 return false
