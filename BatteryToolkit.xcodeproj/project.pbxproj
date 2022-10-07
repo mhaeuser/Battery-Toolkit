@@ -320,14 +320,10 @@
 		CE52866A28298B6D00860C7B = {
 			isa = PBXGroup;
 			children = (
-				CEF3496D28DCD34900A1CECD /* SecCodeEx */,
+				CEC74DDB28F0290200488CDC /* Modules */,
 				CE3C1D8128C7F950008A0F7D /* uninstall.sh */,
-				CED8DD3628C364D60082C02A /* NSXPCConnection+AuditToken */,
 				CEECE31928BB648F00821A3B /* BatteryToolkitService */,
 				CE6B75F728BC18DD008DF170 /* Common */,
-				CE6C06B828A84C2400D76CC8 /* BTPreprocessor */,
-				CEB4671C2843C80D00D7CB01 /* SMCParamStruct */,
-				CE6C06A328A84A9200D76CC8 /* IOPMPrivate */,
 				CE555D89285D2A0B0031A6F9 /* Libraries */,
 				CE52867528298B6D00860C7B /* BatteryToolkit */,
 				CE3974422859E518002D0EC9 /* me.mhaeuser.batterytoolkitd */,
@@ -463,6 +459,18 @@
 				CEB4671D2843C87200D7CB01 /* module.modulemap */,
 			);
 			path = SMCParamStruct;
+			sourceTree = "<group>";
+		};
+		CEC74DDB28F0290200488CDC /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				CE6C06B828A84C2400D76CC8 /* BTPreprocessor */,
+				CEB4671C2843C80D00D7CB01 /* SMCParamStruct */,
+				CE6C06A328A84A9200D76CC8 /* IOPMPrivate */,
+				CED8DD3628C364D60082C02A /* NSXPCConnection+AuditToken */,
+				CEF3496D28DCD34900A1CECD /* SecCodeEx */,
+			);
+			path = Modules;
 			sourceTree = "<group>";
 		};
 		CED8DD3628C364D60082C02A /* NSXPCConnection+AuditToken */ = {
@@ -956,7 +964,6 @@
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_PARAMETER = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_KEY_CFBundleDisplayName = "$(PRODUCT_NAME)";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 Marvin Häuser. All rights reserved.";
 				LLVM_LTO = YES_THIN;
@@ -969,6 +976,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_INCLUDE_PATHS = Modules;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
@@ -1085,7 +1093,6 @@
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_PARAMETER = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_KEY_CFBundleDisplayName = "$(PRODUCT_NAME)";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 Marvin Häuser. All rights reserved.";
 				LLVM_LTO = YES_THIN;
@@ -1097,6 +1104,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_INCLUDE_PATHS = Modules;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
