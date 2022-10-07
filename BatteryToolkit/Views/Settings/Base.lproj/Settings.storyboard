@@ -59,18 +59,18 @@
             <objects>
                 <viewController storyboardIdentifier="SettingsViewController" showSeguePresentationStyle="single" id="qK6-EM-YZH" userLabel="SettingsViewController" customClass="SettingsViewController" customModule="Battery_Toolkit" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" translatesAutoresizingMaskIntoConstraints="NO" id="IvC-q3-fvl" userLabel="General View">
-                        <rect key="frame" x="0.0" y="0.0" width="515" height="105"/>
+                        <rect key="frame" x="0.0" y="0.0" width="475" height="218"/>
                         <subviews>
                             <tabView allowsTruncatedLabels="NO" type="noTabsNoBorder" translatesAutoresizingMaskIntoConstraints="NO" id="NXG-fh-uCo">
-                                <rect key="frame" x="0.0" y="69" width="515" height="36"/>
+                                <rect key="frame" x="0.0" y="69" width="475" height="149"/>
                                 <font key="font" metaFont="system"/>
                                 <tabViewItems>
                                     <tabViewItem label="General" identifier="" id="r6x-U7-0zu" userLabel="General">
                                         <view key="view" id="j3z-8d-YbE">
-                                            <rect key="frame" x="0.0" y="0.0" width="515" height="36"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="475" height="36"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QDm-L7-ymC">
+                                                <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QDm-L7-ymC">
                                                     <rect key="frame" x="18" y="-1" width="408" height="18"/>
                                                     <buttonCell key="cell" type="check" title="Open Battery Toolkit automatically when you log in to your Mac" bezelStyle="regularSquare" imagePosition="left" inset="2" id="sXH-cF-vcD">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -80,20 +80,19 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="QDm-L7-ymC" firstAttribute="leading" secondItem="j3z-8d-YbE" secondAttribute="leading" constant="20" symbolic="YES" id="4wM-89-27y"/>
-                                                <constraint firstAttribute="trailing" secondItem="QDm-L7-ymC" secondAttribute="trailing" constant="20" symbolic="YES" id="6qo-5I-nct"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="QDm-L7-ymC" secondAttribute="trailing" constant="20" symbolic="YES" id="6qo-5I-nct"/>
                                                 <constraint firstAttribute="bottom" secondItem="QDm-L7-ymC" secondAttribute="bottom" id="bcW-9Y-OhE"/>
                                                 <constraint firstItem="QDm-L7-ymC" firstAttribute="top" secondItem="j3z-8d-YbE" secondAttribute="top" constant="20" symbolic="YES" id="kj7-7c-URO"/>
-                                                <constraint firstAttribute="trailing" secondItem="QDm-L7-ymC" secondAttribute="trailing" constant="20" symbolic="YES" id="ky1-Y5-gfL"/>
                                             </constraints>
                                         </view>
                                     </tabViewItem>
                                     <tabViewItem label="Power" identifier="" id="IMi-pw-cwy" userLabel="Power">
                                         <view key="view" id="Blc-dd-9Qv">
-                                            <rect key="frame" x="0.0" y="0.0" width="515" height="149"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="475" height="149"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nq7-TF-yL4" userLabel="Max Stepper">
-                                                    <rect key="frame" x="462" y="29" width="19" height="28"/>
+                                                    <rect key="frame" x="422" y="29" width="19" height="28"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="CgW-fv-xEB"/>
                                                         <constraint firstAttribute="width" constant="13" id="LgR-Wb-JpC"/>
@@ -104,7 +103,7 @@
                                                     </connections>
                                                 </stepper>
                                                 <textField verticalHuggingPriority="750" preferredMaxLayoutWidth="30" translatesAutoresizingMaskIntoConstraints="NO" id="UVz-So-HqI" userLabel="Min Charge ">
-                                                    <rect key="frame" x="430" y="85" width="35" height="21"/>
+                                                    <rect key="frame" x="390" y="85" width="35" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="Kuf-Hs-zxF"/>
                                                         <constraint firstAttribute="width" constant="35" id="MRL-G0-91Y"/>
@@ -119,7 +118,7 @@
                                                         <binding destination="qK6-EM-YZH" name="value" keyPath="self.minChargeNum" id="nnI-Ek-gCl"/>
                                                     </connections>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zNI-F1-3zH" userLabel="Max Text">
+                                                <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zNI-F1-3zH" userLabel="Max Text">
                                                     <rect key="frame" x="18" y="61" width="199" height="16"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="16" id="EuL-L8-25Q"/>
@@ -131,8 +130,8 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TZ0-RS-ZgS" userLabel="Adapter Sleep">
-                                                    <rect key="frame" x="18" y="-1" width="477" height="18"/>
+                                                <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TZ0-RS-ZgS" userLabel="Adapter Sleep">
+                                                    <rect key="frame" x="18" y="-1" width="437" height="18"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="16" id="j6C-qS-fZ0"/>
                                                     </constraints>
@@ -142,7 +141,7 @@
                                                     </buttonCell>
                                                 </button>
                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" preferredMaxLayoutWidth="16" translatesAutoresizingMaskIntoConstraints="NO" id="kwg-mE-JId" userLabel="Max %">
-                                                    <rect key="frame" x="481" y="35" width="16" height="16"/>
+                                                    <rect key="frame" x="441" y="35" width="16" height="16"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="12" id="PgQ-Jv-j8D"/>
                                                         <constraint firstAttribute="height" constant="16" id="y7M-IN-ZLF"/>
@@ -154,7 +153,7 @@
                                                     </textFieldCell>
                                                 </textField>
                                                 <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BRS-K5-tS0" userLabel="Min Stepper">
-                                                    <rect key="frame" x="462" y="81" width="19" height="28"/>
+                                                    <rect key="frame" x="422" y="81" width="19" height="28"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="1ax-0q-HUH"/>
                                                         <constraint firstAttribute="width" constant="13" id="G5f-Ks-aX5"/>
@@ -165,7 +164,7 @@
                                                     </connections>
                                                 </stepper>
                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" preferredMaxLayoutWidth="16" translatesAutoresizingMaskIntoConstraints="NO" id="cpE-XY-Cm8" userLabel="Min %">
-                                                    <rect key="frame" x="481" y="87" width="16" height="16"/>
+                                                    <rect key="frame" x="441" y="87" width="16" height="16"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="16" id="YOG-qc-MNm"/>
                                                         <constraint firstAttribute="width" constant="12" id="fxa-jc-NFy"/>
@@ -177,7 +176,7 @@
                                                     </textFieldCell>
                                                 </textField>
                                                 <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9gz-yn-SNi" userLabel="Max Slider">
-                                                    <rect key="frame" x="18" y="27" width="406" height="28"/>
+                                                    <rect key="frame" x="18" y="27" width="366" height="28"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="1lj-SG-3et"/>
                                                     </constraints>
@@ -187,7 +186,7 @@
                                                     </connections>
                                                 </slider>
                                                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jVr-RT-V0O" userLabel="Max Charge">
-                                                    <rect key="frame" x="430" y="33" width="35" height="21"/>
+                                                    <rect key="frame" x="390" y="33" width="35" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="35" id="hfS-3E-kvP"/>
                                                         <constraint firstAttribute="height" constant="21" id="inl-id-yxn"/>
@@ -203,7 +202,7 @@
                                                     </connections>
                                                 </textField>
                                                 <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GpU-47-1gg" userLabel="Min Slider">
-                                                    <rect key="frame" x="18" y="79" width="406" height="28"/>
+                                                    <rect key="frame" x="18" y="79" width="366" height="28"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="8u8-ge-GfV"/>
                                                     </constraints>
@@ -212,7 +211,7 @@
                                                         <binding destination="qK6-EM-YZH" name="value" keyPath="self.minChargeNum" id="zJb-gs-jH2"/>
                                                     </connections>
                                                 </slider>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xbB-Gg-5TD" userLabel="Min Text">
+                                                <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xbB-Gg-5TD" userLabel="Min Text">
                                                     <rect key="frame" x="18" y="113" width="197" height="16"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="16" id="CJk-Zk-wNS"/>
@@ -224,7 +223,7 @@
                                                     </textFieldCell>
                                                 </textField>
                                                 <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="Z0P-wM-ijd">
-                                                    <rect key="frame" x="20" y="22" width="475" height="5"/>
+                                                    <rect key="frame" x="20" y="22" width="435" height="5"/>
                                                 </box>
                                             </subviews>
                                             <constraints>
@@ -268,7 +267,7 @@
                                 </tabViewItems>
                             </tabView>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tMo-Nt-MJE">
-                                <rect key="frame" x="426" y="13" width="76" height="32"/>
+                                <rect key="frame" x="386" y="13" width="76" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="po9-PZ-BZ9"/>
                                 </constraints>
@@ -281,8 +280,8 @@
                                     <action selector="doneButtonAction:" target="qK6-EM-YZH" id="0PC-jQ-0PY"/>
                                 </connections>
                             </button>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1wm-Dj-FSo">
-                                <rect key="frame" x="352" y="13" width="76" height="32"/>
+                            <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1wm-Dj-FSo">
+                                <rect key="frame" x="312" y="13" width="76" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="dN6-cM-IvN"/>
                                 </constraints>
@@ -298,7 +297,7 @@ Gw
                                 </connections>
                             </button>
                             <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="ZwQ-iO-Z8h">
-                                <rect key="frame" x="0.0" y="58" width="515" height="5"/>
+                                <rect key="frame" x="0.0" y="58" width="475" height="5"/>
                             </box>
                         </subviews>
                         <constraints>
