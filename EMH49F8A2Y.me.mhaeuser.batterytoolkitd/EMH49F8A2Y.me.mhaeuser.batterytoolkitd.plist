@@ -9,15 +9,15 @@
 		<key>SuccessfulExit</key>
 		<false/>
 	</dict>
-	<key>AssociatedBundleIdentifiers</key>
-	<string>me.mhaeuser.BatteryToolkit</string>
+	<key>BundleProgram</key>
+	<string>Contents/Library/LaunchServices/EMH49F8A2Y.me.mhaeuser.batterytoolkitd</string>
 	<key>Label</key>
-	<string>me.mhaeuser.batterytoolkitd</string>
+	<string>EMH49F8A2Y.me.mhaeuser.batterytoolkitd</string>
 	<key>RunAtLoad</key>
 	<true/>
 	<key>MachServices</key>
 	<dict>
-		<key>me.mhaeuser.batterytoolkitd</key>
+		<key>EMH49F8A2Y.me.mhaeuser.batterytoolkitd</key>
 		<true/>
 	</dict>
 </dict>
