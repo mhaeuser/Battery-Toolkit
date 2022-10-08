@@ -62,14 +62,20 @@ internal enum BTActions {
     }
 
     static func getState(
-        reply: @Sendable @escaping (BTError.RawValue, [String: NSObject & Sendable])
+        reply: @Sendable @escaping (
+            BTError.RawValue,
+            [String: NSObject & Sendable]
+        )
             -> Void
     ) {
         BTDaemonXPCClient.getState(reply: reply)
     }
 
     static func getSettings(
-        reply: @Sendable @escaping (BTError.RawValue, [String: NSObject & Sendable])
+        reply: @Sendable @escaping (
+            BTError.RawValue,
+            [String: NSObject & Sendable]
+        )
             -> Void
     ) {
         BTDaemonXPCClient.getSettings(reply: reply)

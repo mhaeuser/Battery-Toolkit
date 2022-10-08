@@ -124,7 +124,8 @@ internal final class BTSettingsViewController: NSViewController {
             ),
         ]
 
-        guard !(settings as NSDictionary).isEqual(to: self.currentSettings) else {
+        guard !(settings as NSDictionary).isEqual(to: self.currentSettings)
+        else {
             os_log("Background Activity settings have not changed, ignoring")
             //
             // If the previous operations failed, we displayed an error prompt
