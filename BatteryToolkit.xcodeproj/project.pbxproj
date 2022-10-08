@@ -77,7 +77,6 @@
 		CEB4A42F28D4D4D0004FA277 /* SettingsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4A42E28D4D4D0004FA277 /* SettingsWindowController.swift */; };
 		CED8DD3928C365790082C02A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CED8DD3828C365790082C02A /* Security.framework */; };
 		CEE1655328E58D9100DC2443 /* SecCodeEx.c in Sources */ = {isa = PBXBuildFile; fileRef = CEF3496E28DCD36100A1CECD /* SecCodeEx.c */; };
-		CEE1655428E58D9500DC2443 /* SecCodeEx.h in Headers */ = {isa = PBXBuildFile; fileRef = CEF3496F28DCD52400A1CECD /* SecCodeEx.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEE1655528E58DAF00DC2443 /* libSecCodeEx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CEE1654F28E4B65B00DC2443 /* libSecCodeEx.a */; };
 		CEE1655628E58DB900DC2443 /* libSecCodeEx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CEE1654F28E4B65B00DC2443 /* libSecCodeEx.a */; };
 		CEE1655728E58DBF00DC2443 /* libSecCodeEx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CEE1654F28E4B65B00DC2443 /* libSecCodeEx.a */; };
@@ -506,17 +505,6 @@
 		};
 /* End PBXGroup section */
 
-/* Begin PBXHeadersBuildPhase section */
-		CEE1654B28E4B65B00DC2443 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CEE1655428E58D9500DC2443 /* SecCodeEx.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXHeadersBuildPhase section */
-
 /* Begin PBXNativeTarget section */
 		CE3974402859E518002D0EC9 /* EMH49F8A2Y.me.mhaeuser.batterytoolkitd */ = {
 			isa = PBXNativeTarget;
@@ -577,7 +565,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CEE1655228E4B65C00DC2443 /* Build configuration list for PBXNativeTarget "SecCodeEx" */;
 			buildPhases = (
-				CEE1654B28E4B65B00DC2443 /* Headers */,
 				CEE1654C28E4B65B00DC2443 /* Sources */,
 			);
 			buildRules = (
