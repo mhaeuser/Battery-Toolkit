@@ -10,7 +10,6 @@ import os.log
 @main
 @MainActor
 internal enum BTDaemon {
-    /// Whether the machine is supported.
     private(set) static var supported = false
 
     private static var uniqueId: Data? = nil
@@ -59,7 +58,7 @@ internal enum BTDaemon {
             let status = BTAuthorization.duplicateRight(
                 rightName: BTAuthorizationRights.manage,
                 templateName: kAuthorizationRuleAuthenticateAsAdmin,
-                comment: "Used by \(BT_DAEMON_NAME) to allow access to its privileged functions",
+                comment: "Used by \(BT_DAEMON_ID) to allow access to its privileged functions",
                 timeout: 300
             )
             if status != errSecSuccess {

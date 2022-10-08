@@ -7,8 +7,8 @@
 
 #include "BTPreprocessor.h"
 
-const NSString *const BT_APP_NAME       = @BT_APP_NAME_;
-const NSString *const BT_SERVICE_NAME   = @BT_SERVICE_NAME_;
-const NSString *const BT_DAEMON_NAME    = @BT_DAEMON_NAME_;
-const NSString *const BT_AUTOSTART_NAME = @BT_AUTOSTART_NAME_;
-const NSString *const BT_CODE_SIGN_CN   = @BT_CODE_SIGN_CN_;
+const NSString *const BT_APP_ID       = @BT_APP_ID_;
+const NSString *const BT_SERVICE_ID   = @BT_SERVICE_ID_;
+const NSString *const BT_DAEMON_ID    = @BT_DAEMON_ID_;
+const NSString *const BT_AUTOSTART_ID = @BT_AUTOSTART_ID_;
+const NSString *const BT_CODESIGN_CN  = @BT_CODESIGN_CN_;

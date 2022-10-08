@@ -843,11 +843,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				BT_APP_NAME = me.mhaeuser.BatteryToolkit;
-				BT_AUTOSTART_NAME = me.mhaeuser.BatteryToolkitAutostart;
-				BT_CODE_SIGN_CN = "Apple Development: mhaeuser@posteo.de (FK3MXHN3BX)";
-				BT_DAEMON_NAME = EMH49F8A2Y.me.mhaeuser.batterytoolkitd;
-				BT_SERVICE_NAME = me.mhaeuser.BatteryToolkitService;
+				BT_APP_ID = me.mhaeuser.BatteryToolkit;
+				BT_AUTOSTART_ID = me.mhaeuser.BatteryToolkitAutostart;
+				BT_CODESIGN_CN = "Apple Development: mhaeuser@posteo.de (FK3MXHN3BX)";
+				BT_DAEMON_ID = EMH49F8A2Y.me.mhaeuser.batterytoolkitd;
+				BT_SERVICE_ID = me.mhaeuser.BatteryToolkitService;
 				CLANG_ANALYZER_GCD_PERFORMANCE = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_EMPTY_CONTEXT = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -926,11 +926,11 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
-					"\"BT_APP_NAME_=\\\"$(BT_APP_NAME)\\\"\"",
-					"\"BT_AUTOSTART_NAME_=\\\"$(BT_AUTOSTART_NAME)\\\"\"",
-					"\"BT_DAEMON_NAME_=\\\"$(BT_DAEMON_NAME)\\\"\"",
-					"\"BT_CODE_SIGN_CN_=\\\"$(BT_CODE_SIGN_CN)\\\"\"",
-					"\"BT_SERVICE_NAME_=\\\"$(BT_SERVICE_NAME)\\\"\"",
+					"\"BT_APP_ID_=\\\"$(BT_APP_ID)\\\"\"",
+					"\"BT_AUTOSTART_ID_=\\\"$(BT_AUTOSTART_ID)\\\"\"",
+					"\"BT_DAEMON_ID_=\\\"$(BT_DAEMON_ID)\\\"\"",
+					"\"BT_CODESIGN_CN_=\\\"$(BT_CODESIGN_CN)\\\"\"",
+					"\"BT_SERVICE_ID_=\\\"$(BT_SERVICE_ID)\\\"\"",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
@@ -980,11 +980,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				BT_APP_NAME = me.mhaeuser.BatteryToolkit;
-				BT_AUTOSTART_NAME = me.mhaeuser.BatteryToolkitAutostart;
-				BT_CODE_SIGN_CN = "Apple Development: mhaeuser@posteo.de (FK3MXHN3BX)";
-				BT_DAEMON_NAME = EMH49F8A2Y.me.mhaeuser.batterytoolkitd;
-				BT_SERVICE_NAME = me.mhaeuser.BatteryToolkitService;
+				BT_APP_ID = me.mhaeuser.BatteryToolkit;
+				BT_AUTOSTART_ID = me.mhaeuser.BatteryToolkitAutostart;
+				BT_CODESIGN_CN = "Apple Development: mhaeuser@posteo.de (FK3MXHN3BX)";
+				BT_DAEMON_ID = EMH49F8A2Y.me.mhaeuser.batterytoolkitd;
+				BT_SERVICE_ID = me.mhaeuser.BatteryToolkitService;
 				CLANG_ANALYZER_GCD_PERFORMANCE = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_EMPTY_CONTEXT = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -1060,11 +1060,11 @@
 				GCC_FAST_MATH = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"\"BT_APP_NAME_=\\\"$(BT_APP_NAME)\\\"\"",
-					"\"BT_AUTOSTART_NAME_=\\\"$(BT_AUTOSTART_NAME)\\\"\"",
-					"\"BT_DAEMON_NAME_=\\\"$(BT_DAEMON_NAME)\\\"\"",
-					"\"BT_CODE_SIGN_CN_=\\\"$(BT_CODE_SIGN_CN)\\\"\"",
-					"\"BT_SERVICE_NAME_=\\\"$(BT_SERVICE_NAME)\\\"\"",
+					"\"BT_APP_ID_=\\\"$(BT_APP_ID)\\\"\"",
+					"\"BT_AUTOSTART_ID_=\\\"$(BT_AUTOSTART_ID)\\\"\"",
+					"\"BT_DAEMON_ID_=\\\"$(BT_DAEMON_ID)\\\"\"",
+					"\"BT_CODESIGN_CN_=\\\"$(BT_CODESIGN_CN)\\\"\"",
+					"\"BT_SERVICE_ID_=\\\"$(BT_SERVICE_ID)\\\"\"",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;

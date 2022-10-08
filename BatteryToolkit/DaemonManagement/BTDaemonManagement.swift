@@ -92,7 +92,7 @@ internal enum BTDaemonManagement {
         }
 
         let bundleId = CSIdentification.getBundleRelativeUniqueId(
-            relative: "Contents/Library/LaunchServices/" + BT_DAEMON_NAME
+            relative: "Contents/Library/LaunchServices/" + BT_DAEMON_ID
         )
         guard let bundleId else {
             os_log("Bundle daemon unique ID is nil")

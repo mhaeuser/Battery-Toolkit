@@ -7,7 +7,7 @@
 	<key>SMPrivilegedExecutables</key>
 	<dict>
 		<key>EMH49F8A2Y.me.mhaeuser.batterytoolkitd</key>
-		<string>identifier "EMH49F8A2Y.me.mhaeuser.batterytoolkitd" and anchor apple generic and certificate leaf[subject.CN] = "$(BT_CODE_SIGN_CN)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
+		<string>identifier &quot;EMH49F8A2Y.me.mhaeuser.batterytoolkitd&quot; and anchor apple generic and certificate leaf[subject.CN] = &quot;$(BT_CODESIGN_CN)&quot; and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
 	</dict>
 </dict>
 </plist>

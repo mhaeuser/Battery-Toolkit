@@ -13,7 +13,7 @@ internal enum BTXPCValidation {
     static func protectService(connection: NSXPCConnection) {
         if #available(macOS 13.0, *) {
             connection.setCodeSigningRequirement(
-                requirementsTextFromId(identifier: BT_SERVICE_NAME)
+                requirementsTextFromId(identifier: BT_SERVICE_ID)
             )
         }
     }
@@ -21,7 +21,7 @@ internal enum BTXPCValidation {
     static func protectDaemon(connection: NSXPCConnection) {
         if #available(macOS 13.0, *) {
             connection.setCodeSigningRequirement(
-                requirementsTextFromId(identifier: BT_DAEMON_NAME)
+                requirementsTextFromId(identifier: BT_DAEMON_ID)
             )
         }
     }
@@ -50,7 +50,7 @@ internal enum BTXPCValidation {
         }
 
         let requirementText = self
-            .requirementsTextFromId(identifier: BT_APP_NAME)
+            .requirementsTextFromId(identifier: BT_APP_ID)
         if #available(macOS 13.0, *) {
             connection.setCodeSigningRequirement(requirementText)
             return true
@@ -149,7 +149,7 @@ internal enum BTXPCValidation {
     private static func requirementsTextFromId(identifier: String) -> String {
         let debugText = "identifier \"" + identifier + "\"" +
             " and anchor apple generic" +
-            " and certificate leaf[subject.CN] = \"" + BT_CODE_SIGN_CN + "\"" +
+            " and certificate leaf[subject.CN] = \"" + BT_CODESIGN_CN + "\"" +
             " and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */" +
             " and !(entitlement[\"com.apple.security.cs.allow-dyld-environment-variables\"] /* exists */)" +
             " and !(entitlement[\"com.apple.security.cs.disable-library-validation\"] /* exists */)" +

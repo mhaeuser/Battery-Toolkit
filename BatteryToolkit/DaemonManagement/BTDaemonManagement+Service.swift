@@ -27,7 +27,7 @@ internal extension BTDaemonManagement.Status {
 internal extension BTDaemonManagement {
     @available(macOS 13.0, *)
     enum Service {
-        private static let daemonServicePlist = "\(BT_DAEMON_NAME).plist"
+        private static let daemonServicePlist = "\(BT_DAEMON_ID).plist"
 
         @MainActor static func register(
             reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void

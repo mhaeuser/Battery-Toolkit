@@ -68,14 +68,14 @@ internal enum BTLoginItem {
     @available(macOS, deprecated: 13.0)
     private static func enableLegacy() -> Bool {
         return SMLoginItemSetEnabled(
-            BT_AUTOSTART_NAME as CFString,
+            BT_AUTOSTART_ID as CFString,
             true
         )
     }
 
     private static func disableLegacy() -> Bool {
         return SMLoginItemSetEnabled(
-            BT_AUTOSTART_NAME as CFString,
+            BT_AUTOSTART_ID as CFString,
             false
         )
     }

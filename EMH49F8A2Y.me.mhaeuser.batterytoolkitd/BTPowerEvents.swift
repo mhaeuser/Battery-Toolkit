@@ -8,24 +8,14 @@ import IOKit.ps
 import IOPMPrivate
 import os.log
 
-/// Handler for power events. Automatically manages the battery charging state
-// based on factors like
-/// battery charging level and user inputs.
 @MainActor
 internal enum BTPowerEvents {
-    /// Indicates whether an update is in progress.
     static var updating = false
 
-    /// The current mode for battery charging.
     private(set) static var chargingMode = BTStateInfo.ChargingMode.standard
-
-    /// Whether the system is drawing external power.
     private(set) static var unlimitedPower = false
 
-    /// Whether the Limited Power notification has been created.
     private static var powerCreated = false
-
-    /// Whether the Percent Change notification has been created
     private static var percentCreated = false
 
     static func start() -> BTError {
@@ -50,8 +40,6 @@ internal enum BTPowerEvents {
         return BTError.success
     }
 
-    /// Stops the service as part of termination. Hence, not all acquired
-    /// resources are released.
     static func exit() {
         if !self.updating {
             self.restoreDefaults()
@@ -60,7 +48,6 @@ internal enum BTPowerEvents {
         GlobalSleep.forceRestore()
     }
 
-    /// Notification handler for changed settings.
     static func settingsChanged() {
         guard self.percentCreated else {
             return
@@ -69,32 +56,21 @@ internal enum BTPowerEvents {
         _ = self.handleChargeHysteresis()
     }
 
-    /// Charge the battery to the configured maximum next time it is connected to
-    /// external power and then disable charging.
-    ///
-    /// - Returns: Whether the operation was completed successfully.
     static func chargeToMaximum() -> Bool {
         self.chargingMode = .toMaximum
         return self.enableBelowThresholdMode(threshold: BTSettings.maxCharge)
     }
 
-    /// Disable battery charging.
-    ///
-    /// - Returns: Whether the operation was completed successfully.
     static func disableCharging() -> Bool {
         self.chargingMode = .standard
         return BTPowerState.disableCharging()
     }
 
-    /// Charge the battery to 100 % next time it is connected to external power.
-    ///
-    /// - Returns: Whether the operation was completed successfully.
     static func chargeToFull() -> Bool {
         self.chargingMode = .toFull
         return self.enableBelowThresholdMode(threshold: 100)
     }
 
-    /// Gets the battery charging progress.
     static func getChargingProgress() -> BTStateInfo.ChargingProgress {
         var percent: Int32 = 100
         let result = IOPSGetPercentRemaining(&percent, nil, nil)
@@ -114,18 +90,10 @@ internal enum BTPowerEvents {
         return .full
     }
 
-    /// Handler for the Limited Power notification.
-    ///
-    /// - Parameters:
-    ///     - token: The registration token.
     private static func limitedPowerHandler(token _: Int32) {
         self.handleLimitedPower()
     }
 
-    /// Handler for the Percent Change notification.
-    ///
-    /// - Parameters:
-    ///     - token: The registration token.
     private static func percentChangeHandler(token _: Int32) {
         //
         // An unlucky dispatching order of LimitedPower and PercentChanged
@@ -169,10 +137,9 @@ internal enum BTPowerEvents {
             return true
         }
 
-        self.percentCreated = BTDispatcher
-            .registerPercentChangeNotification(
-                self.percentChangeHandler
-            )
+        self.percentCreated = BTDispatcher.registerPercentChangeNotification(
+            self.percentChangeHandler
+        )
         guard self.percentCreated else {
             return false
         }
@@ -243,7 +210,6 @@ internal enum BTPowerEvents {
         return percent
     }
 
-    /// Returns whether the system is drawing external power.
     private static func drawingUnlimitedPower() -> Bool {
         //
         // macOS may falsely report drawing unlimited power when the power
@@ -253,9 +219,6 @@ internal enum BTPowerEvents {
             IOPSDrawingUnlimitedPower()
     }
 
-    /// Adapts to changes to external power. If external power is connected,
-    /// monitors changes to the battery charge level and reacts accordingly. If
-    /// external power is disconnected, disables battery charging.
     private static func handleLimitedPower() {
         //
         // Immediately disable sleep to not interrupt the setup phase.
@@ -285,9 +248,6 @@ internal enum BTPowerEvents {
         GlobalSleep.restore()
     }
 
-    /// Restores the default platform power configuration. Battery charging and
-    /// the power adapter are enabled. To ease debugging, this function has no
-    /// effect when compiling with the DEBUG flag.
     private static func restoreDefaults() {
         //
         // Do not reset to defaults when debugging to not stress the batteries
@@ -299,12 +259,6 @@ internal enum BTPowerEvents {
         #endif
     }
 
-    /// Enables battery charging, if the battery charge level is below the
-    /// threshold.
-    ///
-    /// - Parameters:
-    ///     - threshold: The battery charge level threshold below which charging
-    ///                  should be enabled.
     private static func enableBelowThresholdMode(threshold: UInt8) -> Bool {
         //
         // When the percent loop is inactive, this currently means that the

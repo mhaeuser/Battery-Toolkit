@@ -59,7 +59,7 @@ internal enum BTAppXPCClient {
             return connect
         }
 
-        let connect = NSXPCConnection(serviceName: BT_SERVICE_NAME)
+        let connect = NSXPCConnection(serviceName: BT_SERVICE_ID)
 
         connect.remoteObjectInterface = NSXPCInterface(
             with: BTServiceCommProtocol.self

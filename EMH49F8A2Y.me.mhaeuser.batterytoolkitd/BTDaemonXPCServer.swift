@@ -12,7 +12,7 @@ import Security
 
 internal enum BTDaemonXPCServer {
     @MainActor private static let listener = NSXPCListener(
-        machServiceName: BT_DAEMON_NAME
+        machServiceName: BT_DAEMON_ID
     )
 
     private static let delegate: NSXPCListenerDelegate = Delegate()

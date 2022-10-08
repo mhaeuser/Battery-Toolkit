@@ -11,19 +11,19 @@
 __BEGIN_DECLS
 
 /// The Battery Toolkit bundle identifier.
-extern const NSString *const BT_APP_NAME;
+extern const NSString *const BT_APP_ID;
 
 /// The Battery Toolkit Service identifier.
-extern const NSString *const BT_SERVICE_NAME;
+extern const NSString *const BT_SERVICE_ID;
 
 /// The Battery Toolkit daemon identifier.
-extern const NSString *const BT_DAEMON_NAME;
+extern const NSString *const BT_DAEMON_ID;
 
 /// The Battery Toolkit Autostart identifier.
-extern const NSString *const BT_AUTOSTART_NAME;
+extern const NSString *const BT_AUTOSTART_ID;
 
 /// The Battery Toolkit codesign Common Name.
-extern const NSString *const BT_CODE_SIGN_CN;
+extern const NSString *const BT_CODESIGN_CN;
 
 __END_DECLS
 

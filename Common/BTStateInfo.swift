@@ -7,15 +7,15 @@ import Foundation
 
 internal enum BTStateInfo {
     enum ChargingMode: UInt8 {
-        case standard
-        case toMaximum
-        case toFull
+        case standard = 0
+        case toMaximum = 1
+        case toFull = 2
     }
 
     enum ChargingProgress: UInt8 {
-        case belowMax
-        case belowFull
-        case full
+        case belowMax = 0
+        case belowFull = 1
+        case full = 2
     }
 
     enum Keys {

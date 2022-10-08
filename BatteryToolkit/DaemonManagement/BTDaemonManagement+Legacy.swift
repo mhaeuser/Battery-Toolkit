@@ -16,7 +16,7 @@ internal extension BTDaemonManagement.Status {
 
 internal extension BTDaemonManagement {
     enum Legacy {
-        private static let daemonServicePlist = "\(BT_DAEMON_NAME).plist"
+        private static let daemonServicePlist = "\(BT_DAEMON_ID).plist"
 
         @available(macOS, deprecated: 13.0)
         @MainActor static func register(
@@ -38,7 +38,7 @@ internal extension BTDaemonManagement {
                         var error: Unmanaged<CFError>?
                         let success = SMJobBless(
                             kSMDomainSystemLaunchd,
-                            BT_DAEMON_NAME as CFString,
+                            BT_DAEMON_ID as CFString,
                             authRef,
                             &error
                         )
@@ -81,7 +81,7 @@ internal extension BTDaemonManagement {
             var error: Unmanaged<CFError>? = nil
             let success = SMJobRemove(
                 kSMDomainSystemLaunchd,
-                BT_DAEMON_NAME as CFString,
+                BT_DAEMON_ID as CFString,
                 authRef,
                 true,
                 &error
