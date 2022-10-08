@@ -24,22 +24,27 @@ internal enum BTAuthorization {
         rightName: String,
         flags: AuthorizationFlags
     ) -> Bool {
-        var item = AuthorizationItem(
-            name: rightName,
-            valueLength: 0,
-            value: nil,
-            flags: 0
-        )
-        var rights = AuthorizationRights(count: 1, items: &item)
+        return rightName.withCString { rightName in
+            var item = AuthorizationItem(
+                name: rightName,
+                valueLength: 0,
+                value: nil,
+                flags: 0
+            )
 
-        let status = AuthorizationCopyRights(
-            authRef,
-            &rights,
-            nil,
-            flags,
-            nil
-        )
-        return status == errAuthorizationSuccess
+            return withUnsafeMutablePointer(to: &item) { item in
+                var rights = AuthorizationRights(count: 1, items: item)
+
+                let status = AuthorizationCopyRights(
+                    authRef,
+                    &rights,
+                    nil,
+                    flags,
+                    nil
+                )
+                return status == errAuthorizationSuccess
+            }
+        }
     }
 
     internal static func interactive(rightName: String) -> AuthorizationRef? {
@@ -85,17 +90,34 @@ internal enum BTAuthorization {
 
     internal static func duplicateRight(
         rightName: String,
-        templateName: String
+        templateName: String,
+        comment: String,
+        timeout: Int
     ) -> OSStatus {
         let authRef = self.empty()
         guard let authRef else {
             return errAuthorizationInternal
         }
 
+        var adminRightDef: CFDictionary? = nil
+        let getStatus = AuthorizationRightGet(
+            templateName,
+            &adminRightDef
+        )
+        guard
+            getStatus == errSecSuccess,
+            var adminRightDef = adminRightDef as? [CFString: Any]
+        else {
+            return errAuthorizationInternal
+        }
+
+        adminRightDef[kAuthorizationComment as CFString] = comment as CFString
+        adminRightDef["timeout" as CFString] = timeout as CFNumber
+
         let status = AuthorizationRightSet(
             authRef,
             rightName,
-            templateName as CFString,
+            adminRightDef as CFDictionary,
             nil,
             nil,
             nil

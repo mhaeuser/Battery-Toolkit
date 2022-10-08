@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
+import BTPreprocessor
 import Foundation
 import os.log
 
@@ -36,7 +37,9 @@ internal enum BTDaemon {
 
             let status = BTAuthorization.duplicateRight(
                 rightName: BTAuthorizationRights.manage,
-                templateName: kAuthorizationRuleAuthenticateAsAdmin
+                templateName: kAuthorizationRuleAuthenticateAsAdmin,
+                comment: "Used by \(BT_DAEMON_NAME) to allow access to its privileged functions",
+                timeout: 300
             )
             if status != errSecSuccess {
                 os_log("Error adding manage right: \(status)")
