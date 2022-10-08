@@ -130,7 +130,7 @@ internal final class BTSettingsViewController: NSViewController {
             // If the previous operations failed, we displayed an error prompt
             // and must not close the window.
             //
-            if !success {
+            if success {
                 self.view.window?.windowController?.close()
             }
 
