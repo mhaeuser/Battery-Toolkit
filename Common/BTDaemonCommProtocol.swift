@@ -30,16 +30,16 @@ enum BTDaemonCommCommand: UInt8 {
     )
 
     @MainActor func getState(
-        reply: @Sendable @escaping ([String: NSObject]) -> Void
+        reply: @Sendable @escaping ([String: NSObject & Sendable]) -> Void
     )
 
     @MainActor func getSettings(
-        reply: @Sendable @escaping ([String: NSObject]) -> Void
+        reply: @Sendable @escaping ([String: NSObject & Sendable]) -> Void
     )
 
     @MainActor func setSettings(
         authData: Data?,
-        settings: [String: NSObject],
+        settings: [String: NSObject & Sendable],
         reply: @Sendable @escaping (BTError.RawValue) -> Void
     )
 }

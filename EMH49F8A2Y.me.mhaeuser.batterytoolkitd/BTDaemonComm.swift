@@ -52,7 +52,7 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
     }
 
     @MainActor func getState(
-        reply: @Sendable @escaping ([String: NSObject]) -> Void
+        reply: @Sendable @escaping ([String: NSObject & Sendable]) -> Void
     ) {
         guard BTDaemon.supported else {
             reply([:])
@@ -63,7 +63,7 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
     }
 
     @MainActor func getSettings(
-        reply: @Sendable @escaping ([String: NSObject]) -> Void
+        reply: @Sendable @escaping ([String: NSObject & Sendable]) -> Void
     ) {
         guard BTDaemon.supported else {
             reply([:])
@@ -75,7 +75,7 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
 
     @MainActor func setSettings(
         authData: Data?,
-        settings: [String: NSObject],
+        settings: [String: NSObject & Sendable],
         reply: @Sendable @escaping (BTError.RawValue) -> Void
     ) {
         guard BTDaemon.supported else {

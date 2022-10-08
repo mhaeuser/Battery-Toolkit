@@ -8,7 +8,7 @@ import os.log
 
 @MainActor
 internal final class BTSettingsViewController: NSViewController {
-    private var currentSettings: [String: NSObject]? = nil
+    private var currentSettings: [String: NSObject & Sendable]? = nil
 
     @IBOutlet private var tabView: NSTabView!
     @IBOutlet private var generalTab: NSTabViewItem!
@@ -116,7 +116,7 @@ internal final class BTSettingsViewController: NSViewController {
             )
         }
 
-        let settings: [String: NSObject] = [
+        let settings: [String: NSObject & Sendable] = [
             BTSettingsInfo.Keys.minCharge: self.minChargeNum,
             BTSettingsInfo.Keys.maxCharge: self.maxChargeNum,
             BTSettingsInfo.Keys.adapterSleep: NSNumber(
@@ -124,7 +124,7 @@ internal final class BTSettingsViewController: NSViewController {
             ),
         ]
 
-        guard settings != self.currentSettings else {
+        guard !(settings as NSDictionary).isEqual(to: self.currentSettings) else {
             os_log("Background Activity settings have not changed, ignoring")
             //
             // If the previous operations failed, we displayed an error prompt

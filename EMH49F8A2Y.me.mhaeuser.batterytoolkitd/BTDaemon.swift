@@ -19,7 +19,7 @@ internal enum BTDaemon {
         return self.uniqueId
     }
 
-    static func getState() -> [String: NSObject] {
+    static func getState() -> [String: NSObject & Sendable] {
         let chargingDisabled = BTPowerState.isChargingDisabled()
         let connected = BTPowerEvents.unlimitedPower
         let powerDisabled = BTPowerState.isPowerAdapterDisabled()

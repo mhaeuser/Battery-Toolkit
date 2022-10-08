@@ -52,11 +52,11 @@ internal enum BTSettings {
         _ = CFPreferencesAppSynchronize(kCFPreferencesCurrentApplication)
     }
 
-    static func getSettings() -> [String: NSObject] {
+    static func getSettings() -> [String: NSObject & Sendable] {
         let minCharge = NSNumber(value: self.minCharge)
         let maxCharge = NSNumber(value: self.maxCharge)
         let adapterSleep = NSNumber(value: self.adapterSleep)
-        let settings: [String: NSObject] = [
+        let settings: [String: NSObject & Sendable] = [
             BTSettingsInfo.Keys.minCharge: minCharge,
             BTSettingsInfo.Keys.maxCharge: maxCharge,
             BTSettingsInfo.Keys.adapterSleep: adapterSleep,
@@ -66,7 +66,7 @@ internal enum BTSettings {
     }
 
     static func setSettings(
-        settings: [String: NSObject],
+        settings: [String: NSObject & Sendable],
         reply: @Sendable @escaping (BTError.RawValue) -> Void
     ) {
         let minChargeNum = settings[BTSettingsInfo.Keys.minCharge] as? NSNumber

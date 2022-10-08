@@ -41,7 +41,7 @@ internal enum BTDaemonXPCClient {
     }
 
     static func getState(
-        reply: @Sendable @escaping (BTError.RawValue, [String: NSObject])
+        reply: @Sendable @escaping (BTError.RawValue, [String: NSObject & Sendable])
             -> Void
     ) {
         self.executeDaemonRetry { error in
@@ -96,7 +96,7 @@ internal enum BTDaemonXPCClient {
     }
 
     static func getSettings(
-        reply: @Sendable @escaping (BTError.RawValue, [String: NSObject])
+        reply: @Sendable @escaping (BTError.RawValue, [String: NSObject & Sendable])
             -> Void
     ) {
         self.executeDaemonRetry { error in
@@ -109,7 +109,7 @@ internal enum BTDaemonXPCClient {
     }
 
     static func setSettings(
-        settings: [String: NSObject],
+        settings: [String: NSObject & Sendable],
         reply: @Sendable @escaping (BTError.RawValue) -> Void
     ) {
         self.executeDaemonManageRetry(reply: reply) { daemon, authData, reply in
