@@ -4,6 +4,6 @@
 //
 
 module IOPMPrivate {
-    header "IOPowerSourcesPrivate.h"
     header "IOPMLibPrivate.h"
+    header "IOPowerSourcesPrivate.h"
 }

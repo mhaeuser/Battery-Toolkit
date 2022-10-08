@@ -277,10 +277,10 @@
 		CE0DA2BB28D7BFA800C35C45 /* DaemonManagement */ = {
 			isa = PBXGroup;
 			children = (
-				CEB4A42328D39ECE004FA277 /* BTDaemonManagement+Status.swift */,
 				CE3C1DA228C9329F008A0F7D /* BTDaemonManagement.swift */,
-				CE85D05E28D7B7E6005D1E0C /* BTDaemonManagement+Service.swift */,
 				CEB09B7228D7B9A5007FFB37 /* BTDaemonManagement+Legacy.swift */,
+				CE85D05E28D7B7E6005D1E0C /* BTDaemonManagement+Service.swift */,
+				CEB4A42328D39ECE004FA277 /* BTDaemonManagement+Status.swift */,
 			);
 			path = DaemonManagement;
 			sourceTree = "<group>";
@@ -288,17 +288,17 @@
 		CE3974422859E518002D0EC9 /* EMH49F8A2Y.me.mhaeuser.batterytoolkitd */ = {
 			isa = PBXGroup;
 			children = (
+				CE675D9628C7E82E00F05929 /* Info.plist */,
+				CE675D9528C7E81600F05929 /* EMH49F8A2Y.me.mhaeuser.batterytoolkitd.plist */,
+				CE3C1D8028C7F622008A0F7D /* launchd.plist */,
+				CEA80FD7285A56B50064ADEA /* BTDaemon.swift */,
+				CEA80FD5285A565C0064ADEA /* BTDaemonComm.swift */,
+				CE54510128D9FE9D00D6EB5F /* BTDaemonManagement.swift */,
+				CE397471285A2396002D0EC9 /* BTDaemonXPCServer.swift */,
+				CE8ED7F328C144EE00398581 /* BTDispatcher.swift */,
+				CEC321AF284BAA2B009B9A30 /* BTPowerEvents.swift */,
 				CEECE31028BAB12000821A3B /* BTPowerState.swift */,
 				CE3A8F6C284D056D00A9E373 /* BTSettings.swift */,
-				CEC321AF284BAA2B009B9A30 /* BTPowerEvents.swift */,
-				CE3C1D8028C7F622008A0F7D /* launchd.plist */,
-				CE675D9528C7E81600F05929 /* EMH49F8A2Y.me.mhaeuser.batterytoolkitd.plist */,
-				CE675D9628C7E82E00F05929 /* Info.plist */,
-				CE397471285A2396002D0EC9 /* BTDaemonXPCServer.swift */,
-				CEA80FD5285A565C0064ADEA /* BTDaemonComm.swift */,
-				CEA80FD7285A56B50064ADEA /* BTDaemon.swift */,
-				CE8ED7F328C144EE00398581 /* BTDispatcher.swift */,
-				CE54510128D9FE9D00D6EB5F /* BTDaemonManagement.swift */,
 			);
 			path = EMH49F8A2Y.me.mhaeuser.batterytoolkitd;
 			sourceTree = "<group>";
@@ -306,12 +306,12 @@
 		CE3A8F6E284D26BA00A9E373 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				CED8DD3828C365790082C02A /* Security.framework */,
 				CE6B760328BC19C7008DF170 /* Cocoa.framework */,
-				CE6B75FF28BC1995008DF170 /* ServiceManagement.framework */,
 				CE00654628A989EB0049B17D /* CoreFoundation.framework */,
-				CE00654428A989DD0049B17D /* IOKit.framework */,
 				CE6C06A028A8398600D76CC8 /* Foundation.framework */,
+				CE00654428A989DD0049B17D /* IOKit.framework */,
+				CED8DD3828C365790082C02A /* Security.framework */,
+				CE6B75FF28BC1995008DF170 /* ServiceManagement.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -320,29 +320,29 @@
 			isa = PBXGroup;
 			children = (
 				CEC74DDB28F0290200488CDC /* Modules */,
-				CE3C1D8128C7F950008A0F7D /* uninstall.sh */,
-				CEECE31928BB648F00821A3B /* BatteryToolkitService */,
-				CE6B75F728BC18DD008DF170 /* Common */,
 				CE555D89285D2A0B0031A6F9 /* Libraries */,
-				CE52867528298B6D00860C7B /* BatteryToolkit */,
-				CE3974422859E518002D0EC9 /* EMH49F8A2Y.me.mhaeuser.batterytoolkitd */,
+				CE6B75F728BC18DD008DF170 /* Common */,
 				CE9BD24728E8908000B6C61D /* AutostartHelper */,
+				CEECE31928BB648F00821A3B /* BatteryToolkitService */,
+				CE3974422859E518002D0EC9 /* EMH49F8A2Y.me.mhaeuser.batterytoolkitd */,
+				CE52867528298B6D00860C7B /* BatteryToolkit */,
+				CE3C1D8128C7F950008A0F7D /* uninstall.sh */,
 				CE3A8F6E284D26BA00A9E373 /* Frameworks */,
-				CE39744B2859E6D3002D0EC9 /* EMH49F8A2Y.me.mhaeuser.batterytoolkitd */,
-				CE39744C285A1D35002D0EC9 /* Battery Toolkit.app */,
-				CEECE31828BB648F00821A3B /* Battery Toolkit Service.xpc */,
 				CEE1654F28E4B65B00DC2443 /* libSecCodeEx.a */,
 				CE9BD24628E8908000B6C61D /* AutostartHelper.app */,
+				CEECE31828BB648F00821A3B /* Battery Toolkit Service.xpc */,
+				CE39744B2859E6D3002D0EC9 /* EMH49F8A2Y.me.mhaeuser.batterytoolkitd */,
+				CE39744C285A1D35002D0EC9 /* Battery Toolkit.app */,
 			);
 			sourceTree = "<group>";
 		};
 		CE52867528298B6D00860C7B /* BatteryToolkit */ = {
 			isa = PBXGroup;
 			children = (
-				CEA3908928DF95170023261A /* Views */,
 				CE0DA2BB28D7BFA800C35C45 /* DaemonManagement */,
-				CEE95015285BC3EF00FF60E0 /* Info.plist */,
+				CEA3908928DF95170023261A /* Views */,
 				CE52867A28298B6E00860C7B /* Assets.xcassets */,
+				CEE95015285BC3EF00FF60E0 /* Info.plist */,
 				CE52867F28298B6E00860C7B /* BatteryToolkit.entitlements */,
 				CE39746D285A229F002D0EC9 /* BatteryToolkit.swift */,
 				CE6B760628BC1ABC008DF170 /* BTAppXPCClient.swift */,
@@ -356,9 +356,9 @@
 			isa = PBXGroup;
 			children = (
 				CE1F5E3528D7339D00F61F67 /* CSIdentification.swift */,
+				CE2B96BF28A7E2BB00FE3DDB /* GlobalSleep.swift */,
 				CE37DD0D283F86F90060C43F /* SMCComm.swift */,
 				CE37DD0F284164160060C43F /* SMCComm+Power.swift */,
-				CE2B96BF28A7E2BB00FE3DDB /* GlobalSleep.swift */,
 			);
 			path = Libraries;
 			sourceTree = "<group>";
@@ -367,14 +367,14 @@
 			isa = PBXGroup;
 			children = (
 				CE3179E928DB540600E9C121 /* BTAuthorization.swift */,
+				CE5E5AF228DF183E00AF1D07 /* BTAuthorizationRights.swift */,
 				CEA80FDA285A57030064ADEA /* BTDaemonCommProtocol.swift */,
-				CE0DB56228BEB4E600B8FC4C /* BTSettingsInfo.swift */,
+				CE5E5AF728DF1CB100AF1D07 /* BTError.swift */,
 				CE3C1DA628CA33FD008A0F7D /* BTLegacyHelperInfo.swift */,
+				CE1F5E3B28D760D400F61F67 /* BTLocalization.swift */,
+				CE0DB56228BEB4E600B8FC4C /* BTSettingsInfo.swift */,
 				CEB4A42728D3B184004FA277 /* BTStateInfo.swift */,
 				CE50557028D65B48000E4387 /* BTXPCValidation.swift */,
-				CE1F5E3B28D760D400F61F67 /* BTLocalization.swift */,
-				CE5E5AF228DF183E00AF1D07 /* BTAuthorizationRights.swift */,
-				CE5E5AF728DF1CB100AF1D07 /* BTError.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -383,8 +383,8 @@
 			isa = PBXGroup;
 			children = (
 				CE6C06A428A84AAB00D76CC8 /* module.modulemap */,
-				CEC321B1284BBC93009B9A30 /* IOPowerSourcesPrivate.h */,
 				CE2B96BD28A7CEFE00FE3DDB /* IOPMLibPrivate.h */,
+				CEC321B1284BBC93009B9A30 /* IOPowerSourcesPrivate.h */,
 			);
 			path = IOPMPrivate;
 			sourceTree = "<group>";
@@ -402,8 +402,8 @@
 		CE9BD24728E8908000B6C61D /* AutostartHelper */ = {
 			isa = PBXGroup;
 			children = (
-				CE01E25828E8BF6B00EFDDD6 /* AutostartHelper.swift */,
 				CE01E25728E8BF6B00EFDDD6 /* AutostartHelper.entitlements */,
+				CE01E25828E8BF6B00EFDDD6 /* AutostartHelper.swift */,
 			);
 			path = AutostartHelper;
 			sourceTree = "<group>";
@@ -411,10 +411,10 @@
 		CEA3908728DF94ED0023261A /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				CEB4A42E28D4D4D0004FA277 /* SettingsWindowController.swift */,
-				CE30CBA028C48995001E2AC6 /* SettingsViewController.swift */,
-				CE5E5AE728DE31EB00AF1D07 /* SettingsMenuItem.swift */,
 				CE1F5E4128D76C6D00F61F67 /* Settings.storyboard */,
+				CE5E5AE728DE31EB00AF1D07 /* SettingsMenuItem.swift */,
+				CE30CBA028C48995001E2AC6 /* SettingsViewController.swift */,
+				CEB4A42E28D4D4D0004FA277 /* SettingsWindowController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -422,8 +422,8 @@
 		CEA3908828DF95020023261A /* Upgrading */ = {
 			isa = PBXGroup;
 			children = (
-				CE3179F428DC72D800E9C121 /* UpgradingViewController.swift */,
 				CE3179F328DC729900E9C121 /* Upgrading.storyboard */,
+				CE3179F428DC72D800E9C121 /* UpgradingViewController.swift */,
 			);
 			path = Upgrading;
 			sourceTree = "<group>";
@@ -434,8 +434,8 @@
 				CEA3908A28DF95490023261A /* Main */,
 				CEA3908728DF94ED0023261A /* Settings */,
 				CEA3908828DF95020023261A /* Upgrading */,
-				CE54510328DA017300D6EB5F /* BTAppPrompts.swift */,
 				CE5E5AE228DE214200AF1D07 /* BTAccessoryMode.swift */,
+				CE54510328DA017300D6EB5F /* BTAppPrompts.swift */,
 				CE4303CC28E38D00006172ED /* BTErrorHandler.swift */,
 			);
 			path = Views;
@@ -444,9 +444,9 @@
 		CEA3908A28DF95490023261A /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				CE37DD0A283F80960060C43F /* Main.storyboard */,
 				CE52868528298CA300860C7B /* AppDelegate.swift */,
 				CE5E5AE428DE292D00AF1D07 /* CommandsMenuDelegate.swift */,
-				CE37DD0A283F80960060C43F /* Main.storyboard */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -454,8 +454,8 @@
 		CEB4671C2843C80D00D7CB01 /* SMCParamStruct */ = {
 			isa = PBXGroup;
 			children = (
-				CEB4671B2843BFA000D7CB01 /* SMCParamStruct.h */,
 				CEB4671D2843C87200D7CB01 /* module.modulemap */,
+				CEB4671B2843BFA000D7CB01 /* SMCParamStruct.h */,
 			);
 			path = SMCParamStruct;
 			sourceTree = "<group>";
@@ -464,10 +464,10 @@
 			isa = PBXGroup;
 			children = (
 				CE6C06B828A84C2400D76CC8 /* BTPreprocessor */,
-				CEB4671C2843C80D00D7CB01 /* SMCParamStruct */,
 				CE6C06A328A84A9200D76CC8 /* IOPMPrivate */,
 				CED8DD3628C364D60082C02A /* NSXPCConnection+AuditToken */,
 				CEF3496D28DCD34900A1CECD /* SecCodeEx */,
+				CEB4671C2843C80D00D7CB01 /* SMCParamStruct */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -475,8 +475,8 @@
 		CED8DD3628C364D60082C02A /* NSXPCConnection+AuditToken */ = {
 			isa = PBXGroup;
 			children = (
-				CEA80FD3285A51600064ADEA /* NSXPCConnection+AuditToken.h */,
 				CED8DD3728C364FA0082C02A /* module.modulemap */,
+				CEA80FD3285A51600064ADEA /* NSXPCConnection+AuditToken.h */,
 			);
 			path = "NSXPCConnection+AuditToken";
 			sourceTree = "<group>";
@@ -486,8 +486,8 @@
 			children = (
 				CEECE32028BB648F00821A3B /* Info.plist */,
 				CEECE32728BB652400821A3B /* BTService.swift */,
-				CEECE32F28BB742500821A3B /* BTServiceCommProtocol.swift */,
 				CEECE33228BB745B00821A3B /* BTServiceComm.swift */,
+				CEECE32F28BB742500821A3B /* BTServiceCommProtocol.swift */,
 				CE6B760828BC1D15008DF170 /* BTServiceXPCServer.swift */,
 			);
 			path = BatteryToolkitService;
