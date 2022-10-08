@@ -8,7 +8,7 @@
 #include <Security/SecCode.h>
 
 OSStatus SecCodeCopySigningInformationDynamic(
-    SecCodeRef code,
+    SecCodeRef __nonnull code,
     SecCSFlags flags,
     CFDictionaryRef * __nonnull CF_RETURNS_RETAINED information
 )

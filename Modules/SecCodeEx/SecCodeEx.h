@@ -15,7 +15,7 @@ __BEGIN_DECLS
   code reference.
  */
 OSStatus SecCodeCopySigningInformationDynamic(
-    SecCodeRef code,
+    SecCodeRef __nonnull code,
     SecCSFlags flags,
     CFDictionaryRef * __nonnull CF_RETURNS_RETAINED information
 );
