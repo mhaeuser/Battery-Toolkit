@@ -103,7 +103,6 @@ internal final class BTSettingsViewController: NSViewController {
             BTLoginItem.disable() :
             BTLoginItem.enable()
 
-        // FIXME: Handle error?
         if success {
             UserDefaults.standard.setValue(
                 disableAutostart,
