@@ -29,25 +29,56 @@ internal extension BTDaemonManagement {
     enum Service {
         private static let daemonServicePlist = "\(BT_DAEMON_NAME).plist"
 
-        private static func registered(status: SMAppService.Status) -> Bool {
-            return status != .notRegistered && status != .notFound
+        @MainActor static func register(
+            reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void
+        ) {
+            os_log("Starting daemon service")
+
+            let status = SMAppService.statusForLegacyPlist(
+                at: BTLegacyHelperInfo.legacyHelperPlist
+            )
+            guard self.registered(status: status) else {
+                self.update(reply: reply)
+                return
+            }
+
+            os_log("Legacy helper registered")
+            reply(.requiresUpgrade)
         }
 
-        private static func registerSync(appService: SMAppService) {
-            os_log("Registering daemon service")
+        @MainActor static func upgrade(
+            reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void
+        ) {
+            os_log("Upgrading daemon service")
 
-            assert(!Thread.isMainThread)
+            BTDaemonManagement.Legacy.unregisterCleanup { error in
+                guard error == BTError.success.rawValue else {
+                    reply(.notRegistered)
+                    return
+                }
 
-            do {
-                try appService.register()
-            } catch {
-                os_log(
-                    "Daemon service registering failed, error: \(error), status: \(appService.status.rawValue)"
-                )
+                awaitUnregister(run: 0) { success in
+                    guard success else {
+                        reply(.notRegistered)
+                        return
+                    }
+
+                    DispatchQueue.main.async {
+                        update(reply: reply)
+                    }
+                }
             }
         }
 
-        internal static func unregister(
+        static func approve(
+            timeout: UInt8,
+            reply: @escaping @Sendable (Bool) -> Void
+        ) {
+            SMAppService.openSystemSettingsLoginItems()
+            self.awaitApproval(run: 0, timeout: timeout, reply: reply)
+        }
+
+        static func unregister(
             reply: @Sendable @escaping (BTError.RawValue) -> Void
         ) {
             os_log("Unregistering daemon service")
@@ -55,7 +86,7 @@ internal extension BTDaemonManagement {
             // Any other status code makes unregister() loop indefinitely.
             //
             let appService = SMAppService.daemon(
-                plistName: BTDaemonManagement.Service.daemonServicePlist
+                plistName: self.daemonServicePlist
             )
             guard appService.status == .enabled else {
                 DispatchQueue.global(qos: .userInitiated).async {
@@ -80,6 +111,24 @@ internal extension BTDaemonManagement {
             }
         }
 
+        private static func registered(status: SMAppService.Status) -> Bool {
+            return status != .notRegistered && status != .notFound
+        }
+
+        private static func registerSync(appService: SMAppService) {
+            os_log("Registering daemon service")
+
+            assert(!Thread.isMainThread)
+
+            do {
+                try appService.register()
+            } catch {
+                os_log(
+                    "Daemon service registering failed, error: \(error), status: \(appService.status.rawValue)"
+                )
+            }
+        }
+
         private static func forceRegister(
             run: UInt8,
             reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void
@@ -96,7 +145,7 @@ internal extension BTDaemonManagement {
             assert(!Thread.isMainThread)
 
             let appService = SMAppService.daemon(
-                plistName: BTDaemonManagement.Service.daemonServicePlist
+                plistName: self.daemonServicePlist
             )
             self.registerSync(appService: appService)
             guard self.registered(status: appService.status) else {
@@ -134,7 +183,7 @@ internal extension BTDaemonManagement {
             reply: @Sendable @escaping (Bool) -> Void
         ) {
             let appService = SMAppService.daemon(
-                plistName: BTDaemonManagement.Service.daemonServicePlist
+                plistName: self.daemonServicePlist
             )
             guard !self.registered(status: appService.status) else {
                 guard run < 24 else {
@@ -159,7 +208,7 @@ internal extension BTDaemonManagement {
             reply: @escaping @Sendable (Bool) -> Void
         ) {
             let appService = SMAppService.daemon(
-                plistName: BTDaemonManagement.Service.daemonServicePlist
+                plistName: self.daemonServicePlist
             )
             guard appService.status == .enabled else {
                 guard run < timeout else {
@@ -180,55 +229,6 @@ internal extension BTDaemonManagement {
             }
 
             reply(true)
-        }
-
-        @MainActor internal static func register(
-            reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void
-        ) {
-            os_log("Starting daemon service")
-
-            let status = SMAppService.statusForLegacyPlist(
-                at: BTLegacyHelperInfo.legacyHelperPlist
-            )
-            guard self.registered(status: status) else {
-                self.update(reply: reply)
-                return
-            }
-
-            os_log("Legacy helper registered")
-            reply(.requiresUpgrade)
-        }
-
-        @MainActor internal static func upgrade(
-            reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void
-        ) {
-            os_log("Upgrading daemon service")
-
-            BTDaemonManagement.Legacy.unregisterCleanup { error in
-                guard error == BTError.success.rawValue else {
-                    reply(.notRegistered)
-                    return
-                }
-
-                awaitUnregister(run: 0) { success in
-                    guard success else {
-                        reply(.notRegistered)
-                        return
-                    }
-
-                    DispatchQueue.main.async {
-                        update(reply: reply)
-                    }
-                }
-            }
-        }
-
-        internal static func approve(
-            timeout: UInt8,
-            reply: @escaping @Sendable (Bool) -> Void
-        ) {
-            SMAppService.openSystemSettingsLoginItems()
-            self.awaitApproval(run: 0, timeout: timeout, reply: reply)
         }
     }
 }

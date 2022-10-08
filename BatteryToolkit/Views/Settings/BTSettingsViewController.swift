@@ -6,25 +6,25 @@
 import Cocoa
 import os.log
 
-final class SettingsViewController: NSViewController {
+internal final class BTSettingsViewController: NSViewController {
     private var currentSettings: [String: NSObject]? = nil
 
-    @IBOutlet var tabView: NSTabView!
-    @IBOutlet var generalTab: NSTabViewItem!
-    @IBOutlet var backgroundActivityTab: NSTabViewItem!
+    @IBOutlet private var tabView: NSTabView!
+    @IBOutlet private var generalTab: NSTabViewItem!
+    @IBOutlet private var backgroundActivityTab: NSTabViewItem!
 
-    @IBOutlet var autostartButton: NSButton!
+    @IBOutlet private var autostartButton: NSButton!
 
-    @IBOutlet var minChargeTextField: NSTextField!
-    @IBOutlet var minChargeSlider: NSSlider!
+    @IBOutlet private var minChargeTextField: NSTextField!
+    @IBOutlet private var minChargeSlider: NSSlider!
 
-    @IBOutlet var maxChargeTextField: NSTextField!
-    @IBOutlet var maxChargeSlider: NSSlider!
+    @IBOutlet private var maxChargeTextField: NSTextField!
+    @IBOutlet private var maxChargeSlider: NSSlider!
 
-    @IBOutlet var adapterSleepButton: NSButton!
+    @IBOutlet private var adapterSleepButton: NSButton!
 
     private var minChargeVal = BTSettingsInfo.Defaults.minCharge
-    @objc dynamic var minChargeNum: NSNumber {
+    @objc private dynamic var minChargeNum: NSNumber {
         get {
             return NSNumber(value: self.minChargeVal)
         }
@@ -60,7 +60,7 @@ final class SettingsViewController: NSViewController {
     }
 
     private var maxChargeVal = BTSettingsInfo.Defaults.maxCharge
-    @objc dynamic var maxChargeNum: NSNumber {
+    @objc private dynamic var maxChargeNum: NSNumber {
         get {
             return NSNumber(value: self.maxChargeVal)
         }
@@ -92,65 +92,11 @@ final class SettingsViewController: NSViewController {
         }
     }
 
-    private func setMinCharge(value: Int) {
-        self.minChargeNum = NSNumber(value: value)
-    }
-
-    private func setMaxCharge(value: Int) {
-        self.maxChargeNum = NSNumber(value: value)
-    }
-
-    private func setAdapterSleep(value: Bool) {
-        self.adapterSleepButton.state = value ?
-            NSControl.StateValue.off :
-            NSControl.StateValue.on
-    }
-
-    private func initGeneralState() {
-        let disableAutostart = UserDefaults.standard.bool(
-            forKey: BTSettingsInfo.Keys.disableAutostart
-        )
-        self.autostartButton.state = disableAutostart ?
-            NSControl.StateValue.off :
-            NSControl.StateValue.on
-    }
-
-    private func initBackgroundActivityState() {
-        BTActions.getSettings { error, settings in
-            DispatchQueue.main.async {
-                self.currentSettings = settings
-
-                guard error == BTError.success.rawValue else {
-                    BTErrorHandler.errorHandler(error: error)
-                    return
-                }
-
-                let minChargeNum =
-                    settings[BTSettingsInfo.Keys.minCharge] as? NSNumber
-                let maxChargeNum =
-                    settings[BTSettingsInfo.Keys.maxCharge] as? NSNumber
-                let adapterInfoNum =
-                    settings[BTSettingsInfo.Keys.adapterSleep] as? NSNumber
-
-                let minCharge = minChargeNum?.intValue ??
-                    Int(BTSettingsInfo.Defaults.minCharge)
-                let maxCharge = maxChargeNum?.intValue ??
-                    Int(BTSettingsInfo.Defaults.maxCharge)
-                let adapterSleep = adapterInfoNum?.boolValue ??
-                    BTSettingsInfo.Defaults.adapterSleep
-
-                self.setMinCharge(value: minCharge)
-                self.setMaxCharge(value: maxCharge)
-                self.setAdapterSleep(value: adapterSleep)
-            }
-        }
-    }
-
-    @IBAction func cancelButtonAction(_: NSButton) {
+    @IBAction private func cancelButtonAction(_: NSButton) {
         self.view.window?.windowController?.close()
     }
 
-    @IBAction func doneButtonAction(_: NSButton) {
+    @IBAction private func doneButtonAction(_: NSButton) {
         let disableAutostart = self.autostartButton.state != .on
         let success = disableAutostart ?
             BTLoginItem.disable() :
@@ -221,12 +167,66 @@ final class SettingsViewController: NSViewController {
         NSApp.activate(ignoringOtherApps: true)
     }
 
-    internal func selectGeneralTab() {
+    func selectGeneralTab() {
         self.tabView.selectTabViewItem(self.generalTab)
     }
 
-    internal func selectBackgroundActivityTab() {
+    func selectBackgroundActivityTab() {
         self.tabView.selectTabViewItem(self.backgroundActivityTab)
         self.updateViewConstraints()
+    }
+
+    private func setMinCharge(value: Int) {
+        self.minChargeNum = NSNumber(value: value)
+    }
+
+    private func setMaxCharge(value: Int) {
+        self.maxChargeNum = NSNumber(value: value)
+    }
+
+    private func setAdapterSleep(value: Bool) {
+        self.adapterSleepButton.state = value ?
+            NSControl.StateValue.off :
+            NSControl.StateValue.on
+    }
+
+    private func initGeneralState() {
+        let disableAutostart = UserDefaults.standard.bool(
+            forKey: BTSettingsInfo.Keys.disableAutostart
+        )
+        self.autostartButton.state = disableAutostart ?
+            NSControl.StateValue.off :
+            NSControl.StateValue.on
+    }
+
+    private func initBackgroundActivityState() {
+        BTActions.getSettings { error, settings in
+            DispatchQueue.main.async {
+                self.currentSettings = settings
+
+                guard error == BTError.success.rawValue else {
+                    BTErrorHandler.errorHandler(error: error)
+                    return
+                }
+
+                let minChargeNum =
+                    settings[BTSettingsInfo.Keys.minCharge] as? NSNumber
+                let maxChargeNum =
+                    settings[BTSettingsInfo.Keys.maxCharge] as? NSNumber
+                let adapterInfoNum =
+                    settings[BTSettingsInfo.Keys.adapterSleep] as? NSNumber
+
+                let minCharge = minChargeNum?.intValue ??
+                    Int(BTSettingsInfo.Defaults.minCharge)
+                let maxCharge = maxChargeNum?.intValue ??
+                    Int(BTSettingsInfo.Defaults.maxCharge)
+                let adapterSleep = adapterInfoNum?.boolValue ??
+                    BTSettingsInfo.Defaults.adapterSleep
+
+                self.setMinCharge(value: minCharge)
+                self.setMaxCharge(value: maxCharge)
+                self.setAdapterSleep(value: adapterSleep)
+            }
+        }
     }
 }

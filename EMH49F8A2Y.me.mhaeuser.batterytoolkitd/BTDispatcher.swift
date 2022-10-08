@@ -11,23 +11,54 @@ import os.log
 
 @MainActor
 internal enum BTDispatcher {
-    fileprivate struct Registration {
-        fileprivate let valid: Bool
-        fileprivate let token: Int32
-
-        init() {
-            self.valid = false
-            self.token = 0
-        }
-
-        init(valid: Bool, token: Int32) {
-            self.valid = valid
-            self.token = token
-        }
-    }
-
     private static var percentRegistration = Registration()
     private static var powerRegistration = Registration()
+
+    static func registerLimitedPowerNotification(
+        _ handler: @MainActor @escaping (Int32) -> Void
+    ) -> Bool {
+        assert(!self.powerRegistration.valid)
+
+        self.powerRegistration = self.registerDispatch(
+            kIOPSNotifyPowerSource,
+            handler
+        )
+        return self.powerRegistration.valid
+    }
+
+    static func registerPercentChangeNotification(
+        _ handler: @MainActor @escaping (Int32) -> Void
+    ) -> Bool {
+        assert(!self.percentRegistration.valid)
+
+        self.percentRegistration = self.registerDispatch(
+            kIOPSNotifyPercentChange,
+            handler
+        )
+        return self.percentRegistration.valid
+    }
+
+    static func unregisterPercentChangeNotification() {
+        let result = self.unregisterDispatch(
+            registration: self.percentRegistration
+        )
+        if !result {
+            os_log("Failed to unregister percent change notification")
+        }
+
+        self.percentRegistration = BTDispatcher.Registration()
+    }
+
+    static func unregisterLimitedPowerNotification() {
+        let result = self.unregisterDispatch(
+            registration: self.powerRegistration
+        )
+        if !result {
+            os_log("Failed to unregister limited power notification")
+        }
+
+        self.powerRegistration = BTDispatcher.Registration()
+    }
 
     private static func registerDispatch(
         _ notify_type: String,
@@ -54,50 +85,21 @@ internal enum BTDispatcher {
 
         return notify_cancel(registration.token) == NOTIFY_STATUS_OK
     }
+}
 
-    internal static func registerLimitedPowerNotification(
-        _ handler: @MainActor @escaping (Int32) -> Void
-    ) -> Bool {
-        assert(!BTDispatcher.powerRegistration.valid)
+private extension BTDispatcher {
+    struct Registration {
+        let valid: Bool
+        let token: Int32
 
-        BTDispatcher.powerRegistration = BTDispatcher.registerDispatch(
-            kIOPSNotifyPowerSource,
-            handler
-        )
-        return BTDispatcher.powerRegistration.valid
-    }
-
-    internal static func registerPercentChangeNotification(
-        _ handler: @MainActor @escaping (Int32) -> Void
-    ) -> Bool {
-        assert(!BTDispatcher.percentRegistration.valid)
-
-        BTDispatcher.percentRegistration = BTDispatcher.registerDispatch(
-            kIOPSNotifyPercentChange,
-            handler
-        )
-        return BTDispatcher.percentRegistration.valid
-    }
-
-    internal static func unregisterPercentChangeNotification() {
-        let result = BTDispatcher.unregisterDispatch(
-            registration: BTDispatcher.percentRegistration
-        )
-        if !result {
-            os_log("Failed to unregister percent change notification")
+        init() {
+            self.valid = false
+            self.token = 0
         }
 
-        BTDispatcher.percentRegistration = BTDispatcher.Registration()
-    }
-
-    internal static func unregisterLimitedPowerNotification() {
-        let result = BTDispatcher.unregisterDispatch(
-            registration: BTDispatcher.powerRegistration
-        )
-        if !result {
-            os_log("Failed to unregister limited power notification")
+        init(valid: Bool, token: Int32) {
+            self.valid = valid
+            self.token = token
         }
-
-        BTDispatcher.powerRegistration = BTDispatcher.Registration()
     }
 }

@@ -9,16 +9,6 @@ import ServiceManagement
 internal final class BTServiceComm: NSObject, BTServiceCommProtocol {
     private var authRef: AuthorizationRef? = nil
 
-    private func getAuthRef() -> AuthorizationRef? {
-        guard let authRef = self.authRef else {
-            let authRef = BTAuthorization.empty()
-            self.authRef = authRef
-            return authRef
-        }
-
-        return authRef
-    }
-
     func getAuthorization(
         reply: @Sendable @escaping (Data?) -> Void
     ) {
@@ -77,5 +67,15 @@ internal final class BTServiceComm: NSObject, BTServiceCommProtocol {
         // pressure, a password prompt may be avoided when it is relaunched.
         //
         AuthorizationFree(authRef, [])
+    }
+
+    private func getAuthRef() -> AuthorizationRef? {
+        guard let authRef = self.authRef else {
+            let authRef = BTAuthorization.empty()
+            self.authRef = authRef
+            return authRef
+        }
+
+        return authRef
     }
 }

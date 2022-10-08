@@ -6,16 +6,16 @@
 import AppKit
 import Foundation
 
-final class SettingsWindowController: NSWindowController {
+internal final class BTSettingsWindowController: NSWindowController {
     private static var currentTab = NSToolbarItem.Identifier("general")
 
-    @IBOutlet var toolbar: NSToolbar!
+    @IBOutlet private var toolbar: NSToolbar!
 
     override func windowDidLoad() {
         super.windowDidLoad()
 
-        self.toolbar.selectedItemIdentifier = SettingsWindowController
-            .currentTab
+        self.toolbar.selectedItemIdentifier =
+            BTSettingsWindowController.currentTab
         for item in self.toolbar.items {
             if item.itemIdentifier == self.toolbar.selectedItemIdentifier {
                 guard let action = item.action else {
@@ -34,15 +34,15 @@ final class SettingsWindowController: NSWindowController {
             return
         }
 
-        SettingsWindowController.currentTab = currentTab
+        BTSettingsWindowController.currentTab = currentTab
 
         super.close()
     }
 
-    @IBAction func generalAction(_ sender: NSToolbarItem) {
+    @IBAction private func generalAction(_ sender: NSToolbarItem) {
         guard
-            let settingsViewControler = self
-                .contentViewController as? SettingsViewController
+            let settingsViewControler =
+            self.contentViewController as? BTSettingsViewController
         else {
             return
         }
@@ -51,10 +51,10 @@ final class SettingsWindowController: NSWindowController {
         self.window?.title = sender.label
     }
 
-    @IBAction func backgroundActivityAction(_ sender: NSToolbarItem) {
+    @IBAction private func backgroundActivityAction(_ sender: NSToolbarItem) {
         guard
-            let settingsViewControler = self
-                .contentViewController as? SettingsViewController
+            let settingsViewControler =
+            self.contentViewController as? BTSettingsViewController
         else {
             return
         }

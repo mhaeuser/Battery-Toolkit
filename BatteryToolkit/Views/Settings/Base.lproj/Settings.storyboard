@@ -11,7 +11,7 @@
         <!--SettingsWindowController-->
         <scene sceneID="SPA-xe-0ME">
             <objects>
-                <windowController storyboardIdentifier="SettingsWindowController" showSeguePresentationStyle="single" id="Svp-Rd-cF3" userLabel="SettingsWindowController" customClass="SettingsWindowController" customModule="Battery_Toolkit" customModuleProvider="target" sceneMemberID="viewController">
+                <windowController storyboardIdentifier="SettingsWindowController" showSeguePresentationStyle="single" id="Svp-Rd-cF3" userLabel="SettingsWindowController" customClass="BTSettingsWindowController" customModule="Battery_Toolkit" customModuleProvider="target" sceneMemberID="viewController">
                     <window key="window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="utilityWindow" tabbingMode="disallowed" toolbarStyle="preference" id="zbj-Ah-uH1">
                         <windowStyleMask key="styleMask" titled="YES"/>
                         <windowCollectionBehavior key="collectionBehavior" fullScreenNone="YES" fullScreenDisallowsTiling="YES"/>
@@ -57,12 +57,12 @@
         <!--SettingsViewController-->
         <scene sceneID="vWP-bX-OzO">
             <objects>
-                <viewController storyboardIdentifier="SettingsViewController" showSeguePresentationStyle="single" id="qK6-EM-YZH" userLabel="SettingsViewController" customClass="SettingsViewController" customModule="Battery_Toolkit" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SettingsViewController" showSeguePresentationStyle="single" id="qK6-EM-YZH" userLabel="SettingsViewController" customClass="BTSettingsViewController" customModule="Battery_Toolkit" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" translatesAutoresizingMaskIntoConstraints="NO" id="IvC-q3-fvl" userLabel="General View">
-                        <rect key="frame" x="0.0" y="0.0" width="475" height="218"/>
+                        <rect key="frame" x="0.0" y="0.0" width="475" height="105"/>
                         <subviews>
                             <tabView allowsTruncatedLabels="NO" type="noTabsNoBorder" translatesAutoresizingMaskIntoConstraints="NO" id="NXG-fh-uCo">
-                                <rect key="frame" x="0.0" y="69" width="475" height="149"/>
+                                <rect key="frame" x="0.0" y="69" width="475" height="36"/>
                                 <font key="font" metaFont="system"/>
                                 <tabViewItems>
                                     <tabViewItem label="General" identifier="" id="r6x-U7-0zu" userLabel="General">

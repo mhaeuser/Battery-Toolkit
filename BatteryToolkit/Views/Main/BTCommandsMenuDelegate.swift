@@ -6,35 +6,36 @@
 import Cocoa
 import os.log
 
-final class CommandsMenuDelegate: NSObject, NSMenuDelegate {
-    @IBOutlet var infoUnknownStateItem: NSMenuItem!
+@MainActor
+internal final class BTCommandsMenuDelegate: NSObject, NSMenuDelegate {
+    @IBOutlet private var infoUnknownStateItem: NSMenuItem!
 
-    @IBOutlet var infoPowerAdapterEnabledItem: NSMenuItem!
-    @IBOutlet var infoPowerAdapterDisabledItem: NSMenuItem!
+    @IBOutlet private var infoPowerAdapterEnabledItem: NSMenuItem!
+    @IBOutlet private var infoPowerAdapterDisabledItem: NSMenuItem!
 
-    @IBOutlet var infoChargingToMaximumItem: NSMenuItem!
-    @IBOutlet var infoChargingToFullItem: NSMenuItem!
-    @IBOutlet var infoChargingUnknownModeItem: NSMenuItem!
+    @IBOutlet private var infoChargingToMaximumItem: NSMenuItem!
+    @IBOutlet private var infoChargingToFullItem: NSMenuItem!
+    @IBOutlet private var infoChargingUnknownModeItem: NSMenuItem!
 
-    @IBOutlet var infoNotChargingItem: NSMenuItem!
-    @IBOutlet var infoRequestedChargingToMaximumItem: NSMenuItem!
-    @IBOutlet var infoRequestedChargingToFullItem: NSMenuItem!
-    @IBOutlet var infoNotChargingUnknownModeItem: NSMenuItem!
+    @IBOutlet private var infoNotChargingItem: NSMenuItem!
+    @IBOutlet private var infoRequestedChargingToMaximumItem: NSMenuItem!
+    @IBOutlet private var infoRequestedChargingToFullItem: NSMenuItem!
+    @IBOutlet private var infoNotChargingUnknownModeItem: NSMenuItem!
 
-    @IBOutlet var disablePowerAdapterItem: NSMenuItem!
-    @IBOutlet var enablePowerAdapterItem: NSMenuItem!
+    @IBOutlet private var disablePowerAdapterItem: NSMenuItem!
+    @IBOutlet private var enablePowerAdapterItem: NSMenuItem!
 
-    @IBOutlet var chargeToFullNowItem: NSMenuItem!
-    @IBOutlet var chargeToMaximumNowItem: NSMenuItem!
-    @IBOutlet var disableChargingItem: NSMenuItem!
+    @IBOutlet private var chargeToFullNowItem: NSMenuItem!
+    @IBOutlet private var chargeToMaximumNowItem: NSMenuItem!
+    @IBOutlet private var disableChargingItem: NSMenuItem!
 
-    @IBOutlet var requestChargingToFullItem: NSMenuItem!
-    @IBOutlet var requestChargingToMaximumItem: NSMenuItem!
-    @IBOutlet var cancelChargingRequestItem: NSMenuItem!
+    @IBOutlet private var requestChargingToFullItem: NSMenuItem!
+    @IBOutlet private var requestChargingToMaximumItem: NSMenuItem!
+    @IBOutlet private var cancelChargingRequestItem: NSMenuItem!
 
     private var refreshTimer: DispatchSourceTimer? = nil
 
-    @MainActor private func refresh() {
+    private func refresh() {
         BTActions.getState { error, state in
             DispatchQueue.main.async {
                 guard error == BTError.success.rawValue else {
@@ -242,7 +243,7 @@ final class CommandsMenuDelegate: NSObject, NSMenuDelegate {
         }
     }
 
-    @MainActor func menuWillOpen(_: NSMenu) {
+    func menuWillOpen(_: NSMenu) {
         assert(self.refreshTimer == nil)
 
         let timer = DispatchSource.makeTimerSource(queue: DispatchQueue.main)

@@ -5,8 +5,8 @@
 
 import Cocoa
 
-final class UpgradingViewController: NSViewController {
-    @IBOutlet var progress: NSProgressIndicator!
+internal final class BTUpgradingViewController: NSViewController {
+    @IBOutlet private var progress: NSProgressIndicator!
 
     override func viewWillAppear() {
         super.viewWillAppear()

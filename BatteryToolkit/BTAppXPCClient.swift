@@ -10,24 +10,52 @@ import ServiceManagement
 
 @MainActor
 internal enum BTAppXPCClient {
-    private enum Handlers {
-        fileprivate static func interruption() {
-            os_log("XPC app connection interrupted")
-        }
-
-        fileprivate static func invalidation() {
-            DispatchQueue.main.async {
-                BTAppXPCClient.connect = nil
-            }
-
-            os_log("XPC app connection invalidated")
-        }
-    }
-
     private static var connect: NSXPCConnection? = nil
 
+    static func getAuthorization(
+        reply: @Sendable @escaping (Data?) -> Void
+    ) {
+        let service = self.getService {
+            reply(nil)
+        }
+
+        service.getAuthorization(reply: reply)
+    }
+
+    static func getDaemonAuthorization(
+        reply: @Sendable @escaping (Data?) -> Void
+    ) {
+        let service = self.getService {
+            reply(nil)
+        }
+
+        service.getDaemonAuthorization(reply: reply)
+    }
+
+    static func getManageAuthorization(
+        reply: @Sendable @escaping (Data?) -> Void
+    ) {
+        let service = self.getService {
+            reply(nil)
+        }
+
+        service.getManageAuthorization(reply: reply)
+    }
+
+    private nonisolated static func interruptionHandler() {
+        os_log("XPC app connection interrupted")
+    }
+
+    private nonisolated static func invalidationHandler() {
+        DispatchQueue.main.async {
+            BTAppXPCClient.connect = nil
+        }
+
+        os_log("XPC app connection invalidated")
+    }
+
     private static func connectService() -> NSXPCConnection {
-        if let connect = BTAppXPCClient.connect {
+        if let connect = self.connect {
             return connect
         }
 
@@ -37,14 +65,14 @@ internal enum BTAppXPCClient {
             with: BTServiceCommProtocol.self
         )
 
-        connect.invalidationHandler = BTAppXPCClient.Handlers.invalidation
-        connect.interruptionHandler = BTAppXPCClient.Handlers.interruption
+        connect.invalidationHandler = self.invalidationHandler
+        connect.interruptionHandler = self.interruptionHandler
 
         BTXPCValidation.protectService(connection: connect)
 
         connect.resume()
 
-        BTAppXPCClient.connect = connect
+        self.connect = connect
 
         os_log("XPC app connected")
 
@@ -54,7 +82,7 @@ internal enum BTAppXPCClient {
     private static func getService(errorHandler: @escaping @Sendable () -> Void)
         -> BTServiceCommProtocol
     {
-        let connect = BTAppXPCClient.connectService()
+        let connect = self.connectService()
 
         let service = connect.remoteObjectProxyWithErrorHandler { error in
             os_log("XPC app remote object error: \(error.localizedDescription)")
@@ -62,35 +90,5 @@ internal enum BTAppXPCClient {
         } as! BTServiceCommProtocol
 
         return service
-    }
-
-    internal static func getAuthorization(
-        reply: @Sendable @escaping (Data?) -> Void
-    ) {
-        let service = BTAppXPCClient.getService {
-            reply(nil)
-        }
-
-        service.getAuthorization(reply: reply)
-    }
-
-    internal static func getDaemonAuthorization(
-        reply: @Sendable @escaping (Data?) -> Void
-    ) {
-        let service = BTAppXPCClient.getService {
-            reply(nil)
-        }
-
-        service.getDaemonAuthorization(reply: reply)
-    }
-
-    internal static func getManageAuthorization(
-        reply: @Sendable @escaping (Data?) -> Void
-    ) {
-        let service = BTAppXPCClient.getService {
-            reply(nil)
-        }
-
-        service.getManageAuthorization(reply: reply)
     }
 }

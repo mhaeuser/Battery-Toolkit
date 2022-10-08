@@ -9,7 +9,75 @@ import NSXPCConnectionAuditToken
 import os.log
 import SecCodeEx
 
-public enum BTXPCValidation {
+internal enum BTXPCValidation {
+    static func protectService(connection: NSXPCConnection) {
+        if #available(macOS 13.0, *) {
+            connection.setCodeSigningRequirement(
+                requirementsTextFromId(identifier: BT_SERVICE_NAME)
+            )
+        }
+    }
+
+    static func protectDaemon(connection: NSXPCConnection) {
+        if #available(macOS 13.0, *) {
+            connection.setCodeSigningRequirement(
+                requirementsTextFromId(identifier: BT_DAEMON_NAME)
+            )
+        }
+    }
+
+    static func isValidClient(connection: NSXPCConnection) -> Bool {
+        var token = connection.auditToken
+        let tokenData = Data(
+            bytes: &token,
+            count: MemoryLayout.size(ofValue: token)
+        )
+        let attributes = [kSecGuestAttributeAudit: tokenData]
+
+        var code: SecCode? = nil
+        let codeStatus = SecCodeCopyGuestWithAttributes(
+            nil,
+            attributes as CFDictionary,
+            [],
+            &code
+        )
+        guard codeStatus == errSecSuccess, let code else {
+            return false
+        }
+
+        guard self.verifyCsStatus(code: code) else {
+            return false
+        }
+
+        let requirementText = self
+            .requirementsTextFromId(identifier: BT_APP_NAME)
+        if #available(macOS 13.0, *) {
+            connection.setCodeSigningRequirement(requirementText)
+            return true
+        } else {
+            var requirement: SecRequirement? = nil
+            let reqStatus = SecRequirementCreateWithString(
+                requirementText as CFString,
+                [],
+                &requirement
+            )
+            guard reqStatus == errSecSuccess, let requirement else {
+                return false
+            }
+
+            let validStatus = SecCodeCheckValidity(
+                code,
+                [
+                    .enforceRevocationChecks,
+                    SecCSFlags(rawValue: kSecCSRestrictSidebandData),
+                    SecCSFlags(rawValue: kSecCSStrictValidate),
+                ],
+                requirement
+            )
+            return validStatus == errSecSuccess
+        }
+    }
+
     private static func verifyCsStatus(code: SecCode) -> Bool {
         var signInfo: CFDictionary? = nil
         let infoStatus = SecCodeCopySigningInformationDynamic(
@@ -93,73 +161,5 @@ public enum BTXPCValidation {
             return debugText +
                 " and !(entitlement[\"com.apple.security.get-task-allow\"] /* exists */)"
         #endif
-    }
-
-    public static func protectService(connection: NSXPCConnection) {
-        if #available(macOS 13.0, *) {
-            connection.setCodeSigningRequirement(
-                requirementsTextFromId(identifier: BT_SERVICE_NAME)
-            )
-        }
-    }
-
-    public static func protectDaemon(connection: NSXPCConnection) {
-        if #available(macOS 13.0, *) {
-            connection.setCodeSigningRequirement(
-                requirementsTextFromId(identifier: BT_DAEMON_NAME)
-            )
-        }
-    }
-
-    public static func isValidClient(connection: NSXPCConnection) -> Bool {
-        var token = connection.auditToken
-        let tokenData = Data(
-            bytes: &token,
-            count: MemoryLayout.size(ofValue: token)
-        )
-        let attributes = [kSecGuestAttributeAudit: tokenData]
-
-        var code: SecCode? = nil
-        let codeStatus = SecCodeCopyGuestWithAttributes(
-            nil,
-            attributes as CFDictionary,
-            [],
-            &code
-        )
-        guard codeStatus == errSecSuccess, let code else {
-            return false
-        }
-
-        guard self.verifyCsStatus(code: code) else {
-            return false
-        }
-
-        let requirementText = self
-            .requirementsTextFromId(identifier: BT_APP_NAME)
-        if #available(macOS 13.0, *) {
-            connection.setCodeSigningRequirement(requirementText)
-            return true
-        } else {
-            var requirement: SecRequirement? = nil
-            let reqStatus = SecRequirementCreateWithString(
-                requirementText as CFString,
-                [],
-                &requirement
-            )
-            guard reqStatus == errSecSuccess, let requirement else {
-                return false
-            }
-
-            let validStatus = SecCodeCheckValidity(
-                code,
-                [
-                    .enforceRevocationChecks,
-                    SecCSFlags(rawValue: kSecCSRestrictSidebandData),
-                    SecCSFlags(rawValue: kSecCSStrictValidate),
-                ],
-                requirement
-            )
-            return validStatus == errSecSuccess
-        }
     }
 }

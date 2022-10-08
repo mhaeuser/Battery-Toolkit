@@ -11,8 +11,191 @@ import os.log
 internal enum BTDaemonXPCClient {
     private static var connect: NSXPCConnection? = nil
 
+    static func disconnectDaemon() {
+        guard let connect = self.connect else {
+            return
+        }
+
+        self.connect = nil
+        connect.invalidate()
+    }
+
+    static func stop() {
+        guard let connect = self.connect else {
+            return
+        }
+
+        self.connect = nil
+
+        connect.invalidate()
+    }
+
+    static func getUniqueId(
+        reply: @Sendable @escaping (Data?) -> Void
+    ) {
+        self.executeDaemonRetry { _ in
+            reply(nil)
+        } command: { daemon in
+            daemon.getUniqueId(reply: reply)
+        }
+    }
+
+    static func getState(
+        reply: @Sendable @escaping (BTError.RawValue, [String: NSObject])
+            -> Void
+    ) {
+        self.executeDaemonRetry { error in
+            reply(error, [:])
+        } command: { daemon in
+            daemon.getState { state in
+                reply(BTError.success.rawValue, state)
+            }
+        }
+    }
+
+    static func disablePowerAdapter(
+        reply: @Sendable @escaping (BTError.RawValue) -> Void
+    ) {
+        self.runExecute(
+            command: BTDaemonCommCommand.disablePowerAdapter,
+            reply: reply
+        )
+    }
+
+    static func enablePowerAdapter(
+        reply: @Sendable @escaping (BTError.RawValue) -> Void
+    ) {
+        self.runExecute(
+            command: BTDaemonCommCommand.enablePowerAdapter,
+            reply: reply
+        )
+    }
+
+    static func chargeToMaximum(
+        reply: @Sendable @escaping (BTError.RawValue) -> Void
+    ) {
+        self.runExecute(
+            command: BTDaemonCommCommand.chargeToMaximum,
+            reply: reply
+        )
+    }
+
+    static func chargeToFull(
+        reply: @Sendable @escaping (BTError.RawValue) -> Void
+    ) {
+        self.runExecute(command: BTDaemonCommCommand.chargeToFull, reply: reply)
+    }
+
+    static func disableCharging(
+        reply: @Sendable @escaping (BTError.RawValue) -> Void
+    ) {
+        self.runExecute(
+            command: BTDaemonCommCommand.disableCharging,
+            reply: reply
+        )
+    }
+
+    static func getSettings(
+        reply: @Sendable @escaping (BTError.RawValue, [String: NSObject])
+            -> Void
+    ) {
+        self.executeDaemonRetry { error in
+            reply(error, [:])
+        } command: { daemon in
+            daemon.getSettings { settings in
+                reply(BTError.success.rawValue, settings)
+            }
+        }
+    }
+
+    static func setSettings(
+        settings: [String: NSObject],
+        reply: @Sendable @escaping (BTError.RawValue) -> Void
+    ) {
+        self.executeDaemonManageRetry(reply: reply) { daemon, authData, reply in
+            daemon.setSettings(
+                authData: authData,
+                settings: settings,
+                reply: reply
+            )
+        }
+    }
+
+    static func prepareUpdate(
+        reply: @Sendable @escaping (BTError.RawValue) -> Void
+    ) {
+        self.executeDaemonRetry(
+            errorHandler: reply
+        ) { daemon in
+            daemon.execute(
+                authData: nil,
+                command: BTDaemonCommCommand.prepareUpdate.rawValue,
+                reply: reply
+            )
+        }
+    }
+
+    static func finishUpdate() {
+        //
+        // Deliberately ignore errors as this is an optional notification.
+        //
+        self.executeDaemonRetry(
+            errorHandler: { _ in }
+        ) { daemon in
+            daemon.execute(
+                authData: nil,
+                command: BTDaemonCommCommand.finishUpdate.rawValue,
+                reply: { _ in }
+            )
+        }
+    }
+
+    static func removeLegacyHelperFiles(
+        authData: Data,
+        reply: @Sendable @escaping (BTError.RawValue) -> Void
+    ) {
+        self.executeDaemonRetry { error in
+            reply(error)
+        } command: { daemon in
+            daemon.execute(
+                authData: authData,
+                command: BTDaemonCommCommand.removeLegacyHelperFiles.rawValue,
+                reply: reply
+            )
+        }
+    }
+
+    static func prepareDisable(
+        authData: Data,
+        reply: @Sendable @escaping (BTError.RawValue) -> Void
+    ) {
+        self.executeDaemonRetry { error in
+            reply(error)
+        } command: { daemon in
+            daemon.execute(
+                authData: authData,
+                command: BTDaemonCommCommand.prepareDisable.rawValue,
+                reply: reply
+            )
+        }
+    }
+
+    static func isSupported(
+        reply: @Sendable @escaping (BTError.RawValue) -> Void
+    ) {
+        self.executeDaemonRetry { error in
+            reply(error)
+        } command: { daemon in
+            daemon.execute(
+                authData: nil,
+                command: BTDaemonCommCommand.isSupported.rawValue,
+                reply: reply
+            )
+        }
+    }
+
     private static func connectDaemon() -> NSXPCConnection {
-        if let connect = BTDaemonXPCClient.connect {
+        if let connect = self.connect {
             return connect
         }
 
@@ -27,7 +210,7 @@ internal enum BTDaemonXPCClient {
         BTXPCValidation.protectDaemon(connection: connect)
 
         connect.resume()
-        BTDaemonXPCClient.connect = connect
+        self.connect = connect
 
         os_log("XPC client connected")
 
@@ -97,194 +280,6 @@ internal enum BTDaemonXPCClient {
             daemon.execute(
                 authData: authData,
                 command: command.rawValue,
-                reply: reply
-            )
-        }
-    }
-
-    internal static func disconnectDaemon() {
-        guard let connect = BTDaemonXPCClient.connect else {
-            return
-        }
-
-        BTDaemonXPCClient.connect = nil
-        connect.invalidate()
-    }
-
-    internal static func stop() {
-        guard let connect = BTDaemonXPCClient.connect else {
-            return
-        }
-
-        BTDaemonXPCClient.connect = nil
-
-        connect.invalidate()
-    }
-
-    internal static func getUniqueId(
-        reply: @Sendable @escaping (Data?) -> Void
-    ) {
-        self.executeDaemonRetry { _ in
-            reply(nil)
-        } command: { daemon in
-            daemon.getUniqueId(reply: reply)
-        }
-    }
-
-    internal static func getState(
-        reply: @Sendable @escaping (BTError.RawValue, [String: NSObject])
-            -> Void
-    ) {
-        self.executeDaemonRetry { error in
-            reply(error, [:])
-        } command: { daemon in
-            daemon.getState { state in
-                reply(BTError.success.rawValue, state)
-            }
-        }
-    }
-
-    internal static func disablePowerAdapter(
-        reply: @Sendable @escaping (BTError.RawValue) -> Void
-    ) {
-        self.runExecute(
-            command: BTDaemonCommCommand.disablePowerAdapter,
-            reply: reply
-        )
-    }
-
-    internal static func enablePowerAdapter(
-        reply: @Sendable @escaping (BTError.RawValue) -> Void
-    ) {
-        self.runExecute(
-            command: BTDaemonCommCommand.enablePowerAdapter,
-            reply: reply
-        )
-    }
-
-    internal static func chargeToMaximum(
-        reply: @Sendable @escaping (BTError.RawValue) -> Void
-    ) {
-        self.runExecute(
-            command: BTDaemonCommCommand.chargeToMaximum,
-            reply: reply
-        )
-    }
-
-    internal static func chargeToFull(
-        reply: @Sendable @escaping (BTError.RawValue) -> Void
-    ) {
-        self.runExecute(command: BTDaemonCommCommand.chargeToFull, reply: reply)
-    }
-
-    internal static func disableCharging(
-        reply: @Sendable @escaping (BTError.RawValue) -> Void
-    ) {
-        self.runExecute(
-            command: BTDaemonCommCommand.disableCharging,
-            reply: reply
-        )
-    }
-
-    internal static func getSettings(
-        reply: @Sendable @escaping (BTError.RawValue, [String: NSObject])
-            -> Void
-    ) {
-        self.executeDaemonRetry { error in
-            reply(error, [:])
-        } command: { daemon in
-            daemon.getSettings { settings in
-                reply(BTError.success.rawValue, settings)
-            }
-        }
-    }
-
-    internal static func setSettings(
-        settings: [String: NSObject],
-        reply: @Sendable @escaping (BTError.RawValue) -> Void
-    ) {
-        self.executeDaemonManageRetry(reply: reply) { daemon, authData, reply in
-            daemon.setSettings(
-                authData: authData,
-                settings: settings,
-                reply: reply
-            )
-        }
-    }
-
-    @Sendable private nonisolated static func emptyErrorHandler(
-        error _: BTError.RawValue
-    ) {
-        //
-        // Deliberately ignore errors as this is an optional notification.
-        //
-    }
-
-    internal static func prepareUpdate(
-        reply: @Sendable @escaping (BTError.RawValue) -> Void
-    ) {
-        self.executeDaemonRetry(
-            errorHandler: reply
-        ) { daemon in
-            daemon.execute(
-                authData: nil,
-                command: BTDaemonCommCommand.prepareUpdate.rawValue,
-                reply: reply
-            )
-        }
-    }
-
-    internal static func finishUpdate() {
-        self.executeDaemonRetry(
-            errorHandler: self.emptyErrorHandler
-        ) { daemon in
-            daemon.execute(
-                authData: nil,
-                command: BTDaemonCommCommand.finishUpdate.rawValue,
-                reply: emptyErrorHandler
-            )
-        }
-    }
-
-    internal static func removeLegacyHelperFiles(
-        authData: Data,
-        reply: @Sendable @escaping (BTError.RawValue) -> Void
-    ) {
-        self.executeDaemonRetry { error in
-            reply(error)
-        } command: { daemon in
-            daemon.execute(
-                authData: authData,
-                command: BTDaemonCommCommand.removeLegacyHelperFiles.rawValue,
-                reply: reply
-            )
-        }
-    }
-
-    internal static func prepareDisable(
-        authData: Data,
-        reply: @Sendable @escaping (BTError.RawValue) -> Void
-    ) {
-        self.executeDaemonRetry { error in
-            reply(error)
-        } command: { daemon in
-            daemon.execute(
-                authData: authData,
-                command: BTDaemonCommCommand.prepareDisable.rawValue,
-                reply: reply
-            )
-        }
-    }
-
-    internal static func isSupported(
-        reply: @Sendable @escaping (BTError.RawValue) -> Void
-    ) {
-        self.executeDaemonRetry { error in
-            reply(error)
-        } command: { daemon in
-            daemon.execute(
-                authData: nil,
-                command: BTDaemonCommCommand.isSupported.rawValue,
                 reply: reply
             )
         }

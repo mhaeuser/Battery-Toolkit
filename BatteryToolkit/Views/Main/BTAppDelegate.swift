@@ -6,20 +6,45 @@
 import Cocoa
 import os.log
 
+@MainActor
 @main
-final class AppDelegate: NSObject, NSApplicationDelegate {
-    @MainActor private var menuBarExtraItem: NSStatusItem?
-    @MainActor @IBOutlet var menuBarExtraMenu: NSMenu!
+internal final class BTAppDelegate: NSObject, NSApplicationDelegate {
+    private var menuBarExtraItem: NSStatusItem?
+    @IBOutlet private var menuBarExtraMenu: NSMenu!
 
-    @MainActor @IBOutlet var settingsItem: NSMenuItem!
-    @MainActor @IBOutlet var disableBackgroundItem: NSMenuItem!
-    @MainActor @IBOutlet var commandsMenuItem: NSMenuItem!
+    @IBOutlet private var settingsItem: NSMenuItem!
+    @IBOutlet private var disableBackgroundItem: NSMenuItem!
+    @IBOutlet private var commandsMenuItem: NSMenuItem!
 
-    @MainActor @IBAction private func removeDaemonHandler(sender _: NSMenuItem) {
+    func applicationDidFinishLaunching(_: Notification) {
+        BTActions.startDaemon(reply: self.daemonStatusHandler)
+    }
+
+    func applicationWillTerminate(_: Notification) {
+        BTActions.stop()
+    }
+
+    func applicationWillBecomeActive(_: Notification) {
+        guard self.menuBarExtraItem != nil else {
+            return
+        }
+
+        BTAccessoryMode.deactivate()
+    }
+
+    func applicationWillResignActive(_: Notification) {
+        guard self.menuBarExtraItem != nil else {
+            return
+        }
+
+        BTAccessoryMode.activate()
+    }
+
+    @IBAction private func removeDaemonHandler(sender _: NSMenuItem) {
         BTAppPrompts.promptRemoveDaemon()
     }
 
-    @Sendable private func daemonStatusHandler(
+    @Sendable private nonisolated func daemonStatusHandler(
         status: BTDaemonManagement.Status
     ) {
         DispatchQueue.main.async {
@@ -95,29 +120,5 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 }
             }
         }
-    }
-
-    @MainActor func applicationDidFinishLaunching(_: Notification) {
-        BTActions.startDaemon(reply: self.daemonStatusHandler)
-    }
-
-    @MainActor func applicationWillTerminate(_: Notification) {
-        BTActions.stop()
-    }
-
-    @MainActor func applicationWillBecomeActive(_: Notification) {
-        guard self.menuBarExtraItem != nil else {
-            return
-        }
-
-        BTAccessoryMode.deactivate()
-    }
-
-    @MainActor func applicationWillResignActive(_: Notification) {
-        guard self.menuBarExtraItem != nil else {
-            return
-        }
-
-        BTAccessoryMode.activate()
     }
 }

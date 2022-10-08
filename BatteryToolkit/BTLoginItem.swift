@@ -9,17 +9,17 @@ import os.log
 import ServiceManagement
 
 internal enum BTLoginItem {
-    internal static func enable() -> Bool {
+    static func enable() -> Bool {
         if #available(macOS 13.0, *) {
-            return enableService()
+            return self.enableService()
         } else {
             return self.enableLegacy()
         }
     }
 
-    internal static func disable() -> Bool {
+    static func disable() -> Bool {
         if #available(macOS 13.0, *) {
-            return disableService()
+            return self.disableService()
         } else {
             return self.disableLegacy()
         }

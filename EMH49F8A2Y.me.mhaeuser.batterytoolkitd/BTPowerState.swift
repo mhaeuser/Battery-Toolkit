@@ -11,9 +11,9 @@ internal enum BTPowerState {
     private static var chargingDisabled = false
     private static var powerDisabled = false
 
-    internal static func initSleepState() {
+    static func initSleepState() {
         let chargeDisabled = SMCComm.Power.isChargingDisabled()
-        BTPowerState.chargingDisabled = chargeDisabled
+        self.chargingDisabled = chargeDisabled
         if !chargeDisabled {
             //
             // Sleep must always be disabled when charging is enabled.
@@ -22,20 +22,20 @@ internal enum BTPowerState {
         }
 
         let powerDisabled = SMCComm.Power.isPowerAdapterDisabled()
-        BTPowerState.powerDisabled = powerDisabled
+        self.powerDisabled = powerDisabled
         if powerDisabled {
             //
             // Sleep must be disabled when external power is disabled.
             //
-            BTPowerState.disableAdapterSleep()
+            self.disableAdapterSleep()
         }
     }
 
-    internal static func adapterSleepPreferenceToggled() {
+    static func adapterSleepPreferenceToggled() {
         //
         // If power is disabled, toggle sleep.
         //
-        guard BTPowerState.powerDisabled else {
+        guard self.powerDisabled else {
             return
         }
 
@@ -46,8 +46,8 @@ internal enum BTPowerState {
         }
     }
 
-    internal static func disableCharging() -> Bool {
-        guard !BTPowerState.chargingDisabled else {
+    static func disableCharging() -> Bool {
+        guard !self.chargingDisabled else {
             return true
         }
 
@@ -59,12 +59,12 @@ internal enum BTPowerState {
 
         GlobalSleep.restore()
 
-        BTPowerState.chargingDisabled = true
+        self.chargingDisabled = true
         return true
     }
 
-    internal static func enableCharging() -> Bool {
-        guard BTPowerState.chargingDisabled else {
+    static func enableCharging() -> Bool {
+        guard self.chargingDisabled else {
             return true
         }
 
@@ -76,12 +76,12 @@ internal enum BTPowerState {
 
         GlobalSleep.disable()
 
-        BTPowerState.chargingDisabled = false
+        self.chargingDisabled = false
         return true
     }
 
-    internal static func disablePowerAdapter() -> Bool {
-        guard !BTPowerState.powerDisabled else {
+    static func disablePowerAdapter() -> Bool {
+        guard !self.powerDisabled else {
             return true
         }
 
@@ -94,12 +94,12 @@ internal enum BTPowerState {
             return false
         }
 
-        BTPowerState.powerDisabled = true
+        self.powerDisabled = true
         return true
     }
 
-    internal static func enablePowerAdapter() -> Bool {
-        guard BTPowerState.powerDisabled else {
+    static func enablePowerAdapter() -> Bool {
+        guard self.powerDisabled else {
             return true
         }
 
@@ -111,16 +111,16 @@ internal enum BTPowerState {
 
         self.restoreAdapterSleep()
 
-        BTPowerState.powerDisabled = false
+        self.powerDisabled = false
         return true
     }
 
-    internal static func isChargingDisabled() -> Bool {
-        return BTPowerState.chargingDisabled
+    static func isChargingDisabled() -> Bool {
+        return self.chargingDisabled
     }
 
-    internal static func isPowerAdapterDisabled() -> Bool {
-        return BTPowerState.powerDisabled
+    static func isPowerAdapterDisabled() -> Bool {
+        return self.powerDisabled
     }
 
     private static func disableAdapterSleep() {

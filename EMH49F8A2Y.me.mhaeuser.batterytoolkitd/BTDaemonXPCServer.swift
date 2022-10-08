@@ -11,8 +11,25 @@ import NSXPCConnectionAuditToken
 import Security
 
 internal enum BTDaemonXPCServer {
-    private final class Delegate: NSObject, NSXPCListenerDelegate {
-        fileprivate func listener(
+    @MainActor private static let listener = NSXPCListener(
+        machServiceName: BT_DAEMON_NAME
+    )
+
+    private static let delegate: NSXPCListenerDelegate = Delegate()
+
+    private static let daemonInterface =
+        NSXPCInterface(with: BTDaemonCommProtocol.self)
+    private static let daemonComm = BTDaemonComm()
+
+    @MainActor static func start() {
+        self.listener.delegate = self.delegate
+        self.listener.resume()
+    }
+}
+
+private extension BTDaemonXPCServer {
+    final class Delegate: NSObject, NSXPCListenerDelegate {
+        func listener(
             _: NSXPCListener,
             shouldAcceptNewConnection newConnection: NSXPCConnection
         ) -> Bool {
@@ -29,20 +46,5 @@ internal enum BTDaemonXPCServer {
 
             return true
         }
-    }
-
-    @MainActor private static let listener = NSXPCListener(
-        machServiceName: BT_DAEMON_NAME
-    )
-
-    private static let delegate: NSXPCListenerDelegate = Delegate()
-
-    private static let daemonInterface =
-        NSXPCInterface(with: BTDaemonCommProtocol.self)
-    private static let daemonComm = BTDaemonComm()
-
-    @MainActor internal static func start() {
-        self.listener.delegate = self.delegate
-        self.listener.resume()
     }
 }

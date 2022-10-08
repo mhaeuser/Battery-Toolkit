@@ -9,7 +9,7 @@ import os.log
 import ServiceManagement
 
 internal enum BTAuthorization {
-    internal static func empty() -> AuthorizationRef? {
+    static func empty() -> AuthorizationRef? {
         var authRef: AuthorizationRef? = nil
         let status = AuthorizationCreate(nil, nil, [], &authRef)
         guard status == errAuthorizationSuccess else {
@@ -19,35 +19,7 @@ internal enum BTAuthorization {
         return authRef
     }
 
-    private static func copyRight(
-        authRef: AuthorizationRef,
-        rightName: String,
-        flags: AuthorizationFlags
-    ) -> Bool {
-        return rightName.withCString { rightName in
-            var item = AuthorizationItem(
-                name: rightName,
-                valueLength: 0,
-                value: nil,
-                flags: 0
-            )
-
-            return withUnsafeMutablePointer(to: &item) { item in
-                var rights = AuthorizationRights(count: 1, items: item)
-
-                let status = AuthorizationCopyRights(
-                    authRef,
-                    &rights,
-                    nil,
-                    flags,
-                    nil
-                )
-                return status == errAuthorizationSuccess
-            }
-        }
-    }
-
-    internal static func interactive(rightName: String) -> AuthorizationRef? {
+    static func interactive(rightName: String) -> AuthorizationRef? {
         let authRef = self.empty()
         guard let authRef else {
             return nil
@@ -66,7 +38,7 @@ internal enum BTAuthorization {
         return authRef
     }
 
-    internal static func acquireInteractive(
+    static func acquireInteractive(
         authRef: AuthorizationRef,
         rightName: String
     ) -> Bool {
@@ -77,7 +49,7 @@ internal enum BTAuthorization {
         )
     }
 
-    internal static func checkRight(
+    static func checkRight(
         authRef: AuthorizationRef,
         rightName: String
     ) -> Bool {
@@ -88,7 +60,7 @@ internal enum BTAuthorization {
         )
     }
 
-    internal static func duplicateRight(
+    static func duplicateRight(
         rightName: String,
         templateName: String,
         comment: String,
@@ -128,7 +100,7 @@ internal enum BTAuthorization {
         return status
     }
 
-    internal static func removeRight(rightName: String) -> OSStatus {
+    static func removeRight(rightName: String) -> OSStatus {
         let authRef = self.empty()
         guard let authRef else {
             return errAuthorizationInternal
@@ -141,7 +113,7 @@ internal enum BTAuthorization {
         return status
     }
 
-    internal static func toData(authRef: AuthorizationRef?) -> Data? {
+    static func toData(authRef: AuthorizationRef?) -> Data? {
         guard let authRef else {
             return nil
         }
@@ -158,7 +130,7 @@ internal enum BTAuthorization {
         )
     }
 
-    internal static func fromData(authData: Data?) -> AuthorizationRef? {
+    static func fromData(authData: Data?) -> AuthorizationRef? {
         guard
             let authData,
             authData.count == kAuthorizationExternalFormLength
@@ -178,5 +150,33 @@ internal enum BTAuthorization {
         }
 
         return authRef
+    }
+
+    private static func copyRight(
+        authRef: AuthorizationRef,
+        rightName: String,
+        flags: AuthorizationFlags
+    ) -> Bool {
+        return rightName.withCString { rightName in
+            var item = AuthorizationItem(
+                name: rightName,
+                valueLength: 0,
+                value: nil,
+                flags: 0
+            )
+
+            return withUnsafeMutablePointer(to: &item) { item in
+                var rights = AuthorizationRights(count: 1, items: item)
+
+                let status = AuthorizationCopyRights(
+                    authRef,
+                    &rights,
+                    nil,
+                    flags,
+                    nil
+                )
+                return status == errAuthorizationSuccess
+            }
+        }
     }
 }

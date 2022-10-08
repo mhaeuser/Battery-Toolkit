@@ -5,24 +5,24 @@
 
 import Foundation
 
-public enum BTStateInfo {
-    public enum ChargingMode: UInt8 {
+internal enum BTStateInfo {
+    enum ChargingMode: UInt8 {
         case standard
         case toMaximum
         case toFull
     }
 
-    public enum ChargingProgress: UInt8 {
+    enum ChargingProgress: UInt8 {
         case belowMax
         case belowFull
         case full
     }
 
-    public enum Keys {
-        public static let powerDisabled = "PowerDisabled"
-        public static let connected = "Connected"
-        public static let chargingDisabled = "ChargingDisabled"
-        public static let progress = "Progress"
-        public static let chargingMode = "Mode"
+    enum Keys {
+        static let powerDisabled = "PowerDisabled"
+        static let connected = "Connected"
+        static let chargingDisabled = "ChargingDisabled"
+        static let progress = "Progress"
+        static let chargingMode = "Mode"
     }
 }

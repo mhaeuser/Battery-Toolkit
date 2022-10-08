@@ -34,7 +34,7 @@
         <!--UpgradingViewController-->
         <scene sceneID="gH7-2U-rfn">
             <objects>
-                <viewController id="nh7-vh-qsR" userLabel="UpgradingViewController" customClass="UpgradingViewController" customModule="Battery_Toolkit" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="nh7-vh-qsR" userLabel="UpgradingViewController" customClass="BTUpgradingViewController" customModule="Battery_Toolkit" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="jgQ-cQ-6CX">
                         <rect key="frame" x="0.0" y="0.0" width="368" height="72"/>
                         <autoresizingMask key="autoresizingMask"/>

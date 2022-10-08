@@ -19,7 +19,7 @@ internal extension BTDaemonManagement {
         private static let daemonServicePlist = "\(BT_DAEMON_NAME).plist"
 
         @available(macOS, deprecated: 13.0)
-        @MainActor internal static func register(
+        @MainActor static func register(
             reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void
         ) {
             os_log("Registering legacy helper")
@@ -61,15 +61,15 @@ internal extension BTDaemonManagement {
             }
         }
 
-        internal static func upgrade() {
+        static func upgrade() {
             assertionFailure()
         }
 
-        internal static func approve() {
+        static func approve() {
             assertionFailure()
         }
 
-        internal static func unregister(authRef: AuthorizationRef) {
+        static func unregister(authRef: AuthorizationRef) {
             os_log("Unregistering legacy helper")
 
             assert(!Thread.isMainThread)
@@ -96,7 +96,7 @@ internal extension BTDaemonManagement {
             //
         }
 
-        @MainActor internal static func unregisterCleanup(
+        @MainActor static func unregisterCleanup(
             reply: @Sendable @escaping (BTError.RawValue) -> Void
         ) {
             os_log("Unregistering legacy helper")

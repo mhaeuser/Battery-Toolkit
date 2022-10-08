@@ -8,19 +8,7 @@ import os.log
 
 @MainActor
 internal enum BTDaemonManagement {
-    private static func removeFile(path: URL) -> Bool {
-        do {
-            try FileManager.default.removeItem(at: path)
-            return true
-        } catch CocoaError.fileNoSuchFile {
-            return true
-        } catch {
-            os_log("Error deleting file \(path): \(error.localizedDescription)")
-            return false
-        }
-    }
-
-    internal static func removeLegacyHelperFiles() -> Bool {
+    static func removeLegacyHelperFiles() -> Bool {
         let success1 = self
             .removeFile(path: BTLegacyHelperInfo.legacyHelperPlist)
         let success2 = self
@@ -32,7 +20,7 @@ internal enum BTDaemonManagement {
         return success
     }
 
-    internal static func prepareDisable() -> Bool {
+    static func prepareDisable() -> Bool {
         let legacySuccess = self.removeLegacyHelperFiles()
 
         let rightStatus = BTAuthorization.removeRight(
@@ -43,5 +31,17 @@ internal enum BTDaemonManagement {
         BTSettings.removeDefaults()
 
         return legacySuccess && rightStatus == errSecSuccess
+    }
+
+    private static func removeFile(path: URL) -> Bool {
+        do {
+            try FileManager.default.removeItem(at: path)
+            return true
+        } catch CocoaError.fileNoSuchFile {
+            return true
+        } catch {
+            os_log("Error deleting file \(path): \(error.localizedDescription)")
+            return false
+        }
     }
 }

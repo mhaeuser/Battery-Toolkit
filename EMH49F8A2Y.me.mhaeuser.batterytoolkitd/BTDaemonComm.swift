@@ -14,7 +14,7 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
         reply(BTDaemon.getUniqueId())
     }
 
-    @MainActor internal func execute(
+    @MainActor func execute(
         authData: Data?,
         command: UInt8,
         reply: @Sendable @escaping (BTError.RawValue) -> Void
@@ -49,6 +49,59 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
         self.executeWithAuth(authRef: authRef, command: command, reply: reply)
 
         AuthorizationFree(authRef, [])
+    }
+
+    @MainActor func getState(
+        reply: @Sendable @escaping ([String: NSObject]) -> Void
+    ) {
+        guard BTDaemon.supported else {
+            reply([:])
+            return
+        }
+
+        reply(BTDaemon.getState())
+    }
+
+    @MainActor func getSettings(
+        reply: @Sendable @escaping ([String: NSObject]) -> Void
+    ) {
+        guard BTDaemon.supported else {
+            reply([:])
+            return
+        }
+
+        reply(BTSettings.getSettings())
+    }
+
+    @MainActor func setSettings(
+        authData: Data?,
+        settings: [String: NSObject],
+        reply: @Sendable @escaping (BTError.RawValue) -> Void
+    ) {
+        guard BTDaemon.supported else {
+            reply(BTError.unsupported.rawValue)
+            return
+        }
+
+        let authRef = BTAuthorization.fromData(authData: authData)
+        guard let authRef else {
+            reply(BTError.notAuthorized.rawValue)
+            return
+        }
+
+        let authorized = BTAuthorization.checkRight(
+            authRef: authRef,
+            rightName: BTAuthorizationRights.manage
+        )
+
+        AuthorizationFree(authRef, [])
+
+        guard authorized else {
+            reply(BTError.notAuthorized.rawValue)
+            return
+        }
+
+        BTSettings.setSettings(settings: settings, reply: reply)
     }
 
     @MainActor private func executeWithAuth(
@@ -125,58 +178,5 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
         }()
 
         reply(BTError(fromBool: success).rawValue)
-    }
-
-    @MainActor internal func getState(
-        reply: @Sendable @escaping ([String: NSObject]) -> Void
-    ) {
-        guard BTDaemon.supported else {
-            reply([:])
-            return
-        }
-
-        reply(BTDaemon.getState())
-    }
-
-    @MainActor internal func getSettings(
-        reply: @Sendable @escaping ([String: NSObject]) -> Void
-    ) {
-        guard BTDaemon.supported else {
-            reply([:])
-            return
-        }
-
-        reply(BTSettings.getSettings())
-    }
-
-    @MainActor internal func setSettings(
-        authData: Data?,
-        settings: [String: NSObject],
-        reply: @Sendable @escaping (BTError.RawValue) -> Void
-    ) {
-        guard BTDaemon.supported else {
-            reply(BTError.unsupported.rawValue)
-            return
-        }
-
-        let authRef = BTAuthorization.fromData(authData: authData)
-        guard let authRef else {
-            reply(BTError.notAuthorized.rawValue)
-            return
-        }
-
-        let authorized = BTAuthorization.checkRight(
-            authRef: authRef,
-            rightName: BTAuthorizationRights.manage
-        )
-
-        AuthorizationFree(authRef, [])
-
-        guard authorized else {
-            reply(BTError.notAuthorized.rawValue)
-            return
-        }
-
-        BTSettings.setSettings(settings: settings, reply: reply)
     }
 }

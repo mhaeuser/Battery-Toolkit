@@ -5,7 +5,8 @@
 
 import AppKit
 
-internal final class SettingsMenuItem: NSMenuItem {
+@MainActor
+internal final class BTSettingsMenuItem: NSMenuItem {
     override var title: String {
         get {
             guard #available(macOS 13.0, *) else {

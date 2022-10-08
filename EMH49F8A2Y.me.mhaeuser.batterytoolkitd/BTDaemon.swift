@@ -11,18 +11,39 @@ import os.log
 @MainActor
 internal enum BTDaemon {
     /// Whether the machine is supported.
-    internal private(set) static var supported = false
+    private(set) static var supported = false
 
     private static var uniqueId: Data? = nil
 
+    static func getUniqueId() -> Data? {
+        return self.uniqueId
+    }
+
+    static func getState() -> [String: NSObject] {
+        let chargingDisabled = BTPowerState.isChargingDisabled()
+        let connected = BTPowerEvents.unlimitedPower
+        let powerDisabled = BTPowerState.isPowerAdapterDisabled()
+        let progress = BTPowerEvents.getChargingProgress()
+        let mode = BTPowerEvents.chargingMode
+
+        return [
+            BTStateInfo.Keys.powerDisabled: NSNumber(value: powerDisabled),
+            BTStateInfo.Keys.connected: NSNumber(value: connected),
+            BTStateInfo.Keys
+                .chargingDisabled: NSNumber(value: chargingDisabled),
+            BTStateInfo.Keys.progress: NSNumber(value: progress.rawValue),
+            BTStateInfo.Keys.chargingMode: NSNumber(value: mode.rawValue),
+        ]
+    }
+
     private static func main() {
-        BTDaemon.uniqueId = CSIdentification.getUniqueIdSelf()
+        self.uniqueId = CSIdentification.getUniqueIdSelf()
 
         BTSettings.readDefaults()
 
         let startError = BTPowerEvents.start()
         if startError == BTError.success {
-            BTDaemon.supported = true
+            self.supported = true
 
             let termSource = DispatchSource.makeSignalSource(signal: SIGTERM)
             termSource.setEventHandler {
@@ -58,26 +79,5 @@ internal enum BTDaemon {
         BTDaemonXPCServer.start()
 
         dispatchMain()
-    }
-
-    internal static func getUniqueId() -> Data? {
-        return BTDaemon.uniqueId
-    }
-
-    internal static func getState() -> [String: NSObject] {
-        let chargingDisabled = BTPowerState.isChargingDisabled()
-        let connected = BTPowerEvents.unlimitedPower
-        let powerDisabled = BTPowerState.isPowerAdapterDisabled()
-        let progress = BTPowerEvents.getChargingProgress()
-        let mode = BTPowerEvents.chargingMode
-
-        return [
-            BTStateInfo.Keys.powerDisabled: NSNumber(value: powerDisabled),
-            BTStateInfo.Keys.connected: NSNumber(value: connected),
-            BTStateInfo.Keys
-                .chargingDisabled: NSNumber(value: chargingDisabled),
-            BTStateInfo.Keys.progress: NSNumber(value: progress.rawValue),
-            BTStateInfo.Keys.chargingMode: NSNumber(value: mode.rawValue),
-        ]
     }
 }

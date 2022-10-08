@@ -236,7 +236,7 @@
                         <outlet property="delegate" destination="Voe-Tx-rLC" id="PrD-fu-P6m"/>
                     </connections>
                 </application>
-                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Battery_Toolkit" customModuleProvider="target">
+                <customObject id="Voe-Tx-rLC" customClass="BTAppDelegate" customModule="Battery_Toolkit" customModuleProvider="target">
                     <connections>
                         <outlet property="commandsMenuItem" destination="67P-gA-Pem" id="jWr-9p-qLe"/>
                         <outlet property="disableBackgroundItem" destination="oaJ-hp-PXw" id="RQ8-BD-wMQ"/>
@@ -244,7 +244,7 @@
                         <outlet property="settingsItem" destination="BOF-NM-1cW" id="y0F-VK-O7S"/>
                     </connections>
                 </customObject>
-                <customObject id="Yoz-Et-jXW" userLabel="Extra Commands Menu Delegate" customClass="CommandsMenuDelegate" customModule="Battery_Toolkit" customModuleProvider="target">
+                <customObject id="Yoz-Et-jXW" userLabel="Extra Commands Menu Delegate" customClass="BTCommandsMenuDelegate" customModule="Battery_Toolkit" customModuleProvider="target">
                     <connections>
                         <outlet property="cancelChargingRequestItem" destination="ULK-Wm-406" id="gUt-eR-btZ"/>
                         <outlet property="chargeToFullNowItem" destination="llC-Rh-DUh" id="RH6-GM-Smb"/>
@@ -266,7 +266,7 @@
                         <outlet property="requestChargingToMaximumItem" destination="07e-WI-TcK" id="GWU-xi-eZ7"/>
                     </connections>
                 </customObject>
-                <customObject id="Q4N-wh-Pcn" customClass="CommandsMenuDelegate" customModule="Battery_Toolkit" customModuleProvider="target">
+                <customObject id="Q4N-wh-Pcn" customClass="BTCommandsMenuDelegate" customModule="Battery_Toolkit" customModuleProvider="target">
                     <connections>
                         <outlet property="cancelChargingRequestItem" destination="dpS-hD-AaI" id="3r0-bc-xg2"/>
                         <outlet property="chargeToFullNowItem" destination="Aqi-xb-CLH" id="1yr-6e-odu"/>
@@ -365,7 +365,7 @@
                             </connections>
                         </menuItem>
                         <menuItem isSeparatorItem="YES" id="sGg-wU-dOW"/>
-                        <menuItem title="Settings..." keyEquivalent="," id="78l-zk-UHb" customClass="SettingsMenuItem" customModule="Battery_Toolkit" customModuleProvider="target">
+                        <menuItem title="Settings..." keyEquivalent="," id="78l-zk-UHb" customClass="BTSettingsMenuItem" customModule="Battery_Toolkit" customModuleProvider="target">
                             <connections>
                                 <segue destination="Lf9-ud-Dh4" kind="show" id="UU8-oN-xdh"/>
                             </connections>

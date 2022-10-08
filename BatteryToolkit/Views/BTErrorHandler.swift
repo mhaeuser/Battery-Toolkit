@@ -6,7 +6,7 @@
 import Cocoa
 
 internal enum BTErrorHandler {
-    @MainActor internal static func errorHandler(
+    @MainActor static func errorHandler(
         error: BTError.RawValue,
         window: NSWindow? = nil
     ) {
@@ -24,7 +24,7 @@ internal enum BTErrorHandler {
         }
     }
 
-    @Sendable internal static func completionHandler(error: BTError.RawValue) {
+    @Sendable static func completionHandler(error: BTError.RawValue) {
         guard error != BTError.success.rawValue else {
             return
         }

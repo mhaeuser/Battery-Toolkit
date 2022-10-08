@@ -14,14 +14,13 @@ import os.log
 @MainActor
 internal enum BTPowerEvents {
     /// Indicates whether an update is in progress.
-    internal static var updating = false
+    static var updating = false
 
     /// The current mode for battery charging.
-    internal private(set) static var chargingMode =
-        BTStateInfo.ChargingMode.standard
+    private(set) static var chargingMode = BTStateInfo.ChargingMode.standard
 
     /// Whether the system is drawing external power.
-    internal private(set) static var unlimitedPower = false
+    private(set) static var unlimitedPower = false
 
     /// Whether the Limited Power notification has been created.
     private static var powerCreated = false
@@ -29,7 +28,7 @@ internal enum BTPowerEvents {
     /// Whether the Percent Change notification has been created
     private static var percentCreated = false
 
-    internal static func start() -> BTError {
+    static func start() -> BTError {
         let smcSuccess = SMCComm.start()
         guard smcSuccess else {
             return BTError.unknown
@@ -53,8 +52,8 @@ internal enum BTPowerEvents {
 
     /// Stops the service as part of termination. Hence, not all acquired
     /// resources are released.
-    internal static func exit() {
-        if !BTPowerEvents.updating {
+    static func exit() {
+        if !self.updating {
             self.restoreDefaults()
         }
 
@@ -62,8 +61,8 @@ internal enum BTPowerEvents {
     }
 
     /// Notification handler for changed settings.
-    internal static func settingsChanged() {
-        guard BTPowerEvents.percentCreated else {
+    static func settingsChanged() {
+        guard self.percentCreated else {
             return
         }
 
@@ -74,29 +73,29 @@ internal enum BTPowerEvents {
     /// external power and then disable charging.
     ///
     /// - Returns: Whether the operation was completed successfully.
-    internal static func chargeToMaximum() -> Bool {
-        BTPowerEvents.chargingMode = .toMaximum
+    static func chargeToMaximum() -> Bool {
+        self.chargingMode = .toMaximum
         return self.enableBelowThresholdMode(threshold: BTSettings.maxCharge)
     }
 
     /// Disable battery charging.
     ///
     /// - Returns: Whether the operation was completed successfully.
-    internal static func disableCharging() -> Bool {
-        BTPowerEvents.chargingMode = .standard
+    static func disableCharging() -> Bool {
+        self.chargingMode = .standard
         return BTPowerState.disableCharging()
     }
 
     /// Charge the battery to 100 % next time it is connected to external power.
     ///
     /// - Returns: Whether the operation was completed successfully.
-    internal static func chargeToFull() -> Bool {
-        BTPowerEvents.chargingMode = .toFull
+    static func chargeToFull() -> Bool {
+        self.chargingMode = .toFull
         return self.enableBelowThresholdMode(threshold: 100)
     }
 
     /// Gets the battery charging progress.
-    internal static func getChargingProgress() -> BTStateInfo.ChargingProgress {
+    static func getChargingProgress() -> BTStateInfo.ChargingProgress {
         var percent: Int32 = 100
         let result = IOPSGetPercentRemaining(&percent, nil, nil)
         guard result == kIOReturnSuccess else {
@@ -132,7 +131,7 @@ internal enum BTPowerEvents {
         // An unlucky dispatching order of LimitedPower and PercentChanged
         // events may cause this constraint to actually be violated.
         //
-        guard BTPowerEvents.percentCreated else {
+        guard self.percentCreated else {
             return
         }
 
@@ -154,7 +153,7 @@ internal enum BTPowerEvents {
         BTPowerState.initSleepState()
 
         let success = BTDispatcher.registerLimitedPowerNotification(
-            BTPowerEvents.limitedPowerHandler
+            self.limitedPowerHandler
         )
         guard success else {
             return false
@@ -166,15 +165,15 @@ internal enum BTPowerEvents {
     }
 
     private static func registerPercentChangedHandler() -> Bool {
-        guard !BTPowerEvents.percentCreated else {
+        guard !self.percentCreated else {
             return true
         }
 
-        BTPowerEvents.percentCreated = BTDispatcher
+        self.percentCreated = BTDispatcher
             .registerPercentChangeNotification(
-                BTPowerEvents.percentChangeHandler
+                self.percentChangeHandler
             )
-        guard BTPowerEvents.percentCreated else {
+        guard self.percentCreated else {
             return false
         }
 
@@ -183,7 +182,7 @@ internal enum BTPowerEvents {
         // In case charging to maximum or full were requested while the device
         // was on battery, enable it now if appropriate.
         //
-        switch BTPowerEvents.chargingMode {
+        switch self.chargingMode {
         case .toMaximum:
             if percent < BTSettings.maxCharge {
                 _ = BTPowerState.enableCharging()
@@ -202,16 +201,16 @@ internal enum BTPowerEvents {
     }
 
     private static func unregisterPercentChangedHandler() {
-        guard BTPowerEvents.percentCreated else {
+        guard self.percentCreated else {
             return
         }
 
         BTDispatcher.unregisterPercentChangeNotification()
-        BTPowerEvents.percentCreated = false
+        self.percentCreated = false
     }
 
     private static func handleChargeHysteresis() -> Int32 {
-        assert(BTPowerEvents.percentCreated)
+        assert(self.percentCreated)
 
         var percent: Int32 = 100
         let result = IOPSGetPercentRemaining(&percent, nil, nil)
@@ -230,11 +229,11 @@ internal enum BTPowerEvents {
             // charging to full was requested. Charging to maximum is handled
             // implicitly, as it only forces charging in [min, max).
             //
-            if BTPowerEvents.chargingMode != .toFull || percent >= 100 {
+            if self.chargingMode != .toFull || percent >= 100 {
                 //
                 // Charging modes are reset once we disable charging.
                 //
-                BTPowerEvents.chargingMode = .standard
+                self.chargingMode = .standard
                 _ = BTPowerState.disableCharging()
             }
         } else if percent < BTSettings.minCharge {
@@ -264,7 +263,7 @@ internal enum BTPowerEvents {
         GlobalSleep.disable()
 
         let unlimitedPower = self.drawingUnlimitedPower()
-        BTPowerEvents.unlimitedPower = unlimitedPower
+        self.unlimitedPower = unlimitedPower
 
         if unlimitedPower {
             let result = self.registerPercentChangedHandler()
@@ -273,7 +272,7 @@ internal enum BTPowerEvents {
                 self.restoreDefaults()
             }
         } else {
-            BTPowerEvents.unregisterPercentChangedHandler()
+            self.unregisterPercentChangedHandler()
             //
             // Disable charging to not have micro-charges happening when
             // connecting to power.
@@ -313,7 +312,7 @@ internal enum BTPowerEvents {
         // charging to not disable sleep. The charging mode will be handled by
         // power source handler when power is connected.
         //
-        guard BTPowerEvents.percentCreated else {
+        guard self.percentCreated else {
             return true
         }
 

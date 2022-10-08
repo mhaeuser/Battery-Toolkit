@@ -5,7 +5,7 @@
 
 import Foundation
 
-extension BTDaemonManagement {
+internal extension BTDaemonManagement {
     enum Status: UInt8 {
         case notRegistered = 0
         case enabled = 1

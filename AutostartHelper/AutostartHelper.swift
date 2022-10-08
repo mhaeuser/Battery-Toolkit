@@ -10,7 +10,7 @@ import os.log
 @main
 private enum AutostartHelper {
     /// Start the containing app quietly.
-    private static func main() {
+    static func main() {
         //
         // Ensure this helper is launched from an expected location.
         //

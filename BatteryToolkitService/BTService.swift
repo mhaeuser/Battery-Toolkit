@@ -7,7 +7,7 @@ import Foundation
 
 @main
 private enum BTService {
-    private static func main() {
+    static func main() {
         BTServiceXPCServer.start()
     }
 }

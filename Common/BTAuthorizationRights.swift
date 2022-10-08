@@ -7,5 +7,5 @@ import BTPreprocessor
 import Foundation
 
 internal enum BTAuthorizationRights {
-    internal static let manage = BT_DAEMON_NAME + ".manage"
+    static let manage = BT_DAEMON_NAME + ".manage"
 }

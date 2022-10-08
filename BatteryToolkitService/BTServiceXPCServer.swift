@@ -7,8 +7,18 @@ import Foundation
 import os.log
 
 internal enum BTServiceXPCServer {
-    private final class Delegate: NSObject, NSXPCListenerDelegate {
-        fileprivate func listener(
+    private static let delegate = BTServiceXPCServer.Delegate()
+    private static let listener = NSXPCListener.service()
+
+    static func start() {
+        self.listener.delegate = self.delegate
+        self.listener.resume()
+    }
+}
+
+private extension BTServiceXPCServer {
+    final class Delegate: NSObject, NSXPCListenerDelegate {
+        func listener(
             _: NSXPCListener,
             shouldAcceptNewConnection newConnection: NSXPCConnection
         ) -> Bool {
@@ -27,13 +37,5 @@ internal enum BTServiceXPCServer {
 
             return true
         }
-    }
-
-    private static let delegate = BTServiceXPCServer.Delegate()
-    private static let listener = NSXPCListener.service()
-
-    internal static func start() {
-        self.listener.delegate = self.delegate
-        self.listener.resume()
     }
 }
