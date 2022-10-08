@@ -19,25 +19,6 @@ internal enum BTAuthorization {
         return authRef
     }
 
-    static func interactive(rightName: String) -> AuthorizationRef? {
-        let authRef = self.empty()
-        guard let authRef else {
-            return nil
-        }
-
-        let success = self.copyRight(
-            authRef: authRef,
-            rightName: rightName,
-            flags: [.interactionAllowed, .extendRights, .preAuthorize]
-        )
-        guard success else {
-            AuthorizationFree(authRef, [.destroyRights])
-            return nil
-        }
-
-        return authRef
-    }
-
     static func acquireInteractive(
         authRef: AuthorizationRef,
         rightName: String
