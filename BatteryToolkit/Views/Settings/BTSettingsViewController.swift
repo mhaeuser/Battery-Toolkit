@@ -6,6 +6,7 @@
 import Cocoa
 import os.log
 
+@MainActor
 internal final class BTSettingsViewController: NSViewController {
     private var currentSettings: [String: NSObject]? = nil
 

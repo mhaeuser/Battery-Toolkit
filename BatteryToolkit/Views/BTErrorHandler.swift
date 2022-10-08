@@ -30,7 +30,7 @@ internal enum BTErrorHandler {
         }
 
         DispatchQueue.main.async {
-            errorHandler(error: error)
+            self.errorHandler(error: error)
         }
     }
 }

@@ -5,6 +5,7 @@
 
 import Cocoa
 
+@MainActor
 internal final class BTUpgradingViewController: NSViewController {
     @IBOutlet private var progress: NSProgressIndicator!
 

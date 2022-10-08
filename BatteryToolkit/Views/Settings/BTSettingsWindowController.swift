@@ -6,6 +6,7 @@
 import AppKit
 import Foundation
 
+@MainActor
 internal final class BTSettingsWindowController: NSWindowController {
     private static var currentTab = NSToolbarItem.Identifier("general")
 

@@ -6,8 +6,8 @@
 import Cocoa
 import os.log
 
-@MainActor
 @main
+@MainActor
 internal final class BTAppDelegate: NSObject, NSApplicationDelegate {
     private var menuBarExtraItem: NSStatusItem?
     @IBOutlet private var menuBarExtraMenu: NSMenu!
