@@ -7,7 +7,7 @@ import BTPreprocessor
 import Foundation
 
 @MainActor
-internal enum BatteryToolkit {
+internal enum BTActions {
     internal static func startDaemon(
         reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void
     ) {

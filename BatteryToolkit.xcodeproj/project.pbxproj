@@ -24,7 +24,7 @@
 		CE3179F128DC729900E9C121 /* Upgrading.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE3179F328DC729900E9C121 /* Upgrading.storyboard */; };
 		CE3179F528DC72D800E9C121 /* UpgradingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3179F428DC72D800E9C121 /* UpgradingViewController.swift */; };
 		CE37DD0C283F80960060C43F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE37DD0A283F80960060C43F /* Main.storyboard */; };
-		CE39746E285A229F002D0EC9 /* BatteryToolkit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE39746D285A229F002D0EC9 /* BatteryToolkit.swift */; };
+		CE39746E285A229F002D0EC9 /* BTActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE39746D285A229F002D0EC9 /* BTActions.swift */; };
 		CE397472285A2396002D0EC9 /* BTDaemonXPCServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE397471285A2396002D0EC9 /* BTDaemonXPCServer.swift */; };
 		CE397478285A25A1002D0EC9 /* BTDaemonXPCClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE397477285A25A1002D0EC9 /* BTDaemonXPCClient.swift */; };
 		CE3C1D8528C7FB15008A0F7D /* EMH49F8A2Y.me.mhaeuser.batterytoolkitd.plist in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE675D9528C7E81600F05929 /* EMH49F8A2Y.me.mhaeuser.batterytoolkitd.plist */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -179,7 +179,7 @@
 		CE37DD0F284164160060C43F /* SMCComm+Power.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SMCComm+Power.swift"; sourceTree = "<group>"; };
 		CE39744B2859E6D3002D0EC9 /* EMH49F8A2Y.me.mhaeuser.batterytoolkitd */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = EMH49F8A2Y.me.mhaeuser.batterytoolkitd; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE39744C285A1D35002D0EC9 /* Battery Toolkit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Battery Toolkit.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CE39746D285A229F002D0EC9 /* BatteryToolkit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryToolkit.swift; sourceTree = "<group>"; };
+		CE39746D285A229F002D0EC9 /* BTActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTActions.swift; sourceTree = "<group>"; };
 		CE397471285A2396002D0EC9 /* BTDaemonXPCServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTDaemonXPCServer.swift; sourceTree = "<group>"; };
 		CE397477285A25A1002D0EC9 /* BTDaemonXPCClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTDaemonXPCClient.swift; sourceTree = "<group>"; };
 		CE3A8F6C284D056D00A9E373 /* BTSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTSettings.swift; sourceTree = "<group>"; };
@@ -344,7 +344,7 @@
 				CE52867A28298B6E00860C7B /* Assets.xcassets */,
 				CEE95015285BC3EF00FF60E0 /* Info.plist */,
 				CE52867F28298B6E00860C7B /* BatteryToolkit.entitlements */,
-				CE39746D285A229F002D0EC9 /* BatteryToolkit.swift */,
+				CE39746D285A229F002D0EC9 /* BTActions.swift */,
 				CE6B760628BC1ABC008DF170 /* BTAppXPCClient.swift */,
 				CE397477285A25A1002D0EC9 /* BTDaemonXPCClient.swift */,
 				CE2322D328E5EB8B00874CDE /* BTLoginItem.swift */,
@@ -713,7 +713,7 @@
 				CEA3909328DFAE1C0023261A /* BTXPCValidation.swift in Sources */,
 				CEECE33028BB742500821A3B /* BTServiceCommProtocol.swift in Sources */,
 				CE3179ED28DB543600E9C121 /* BTAuthorization.swift in Sources */,
-				CE39746E285A229F002D0EC9 /* BatteryToolkit.swift in Sources */,
+				CE39746E285A229F002D0EC9 /* BTActions.swift in Sources */,
 				CE52868628298CA300860C7B /* AppDelegate.swift in Sources */,
 				CE1F5E3C28D760D400F61F67 /* BTLocalization.swift in Sources */,
 				CE3C1DA728CA33FD008A0F7D /* BTLegacyHelperInfo.swift in Sources */,

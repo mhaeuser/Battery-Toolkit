@@ -116,7 +116,7 @@ final class SettingsViewController: NSViewController {
     }
 
     private func initBackgroundActivityState() {
-        BatteryToolkit.getSettings { error, settings in
+        BTActions.getSettings { error, settings in
             DispatchQueue.main.async {
                 self.currentSettings = settings
 

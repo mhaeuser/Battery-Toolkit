@@ -35,7 +35,7 @@ final class CommandsMenuDelegate: NSObject, NSMenuDelegate {
     private var refreshTimer: DispatchSourceTimer? = nil
 
     @MainActor private func refresh() {
-        BatteryToolkit.getState { error, state in
+        BTActions.getState { error, state in
             DispatchQueue.main.async {
                 guard error == BTError.success.rawValue else {
                     self.infoPowerAdapterEnabledItem.isHidden = true
@@ -262,24 +262,22 @@ final class CommandsMenuDelegate: NSObject, NSMenuDelegate {
     }
 
     @IBAction private func disablePowerAdapterHandler(sender _: NSMenuItem) {
-        BatteryToolkit
-            .disablePowerAdapter(reply: BTErrorHandler.completionHandler)
+        BTActions.disablePowerAdapter(reply: BTErrorHandler.completionHandler)
     }
 
     @IBAction private func enablePowerAdapterHandler(sender _: NSMenuItem) {
-        BatteryToolkit
-            .enablePowerAdapter(reply: BTErrorHandler.completionHandler)
+        BTActions.enablePowerAdapter(reply: BTErrorHandler.completionHandler)
     }
 
     @IBAction private func chargeToMaximumHandler(sender _: NSMenuItem) {
-        BatteryToolkit.chargeToMaximum(reply: BTErrorHandler.completionHandler)
+        BTActions.chargeToMaximum(reply: BTErrorHandler.completionHandler)
     }
 
     @IBAction private func chargeToFullHandler(sender _: NSMenuItem) {
-        BatteryToolkit.chargeToFull(reply: BTErrorHandler.completionHandler)
+        BTActions.chargeToFull(reply: BTErrorHandler.completionHandler)
     }
 
     @IBAction private func disableChargingHandler(sender _: NSMenuItem) {
-        BatteryToolkit.disableCharging(reply: BTErrorHandler.completionHandler)
+        BTActions.disableCharging(reply: BTErrorHandler.completionHandler)
     }
 }

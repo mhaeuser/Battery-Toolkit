@@ -20,7 +20,7 @@ internal struct BTAppPrompts {
     }
 
     private static func tryRemoveDaemon() {
-        BatteryToolkit.removeDaemon { error in
+        BTActions.removeDaemon { error in
             DispatchQueue.main.async {
                 guard error == BTError.success.rawValue else {
                     promptTryRemoveDaemonError()
@@ -33,7 +33,7 @@ internal struct BTAppPrompts {
     }
 
     private static func forceRemoveDaemon() {
-        BatteryToolkit.removeDaemon { error in
+        BTActions.removeDaemon { error in
             DispatchQueue.main.async {
                 guard error == BTError.success.rawValue else {
                     promptForceRemoveDaemonError()
@@ -92,7 +92,7 @@ internal struct BTAppPrompts {
         let response = self.runPromptStandalone(alert: alert)
         switch response {
         case NSApplication.ModalResponse.alertFirstButtonReturn:
-            BatteryToolkit.approveDaemon(timeout: timeout, reply: reply)
+            BTActions.approveDaemon(timeout: timeout, reply: reply)
 
         case NSApplication.ModalResponse.alertSecondButtonReturn:
             NSApp.terminate(self)

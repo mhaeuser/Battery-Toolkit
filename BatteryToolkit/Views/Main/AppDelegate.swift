@@ -28,7 +28,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 os_log("Daemon not registered")
 
                 if BTAppPrompts.promptRegisterDaemonError() {
-                    BatteryToolkit.startDaemon(reply: self.daemonStatusHandler)
+                    BTActions.startDaemon(reply: self.daemonStatusHandler)
                 }
 
             case .enabled:
@@ -87,7 +87,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 upgradingController.window?.center()
                 upgradingController.showWindow(self)
 
-                BatteryToolkit.upgradeDaemon { status in
+                BTActions.upgradeDaemon { status in
                     DispatchQueue.main.async {
                         upgradingController.close()
                         self.daemonStatusHandler(status: status)
@@ -98,11 +98,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     @MainActor func applicationDidFinishLaunching(_: Notification) {
-        BatteryToolkit.startDaemon(reply: self.daemonStatusHandler)
+        BTActions.startDaemon(reply: self.daemonStatusHandler)
     }
 
     @MainActor func applicationWillTerminate(_: Notification) {
-        BatteryToolkit.stop()
+        BTActions.stop()
     }
 
     @MainActor func applicationWillBecomeActive(_: Notification) {
