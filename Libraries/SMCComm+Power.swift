@@ -8,12 +8,8 @@ public extension SMCComm {
     enum Power {
         static func supported() -> Bool {
             for keyInfo in self.keys {
-                do {
-                    let info = try SMCComm.GetKeyInfo(key: keyInfo.key)
-                    guard keyInfo.info == info else {
-                        return false
-                    }
-                } catch {
+                let info = SMCComm.getKeyInfo(key: keyInfo.key)
+                guard keyInfo.info == info else {
                     return false
                 }
             }
@@ -22,94 +18,62 @@ public extension SMCComm {
         }
 
         static func enableCharging() -> Bool {
-            do {
-                try SMCComm.WriteKeyUI8(
-                    key: self.Keys.CH0C,
-                    value: 0x00
-                )
-                return true
-            } catch {
-                return false
-            }
+            return SMCComm.writeKeyUI8(key: self.Keys.CH0C, value: 0x00)
         }
 
         static func disableCharging() -> Bool {
-            do {
-                try SMCComm.WriteKeyUI8(
-                    key: self.Keys.CH0C,
-                    value: 0x01
-                )
-                return true
-            } catch {
-                return false
-            }
+            return SMCComm.writeKeyUI8(key: self.Keys.CH0C, value: 0x01)
         }
 
         static func isChargingDisabled() -> Bool {
-            do {
-                let value = try SMCComm.ReadKeyUI8(key: self.Keys.CH0C)
-                return value != 0x00
-            } catch {
+            let value = SMCComm.readKeyUI8(key: self.Keys.CH0C)
+            guard let value else {
                 return false
             }
+
+            return value != 0x00
         }
 
         static func enablePowerAdapter() -> Bool {
-            do {
-                try SMCComm.WriteKeyUI8(
-                    key: self.Keys.CH0J,
-                    value: 0x00
-                )
-                return true
-            } catch {
-                return false
-            }
+            return SMCComm.writeKeyUI8(key: self.Keys.CH0J, value: 0x00)
         }
 
         static func disablePowerAdapter() -> Bool {
-            do {
-                try SMCComm.WriteKeyUI8(
-                    key: self.Keys.CH0J,
-                    value: 0x20
-                )
-                return true
-            } catch {
-                return false
-            }
+            return SMCComm.writeKeyUI8(key: self.Keys.CH0J, value: 0x20)
         }
 
         static func isPowerAdapterDisabled() -> Bool {
-            do {
-                let value = try SMCComm.ReadKeyUI8(key: self.Keys.CH0J)
-                return value != 0x00
-            } catch {
+            let value = SMCComm.readKeyUI8(key: self.Keys.CH0J)
+            guard let value else {
                 return false
             }
+
+            return value != 0x00
         }
     }
 }
 
 private extension SMCComm.Power {
     private enum Keys {
-        static let CH0C = SMCCommKey("C", "H", "0", "C")
-        static let CH0J = SMCCommKey("C", "H", "0", "J")
+        static let CH0C = SMCComm.Key("C", "H", "0", "C")
+        static let CH0J = SMCComm.Key("C", "H", "0", "J")
     }
 
     private static let keys =
         [
-            SMCCommKeyInfo(
+            SMCComm.KeyInfo(
                 key: SMCComm.Power.Keys.CH0C,
-                info: SMCCommKeyInfoData(
+                info: SMCComm.KeyInfoData(
                     dataSize: 1,
-                    dataType: SMCCommType.hex,
+                    dataType: SMCComm.KeyTypes.hex,
                     dataAttributes: 0xD4
                 )
             ),
-            SMCCommKeyInfo(
+            SMCComm.KeyInfo(
                 key: SMCComm.Power.Keys.CH0J,
-                info: SMCCommKeyInfoData(
+                info: SMCComm.KeyInfoData(
                     dataSize: 1,
-                    dataType: SMCCommType.ui8,
+                    dataType: SMCComm.KeyTypes.ui8,
                     dataAttributes: 0xD4
                 )
             ),
