@@ -194,7 +194,7 @@ internal enum BTAppPrompts {
             return
         }
         //
-        // The warning about losing MainActor is misleading because
+        // The warning about losing MainActor is misleading, because
         // completionHandler is always executed on the main thread.
         //
         alert.beginSheetModal(for: window, completionHandler: reply)
