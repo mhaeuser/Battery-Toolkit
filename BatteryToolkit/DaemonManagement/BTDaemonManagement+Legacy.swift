@@ -27,7 +27,7 @@ internal extension BTDaemonManagement {
             BTAppXPCClient.getAuthorization { authData in
                 assert(!Thread.isMainThread)
 
-                let authRef = BTAuthorization.fromData(authData: authData)
+                let authRef = SimpleAuth.fromData(authData: authData)
                 guard let authRef else {
                     reply(.notRegistered)
                     return
@@ -104,7 +104,7 @@ internal extension BTDaemonManagement {
             BTAppXPCClient.getDaemonAuthorization { authData in
                 assert(!Thread.isMainThread)
 
-                let authRef = BTAuthorization.fromData(authData: authData)
+                let authRef = SimpleAuth.fromData(authData: authData)
                 guard let authRef else {
                     reply(BTError.notAuthorized.rawValue)
                     return

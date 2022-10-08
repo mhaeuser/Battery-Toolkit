@@ -13,7 +13,7 @@ internal final class BTServiceComm: NSObject, BTServiceCommProtocol {
         reply: @Sendable @escaping (Data?) -> Void
     ) {
         let authRef = self.getAuthRef()
-        reply(BTAuthorization.toData(authRef: authRef))
+        reply(SimpleAuth.toData(authRef: authRef))
     }
 
     func getDaemonAuthorization(
@@ -25,7 +25,7 @@ internal final class BTServiceComm: NSObject, BTServiceCommProtocol {
             return
         }
 
-        let success = BTAuthorization.acquireInteractive(
+        let success = SimpleAuth.acquireInteractive(
             authRef: authRef,
             rightName: kSMRightModifySystemDaemons
         )
@@ -34,7 +34,7 @@ internal final class BTServiceComm: NSObject, BTServiceCommProtocol {
             return
         }
 
-        reply(BTAuthorization.toData(authRef: authRef))
+        reply(SimpleAuth.toData(authRef: authRef))
     }
 
     func getManageAuthorization(
@@ -46,7 +46,7 @@ internal final class BTServiceComm: NSObject, BTServiceCommProtocol {
             return
         }
 
-        let success = BTAuthorization.acquireInteractive(
+        let success = SimpleAuth.acquireInteractive(
             authRef: authRef,
             rightName: BTAuthorizationRights.manage
         )
@@ -55,7 +55,7 @@ internal final class BTServiceComm: NSObject, BTServiceCommProtocol {
             return
         }
 
-        reply(BTAuthorization.toData(authRef: authRef))
+        reply(SimpleAuth.toData(authRef: authRef))
     }
 
     deinit {
@@ -71,7 +71,7 @@ internal final class BTServiceComm: NSObject, BTServiceCommProtocol {
 
     private func getAuthRef() -> AuthorizationRef? {
         guard let authRef = self.authRef else {
-            let authRef = BTAuthorization.empty()
+            let authRef = SimpleAuth.empty()
             self.authRef = authRef
             return authRef
         }

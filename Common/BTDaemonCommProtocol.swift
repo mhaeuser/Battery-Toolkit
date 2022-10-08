@@ -5,7 +5,7 @@
 
 import Foundation
 
-enum BTDaemonCommCommand: UInt8 {
+internal enum BTDaemonCommCommand: UInt8 {
     case disablePowerAdapter
     case enablePowerAdapter
     case chargeToFull

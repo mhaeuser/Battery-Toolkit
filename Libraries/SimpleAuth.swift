@@ -8,7 +8,7 @@ import Foundation
 import os.log
 import ServiceManagement
 
-internal enum BTAuthorization {
+public enum SimpleAuth {
     static func empty() -> AuthorizationRef? {
         var authRef: AuthorizationRef? = nil
         let status = AuthorizationCreate(nil, nil, [], &authRef)

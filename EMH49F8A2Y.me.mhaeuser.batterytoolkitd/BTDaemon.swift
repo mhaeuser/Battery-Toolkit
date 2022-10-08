@@ -55,7 +55,7 @@ internal enum BTDaemon {
             //
             signal(SIGTERM, SIG_IGN)
 
-            let status = BTAuthorization.duplicateRight(
+            let status = SimpleAuth.duplicateRight(
                 rightName: BTAuthorizationRights.manage,
                 templateName: kAuthorizationRuleAuthenticateAsAdmin,
                 comment: "Used by \(BT_DAEMON_ID) to allow access to its privileged functions",

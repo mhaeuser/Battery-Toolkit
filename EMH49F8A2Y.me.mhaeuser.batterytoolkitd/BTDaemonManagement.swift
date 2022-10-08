@@ -23,7 +23,7 @@ internal enum BTDaemonManagement {
     static func prepareDisable() -> Bool {
         let legacySuccess = self.removeLegacyHelperFiles()
 
-        let rightStatus = BTAuthorization.removeRight(
+        let rightStatus = SimpleAuth.removeRight(
             rightName: BTAuthorizationRights.manage
         )
         os_log("Manage right removal: \(rightStatus)")
