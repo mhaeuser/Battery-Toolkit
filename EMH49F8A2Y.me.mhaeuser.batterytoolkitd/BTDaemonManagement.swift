@@ -9,12 +9,10 @@ import os.log
 @MainActor
 internal enum BTDaemonManagement {
     static func removeLegacyHelperFiles() -> Bool {
-        let success1 = self
-            .removeFile(path: BTLegacyHelperInfo.legacyHelperPlist)
-        let success2 = self
-            .removeFile(path: BTLegacyHelperInfo.legacyHelperExec)
+        let success =
+            self.removeFile(path: BTLegacyHelperInfo.legacyHelperPlist) &&
+            self.removeFile(path: BTLegacyHelperInfo.legacyHelperExec)
 
-        let success = success1 && success2
         os_log("Legacy helper removal: \(success)")
 
         return success
