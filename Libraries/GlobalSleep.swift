@@ -11,7 +11,7 @@ import IOPMPrivate
 @MainActor
 public enum GlobalSleep {
     private static var disabledCounter: UInt8 = 0
-    private static var previousState = false
+    private static var previousDisabled = false
 
     static func forceRestore() {
         guard self.disabledCounter > 0 else {
@@ -41,7 +41,11 @@ public enum GlobalSleep {
             return
         }
 
-        self.previousState = self.sleepDisabledIOPMValue()
+        let sleepDisable = self.sleepDisabledIOPMValue()
+        self.previousDisabled = sleepDisable
+        guard !sleepDisable else {
+            return
+        }
 
         let result = IOPMSetSystemPowerSetting(
             kIOPMSleepDisabledKey as CFString,
@@ -75,16 +79,17 @@ public enum GlobalSleep {
     }
 
     private static func restorePrevious() {
-        let result = IOPMSetSystemPowerSetting(
-            kIOPMSleepDisabledKey as CFString,
-            self.previousState ? kCFBooleanTrue : kCFBooleanFalse
-        )
-        if result != kIOReturnSuccess {
-            os_log(
-                "Failed to restore sleep disable to \(self.previousState)"
-            )
+        guard !self.previousDisabled else {
+            self.previousDisabled = false
+            return
         }
 
-        self.previousState = false
+        let result = IOPMSetSystemPowerSetting(
+            kIOPMSleepDisabledKey as CFString,
+            kCFBooleanFalse
+        )
+        if result != kIOReturnSuccess {
+            os_log("Failed to restore sleep disable")
+        }
     }
 }
