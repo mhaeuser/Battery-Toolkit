@@ -127,7 +127,7 @@ internal enum BTSettings {
 
         self.adapterSleep = enabled
 
-        BTPowerState.adapterSleepPreferenceToggled()
+        BTPowerState.adapterSleepSettingToggled()
     }
 
     private static func writeDefaults() {

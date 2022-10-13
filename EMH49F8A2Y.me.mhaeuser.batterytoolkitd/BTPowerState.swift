@@ -31,7 +31,7 @@ internal enum BTPowerState {
         }
     }
 
-    static func adapterSleepPreferenceToggled() {
+    static func adapterSleepSettingToggled() {
         //
         // If power is disabled, toggle sleep.
         //
