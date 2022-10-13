@@ -107,11 +107,8 @@ public enum SimpleAuth {
         )
     }
 
-    static func fromData(authData: Data?) -> AuthorizationRef? {
-        guard
-            let authData,
-            authData.count == kAuthorizationExternalFormLength
-        else {
+    static func fromData(authData: Data) -> AuthorizationRef? {
+        guard authData.count == kAuthorizationExternalFormLength else {
             return nil
         }
 
@@ -127,6 +124,14 @@ public enum SimpleAuth {
         }
 
         return authRef
+    }
+
+    static func fromData(authData: Data?) -> AuthorizationRef? {
+        guard let authData else {
+            return nil
+        }
+
+        return self.fromData(authData: authData)
     }
 
     private static func copyRight(
