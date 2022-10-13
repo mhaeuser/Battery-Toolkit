@@ -122,7 +122,7 @@ public enum SimpleAuth {
 
         var authRef: AuthorizationRef? = nil
         let status = AuthorizationCreateFromExternalForm(&extAuth, &authRef)
-        guard status == errSecSuccess, let authRef else {
+        guard status == errSecSuccess else {
             return nil
         }
 
