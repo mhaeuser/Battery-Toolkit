@@ -13,6 +13,11 @@ internal final class BTServiceComm: NSObject, BTServiceCommProtocol {
         reply: @Sendable @escaping (Data?) -> Void
     ) {
         let authRef = self.getAuthRef()
+        guard let authRef else {
+            reply(nil)
+            return
+        }
+
         reply(SimpleAuth.toData(authRef: authRef))
     }
 

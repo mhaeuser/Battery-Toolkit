@@ -94,11 +94,7 @@ public enum SimpleAuth {
         return status
     }
 
-    static func toData(authRef: AuthorizationRef?) -> Data? {
-        guard let authRef else {
-            return nil
-        }
-
+    static func toData(authRef: AuthorizationRef) -> Data? {
         var extAuth = AuthorizationExternalForm()
         let status = AuthorizationMakeExternalForm(authRef, &extAuth)
         guard status == errAuthorizationSuccess else {
