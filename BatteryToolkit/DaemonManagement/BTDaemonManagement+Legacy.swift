@@ -91,8 +91,8 @@ internal extension BTDaemonManagement {
                 "Legacy helper unregistering result: \(success), error: \(String(describing: error))"
             )
             //
-            // Errors are not returned because the legacy helper PLIST has already
-            // been deleted and next time we will not detect it anyway.
+            // Errors are not returned because the legacy helper PLIST has
+            // already been deleted and next time we will not detect it anyway.
             //
         }
 

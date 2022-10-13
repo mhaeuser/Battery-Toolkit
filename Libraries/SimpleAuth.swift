@@ -116,7 +116,7 @@ public enum SimpleAuth {
         }
 
         var extAuth = AuthorizationExternalForm()
-        withUnsafeMutableBytes(of: &extAuth) { (extBuf) -> Void in
+        _ = withUnsafeMutableBytes(of: &extAuth) { extBuf in
             authData.copyBytes(to: extBuf)
         }
 
