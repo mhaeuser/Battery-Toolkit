@@ -38,7 +38,7 @@ internal enum BTDaemonCommCommand: UInt8 {
     )
 
     @MainActor func setSettings(
-        authData: Data?,
+        authData: Data,
         settings: [String: NSObject & Sendable],
         reply: @Sendable @escaping (BTError.RawValue) -> Void
     )

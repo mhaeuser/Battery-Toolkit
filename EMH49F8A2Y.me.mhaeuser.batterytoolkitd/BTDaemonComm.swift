@@ -74,7 +74,7 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
     }
 
     @MainActor func setSettings(
-        authData: Data?,
+        authData: Data,
         settings: [String: NSObject & Sendable],
         reply: @Sendable @escaping (BTError.RawValue) -> Void
     ) {
