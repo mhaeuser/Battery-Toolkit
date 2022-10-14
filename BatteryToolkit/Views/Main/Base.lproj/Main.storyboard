@@ -365,7 +365,7 @@
                             </connections>
                         </menuItem>
                         <menuItem isSeparatorItem="YES" id="sGg-wU-dOW"/>
-                        <menuItem title="Settings..." keyEquivalent="," id="78l-zk-UHb" customClass="BTSettingsMenuItem" customModule="Battery_Toolkit" customModuleProvider="target">
+                        <menuItem title="Settings…" keyEquivalent="," id="78l-zk-UHb" customClass="BTSettingsMenuItem" customModule="Battery_Toolkit" customModuleProvider="target">
                             <connections>
                                 <segue destination="Lf9-ud-Dh4" kind="show" id="UU8-oN-xdh"/>
                             </connections>

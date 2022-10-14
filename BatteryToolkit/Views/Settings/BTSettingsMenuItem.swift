@@ -14,7 +14,7 @@ internal final class BTSettingsMenuItem: NSMenuItem {
             // Ventura for consistency.
             //
             guard #available(macOS 13.0, *) else {
-                return BTLocalization.preferences + "..."
+                return BTLocalization.preferences + "…"
             }
 
             return super.title
