@@ -622,7 +622,7 @@
 					};
 				};
 			};
-			buildConfigurationList = CE52866E28298B6D00860C7B /* Build configuration list for PBXProject "BatteryToolkit" */;
+			buildConfigurationList = CE52866E28298B6D00860C7B /* Build configuration list for PBXProject "Battery Toolkit" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -1219,7 +1219,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CE52866E28298B6D00860C7B /* Build configuration list for PBXProject "BatteryToolkit" */ = {
+		CE52866E28298B6D00860C7B /* Build configuration list for PBXProject "Battery Toolkit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CE52868028298B6E00860C7B /* Debug */,
