@@ -124,7 +124,9 @@ internal enum BTXPCValidation {
             ),
             SecCodeStatus(rawValue: SecCodeSignatureFlags.runtime.rawValue),
         ]
-
+        //
+        // Debugging the app may change its dynamic codesign properties.
+        //
         if codeStatus.contains(.debugged) {
             #if !DEBUG
                 os_log(

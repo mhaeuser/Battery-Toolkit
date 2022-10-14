@@ -150,7 +150,10 @@ internal enum BTSettings {
             self.adapterSleep,
             forKey: BTSettingsInfo.Keys.adapterSleep
         )
-
+        //
+        // As NSUserDefaults are not automatically synchronized without
+        // NSApplication, do so manually.
+        //
         _ = CFPreferencesAppSynchronize(kCFPreferencesCurrentApplication)
     }
 }

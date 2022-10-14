@@ -7,6 +7,9 @@ public extension SMCComm {
     @MainActor
     enum Power {
         static func supported() -> Bool {
+            //
+            // Ensure all required SMC keys are present and well-formed.
+            //
             for keyInfo in self.keys {
                 let info = SMCComm.getKeyInfo(key: keyInfo.key)
                 guard keyInfo.info == info else {

@@ -14,7 +14,9 @@ internal final class BTSettingsWindowController: NSWindowController {
 
     override func windowDidLoad() {
         super.windowDidLoad()
-
+        //
+        // Restore the previous tab for the Settings window.
+        //
         self.toolbar.selectedItemIdentifier =
             BTSettingsWindowController.currentTab
         for item in self.toolbar.items {
@@ -31,6 +33,9 @@ internal final class BTSettingsWindowController: NSWindowController {
     }
 
     override func close() {
+        //
+        // Preserve the current tab of the Settings window.
+        //
         guard let currentTab = toolbar.selectedItemIdentifier else {
             return
         }

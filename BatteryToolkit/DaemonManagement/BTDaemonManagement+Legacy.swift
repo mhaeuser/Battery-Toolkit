@@ -62,10 +62,16 @@ internal extension BTDaemonManagement {
         }
 
         static func upgrade() {
+            //
+            // There is no upgrade path to legacy daemons.
+            //
             assertionFailure()
         }
 
         static func approve() {
+            //
+            // Approval is exclusive to SMAppService daemons.
+            //
             assertionFailure()
         }
 
@@ -77,7 +83,11 @@ internal extension BTDaemonManagement {
             DispatchQueue.main.async {
                 BTDaemonXPCClient.disconnectDaemon()
             }
-
+            //
+            // The warning about SMJobRemove deprecation is misleading, as there
+            // never was a replacement for this API. The only alternative, to
+            // invoke launchctl, is being discouraged from.
+            //
             var error: Unmanaged<CFError>? = nil
             let success = SMJobRemove(
                 kSMDomainSystemLaunchd,
@@ -111,6 +121,8 @@ internal extension BTDaemonManagement {
                 }
 
                 DispatchQueue.main.async {
+                    //
+                    // Legacy helpers require manual cleanup for removal.
                     //
                     // Force-unwrap is safe as authRef would be nil if authData
                     // was nil.

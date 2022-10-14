@@ -51,6 +51,10 @@ internal enum BTLoginItem {
 
     @available(macOS 13.0, *)
     private static func disableService() -> Bool {
+        //
+        // Disable the legacy Login Item to silently upgrade next time it is
+        // enabled.
+        //
         _ = self.disableLegacy()
 
         guard self.registered(status: SMAppService.mainApp.status) else {

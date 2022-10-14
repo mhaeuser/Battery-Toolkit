@@ -36,6 +36,11 @@ internal enum BTDaemon {
     }
 
     private static func main() {
+        //
+        // Cache the unique ID immediately, as this is not safe against
+        // modifications of the daemon on-disk. This ID must not be used for
+        // security-criticial purposes.
+        //
         self.uniqueId = CSIdentification.getUniqueIdSelf()
 
         BTSettings.readDefaults()

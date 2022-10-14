@@ -10,7 +10,12 @@ import IOPMPrivate
 
 @MainActor
 public enum GlobalSleep {
+    /// There can be multiple factors to disable sleep, e.g., active battery
+    /// charging or a disabled power adapter. Use a counter to allow independent
+    /// control by all sources.
     private static var disabledCounter: UInt8 = 0
+
+    /// Honour the user-specified sleep disabled state for restoration.
     private static var previousDisabled = false
 
     static func forceRestore() {

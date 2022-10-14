@@ -41,11 +41,18 @@ internal enum BTPowerEvents {
     }
 
     static func exit() {
+        //
+        // If the daemon is being updated, don't restore the default platform
+        // power state.
+        //
         if !self.updating {
             self.restoreDefaults()
         }
 
         GlobalSleep.forceRestore()
+        //
+        // Don't free remaining resources, as we will exit anyway.
+        //
     }
 
     static func settingsChanged() {

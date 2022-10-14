@@ -7,6 +7,7 @@ import Foundation
 import ServiceManagement
 
 internal final class BTServiceComm: NSObject, BTServiceCommProtocol {
+    /// Cache a single Authorization to preserve the manage right.
     private var authRef: AuthorizationRef? = nil
 
     func getAuthorization(

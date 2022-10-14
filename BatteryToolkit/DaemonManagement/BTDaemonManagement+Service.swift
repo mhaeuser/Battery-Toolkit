@@ -57,7 +57,7 @@ internal extension BTDaemonManagement {
                     return
                 }
 
-                awaitUnregister(run: 0) { success in
+                self.awaitUnregister(run: 0) { success in
                     guard success else {
                         reply(.notRegistered)
                         return
@@ -133,15 +133,10 @@ internal extension BTDaemonManagement {
             run: UInt8,
             reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void
         ) {
-            guard run < 6 else {
-                DispatchQueue.main.async {
-                    BTDaemonXPCClient.finishUpdate()
-                }
-
-                reply(.notRegistered)
-                return
-            }
-
+            //
+            // After unregistering(e.g., to update the daemon), re-registering
+            // may fail for a short amount of time.
+            //
             assert(!Thread.isMainThread)
 
             let appService = SMAppService.daemon(
@@ -149,9 +144,18 @@ internal extension BTDaemonManagement {
             )
             self.registerSync(appService: appService)
             guard self.registered(status: appService.status) else {
+                guard run < 6 else {
+                    DispatchQueue.main.async {
+                        BTDaemonXPCClient.finishUpdate()
+                    }
+
+                    reply(.notRegistered)
+                    return
+                }
+
                 DispatchQueue.global(qos: .userInitiated)
                     .asyncAfter(deadline: .now() + 0.5) {
-                        forceRegister(run: run + 1, reply: reply)
+                        self.forceRegister(run: run + 1, reply: reply)
                     }
 
                 return
@@ -172,7 +176,7 @@ internal extension BTDaemonManagement {
             BTDaemonXPCClient.prepareUpdate { _ in
                 DispatchQueue.main.async {
                     self.unregister { _ in
-                        forceRegister(run: 0, reply: reply)
+                        self.forceRegister(run: 0, reply: reply)
                     }
                 }
             }
@@ -182,6 +186,10 @@ internal extension BTDaemonManagement {
             run: UInt8,
             reply: @Sendable @escaping (Bool) -> Void
         ) {
+            //
+            // After unregistering the legacy helper, it may take one to two
+            // minutes for the job to actually report as unregistered.
+            //
             let appService = SMAppService.daemon(
                 plistName: self.daemonServicePlist
             )
@@ -193,7 +201,7 @@ internal extension BTDaemonManagement {
 
                 DispatchQueue.global(qos: .userInitiated)
                     .asyncAfter(deadline: .now() + 5) {
-                        awaitUnregister(run: run + 1, reply: reply)
+                        self.awaitUnregister(run: run + 1, reply: reply)
                     }
 
                 return
@@ -218,7 +226,7 @@ internal extension BTDaemonManagement {
 
                 DispatchQueue.global(qos: .userInitiated)
                     .asyncAfter(deadline: .now() + 1) {
-                        awaitApproval(
+                        self.awaitApproval(
                             run: run + 1,
                             timeout: timeout,
                             reply: reply

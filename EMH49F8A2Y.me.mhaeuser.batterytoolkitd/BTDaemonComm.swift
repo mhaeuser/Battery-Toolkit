@@ -19,6 +19,10 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
         command: UInt8,
         reply: @Sendable @escaping (BTError.RawValue) -> Void
     ) {
+        //
+        // Report the supported state to the client, so that it can, e.g.,
+        // cleanly uninstall itself if it is unsupported.
+        //
         if command == BTDaemonCommCommand.isSupported.rawValue {
             reply(
                 BTDaemon.supported ?
@@ -27,7 +31,12 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
             )
             return
         }
-
+        //
+        // The update commands are optional notifications that allow to optimise
+        // the process. Usually, the platform power state is reset to its
+        // defaults when the daemon exits. These signals may be used to
+        // temporarily override this behaviour to preserve the state instead.
+        //
         if command == BTDaemonCommCommand.prepareUpdate.rawValue {
             os_log("Preparing update")
             BTPowerEvents.updating = true
@@ -78,6 +87,9 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
         settings: [String: NSObject & Sendable],
         reply: @Sendable @escaping (BTError.RawValue) -> Void
     ) {
+        //
+        // Power state management functions may only be invoked when supported.
+        //
         guard BTDaemon.supported else {
             reply(BTError.unsupported.rawValue)
             return
@@ -139,7 +151,9 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
             reply(BTError(fromBool: success).rawValue)
             return
         }
-
+        //
+        // Power state management functions may only be invoked when supported.
+        //
         guard BTDaemon.supported else {
             reply(BTError.unsupported.rawValue)
             return
@@ -154,29 +168,30 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
             return
         }
 
-        let success = {
-            switch command {
-            case BTDaemonCommCommand.disablePowerAdapter.rawValue:
-                return BTPowerState.disablePowerAdapter()
-
-            case BTDaemonCommCommand.enablePowerAdapter.rawValue:
-                return BTPowerState.enablePowerAdapter()
-
-            case BTDaemonCommCommand.chargeToFull.rawValue:
-                return BTPowerEvents.chargeToFull()
-
-            case BTDaemonCommCommand.chargeToMaximum.rawValue:
-                return BTPowerEvents.chargeToMaximum()
-
-            case BTDaemonCommCommand.disableCharging.rawValue:
-                return BTPowerEvents.disableCharging()
-
-            default:
-                os_log("Unknown command: \(command)")
-                return false
-            }
-        }()
-
+        let success = self.executeManage(command: command)
         reply(BTError(fromBool: success).rawValue)
+    }
+
+    @MainActor private func executeManage(command: UInt8) -> Bool {
+        switch command {
+        case BTDaemonCommCommand.disablePowerAdapter.rawValue:
+            return BTPowerState.disablePowerAdapter()
+
+        case BTDaemonCommCommand.enablePowerAdapter.rawValue:
+            return BTPowerState.enablePowerAdapter()
+
+        case BTDaemonCommCommand.chargeToFull.rawValue:
+            return BTPowerEvents.chargeToFull()
+
+        case BTDaemonCommCommand.chargeToMaximum.rawValue:
+            return BTPowerEvents.chargeToMaximum()
+
+        case BTDaemonCommCommand.disableCharging.rawValue:
+            return BTPowerEvents.disableCharging()
+
+        default:
+            os_log("Unknown command: \(command)")
+            return false
+        }
     }
 }

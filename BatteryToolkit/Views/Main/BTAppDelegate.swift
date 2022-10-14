@@ -25,6 +25,10 @@ internal final class BTAppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationWillBecomeActive(_: Notification) {
+        //
+        // Use the menuBarExtraItem value as an indicator for whether the app
+        // has fully initialized.
+        //
         guard self.menuBarExtraItem != nil else {
             return
         }

@@ -122,7 +122,9 @@ internal final class BTSettingsViewController: NSViewController {
                 value: self.adapterSleepButton.state == NSControl.StateValue.off
             ),
         ]
-
+        //
+        // Submit the settings to the daemon only when they changed.
+        //
         guard !(settings as NSDictionary).isEqual(to: self.currentSettings)
         else {
             os_log("Background Activity settings have not changed, ignoring")
@@ -162,9 +164,15 @@ internal final class BTSettingsViewController: NSViewController {
 
     override func viewWillAppear() {
         super.viewWillAppear()
+
         self.initGeneralState()
         self.initBackgroundActivityState()
+
         self.view.window?.center()
+        //
+        // Activate the app when the Settings window is shown, e.g., when
+        // invoked from the Menu Bar Extra.
+        //
         NSApp.activate(ignoringOtherApps: true)
     }
 
@@ -174,7 +182,6 @@ internal final class BTSettingsViewController: NSViewController {
 
     func selectBackgroundActivityTab() {
         self.tabView.selectTabViewItem(self.backgroundActivityTab)
-        self.updateViewConstraints()
     }
 
     private func setMinCharge(value: Int) {
