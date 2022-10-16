@@ -2,9 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="282"
+   width="284"
    height="48"
-   viewBox="0 0 74.6125 12.7"
+   viewBox="0 0 75.141666 12.7"
    version="1.1"
    id="svg52"
    sodipodi:docname="LogoCaption.svg"
@@ -29,9 +29,9 @@
      inkscape:document-units="mm"
      showgrid="false"
      showborder="true"
-     inkscape:zoom="1.6446431"
-     inkscape:cx="103.36589"
-     inkscape:cy="-12.464711"
+     inkscape:zoom="18.47037"
+     inkscape:cx="264.61299"
+     inkscape:cy="24.336274"
      inkscape:window-width="1527"
      inkscape:window-height="1205"
      inkscape:window-x="0"
@@ -227,90 +227,78 @@
      style="clip-rule:evenodd;display:inline;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;filter:url(#filter158)"
      transform="matrix(0.01474609,0,0,0.01474609,-1.2000221,-1.4250297)"
      inkscape:label="Icon">
-            
-            
-            
+    <g
+       id="g152"
+       inkscape:label="Glow"
+       style="clip-rule:evenodd;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;filter:url(#filter326)"
+       transform="translate(0.00174,10.00174)">
+      <g
+         id="g158"
+         inkscape:label="InnerShadow"
+         style="filter:url(#filter891)">
         <g
-   id="g152"
-   inkscape:label="Glow"
-   style="clip-rule:evenodd;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;filter:url(#filter326)"
-   transform="translate(0.00174,10.00174)">
-  <g
-     id="g158"
-     inkscape:label="InnerShadow"
-     style="filter:url(#filter891)">
-    <g
-       id="Lower-Arrow"
-       transform="matrix(1.40087,0,0,1.40087,153.37728,153.37728)"
-       style="clip-rule:evenodd;display:inline;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2">
-                <path
-   d="M 255.6,447.9 C 169.1,447.9 95.9,390.5 72.3,311.8 L 128.1,256 H 0 v 128.2 l 38.5,-38.5 c 35.4,84.2 119.5,144.7 217.1,144.7 114.8,0 210,-82.6 230.4,-191.9 h -43.3 c -19.6,85.7 -95.9,149.4 -187.1,149.4 z"
-   style="display:inline;fill:#ffffff;fill-rule:nonzero"
-   id="path8" />
-
-                <path
-   d="M 255.6,447.9 C 169.1,447.9 95.9,390.5 72.3,311.8 L 128.1,256 H 0 v 128.2 l 38.5,-38.5 c 35.4,84.2 119.5,144.7 217.1,144.7 114.8,0 210,-82.6 230.4,-191.9 h -43.3 c -19.6,85.7 -95.9,149.4 -187.1,149.4 z"
-   style="display:inline;fill:#ffffff;fill-rule:nonzero"
-   id="path10" />
-
-                <path
-   d="M 255.6,447.9 C 169.1,447.9 95.9,390.5 72.3,311.8 L 128.1,256 H 0 v 128.2 l 38.5,-38.5 c 35.4,84.2 119.5,144.7 217.1,144.7 114.8,0 210,-82.6 230.4,-191.9 h -43.3 c -19.6,85.7 -95.9,149.4 -187.1,149.4 z"
-   style="display:inline;fill:#ffffff;fill-rule:nonzero"
-   id="path12" />
-
-            </g>
-    <g
-       id="Battery"
-       transform="matrix(1.40087,0,0,1.40087,153.37728,153.37728)"
-       style="clip-rule:evenodd;display:inline;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2">
-                <path
-   d="m 276.8,106.6 h -42.5 c -11.8,0 -21.2,9.4 -21.2,21.2 V 149 h -21.2 c -11.8,0 -21.2,9.4 -21.2,21.2 v 170.7 c 0,23.6 18.9,42.5 42.5,42.5 h 84.9 c 23.6,0 42.5,-18.9 42.5,-42.5 V 170.2 c 0,-11.8 -9.4,-21.2 -21.2,-21.2 h -21.3 l 0.1,-20.3 c -0.1,-11.9 -9.6,-22.1 -21.4,-22.1 z m 32.3,149.4 -74.7,84.9 v -63.7 h -32.2 l 74.7,-84.9 V 256 Z"
-   style="fill:#ffffff;fill-rule:nonzero"
-   id="path15" />
-
-                <path
-   d="m 276.8,106.6 h -42.5 c -11.8,0 -21.2,9.4 -21.2,21.2 V 149 h -21.2 c -11.8,0 -21.2,9.4 -21.2,21.2 v 170.7 c 0,23.6 18.9,42.5 42.5,42.5 h 84.9 c 23.6,0 42.5,-18.9 42.5,-42.5 V 170.2 c 0,-11.8 -9.4,-21.2 -21.2,-21.2 h -21.3 l 0.1,-20.3 c -0.1,-11.9 -9.6,-22.1 -21.4,-22.1 z m 32.3,149.4 -74.7,84.9 v -63.7 h -32.2 l 74.7,-84.9 V 256 Z"
-   style="fill:#ffffff;fill-rule:nonzero"
-   id="path17" />
-
-                <path
-   d="m 276.8,106.6 h -42.5 c -11.8,0 -21.2,9.4 -21.2,21.2 V 149 h -21.2 c -11.8,0 -21.2,9.4 -21.2,21.2 v 170.7 c 0,23.6 18.9,42.5 42.5,42.5 h 84.9 c 23.6,0 42.5,-18.9 42.5,-42.5 V 170.2 c 0,-11.8 -9.4,-21.2 -21.2,-21.2 h -21.3 l 0.1,-20.3 c -0.1,-11.9 -9.6,-22.1 -21.4,-22.1 z m 32.3,149.4 -74.7,84.9 v -63.7 h -32.2 l 74.7,-84.9 V 256 Z"
-   style="fill:#ffffff;fill-rule:nonzero"
-   id="path19" />
-
-            </g>
-    <g
-       id="Upper-Arrow"
-       transform="matrix(1.40087,0,0,1.40087,153.37728,153.37728)"
-       style="clip-rule:evenodd;display:inline;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2">
-                <path
-   d="M 472.7,167.1 C 437.3,82.2 353.1,21.6 255.6,21.6 140.8,21.6 45.6,104.2 25.2,213.5 h 43.3 c 19.7,-84.9 96,-149.4 186.4,-149.4 86.5,0 159.7,57.4 183.3,136.1 L 383.8,256 H 512 V 128.6 Z"
-   style="display:inline;fill:#ffffff;fill-rule:nonzero"
-   id="path22" />
-
-                <path
-   d="M 472.7,167.1 C 437.3,82.2 353.1,21.6 255.6,21.6 140.8,21.6 45.6,104.2 25.2,213.5 h 43.3 c 19.7,-84.9 96,-149.4 186.4,-149.4 86.5,0 159.7,57.4 183.3,136.1 L 383.8,256 H 512 V 128.6 Z"
-   style="display:inline;fill:#ffffff;fill-rule:nonzero"
-   id="path24" />
-
-                <path
-   d="M 472.7,167.1 C 437.3,82.2 353.1,21.6 255.6,21.6 140.8,21.6 45.6,104.2 25.2,213.5 h 43.3 c 19.7,-84.9 96,-149.4 186.4,-149.4 86.5,0 159.7,57.4 183.3,136.1 L 383.8,256 H 512 V 128.6 Z"
-   style="display:inline;fill:#ffffff;fill-rule:nonzero"
-   id="path26" />
-
-            </g>
+           id="Lower-Arrow"
+           transform="matrix(1.40087,0,0,1.40087,153.37728,153.37728)"
+           style="clip-rule:evenodd;display:inline;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2">
+          <path
+             d="M 255.6,447.9 C 169.1,447.9 95.9,390.5 72.3,311.8 L 128.1,256 H 0 v 128.2 l 38.5,-38.5 c 35.4,84.2 119.5,144.7 217.1,144.7 114.8,0 210,-82.6 230.4,-191.9 h -43.3 c -19.6,85.7 -95.9,149.4 -187.1,149.4 z"
+             style="display:inline;fill:#ffffff;fill-rule:nonzero"
+             id="path8" />
+          <path
+             d="M 255.6,447.9 C 169.1,447.9 95.9,390.5 72.3,311.8 L 128.1,256 H 0 v 128.2 l 38.5,-38.5 c 35.4,84.2 119.5,144.7 217.1,144.7 114.8,0 210,-82.6 230.4,-191.9 h -43.3 c -19.6,85.7 -95.9,149.4 -187.1,149.4 z"
+             style="display:inline;fill:#ffffff;fill-rule:nonzero"
+             id="path10" />
+          <path
+             d="M 255.6,447.9 C 169.1,447.9 95.9,390.5 72.3,311.8 L 128.1,256 H 0 v 128.2 l 38.5,-38.5 c 35.4,84.2 119.5,144.7 217.1,144.7 114.8,0 210,-82.6 230.4,-191.9 h -43.3 c -19.6,85.7 -95.9,149.4 -187.1,149.4 z"
+             style="display:inline;fill:#ffffff;fill-rule:nonzero"
+             id="path12" />
+        </g>
+        <g
+           id="Battery"
+           transform="matrix(1.40087,0,0,1.40087,153.37728,153.37728)"
+           style="clip-rule:evenodd;display:inline;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2">
+          <path
+             d="m 276.8,106.6 h -42.5 c -11.8,0 -21.2,9.4 -21.2,21.2 V 149 h -21.2 c -11.8,0 -21.2,9.4 -21.2,21.2 v 170.7 c 0,23.6 18.9,42.5 42.5,42.5 h 84.9 c 23.6,0 42.5,-18.9 42.5,-42.5 V 170.2 c 0,-11.8 -9.4,-21.2 -21.2,-21.2 h -21.3 l 0.1,-20.3 c -0.1,-11.9 -9.6,-22.1 -21.4,-22.1 z m 32.3,149.4 -74.7,84.9 v -63.7 h -32.2 l 74.7,-84.9 V 256 Z"
+             style="fill:#ffffff;fill-rule:nonzero"
+             id="path15" />
+          <path
+             d="m 276.8,106.6 h -42.5 c -11.8,0 -21.2,9.4 -21.2,21.2 V 149 h -21.2 c -11.8,0 -21.2,9.4 -21.2,21.2 v 170.7 c 0,23.6 18.9,42.5 42.5,42.5 h 84.9 c 23.6,0 42.5,-18.9 42.5,-42.5 V 170.2 c 0,-11.8 -9.4,-21.2 -21.2,-21.2 h -21.3 l 0.1,-20.3 c -0.1,-11.9 -9.6,-22.1 -21.4,-22.1 z m 32.3,149.4 -74.7,84.9 v -63.7 h -32.2 l 74.7,-84.9 V 256 Z"
+             style="fill:#ffffff;fill-rule:nonzero"
+             id="path17" />
+          <path
+             d="m 276.8,106.6 h -42.5 c -11.8,0 -21.2,9.4 -21.2,21.2 V 149 h -21.2 c -11.8,0 -21.2,9.4 -21.2,21.2 v 170.7 c 0,23.6 18.9,42.5 42.5,42.5 h 84.9 c 23.6,0 42.5,-18.9 42.5,-42.5 V 170.2 c 0,-11.8 -9.4,-21.2 -21.2,-21.2 h -21.3 l 0.1,-20.3 c -0.1,-11.9 -9.6,-22.1 -21.4,-22.1 z m 32.3,149.4 -74.7,84.9 v -63.7 h -32.2 l 74.7,-84.9 V 256 Z"
+             style="fill:#ffffff;fill-rule:nonzero"
+             id="path19" />
+        </g>
+        <g
+           id="Upper-Arrow"
+           transform="matrix(1.40087,0,0,1.40087,153.37728,153.37728)"
+           style="clip-rule:evenodd;display:inline;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2">
+          <path
+             d="M 472.7,167.1 C 437.3,82.2 353.1,21.6 255.6,21.6 140.8,21.6 45.6,104.2 25.2,213.5 h 43.3 c 19.7,-84.9 96,-149.4 186.4,-149.4 86.5,0 159.7,57.4 183.3,136.1 L 383.8,256 H 512 V 128.6 Z"
+             style="display:inline;fill:#ffffff;fill-rule:nonzero"
+             id="path22" />
+          <path
+             d="M 472.7,167.1 C 437.3,82.2 353.1,21.6 255.6,21.6 140.8,21.6 45.6,104.2 25.2,213.5 h 43.3 c 19.7,-84.9 96,-149.4 186.4,-149.4 86.5,0 159.7,57.4 183.3,136.1 L 383.8,256 H 512 V 128.6 Z"
+             style="display:inline;fill:#ffffff;fill-rule:nonzero"
+             id="path24" />
+          <path
+             d="M 472.7,167.1 C 437.3,82.2 353.1,21.6 255.6,21.6 140.8,21.6 45.6,104.2 25.2,213.5 h 43.3 c 19.7,-84.9 96,-149.4 186.4,-149.4 86.5,0 159.7,57.4 183.3,136.1 L 383.8,256 H 512 V 128.6 Z"
+             style="display:inline;fill:#ffffff;fill-rule:nonzero"
+             id="path26" />
+        </g>
+      </g>
+    </g>
   </g>
-</g>
-</g>
   <text
      xml:space="preserve"
-     transform="matrix(0.44186369,0,0,0.44186369,-9.5239597,-3.2485573)"
+     transform="matrix(0.44186369,0,0,0.44186369,-8.9947929,-3.2485573)"
      id="text774"
-     style="white-space:pre;shape-inside:url(#rect776);display:inline;fill:#333333"
+     style="white-space:pre;shape-inside:url(#rect776);display:inline;fill:#333333;fill-opacity:0.885542"
      inkscape:label="Label"><tspan
        x="54.460938"
        y="28.672775"
-       id="tspan1092"><tspan
+       id="tspan8953"><tspan
          style="font-size:18.6667px;-inkscape-font-specification:'sans-serif, Normal'"
-         id="tspan1090">Battery Toolkit</tspan></tspan></text>
+         id="tspan8951">Battery Toolkit</tspan></tspan></text>
 </svg>
