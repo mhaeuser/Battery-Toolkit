@@ -49,15 +49,17 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
             return
         }
 
-        let authRef = SimpleAuth.fromData(authData: authData)
-        guard let authRef else {
+        let simpleAuth = SimpleAuth.fromData(authData: authData)
+        guard let simpleAuth else {
             reply(BTError.notAuthorized.rawValue)
             return
         }
 
-        self.executeWithAuth(authRef: authRef, command: command, reply: reply)
-
-        AuthorizationFree(authRef, [])
+        self.executeWithAuth(
+            simpleAuth: simpleAuth,
+            command: command,
+            reply: reply
+        )
     }
 
     @MainActor func getState(
@@ -95,19 +97,16 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
             return
         }
 
-        let authRef = SimpleAuth.fromData(authData: authData)
-        guard let authRef else {
+        let simpleAuth = SimpleAuth.fromData(authData: authData)
+        guard let simpleAuth else {
             reply(BTError.notAuthorized.rawValue)
             return
         }
 
         let authorized = SimpleAuth.checkRight(
-            authRef: authRef,
+            simpleAuth: simpleAuth,
             rightName: BTAuthorizationRights.manage
         )
-
-        AuthorizationFree(authRef, [])
-
         guard authorized else {
             reply(BTError.notAuthorized.rawValue)
             return
@@ -117,14 +116,14 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
     }
 
     @MainActor private func executeWithAuth(
-        authRef: AuthorizationRef,
+        simpleAuth: SimpleAuthRef,
         command: UInt8,
         reply: @Sendable @escaping (BTError.RawValue) -> Void
     ) {
         guard command != BTDaemonCommCommand.removeLegacyHelperFiles.rawValue
         else {
             let authorized = SimpleAuth.checkRight(
-                authRef: authRef,
+                simpleAuth: simpleAuth,
                 rightName: kSMRightModifySystemDaemons
             )
             guard authorized else {
@@ -139,7 +138,7 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
 
         guard command != BTDaemonCommCommand.prepareDisable.rawValue else {
             let authorized = SimpleAuth.checkRight(
-                authRef: authRef,
+                simpleAuth: simpleAuth,
                 rightName: kSMRightModifySystemDaemons
             )
             guard authorized else {
@@ -160,7 +159,7 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
         }
 
         let authorized = SimpleAuth.checkRight(
-            authRef: authRef,
+            simpleAuth: simpleAuth,
             rightName: BTAuthorizationRights.manage
         )
         guard authorized else {

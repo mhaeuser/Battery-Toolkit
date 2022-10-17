@@ -66,15 +66,13 @@ internal enum BTDaemonManagement {
                     if #available(macOS 13.0, *) {
                         self.Service.unregister(reply: reply)
                     } else {
-                        let authRef = SimpleAuth.fromData(authData: authData)
-                        guard let authRef else {
+                        let simpleAuth = SimpleAuth.fromData(authData: authData)
+                        guard let simpleAuth else {
                             reply(BTError.notAuthorized.rawValue)
                             return
                         }
 
-                        self.Legacy.unregister(authRef: authRef)
-
-                        AuthorizationFree(authRef, [])
+                        self.Legacy.unregister(simpleAuth: simpleAuth)
 
                         reply(BTError.success.rawValue)
                     }

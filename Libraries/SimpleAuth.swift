@@ -8,34 +8,55 @@ import Foundation
 import os.log
 import ServiceManagement
 
+/// Wrapper class for reference-counted authorization references.
+public final class SimpleAuthRef: Sendable {
+    let authRef: AuthorizationRef
+
+    init(fromRef authRef: AuthorizationRef) {
+        self.authRef = authRef
+    }
+
+    convenience init?(fromRef authRef: AuthorizationRef?) {
+        guard let authRef else {
+            return nil
+        }
+
+        self.init(fromRef: authRef)
+    }
+
+    deinit {
+        AuthorizationFree(self.authRef, [])
+    }
+}
+
 public enum SimpleAuth {
-    static func empty() -> AuthorizationRef? {
+    static func empty() -> SimpleAuthRef? {
         var authRef: AuthorizationRef? = nil
         let status = AuthorizationCreate(nil, nil, [], &authRef)
         guard status == errAuthorizationSuccess else {
             return nil
         }
 
-        return authRef
+        return SimpleAuthRef(fromRef: authRef)
     }
 
     static func acquireInteractive(
-        authRef: AuthorizationRef,
+        simpleAuth: SimpleAuthRef,
         rightName: String
     ) -> Bool {
         return self.copyRight(
-            authRef: authRef,
+            simpleAuth: simpleAuth,
             rightName: rightName,
             flags: [.interactionAllowed, .extendRights, .preAuthorize]
         )
     }
 
     static func checkRight(
-        authRef: AuthorizationRef,
+        simpleAuth: SimpleAuthRef,
         rightName: String
     ) -> Bool {
         return self.copyRight(
-            authRef: authRef,
+            simpleAuth: simpleAuth,
             rightName: rightName,
             flags: [.destroyRights]
         )
@@ -47,8 +68,8 @@ public enum SimpleAuth {
         comment: String,
         timeout: Int
     ) -> OSStatus {
-        let authRef = self.empty()
-        guard let authRef else {
+        let simpleAuth = self.empty()
+        guard let simpleAuth else {
             return errAuthorizationInternal
         }
 
@@ -67,36 +88,28 @@ public enum SimpleAuth {
         adminRightDef[kAuthorizationComment as CFString] = comment as CFString
         adminRightDef["timeout" as CFString] = timeout as CFNumber
 
-        let status = AuthorizationRightSet(
-            authRef,
+        return AuthorizationRightSet(
+            simpleAuth.authRef,
             rightName,
             adminRightDef as CFDictionary,
             nil,
             nil,
             nil
         )
-
-        AuthorizationFree(authRef, [.destroyRights])
-
-        return status
     }
 
     static func removeRight(rightName: String) -> OSStatus {
-        let authRef = self.empty()
-        guard let authRef else {
+        let simpleAuth = self.empty()
+        guard let simpleAuth else {
             return errAuthorizationInternal
         }
 
-        let status = AuthorizationRightRemove(authRef, rightName)
-
-        AuthorizationFree(authRef, [.destroyRights])
-
-        return status
+        return AuthorizationRightRemove(simpleAuth.authRef, rightName)
     }
 
-    static func toData(authRef: AuthorizationRef) -> Data? {
+    static func toData(simpleAuth: SimpleAuthRef) -> Data? {
         var extAuth = AuthorizationExternalForm()
-        let status = AuthorizationMakeExternalForm(authRef, &extAuth)
+        let status = AuthorizationMakeExternalForm(simpleAuth.authRef, &extAuth)
         guard status == errAuthorizationSuccess else {
             return nil
         }
@@ -107,7 +120,7 @@ public enum SimpleAuth {
         )
     }
 
-    static func fromData(authData: Data) -> AuthorizationRef? {
+    static func fromData(authData: Data) -> SimpleAuthRef? {
         guard authData.count == kAuthorizationExternalFormLength else {
             return nil
         }
@@ -123,10 +136,10 @@ public enum SimpleAuth {
             return nil
         }
 
-        return authRef
+        return SimpleAuthRef(fromRef: authRef)
     }
 
-    static func fromData(authData: Data?) -> AuthorizationRef? {
+    static func fromData(authData: Data?) -> SimpleAuthRef? {
         guard let authData else {
             return nil
         }
@@ -135,7 +148,7 @@ public enum SimpleAuth {
     }
 
     private static func copyRight(
-        authRef: AuthorizationRef,
+        simpleAuth: SimpleAuthRef,
         rightName: String,
         flags: AuthorizationFlags
     ) -> Bool {
@@ -151,7 +164,7 @@ public enum SimpleAuth {
                 var rights = AuthorizationRights(count: 1, items: item)
 
                 let status = AuthorizationCopyRights(
-                    authRef,
+                    simpleAuth.authRef,
                     &rights,
                     nil,
                     flags,

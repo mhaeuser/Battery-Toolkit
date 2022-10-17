@@ -27,8 +27,8 @@ internal extension BTDaemonManagement {
             BTAppXPCClient.getAuthorization { authData in
                 assert(!Thread.isMainThread)
 
-                let authRef = SimpleAuth.fromData(authData: authData)
-                guard let authRef else {
+                let simpleAuth = SimpleAuth.fromData(authData: authData)
+                guard let simpleAuth else {
                     reply(.notRegistered)
                     return
                 }
@@ -39,7 +39,7 @@ internal extension BTDaemonManagement {
                         let success = SMJobBless(
                             kSMDomainSystemLaunchd,
                             BT_DAEMON_ID as CFString,
-                            authRef,
+                            simpleAuth.authRef,
                             &error
                         )
 
@@ -50,8 +50,6 @@ internal extension BTDaemonManagement {
                         os_log(
                             "Legacy helper registering result: \(success), error: \(String(describing: error))"
                         )
-
-                        AuthorizationFree(authRef, [])
 
                         reply(
                             BTDaemonManagement.Status(fromBool: success)
@@ -75,7 +73,7 @@ internal extension BTDaemonManagement {
             assertionFailure()
         }
 
-        static func unregister(authRef: AuthorizationRef) {
+        static func unregister(simpleAuth: SimpleAuthRef) {
             os_log("Unregistering legacy helper")
 
             assert(!Thread.isMainThread)
@@ -92,7 +90,7 @@ internal extension BTDaemonManagement {
             let success = SMJobRemove(
                 kSMDomainSystemLaunchd,
                 BT_DAEMON_ID as CFString,
-                authRef,
+                simpleAuth.authRef,
                 true,
                 &error
             )
@@ -114,8 +112,8 @@ internal extension BTDaemonManagement {
             BTAppXPCClient.getDaemonAuthorization { authData in
                 assert(!Thread.isMainThread)
 
-                let authRef = SimpleAuth.fromData(authData: authData)
-                guard let authRef else {
+                let simpleAuth = SimpleAuth.fromData(authData: authData)
+                guard let simpleAuth else {
                     reply(BTError.notAuthorized.rawValue)
                     return
                 }
@@ -124,16 +122,14 @@ internal extension BTDaemonManagement {
                     //
                     // Legacy helpers require manual cleanup for removal.
                     //
-                    // Force-unwrap is safe as authRef would be nil if authData
-                    // was nil.
+                    // Force-unwrap is safe as simpleAuth would be nil if
+                    // authData was nil.
                     //
                     BTDaemonXPCClient
                         .removeLegacyHelperFiles(authData: authData!) { error in
                             if error == BTError.success.rawValue {
-                                unregister(authRef: authRef)
+                                unregister(simpleAuth: simpleAuth)
                             }
-
-                            AuthorizationFree(authRef, [])
 
                             reply(error)
                         }

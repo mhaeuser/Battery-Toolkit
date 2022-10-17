@@ -8,31 +8,31 @@ import ServiceManagement
 
 internal final class BTServiceComm: NSObject, BTServiceCommProtocol {
     /// Cache a single Authorization to preserve the manage right.
-    private var authRef: AuthorizationRef? = nil
+    private var simpleAuth: SimpleAuthRef? = nil
 
     func getAuthorization(
         reply: @Sendable @escaping (Data?) -> Void
     ) {
-        let authRef = self.getAuthRef()
-        guard let authRef else {
+        let simpleAuth = self.getSimpleAuth()
+        guard let simpleAuth else {
             reply(nil)
             return
         }
 
-        reply(SimpleAuth.toData(authRef: authRef))
+        reply(SimpleAuth.toData(simpleAuth: simpleAuth))
     }
 
     func getDaemonAuthorization(
         reply: @Sendable @escaping (Data?) -> Void
     ) {
-        let authRef = self.getAuthRef()
-        guard let authRef else {
+        let simpleAuth = self.getSimpleAuth()
+        guard let simpleAuth else {
             reply(nil)
             return
         }
 
         let success = SimpleAuth.acquireInteractive(
-            authRef: authRef,
+            simpleAuth: simpleAuth,
             rightName: kSMRightModifySystemDaemons
         )
         guard success else {
@@ -40,20 +40,20 @@ internal final class BTServiceComm: NSObject, BTServiceCommProtocol {
             return
         }
 
-        reply(SimpleAuth.toData(authRef: authRef))
+        reply(SimpleAuth.toData(simpleAuth: simpleAuth))
     }
 
     func getManageAuthorization(
         reply: @Sendable @escaping (Data?) -> Void
     ) {
-        let authRef = self.getAuthRef()
-        guard let authRef else {
+        let simpleAuth = self.getSimpleAuth()
+        guard let simpleAuth else {
             reply(nil)
             return
         }
 
         let success = SimpleAuth.acquireInteractive(
-            authRef: authRef,
+            simpleAuth: simpleAuth,
             rightName: BTAuthorizationRights.manage
         )
         guard success else {
@@ -61,24 +61,16 @@ internal final class BTServiceComm: NSObject, BTServiceCommProtocol {
             return
         }
 
-        reply(SimpleAuth.toData(authRef: authRef))
+        reply(SimpleAuth.toData(simpleAuth: simpleAuth))
     }
 
-    deinit {
-        guard let authRef = self.authRef else {
-            return
+    private func getSimpleAuth() -> SimpleAuthRef? {
+        guard let simpleAuth = self.simpleAuth else {
+            let simpleAuth = SimpleAuth.empty()
+            self.simpleAuth = simpleAuth
+            return simpleAuth
         }
 
-        AuthorizationFree(authRef, [.destroyRights])
-    }
-
-    private func getAuthRef() -> AuthorizationRef? {
-        guard let authRef = self.authRef else {
-            let authRef = SimpleAuth.empty()
-            self.authRef = authRef
-            return authRef
-        }
-
-        return authRef
+        return simpleAuth
     }
 }
