@@ -14,6 +14,9 @@ internal enum BTDaemon {
 
     private static var uniqueId: Data? = nil
 
+    /// SIGTERM source signal. Needs to be preserved for the program lifetime.
+    private static var termSource: DispatchSourceSignal? = nil
+
     static func getUniqueId() -> Data? {
         return self.uniqueId
     }
@@ -58,6 +61,10 @@ internal enum BTDaemon {
                 exit(0)
             }
             termSource.resume()
+            //
+            // Preserve termSource globally, so it is not deallocated.
+            //
+            self.termSource = termSource
             //
             // Ignore SIGTERM to catch it above and gracefully stop the service.
             //
