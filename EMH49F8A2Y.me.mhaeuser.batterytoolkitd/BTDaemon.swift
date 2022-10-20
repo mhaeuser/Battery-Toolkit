@@ -49,7 +49,10 @@ internal enum BTDaemon {
         if startError == BTError.success {
             self.supported = true
 
-            let termSource = DispatchSource.makeSignalSource(signal: SIGTERM)
+            let termSource = DispatchSource.makeSignalSource(
+                signal: SIGTERM,
+                queue: DispatchQueue.main
+            )
             termSource.setEventHandler {
                 BTPowerEvents.exit()
                 exit(0)
