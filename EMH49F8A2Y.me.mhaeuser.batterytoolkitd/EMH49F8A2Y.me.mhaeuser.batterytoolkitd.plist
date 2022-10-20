@@ -15,6 +15,8 @@
 	<string>EMH49F8A2Y.me.mhaeuser.batterytoolkitd</string>
 	<key>RunAtLoad</key>
 	<true/>
+	<key>EnableTransactions</key>
+	<false/>
 	<key>MachServices</key>
 	<dict>
 		<key>EMH49F8A2Y.me.mhaeuser.batterytoolkitd</key>
