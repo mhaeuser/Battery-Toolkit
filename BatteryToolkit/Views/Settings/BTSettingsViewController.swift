@@ -98,15 +98,15 @@ internal final class BTSettingsViewController: NSViewController {
     }
 
     @IBAction private func doneButtonAction(_: NSButton) {
-        let disableAutostart = self.autostartButton.state != .on
-        let success = disableAutostart ?
+        let autostart = (self.autostartButton.state == .on)
+        let success = autostart ?
             BTLoginItem.disable() :
             BTLoginItem.enable()
 
         if success {
             UserDefaults.standard.setValue(
-                disableAutostart,
-                forKey: BTSettingsInfo.Keys.disableAutostart
+                autostart,
+                forKey: BTSettingsInfo.Keys.autostart
             )
         } else {
             BTErrorHandler.errorHandler(
@@ -199,12 +199,12 @@ internal final class BTSettingsViewController: NSViewController {
     }
 
     private func initGeneralState() {
-        let disableAutostart = UserDefaults.standard.bool(
-            forKey: BTSettingsInfo.Keys.disableAutostart
+        let autostart = UserDefaults.standard.bool(
+            forKey: BTSettingsInfo.Keys.autostart
         )
-        self.autostartButton.state = disableAutostart ?
-            NSControl.StateValue.off :
-            NSControl.StateValue.on
+        self.autostartButton.state = autostart ?
+            NSControl.StateValue.on :
+            NSControl.StateValue.off
     }
 
     private func initBackgroundActivityState() {
