@@ -636,11 +636,11 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				CE52867228298B6D00860C7B /* Battery Toolkit */,
-				CE3974402859E518002D0EC9 /* me.mhaeuser.batterytoolkitd */,
-				CEECE31728BB648F00821A3B /* Battery Toolkit Service */,
 				CEE1654E28E4B65B00DC2443 /* SecCodeEx */,
 				CE9BD24528E8908000B6C61D /* AutostartHelper */,
+				CEECE31728BB648F00821A3B /* Battery Toolkit Service */,
+				CE3974402859E518002D0EC9 /* me.mhaeuser.batterytoolkitd */,
+				CE52867228298B6D00860C7B /* Battery Toolkit */,
 			);
 		};
 /* End PBXProject section */
