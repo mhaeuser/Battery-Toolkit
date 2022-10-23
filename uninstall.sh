@@ -8,13 +8,13 @@
 ##
 
 # Remove the Battery Toolkit daemon.
-sudo rm /Library/LaunchDaemons/EMH49F8A2Y.me.mhaeuser.batterytoolkitd.plist
-sudo rm /Library/PrivilegedHelperTools/EMH49F8A2Y.me.mhaeuser.batterytoolkitd
-sudo launchctl remove EMH49F8A2Y.me.mhaeuser.batterytoolkitd
+sudo rm /Library/LaunchDaemons/me.mhaeuser.batterytoolkitd.plist
+sudo rm /Library/PrivilegedHelperTools/me.mhaeuser.batterytoolkitd
+sudo launchctl remove me.mhaeuser.batterytoolkitd
 
 # Remove the Battery Toolkit daemon data.
-sudo defaults delete EMH49F8A2Y.me.mhaeuser.batterytoolkitd
-sudo security authorizationdb remove EMH49F8A2Y.me.mhaeuser.batterytoolkitd.manage
+sudo defaults delete me.mhaeuser.batterytoolkitd
+sudo security authorizationdb remove me.mhaeuser.batterytoolkitd.manage
 
 # Remove the Battery Toolkit Autostart helper.
 launchctl remove me.mhaeuser.BatteryToolkitAutostart

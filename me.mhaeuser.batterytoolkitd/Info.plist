@@ -3,12 +3,12 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleIdentifier</key>
-	<string>EMH49F8A2Y.me.mhaeuser.batterytoolkitd</string>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>SMAuthorizedClients</key>
 	<array>
-		<string>identifier &quot;$(BT_APP_ID)&quot; and anchor apple generic and certificate leaf[subject.CN] = &quot;$(BT_CODESIGN_CN)&quot; and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
+		<string>identifier "$(BT_APP_ID)" and anchor apple generic and certificate leaf[subject.CN] = "$(BT_CODESIGN_CN)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
 	</array>
 </dict>
 </plist>

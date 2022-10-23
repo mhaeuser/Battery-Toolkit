@@ -176,7 +176,9 @@ internal extension BTDaemonManagement {
             BTDaemonXPCClient.prepareUpdate { _ in
                 DispatchQueue.main.async {
                     self.unregister { _ in
-                        self.forceRegister(run: 0, reply: reply)
+                        self.awaitUnregister(run: 0) { _ in
+                            self.forceRegister(run: 0, reply: reply)
+                        }
                     }
                 }
             }

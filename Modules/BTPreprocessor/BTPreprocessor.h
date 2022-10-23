@@ -19,6 +19,9 @@ extern const NSString *const BT_SERVICE_ID;
 /// The Battery Toolkit daemon identifier.
 extern const NSString *const BT_DAEMON_ID;
 
+/// The Battery Toolkit daemon connection name.
+extern const NSString *const BT_DAEMON_CONN;
+
 /// The Battery Toolkit Autostart identifier.
 extern const NSString *const BT_AUTOSTART_ID;
 

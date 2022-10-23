@@ -12,7 +12,7 @@
 	<key>AssociatedBundleIdentifiers</key>
 	<string>me.mhaeuser.BatteryToolkit</string>
 	<key>Label</key>
-	<string>EMH49F8A2Y.me.mhaeuser.batterytoolkitd</string>
+	<string>me.mhaeuser.batterytoolkitd</string>
 	<key>RunAtLoad</key>
 	<true/>
 	<key>EnableTransactions</key>

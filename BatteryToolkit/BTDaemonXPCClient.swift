@@ -206,7 +206,7 @@ internal enum BTDaemonXPCClient {
         }
 
         let connect = NSXPCConnection(
-            machServiceName: BT_DAEMON_ID,
+            machServiceName: BT_DAEMON_CONN,
             options: .privileged
         )
         connect.remoteObjectInterface = NSXPCInterface(
