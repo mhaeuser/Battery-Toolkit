@@ -8,6 +8,8 @@ import os.log
 
 @MainActor
 internal final class BTSettingsViewController: NSViewController {
+    private let autostartSetting = "autostart"
+
     private var currentSettings: [String: NSObject & Sendable]? = nil
 
     @IBOutlet private var tabView: NSTabView!
@@ -106,7 +108,7 @@ internal final class BTSettingsViewController: NSViewController {
         if success {
             UserDefaults.standard.setValue(
                 autostart,
-                forKey: BTSettingsInfo.Keys.autostart
+                forKey: self.autostartSetting
             )
         } else {
             BTErrorHandler.errorHandler(
@@ -200,7 +202,7 @@ internal final class BTSettingsViewController: NSViewController {
 
     private func initGeneralState() {
         let autostart = UserDefaults.standard.bool(
-            forKey: BTSettingsInfo.Keys.autostart
+            forKey: self.autostartSetting
         )
         self.autostartButton.state = autostart ?
             NSControl.StateValue.on :

@@ -10,8 +10,6 @@ internal enum BTSettingsInfo {
         static let minCharge: UInt8 = 70
         static let maxCharge: UInt8 = 80
         static let adapterSleep = false
-
-        static let autostart = false
     }
 
     enum Bounds {
@@ -23,8 +21,6 @@ internal enum BTSettingsInfo {
         static let minCharge = "MinCharge"
         static let maxCharge = "MaxCharge"
         static let adapterSleep = "AdapterSleep"
-
-        static let autostart = "Autostart"
     }
 
     static func chargeLimitsValid(
