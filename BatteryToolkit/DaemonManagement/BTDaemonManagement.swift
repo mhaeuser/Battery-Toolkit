@@ -12,7 +12,7 @@ internal enum BTDaemonManagement {
         reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void
     ) {
         BTDaemonXPCClient.getUniqueId { daemonId in
-            guard daemonUpToDate(daemonId: daemonId) else {
+            guard self.daemonUpToDate(daemonId: daemonId) else {
                 DispatchQueue.main.async {
                     if #available(macOS 13.0, *) {
                         self.Service.register(reply: reply)
