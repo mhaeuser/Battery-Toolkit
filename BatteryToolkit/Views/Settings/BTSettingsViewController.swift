@@ -102,8 +102,8 @@ internal final class BTSettingsViewController: NSViewController {
     @IBAction private func doneButtonAction(_: NSButton) {
         let autostart = (self.autostartButton.state == .on)
         let success = autostart ?
-            BTLoginItem.disable() :
-            BTLoginItem.enable()
+            BTLoginItem.enable() :
+            BTLoginItem.disable()
 
         if success {
             UserDefaults.standard.setValue(
