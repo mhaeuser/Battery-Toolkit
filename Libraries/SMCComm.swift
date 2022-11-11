@@ -148,7 +148,23 @@ public enum SMCComm {
         var inputStruct = SMCParamStruct.writeUI8(key: key, value: value)
 
         let outputStruct = self.callSMCFunctionYPC(params: &inputStruct)
-        return outputStruct != nil
+        //
+        // This is defensive programming to protect against the SMC driver
+        // misreporting success or failure. No such occasions were identified so
+        // far. What has been identified so far were SMC keys reporting values
+        // different from both the previous value and what has been written.
+        //
+        let readValue = self.readKeyUI8(key: key)
+        guard let readValue else {
+            //
+            // If the read fails, return the write result.
+            //
+            return outputStruct != nil
+        }
+        //
+        // If the read succeeds, compare the current to the written value.
+        //
+        return readValue == value
     }
 
     private static func callSMCFunctionYPC(
