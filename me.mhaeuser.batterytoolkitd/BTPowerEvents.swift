@@ -207,8 +207,7 @@ internal enum BTPowerEvents {
                 //
                 // Charging modes are reset once we disable charging.
                 //
-                self.chargingMode = .standard
-                _ = BTPowerState.disableCharging()
+                _ = BTPowerEvents.disableCharging()
             }
         } else if percent < BTSettings.minCharge {
             _ = BTPowerState.enableCharging()
@@ -247,7 +246,7 @@ internal enum BTPowerEvents {
             // Disable charging to not have micro-charges happening when
             // connecting to power.
             //
-            _ = BTPowerState.disableCharging()
+            _ = BTPowerEvents.disableCharging()
         }
         //
         // Restore sleep from the setup phase.
