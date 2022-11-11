@@ -12,9 +12,9 @@ internal enum BTPowerState {
     private static var powerDisabled = false
 
     static func initSleepState() {
-        let chargeDisabled = SMCComm.Power.isChargingDisabled()
-        self.chargingDisabled = chargeDisabled
-        if !chargeDisabled {
+        let chargingDisabled = SMCComm.Power.isChargingDisabled()
+        self.chargingDisabled = chargingDisabled
+        if !chargingDisabled {
             //
             // Sleep must always be disabled when charging is enabled.
             //
