@@ -235,8 +235,8 @@ internal enum BTPowerEvents {
         self.unlimitedPower = unlimitedPower
 
         if unlimitedPower {
-            let result = self.registerPercentChangedHandler()
-            if !result {
+            let success = self.registerPercentChangedHandler()
+            if !success {
                 os_log("Failed to register percent changed handler")
                 self.restoreDefaults()
             }

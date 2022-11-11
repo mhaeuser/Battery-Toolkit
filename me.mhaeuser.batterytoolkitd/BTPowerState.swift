@@ -68,8 +68,8 @@ internal enum BTPowerState {
             return true
         }
 
-        let result = SMCComm.Power.enableCharging()
-        if !result {
+        let success = SMCComm.Power.enableCharging()
+        if !success {
             os_log("Failed to enable charging")
             return false
         }

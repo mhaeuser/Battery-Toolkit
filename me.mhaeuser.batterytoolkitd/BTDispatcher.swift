@@ -39,10 +39,10 @@ internal enum BTDispatcher {
     }
 
     static func unregisterPercentChangeNotification() {
-        let result = self.unregisterDispatch(
+        let success = self.unregisterDispatch(
             registration: self.percentRegistration
         )
-        if !result {
+        if !success {
             os_log("Failed to unregister percent change notification")
         }
 
@@ -50,10 +50,10 @@ internal enum BTDispatcher {
     }
 
     static func unregisterLimitedPowerNotification() {
-        let result = self.unregisterDispatch(
+        let success = self.unregisterDispatch(
             registration: self.powerRegistration
         )
-        if !result {
+        if !success {
             os_log("Failed to unregister limited power notification")
         }
 
