@@ -47,6 +47,8 @@ internal enum BTDaemon {
         self.uniqueId = CSIdentification.getUniqueIdSelf()
 
         BTSettings.readDefaults()
+        
+        GlobalSleep.restoreOnStart()
 
         let startError = BTPowerEvents.start()
         if startError == BTError.success {

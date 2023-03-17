@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2022 Marvin Häuser. All rights reserved.
+// Copyright (C) 2022 - 2023 Marvin Häuser. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
@@ -10,6 +10,16 @@ import IOPMPrivate
 
 @MainActor
 public enum GlobalSleep {
+    /// Restoring the previous SleepDisabled state on shutdown may not work.
+    /// Presumably, the service to write back the setting is torn down by the
+    /// time we call it. To combat this issue, persist the state to restore in
+    /// UserDefaults as soon as it is known. When the service is started and the
+    /// previous state is recorded, restore it and delete the key. This
+    /// simulates the broken behaviour of restoring the state on shutdown by
+    /// restoring on boot instead, while evading any possible issues of
+    /// requiring property services to be up during shutdown.
+    private static let previousSleepDisabledKey = "PreviousSleepDisabled"
+
     /// There can be multiple factors to disable sleep, e.g., active battery
     /// charging or a disabled power adapter. Use a counter to allow independent
     /// control by all sources.
@@ -17,6 +27,16 @@ public enum GlobalSleep {
 
     /// Honour the user-specified sleep disabled state for restoration.
     private static var previousDisabled = false
+
+    static func restoreOnStart() {
+        guard let value = UserDefaults.standard.object(forKey: self.previousSleepDisabledKey) as? Bool else {
+            return
+        }
+        
+        self.setSleepDisabledIOPMValue(value: value as CFBoolean)
+
+        UserDefaults.standard.removeObject(forKey: self.previousSleepDisabledKey)
+    }
 
     static func forceRestore() {
         guard self.disabledCounter > 0 else {
@@ -46,22 +66,22 @@ public enum GlobalSleep {
             return
         }
 
-        let sleepDisable = self.sleepDisabledIOPMValue()
+        let sleepDisable = self.getSleepDisabledIOPMValue()
         self.previousDisabled = sleepDisable
+
+        UserDefaults.standard.setValue(
+            sleepDisable,
+            forKey: self.previousSleepDisabledKey
+        )
+
         guard !sleepDisable else {
             return
         }
 
-        let result = IOPMSetSystemPowerSetting(
-            kIOPMSleepDisabledKey as CFString,
-            kCFBooleanTrue
-        )
-        if result != kIOReturnSuccess {
-            os_log("Failed to disable sleep")
-        }
+        self.setSleepDisabledIOPMValue(value: kCFBooleanTrue)
     }
 
-    private static func sleepDisabledIOPMValue() -> Bool {
+    private static func getSleepDisabledIOPMValue() -> Bool {
         guard let settingsRef = IOPMCopySystemPowerSettings() else {
             os_log("System power settings could not be retrieved")
             return false
@@ -83,18 +103,24 @@ public enum GlobalSleep {
         return sleepDisable
     }
 
+    private static func setSleepDisabledIOPMValue(value: CFBoolean) {
+        let result = IOPMSetSystemPowerSetting(
+            kIOPMSleepDisabledKey as CFString,
+            value
+        )
+        if result != kIOReturnSuccess {
+            os_log("Failed to set \(value) SleepDisabled setting - \(result)")
+        }
+    }
+
     private static func restorePrevious() {
         guard !self.previousDisabled else {
             self.previousDisabled = false
             return
         }
 
-        let result = IOPMSetSystemPowerSetting(
-            kIOPMSleepDisabledKey as CFString,
-            kCFBooleanFalse
-        )
-        if result != kIOReturnSuccess {
-            os_log("Failed to restore sleep disable")
-        }
+        self.setSleepDisabledIOPMValue(value: kCFBooleanFalse)
+
+        UserDefaults.standard.removeObject(forKey: self.previousSleepDisabledKey)
     }
 }
