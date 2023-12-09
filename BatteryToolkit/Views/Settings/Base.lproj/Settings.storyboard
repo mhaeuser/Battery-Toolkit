@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="Svp-Rd-cF3">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="Svp-Rd-cF3">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22155"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -58,11 +58,11 @@
         <scene sceneID="vWP-bX-OzO">
             <objects>
                 <viewController storyboardIdentifier="SettingsViewController" showSeguePresentationStyle="single" id="qK6-EM-YZH" userLabel="SettingsViewController" customClass="BTSettingsViewController" customModule="Battery_Toolkit" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" translatesAutoresizingMaskIntoConstraints="NO" id="IvC-q3-fvl" userLabel="Settings View">
-                        <rect key="frame" x="0.0" y="0.0" width="475" height="105"/>
+                    <view key="view" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IvC-q3-fvl" userLabel="Settings View">
+                        <rect key="frame" x="0.0" y="0.0" width="475" height="260"/>
                         <subviews>
                             <tabView allowsTruncatedLabels="NO" type="noTabsNoBorder" translatesAutoresizingMaskIntoConstraints="NO" id="NXG-fh-uCo">
-                                <rect key="frame" x="0.0" y="69" width="475" height="36"/>
+                                <rect key="frame" x="0.0" y="69" width="475" height="171"/>
                                 <font key="font" metaFont="system"/>
                                 <tabViewItems>
                                     <tabViewItem label="General" identifier="" id="r6x-U7-0zu" userLabel="General">
@@ -88,11 +88,11 @@
                                     </tabViewItem>
                                     <tabViewItem label="Power" identifier="" id="IMi-pw-cwy" userLabel="Power">
                                         <view key="view" id="Blc-dd-9Qv">
-                                            <rect key="frame" x="0.0" y="0.0" width="475" height="149"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="475" height="171"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nq7-TF-yL4" userLabel="Max Stepper">
-                                                    <rect key="frame" x="422" y="29" width="19" height="28"/>
+                                                    <rect key="frame" x="422" y="51" width="19" height="28"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="CgW-fv-xEB"/>
                                                         <constraint firstAttribute="width" constant="13" id="LgR-Wb-JpC"/>
@@ -102,8 +102,8 @@
                                                         <binding destination="qK6-EM-YZH" name="value" keyPath="self.maxChargeNum" id="cm5-lb-m9T"/>
                                                     </connections>
                                                 </stepper>
-                                                <textField verticalHuggingPriority="750" mirrorLayoutDirectionWhenInternationalizing="never" preferredMaxLayoutWidth="30" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UVz-So-HqI" userLabel="Min Charge ">
-                                                    <rect key="frame" x="390" y="85" width="35" height="21"/>
+                                                <textField focusRingType="none" verticalHuggingPriority="750" mirrorLayoutDirectionWhenInternationalizing="never" preferredMaxLayoutWidth="30" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UVz-So-HqI" userLabel="Min Charge ">
+                                                    <rect key="frame" x="390" y="107" width="35" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="Kuf-Hs-zxF"/>
                                                         <constraint firstAttribute="width" constant="35" id="MRL-G0-91Y"/>
@@ -118,8 +118,8 @@
                                                         <binding destination="qK6-EM-YZH" name="value" keyPath="self.minChargeNum" id="nnI-Ek-gCl"/>
                                                     </connections>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zNI-F1-3zH" userLabel="Max Text">
-                                                    <rect key="frame" x="18" y="61" width="199" height="16"/>
+                                                <textField focusRingType="none" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zNI-F1-3zH" userLabel="Max Text">
+                                                    <rect key="frame" x="18" y="83" width="199" height="16"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="16" id="EuL-L8-25Q"/>
                                                         <constraint firstAttribute="height" constant="16" id="gnV-QU-pzo"/>
@@ -131,17 +131,17 @@
                                                     </textFieldCell>
                                                 </textField>
                                                 <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TZ0-RS-ZgS" userLabel="Adapter Sleep">
-                                                    <rect key="frame" x="18" y="-1" width="437" height="18"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="16" id="j6C-qS-fZ0"/>
-                                                    </constraints>
+                                                    <rect key="frame" x="18" y="21" width="437" height="18"/>
                                                     <buttonCell key="cell" type="check" title="Prevent your Mac from sleeping when the power adapter is disabled" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="DsZ-rF-Ott">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="16" id="j6C-qS-fZ0"/>
+                                                    </constraints>
                                                 </button>
-                                                <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" preferredMaxLayoutWidth="16" translatesAutoresizingMaskIntoConstraints="NO" id="kwg-mE-JId" userLabel="Max %">
-                                                    <rect key="frame" x="441" y="35" width="16" height="16"/>
+                                                <textField focusRingType="none" horizontalHuggingPriority="750" verticalHuggingPriority="750" preferredMaxLayoutWidth="16" translatesAutoresizingMaskIntoConstraints="NO" id="kwg-mE-JId" userLabel="Max %">
+                                                    <rect key="frame" x="441" y="57" width="16" height="16"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="12" id="PgQ-Jv-j8D"/>
                                                         <constraint firstAttribute="height" constant="16" id="y7M-IN-ZLF"/>
@@ -153,7 +153,7 @@
                                                     </textFieldCell>
                                                 </textField>
                                                 <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BRS-K5-tS0" userLabel="Min Stepper">
-                                                    <rect key="frame" x="422" y="81" width="19" height="28"/>
+                                                    <rect key="frame" x="422" y="103" width="19" height="28"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="1ax-0q-HUH"/>
                                                         <constraint firstAttribute="width" constant="13" id="G5f-Ks-aX5"/>
@@ -163,8 +163,8 @@
                                                         <binding destination="qK6-EM-YZH" name="value" keyPath="self.minChargeNum" id="3y9-Yj-f6y"/>
                                                     </connections>
                                                 </stepper>
-                                                <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" preferredMaxLayoutWidth="16" translatesAutoresizingMaskIntoConstraints="NO" id="cpE-XY-Cm8" userLabel="Min %">
-                                                    <rect key="frame" x="441" y="87" width="16" height="16"/>
+                                                <textField focusRingType="none" horizontalHuggingPriority="750" verticalHuggingPriority="750" preferredMaxLayoutWidth="16" translatesAutoresizingMaskIntoConstraints="NO" id="cpE-XY-Cm8" userLabel="Min %">
+                                                    <rect key="frame" x="441" y="109" width="16" height="16"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="16" id="YOG-qc-MNm"/>
                                                         <constraint firstAttribute="width" constant="12" id="fxa-jc-NFy"/>
@@ -176,7 +176,7 @@
                                                     </textFieldCell>
                                                 </textField>
                                                 <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9gz-yn-SNi" userLabel="Max Slider">
-                                                    <rect key="frame" x="18" y="27" width="366" height="28"/>
+                                                    <rect key="frame" x="18" y="49" width="366" height="28"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="1lj-SG-3et"/>
                                                     </constraints>
@@ -185,8 +185,8 @@
                                                         <binding destination="qK6-EM-YZH" name="value" keyPath="self.maxChargeNum" id="D0u-LQ-jVe"/>
                                                     </connections>
                                                 </slider>
-                                                <textField verticalHuggingPriority="750" mirrorLayoutDirectionWhenInternationalizing="never" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jVr-RT-V0O" userLabel="Max Charge">
-                                                    <rect key="frame" x="390" y="33" width="35" height="21"/>
+                                                <textField focusRingType="none" verticalHuggingPriority="750" mirrorLayoutDirectionWhenInternationalizing="never" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jVr-RT-V0O" userLabel="Max Charge">
+                                                    <rect key="frame" x="390" y="55" width="35" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="35" id="hfS-3E-kvP"/>
                                                         <constraint firstAttribute="height" constant="21" id="inl-id-yxn"/>
@@ -202,7 +202,7 @@
                                                     </connections>
                                                 </textField>
                                                 <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GpU-47-1gg" userLabel="Min Slider">
-                                                    <rect key="frame" x="18" y="79" width="366" height="28"/>
+                                                    <rect key="frame" x="18" y="101" width="366" height="28"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="8u8-ge-GfV"/>
                                                     </constraints>
@@ -211,8 +211,8 @@
                                                         <binding destination="qK6-EM-YZH" name="value" keyPath="self.minChargeNum" id="zJb-gs-jH2"/>
                                                     </connections>
                                                 </slider>
-                                                <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xbB-Gg-5TD" userLabel="Min Text">
-                                                    <rect key="frame" x="18" y="113" width="197" height="16"/>
+                                                <textField focusRingType="none" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xbB-Gg-5TD" userLabel="Min Text">
+                                                    <rect key="frame" x="18" y="135" width="197" height="16"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="16" id="CJk-Zk-wNS"/>
                                                     </constraints>
@@ -223,11 +223,24 @@
                                                     </textFieldCell>
                                                 </textField>
                                                 <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="Z0P-wM-ijd">
-                                                    <rect key="frame" x="20" y="22" width="435" height="5"/>
+                                                    <rect key="frame" x="20" y="44" width="435" height="5"/>
                                                 </box>
+                                                <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Heb-9D-402" userLabel="Charge Enable Adapter">
+                                                    <rect key="frame" x="18" y="-1" width="437" height="18"/>
+                                                    <buttonCell key="cell" type="check" title="Enable the power adapter when requesting battery charging" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="Jnt-VZ-gsV">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                    </buttonCell>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="16" id="f5l-Dj-uem"/>
+                                                    </constraints>
+                                                </button>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="Heb-9D-402" secondAttribute="bottom" id="0uD-XZ-XUZ"/>
                                                 <constraint firstItem="cpE-XY-Cm8" firstAttribute="centerY" secondItem="GpU-47-1gg" secondAttribute="centerY" id="1dl-YS-6Zu"/>
+                                                <constraint firstItem="Heb-9D-402" firstAttribute="leading" secondItem="Blc-dd-9Qv" secondAttribute="leading" constant="20" symbolic="YES" id="2PF-Je-3P2"/>
+                                                <constraint firstItem="Heb-9D-402" firstAttribute="top" secondItem="TZ0-RS-ZgS" secondAttribute="bottom" constant="6" symbolic="YES" id="3w8-WY-voh"/>
                                                 <constraint firstItem="nq7-TF-yL4" firstAttribute="leading" secondItem="jVr-RT-V0O" secondAttribute="trailing" id="48j-SF-AGL"/>
                                                 <constraint firstItem="cpE-XY-Cm8" firstAttribute="leading" secondItem="BRS-K5-tS0" secondAttribute="trailing" constant="5" id="5BV-JP-wks"/>
                                                 <constraint firstItem="jVr-RT-V0O" firstAttribute="centerY" secondItem="9gz-yn-SNi" secondAttribute="centerY" id="7Rl-Gj-COU"/>
@@ -241,6 +254,7 @@
                                                 <constraint firstItem="jVr-RT-V0O" firstAttribute="width" secondItem="UVz-So-HqI" secondAttribute="width" id="Jhg-b8-0QC"/>
                                                 <constraint firstItem="kwg-mE-JId" firstAttribute="centerY" secondItem="9gz-yn-SNi" secondAttribute="centerY" id="Jti-qG-eyX"/>
                                                 <constraint firstItem="9gz-yn-SNi" firstAttribute="leading" secondItem="Blc-dd-9Qv" secondAttribute="leading" constant="20" symbolic="YES" id="Q20-yh-euj"/>
+                                                <constraint firstAttribute="trailing" secondItem="Heb-9D-402" secondAttribute="trailing" constant="20" symbolic="YES" id="QBZ-QQ-X5w"/>
                                                 <constraint firstAttribute="trailing" secondItem="cpE-XY-Cm8" secondAttribute="trailing" constant="20" symbolic="YES" id="Te3-hT-ilx"/>
                                                 <constraint firstAttribute="trailing" secondItem="TZ0-RS-ZgS" secondAttribute="trailing" constant="20" symbolic="YES" id="Tsu-lP-OoC"/>
                                                 <constraint firstItem="jVr-RT-V0O" firstAttribute="height" secondItem="UVz-So-HqI" secondAttribute="height" id="Vso-fw-dlC"/>
@@ -252,7 +266,6 @@
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="xbB-Gg-5TD" secondAttribute="trailing" constant="20" symbolic="YES" id="cjw-eH-9lo"/>
                                                 <constraint firstAttribute="trailing" secondItem="Z0P-wM-ijd" secondAttribute="trailing" constant="20" symbolic="YES" id="df3-4V-POG"/>
                                                 <constraint firstItem="Z0P-wM-ijd" firstAttribute="leading" secondItem="Blc-dd-9Qv" secondAttribute="leading" constant="20" symbolic="YES" id="g5d-KP-936"/>
-                                                <constraint firstAttribute="bottom" secondItem="TZ0-RS-ZgS" secondAttribute="bottom" id="hLg-kf-nHa"/>
                                                 <constraint firstItem="kwg-mE-JId" firstAttribute="leading" secondItem="nq7-TF-yL4" secondAttribute="trailing" constant="5" id="iJT-WO-ahy"/>
                                                 <constraint firstItem="TZ0-RS-ZgS" firstAttribute="top" secondItem="Z0P-wM-ijd" secondAttribute="bottom" constant="8" symbolic="YES" id="kSC-QH-Cj4"/>
                                                 <constraint firstAttribute="trailing" secondItem="cpE-XY-Cm8" secondAttribute="trailing" constant="20" symbolic="YES" id="oke-SA-KVP"/>
@@ -268,23 +281,20 @@
                             </tabView>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tMo-Nt-MJE">
                                 <rect key="frame" x="386" y="13" width="76" height="32"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="20" id="po9-PZ-BZ9"/>
-                                </constraints>
                                 <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" inset="2" id="cnq-Zd-qMS">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <color key="bezelColor" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="po9-PZ-BZ9"/>
+                                </constraints>
                                 <connections>
                                     <action selector="doneButtonAction:" target="qK6-EM-YZH" id="0PC-jQ-0PY"/>
                                 </connections>
                             </button>
                             <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1wm-Dj-FSo">
                                 <rect key="frame" x="312" y="13" width="76" height="32"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="20" id="dN6-cM-IvN"/>
-                                </constraints>
                                 <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" inset="2" id="dqT-oI-86h">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -292,6 +302,9 @@
 Gw
 </string>
                                 </buttonCell>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="dN6-cM-IvN"/>
+                                </constraints>
                                 <connections>
                                     <action selector="cancelButtonAction:" target="qK6-EM-YZH" id="Pcw-Dd-b8G"/>
                                 </connections>
@@ -321,6 +334,7 @@ Gw
                         <outlet property="adapterSleepButton" destination="TZ0-RS-ZgS" id="YV8-zg-QVa"/>
                         <outlet property="autostartButton" destination="QDm-L7-ymC" id="Tjc-5g-T8L"/>
                         <outlet property="backgroundActivityTab" destination="IMi-pw-cwy" id="9fR-1S-DaG"/>
+                        <outlet property="chargeEnableAdapterButton" destination="Heb-9D-402" id="4mD-Ee-Q00"/>
                         <outlet property="generalTab" destination="r6x-U7-0zu" id="6f2-AH-ze8"/>
                         <outlet property="tabView" destination="NXG-fh-uCo" id="DNX-YP-mN9"/>
                     </connections>
