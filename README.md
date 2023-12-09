@@ -50,7 +50,6 @@ Battery Toolkit currently supports only Apple Silicon Macs.
 * Support for macOS Ventura daemons and login items for a more reliable experience
 
 ## Security
-* The main application, outside calls to the Authorization Services, is fully sandboxed
 * Privileged operations are authenticated by the daemon
 * Privileged daemon exposes only a minimal protocol via XPC
 * XPC communication uses the latest macOS codesign features
