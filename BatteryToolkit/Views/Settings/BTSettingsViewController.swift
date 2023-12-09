@@ -25,6 +25,7 @@ internal final class BTSettingsViewController: NSViewController {
     @IBOutlet private var maxChargeSlider: NSSlider!
 
     @IBOutlet private var adapterSleepButton: NSButton!
+    @IBOutlet private var chargeEnableAdapterButton: NSButton!
 
     private var minChargeVal = BTSettingsInfo.Defaults.minCharge
     @objc private dynamic var minChargeNum: NSNumber {
@@ -123,6 +124,9 @@ internal final class BTSettingsViewController: NSViewController {
             BTSettingsInfo.Keys.adapterSleep: NSNumber(
                 value: self.adapterSleepButton.state == NSControl.StateValue.off
             ),
+            BTSettingsInfo.Keys.chargeEnableAdapter: NSNumber(
+                value: self.chargeEnableAdapterButton.state == NSControl.StateValue.on
+            )
         ]
         //
         // Submit the settings to the daemon only when they changed.
@@ -200,6 +204,12 @@ internal final class BTSettingsViewController: NSViewController {
             NSControl.StateValue.on
     }
 
+    private func setChargeEnableAdapter(value: Bool) {
+        self.chargeEnableAdapterButton.state = value ?
+            NSControl.StateValue.on :
+            NSControl.StateValue.off
+    }
+
     private func initGeneralState() {
         let autostart = UserDefaults.standard.bool(
             forKey: self.autostartSetting
@@ -225,6 +235,8 @@ internal final class BTSettingsViewController: NSViewController {
                     settings[BTSettingsInfo.Keys.maxCharge] as? NSNumber
                 let adapterSleepNum =
                     settings[BTSettingsInfo.Keys.adapterSleep] as? NSNumber
+                let chargeEnableAdapterNum =
+                    settings[BTSettingsInfo.Keys.chargeEnableAdapter] as? NSNumber
 
                 let minCharge = minChargeNum?.intValue ??
                     Int(BTSettingsInfo.Defaults.minCharge)
@@ -232,10 +244,13 @@ internal final class BTSettingsViewController: NSViewController {
                     Int(BTSettingsInfo.Defaults.maxCharge)
                 let adapterSleep = adapterSleepNum?.boolValue ??
                     BTSettingsInfo.Defaults.adapterSleep
+                let chargeEnableAdapter = chargeEnableAdapterNum?.boolValue ??
+                    BTSettingsInfo.Defaults.chargeEnableAdapter
 
                 self.setMinCharge(value: minCharge)
                 self.setMaxCharge(value: maxCharge)
                 self.setAdapterSleep(value: adapterSleep)
+                self.setChargeEnableAdapter(value: chargeEnableAdapter)
             }
         }
     }

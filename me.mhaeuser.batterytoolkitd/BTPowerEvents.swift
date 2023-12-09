@@ -204,6 +204,10 @@ internal enum BTPowerEvents {
             }
         } else if percent < BTSettings.minCharge {
             _ = BTPowerState.enableCharging()
+
+            if BTSettings.chargeEnableAdapter {
+                _ = BTPowerState.enablePowerAdapter()
+            }
         }
 
         return percent
@@ -217,6 +221,25 @@ internal enum BTPowerEvents {
         return !BTPowerState.isPowerAdapterDisabled() &&
             IOPSPrivate.DrawingUnlimitedPower()
     }
+    
+    private static func handlePercentChangedRegistration() {
+        //
+        // If the power adapter should to be re-enabled when battery charging is
+        // requested, we need to keep the percent changed event live.
+        //
+        let shouldChargeEnableAdapter =
+            BTSettings.chargeEnableAdapter &&
+            BTPowerState.isPowerAdapterDisabled()
+        if self.unlimitedPower || shouldChargeEnableAdapter {
+            let success = self.registerPercentChangedHandler()
+            if !success {
+                os_log("Failed to register percent changed handler")
+                self.restoreDefaults()
+            }
+        } else {
+            self.unregisterPercentChangedHandler()
+        }
+    }
 
     private static func handleLimitedPower() {
         //
@@ -226,25 +249,28 @@ internal enum BTPowerEvents {
 
         let unlimitedPower = self.drawingUnlimitedPower()
         self.unlimitedPower = unlimitedPower
-
-        if unlimitedPower {
-            let success = self.registerPercentChangedHandler()
-            if !success {
-                os_log("Failed to register percent changed handler")
-                self.restoreDefaults()
-            }
-        } else {
-            self.unregisterPercentChangedHandler()
+        
+        if !unlimitedPower {
             //
             // Disable charging to not have micro-charges happening when
             // connecting to power.
             //
             _ = BTPowerEvents.disableCharging()
         }
+
+        self.handlePercentChangedRegistration();
         //
         // Restore sleep from the setup phase.
         //
         GlobalSleep.restore()
+    }
+    
+    static func powerAdapterStateChanged() {
+        self.handlePercentChangedRegistration();
+    }
+    
+    static func chargeEnableAdapterSettingToggled() {
+        self.handlePercentChangedRegistration();
     }
 
     private static func restoreDefaults() {
@@ -271,6 +297,10 @@ internal enum BTPowerEvents {
 
         guard let (percent, _, _) = IOPSPrivate.GetPercentRemaining() else {
             return false
+        }
+
+        if BTSettings.chargeEnableAdapter {
+            _ = BTPowerState.enablePowerAdapter()
         }
 
         if percent < threshold {

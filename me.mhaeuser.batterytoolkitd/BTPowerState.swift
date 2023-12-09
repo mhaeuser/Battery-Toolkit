@@ -94,6 +94,8 @@ internal enum BTPowerState {
             return false
         }
 
+        BTPowerEvents.powerAdapterStateChanged()
+
         self.powerDisabled = true
         return true
     }
@@ -108,6 +110,8 @@ internal enum BTPowerState {
             os_log("Failed to enable power adapter")
             return false
         }
+
+        BTPowerEvents.powerAdapterStateChanged()
 
         self.restoreAdapterSleep()
 
