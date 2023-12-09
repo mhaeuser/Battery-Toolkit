@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2022 Marvin Häuser. All rights reserved.
+// Copyright (C) 2022 - 2023 Marvin Häuser. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
@@ -129,7 +129,7 @@ internal final class BTSettingsViewController: NSViewController {
         //
         guard !(settings as NSDictionary).isEqual(to: self.currentSettings)
         else {
-            os_log("Background Activity settings have not changed, ignoring")
+            os_log("Power settings have not changed, ignoring")
             //
             // If the previous operations failed, we displayed an error prompt
             // and must not close the window.
@@ -168,7 +168,7 @@ internal final class BTSettingsViewController: NSViewController {
         super.viewWillAppear()
 
         self.initGeneralState()
-        self.initBackgroundActivityState()
+        self.initPowerState()
 
         self.view.window?.center()
         //
@@ -209,7 +209,7 @@ internal final class BTSettingsViewController: NSViewController {
             NSControl.StateValue.off
     }
 
-    private func initBackgroundActivityState() {
+    private func initPowerState() {
         BTActions.getSettings { error, settings in
             DispatchQueue.main.async {
                 self.currentSettings = settings
@@ -223,14 +223,14 @@ internal final class BTSettingsViewController: NSViewController {
                     settings[BTSettingsInfo.Keys.minCharge] as? NSNumber
                 let maxChargeNum =
                     settings[BTSettingsInfo.Keys.maxCharge] as? NSNumber
-                let adapterInfoNum =
+                let adapterSleepNum =
                     settings[BTSettingsInfo.Keys.adapterSleep] as? NSNumber
 
                 let minCharge = minChargeNum?.intValue ??
                     Int(BTSettingsInfo.Defaults.minCharge)
                 let maxCharge = maxChargeNum?.intValue ??
                     Int(BTSettingsInfo.Defaults.maxCharge)
-                let adapterSleep = adapterInfoNum?.boolValue ??
+                let adapterSleep = adapterSleepNum?.boolValue ??
                     BTSettingsInfo.Defaults.adapterSleep
 
                 self.setMinCharge(value: minCharge)

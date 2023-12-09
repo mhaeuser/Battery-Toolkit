@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2022 Marvin Häuser. All rights reserved.
+// Copyright (C) 2022 - 2023 Marvin Häuser. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
@@ -86,9 +86,9 @@ internal enum BTSettings {
             return
         }
 
-        let adapterInfoNum =
+        let adapterSleepNum =
             settings[BTSettingsInfo.Keys.adapterSleep] as? NSNumber
-        let adapterSleep = adapterInfoNum?.boolValue ??
+        let adapterSleep = adapterSleepNum?.boolValue ??
             BTSettingsInfo.Defaults.adapterSleep
 
         self.setAdapterSleep(enabled: adapterSleep)

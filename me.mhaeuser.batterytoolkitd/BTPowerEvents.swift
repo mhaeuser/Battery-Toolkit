@@ -125,7 +125,7 @@ internal enum BTPowerEvents {
         //
         // Initialize the sleep state based on the current platform state.
         //
-        BTPowerState.initSleepState()
+        BTPowerState.initState()
 
         let success = BTDispatcher.registerLimitedPowerNotification(
             self.limitedPowerHandler

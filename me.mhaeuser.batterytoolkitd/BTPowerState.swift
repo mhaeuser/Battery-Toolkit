@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2022 Marvin Häuser. All rights reserved.
+// Copyright (C) 2022 - 2023 Marvin Häuser. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
@@ -11,7 +11,7 @@ internal enum BTPowerState {
     private static var chargingDisabled = false
     private static var powerDisabled = false
 
-    static func initSleepState() {
+    static func initState() {
         let chargingDisabled = SMCComm.Power.isChargingDisabled()
         self.chargingDisabled = chargingDisabled
         if !chargingDisabled {
