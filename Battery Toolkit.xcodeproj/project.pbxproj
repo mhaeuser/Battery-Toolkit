@@ -600,7 +600,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1410;
-				LastUpgradeCheck = 1410;
+				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					CE3974402859E518002D0EC9 = {
 						CreatedOnToolsVersion = 13.4.1;
@@ -843,6 +843,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				BT_APP_ID = me.mhaeuser.BatteryToolkit;
 				BT_AUTOSTART_ID = me.mhaeuser.BatteryToolkitAutostart;
 				BT_CODESIGN_CN = "Apple Development: Marvin Häuser (87DYA6FH9K)";
@@ -969,8 +970,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = macosx;
-				STRIP_INSTALLED_PRODUCT = NO;
-				STRIP_SWIFT_SYMBOLS = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_INCLUDE_PATHS = Modules;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -983,6 +982,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				BT_APP_ID = me.mhaeuser.BatteryToolkit;
 				BT_AUTOSTART_ID = me.mhaeuser.BatteryToolkitAutostart;
 				BT_CODESIGN_CN = "Apple Development: Marvin Häuser (87DYA6FH9K)";
@@ -1198,7 +1198,6 @@
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				PRODUCT_BUNDLE_IDENTIFIER = me.mhaeuser.BatteryToolkitService;
 				SKIP_INSTALL = YES;
-				STRIP_STYLE = all;
 			};
 			name = Debug;
 		};
@@ -1210,7 +1209,6 @@
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				PRODUCT_BUNDLE_IDENTIFIER = me.mhaeuser.BatteryToolkitService;
 				SKIP_INSTALL = YES;
-				STRIP_STYLE = all;
 			};
 			name = Release;
 		};
