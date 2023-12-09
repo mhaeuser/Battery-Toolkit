@@ -845,7 +845,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				BT_APP_ID = me.mhaeuser.BatteryToolkit;
 				BT_AUTOSTART_ID = me.mhaeuser.BatteryToolkitAutostart;
-				BT_CODESIGN_CN = "Apple Development: mhaeuser@posteo.de (FK3MXHN3BX)";
+				BT_CODESIGN_CN = "Apple Development: Marvin Häuser (87DYA6FH9K)";
 				BT_DAEMON_CONN = EMH49F8A2Y.me.mhaeuser.batterytoolkitd;
 				BT_DAEMON_ID = me.mhaeuser.batterytoolkitd;
 				BT_SERVICE_ID = me.mhaeuser.BatteryToolkitService;
@@ -985,7 +985,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				BT_APP_ID = me.mhaeuser.BatteryToolkit;
 				BT_AUTOSTART_ID = me.mhaeuser.BatteryToolkitAutostart;
-				BT_CODESIGN_CN = "Apple Development: mhaeuser@posteo.de (FK3MXHN3BX)";
+				BT_CODESIGN_CN = "Apple Development: Marvin Häuser (87DYA6FH9K)";
 				BT_DAEMON_CONN = EMH49F8A2Y.me.mhaeuser.batterytoolkitd;
 				BT_DAEMON_ID = me.mhaeuser.batterytoolkitd;
 				BT_SERVICE_ID = me.mhaeuser.BatteryToolkitService;
