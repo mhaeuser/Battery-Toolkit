@@ -201,6 +201,10 @@ internal enum BTPowerEvents {
                 // Charging modes are reset once we disable charging.
                 //
                 _ = BTPowerEvents.disableCharging()
+                
+                if BTSettings.chargeEnableAdapter {
+                    _ = BTPowerState.disablePowerAdapter()
+                }
             }
         } else if percent < BTSettings.minCharge {
             _ = BTPowerState.enableCharging()
