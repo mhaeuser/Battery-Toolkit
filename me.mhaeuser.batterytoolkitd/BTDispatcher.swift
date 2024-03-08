@@ -1,11 +1,10 @@
 //
-// Copyright (C) 2022 Marvin Häuser. All rights reserved.
+// Copyright (C) 2022 - 2024 Marvin Häuser. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
 import Dispatch
 import Foundation
-import IOPMPrivate
 import notify
 import os.log
 
@@ -32,7 +31,7 @@ internal enum BTDispatcher {
         assert(!self.percentRegistration.valid)
 
         self.percentRegistration = self.registerDispatch(
-            kIOPSNotifyPercentChange,
+            IOPSPrivate.kIOPSNotifyPercentChange,
             handler
         )
         return self.percentRegistration.valid

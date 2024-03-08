@@ -1,11 +1,10 @@
 //
-// Copyright (C) 2022 Marvin Häuser. All rights reserved.
+// Copyright (C) 2022 - 2024 Marvin Häuser. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
 import Foundation
 import IOKit.ps
-import IOPMPrivate
 import os.log
 
 @MainActor
@@ -79,10 +78,7 @@ internal enum BTPowerEvents {
     }
 
     static func getChargingProgress() -> BTStateInfo.ChargingProgress {
-        var percent: Int32 = 100
-        let result = IOPSGetPercentRemaining(&percent, nil, nil)
-        guard result == kIOReturnSuccess else {
-            os_log("Failed to retrieve battery percent")
+        guard let (percent, _, _) = IOPSPrivate.GetPercentRemaining() else {
             return .full
         }
 
@@ -183,13 +179,10 @@ internal enum BTPowerEvents {
         self.percentCreated = false
     }
 
-    private static func handleChargeHysteresis() -> Int32 {
+    private static func handleChargeHysteresis() -> UInt8 {
         assert(self.percentCreated)
 
-        var percent: Int32 = 100
-        let result = IOPSGetPercentRemaining(&percent, nil, nil)
-        guard result == kIOReturnSuccess else {
-            os_log("Failed to retrieve battery percent")
+        guard let (percent, _, _) = IOPSPrivate.GetPercentRemaining() else {
             return 100
         }
         //
@@ -222,7 +215,7 @@ internal enum BTPowerEvents {
         // adapter is actually disabled.
         //
         return !BTPowerState.isPowerAdapterDisabled() &&
-            IOPSDrawingUnlimitedPower()
+            IOPSPrivate.DrawingUnlimitedPower()
     }
 
     private static func handleLimitedPower() {
@@ -276,10 +269,7 @@ internal enum BTPowerEvents {
             return true
         }
 
-        var percent: Int32 = 100
-        let result = IOPSGetPercentRemaining(&percent, nil, nil)
-        guard result == kIOReturnSuccess else {
-            os_log("Failed to retrieve battery percent")
+        guard let (percent, _, _) = IOPSPrivate.GetPercentRemaining() else {
             return false
         }
 
