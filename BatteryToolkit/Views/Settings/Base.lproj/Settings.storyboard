@@ -135,7 +135,7 @@
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="16" id="j6C-qS-fZ0"/>
                                                     </constraints>
-                                                    <buttonCell key="cell" type="check" title="Prevent your Mac from sleeping when the power adapter is disabled" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="DsZ-rF-Ott">
+                                                    <buttonCell key="cell" type="check" title="Prevent your Mac from sleeping when the power adapter is disabled" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="DsZ-rF-Ott" toolTip="This is useful in clamshell mode, as the system may otherwise attempt to sleep when the Power Adapter is disabled.">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
