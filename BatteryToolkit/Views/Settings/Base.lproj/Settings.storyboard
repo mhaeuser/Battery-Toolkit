@@ -96,11 +96,11 @@
                                     </tabViewItem>
                                     <tabViewItem label="Power" identifier="" id="IMi-pw-cwy" userLabel="Power">
                                         <view key="view" id="Blc-dd-9Qv">
-                                            <rect key="frame" x="0.0" y="0.0" width="495" height="148"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="495" height="179"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nq7-TF-yL4" userLabel="Max Stepper">
-                                                    <rect key="frame" x="442" y="28" width="19" height="28"/>
+                                                    <rect key="frame" x="442" y="59" width="19" height="28"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="CgW-fv-xEB"/>
                                                         <constraint firstAttribute="width" constant="13" id="LgR-Wb-JpC"/>
@@ -111,7 +111,7 @@
                                                     </connections>
                                                 </stepper>
                                                 <textField verticalHuggingPriority="750" mirrorLayoutDirectionWhenInternationalizing="never" preferredMaxLayoutWidth="30" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UVz-So-HqI" userLabel="Min Charge ">
-                                                    <rect key="frame" x="410" y="84" width="35" height="21"/>
+                                                    <rect key="frame" x="410" y="115" width="35" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="Kuf-Hs-zxF"/>
                                                         <constraint firstAttribute="width" constant="35" id="MRL-G0-91Y"/>
@@ -127,7 +127,7 @@
                                                     </connections>
                                                 </textField>
                                                 <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zNI-F1-3zH" userLabel="Max Text">
-                                                    <rect key="frame" x="18" y="60" width="199" height="16"/>
+                                                    <rect key="frame" x="18" y="91" width="199" height="16"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="16" id="EuL-L8-25Q"/>
                                                         <constraint firstAttribute="height" constant="16" id="gnV-QU-pzo"/>
@@ -139,7 +139,7 @@
                                                     </textFieldCell>
                                                 </textField>
                                                 <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" preferredMaxLayoutWidth="16" translatesAutoresizingMaskIntoConstraints="NO" id="kwg-mE-JId" userLabel="Max %">
-                                                    <rect key="frame" x="461" y="34" width="16" height="16"/>
+                                                    <rect key="frame" x="461" y="65" width="16" height="16"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="12" id="PgQ-Jv-j8D"/>
                                                         <constraint firstAttribute="height" constant="16" id="y7M-IN-ZLF"/>
@@ -151,7 +151,7 @@
                                                     </textFieldCell>
                                                 </textField>
                                                 <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BRS-K5-tS0" userLabel="Min Stepper">
-                                                    <rect key="frame" x="442" y="80" width="19" height="28"/>
+                                                    <rect key="frame" x="442" y="111" width="19" height="28"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="1ax-0q-HUH"/>
                                                         <constraint firstAttribute="width" constant="13" id="G5f-Ks-aX5"/>
@@ -162,7 +162,7 @@
                                                     </connections>
                                                 </stepper>
                                                 <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" preferredMaxLayoutWidth="16" translatesAutoresizingMaskIntoConstraints="NO" id="cpE-XY-Cm8" userLabel="Min %">
-                                                    <rect key="frame" x="461" y="86" width="16" height="16"/>
+                                                    <rect key="frame" x="461" y="117" width="16" height="16"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="16" id="YOG-qc-MNm"/>
                                                         <constraint firstAttribute="width" constant="12" id="fxa-jc-NFy"/>
@@ -174,7 +174,7 @@
                                                     </textFieldCell>
                                                 </textField>
                                                 <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9gz-yn-SNi" userLabel="Max Slider">
-                                                    <rect key="frame" x="18" y="26" width="386" height="28"/>
+                                                    <rect key="frame" x="18" y="57" width="386" height="28"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="1lj-SG-3et"/>
                                                     </constraints>
@@ -184,7 +184,7 @@
                                                     </connections>
                                                 </slider>
                                                 <textField verticalHuggingPriority="750" mirrorLayoutDirectionWhenInternationalizing="never" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jVr-RT-V0O" userLabel="Max Charge">
-                                                    <rect key="frame" x="410" y="32" width="35" height="21"/>
+                                                    <rect key="frame" x="410" y="63" width="35" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="35" id="hfS-3E-kvP"/>
                                                         <constraint firstAttribute="height" constant="21" id="inl-id-yxn"/>
@@ -200,7 +200,7 @@
                                                     </connections>
                                                 </textField>
                                                 <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GpU-47-1gg" userLabel="Min Slider">
-                                                    <rect key="frame" x="18" y="78" width="386" height="28"/>
+                                                    <rect key="frame" x="18" y="109" width="386" height="28"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="8u8-ge-GfV"/>
                                                     </constraints>
@@ -210,7 +210,7 @@
                                                     </connections>
                                                 </slider>
                                                 <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xbB-Gg-5TD" userLabel="Min Text">
-                                                    <rect key="frame" x="18" y="112" width="197" height="16"/>
+                                                    <rect key="frame" x="18" y="143" width="197" height="16"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="16" id="CJk-Zk-wNS"/>
                                                     </constraints>
@@ -221,7 +221,7 @@
                                                     </textFieldCell>
                                                 </textField>
                                                 <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="Z0P-wM-ijd">
-                                                    <rect key="frame" x="20" y="21" width="455" height="5"/>
+                                                    <rect key="frame" x="20" y="52" width="455" height="5"/>
                                                 </box>
                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gVg-BR-NcJ">
                                                     <rect key="frame" x="18" y="0.0" width="415" height="15"/>
@@ -232,8 +232,17 @@
                                                     </textFieldCell>
                                                 </textField>
                                                 <switch horizontalHuggingPriority="750" verticalHuggingPriority="750" controlSize="mini" baseWritingDirection="leftToRight" alignment="left" state="on" translatesAutoresizingMaskIntoConstraints="NO" id="ueg-wa-VAZ">
-                                                    <rect key="frame" x="448" y="-1" width="28" height="16"/>
+                                                    <rect key="frame" x="448" y="30" width="28" height="16"/>
                                                 </switch>
+                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kei-Vw-B1H">
+                                                    <rect key="frame" x="18" y="0.0" width="415" height="28"/>
+                                                    <textFieldCell key="cell" controlSize="small" selectable="YES" id="BOx-qm-k90">
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                        <string key="title">When the lid is closed, your Mac may automatically sleep with the power adapter disabled, even if an external display is connected and turned on.</string>
+                                                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="cpE-XY-Cm8" firstAttribute="centerY" secondItem="GpU-47-1gg" secondAttribute="centerY" id="1dl-YS-6Zu"/>
@@ -244,19 +253,22 @@
                                                 <constraint firstItem="nq7-TF-yL4" firstAttribute="centerY" secondItem="9gz-yn-SNi" secondAttribute="centerY" id="8ev-xd-I2H"/>
                                                 <constraint firstItem="Z0P-wM-ijd" firstAttribute="top" secondItem="nq7-TF-yL4" secondAttribute="bottom" constant="8" symbolic="YES" id="AOB-F8-qtX"/>
                                                 <constraint firstItem="BRS-K5-tS0" firstAttribute="centerY" secondItem="GpU-47-1gg" secondAttribute="centerY" id="B0V-0o-CzJ"/>
+                                                <constraint firstItem="Kei-Vw-B1H" firstAttribute="leading" secondItem="gVg-BR-NcJ" secondAttribute="leading" id="BIy-17-5GJ"/>
                                                 <constraint firstItem="UVz-So-HqI" firstAttribute="leading" secondItem="GpU-47-1gg" secondAttribute="trailing" constant="8" symbolic="YES" id="GGc-ca-f1c"/>
                                                 <constraint firstItem="xbB-Gg-5TD" firstAttribute="top" secondItem="Blc-dd-9Qv" secondAttribute="top" constant="20" symbolic="YES" id="GUv-KX-cgU"/>
                                                 <constraint firstItem="GpU-47-1gg" firstAttribute="top" secondItem="xbB-Gg-5TD" secondAttribute="bottom" constant="8" symbolic="YES" id="HJY-El-CV7"/>
+                                                <constraint firstItem="Kei-Vw-B1H" firstAttribute="top" secondItem="gVg-BR-NcJ" secondAttribute="bottom" constant="3" id="HN7-MJ-nQS"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="zNI-F1-3zH" secondAttribute="trailing" constant="20" symbolic="YES" id="Hq4-Jc-hce"/>
                                                 <constraint firstItem="jVr-RT-V0O" firstAttribute="width" secondItem="UVz-So-HqI" secondAttribute="width" id="Jhg-b8-0QC"/>
                                                 <constraint firstItem="kwg-mE-JId" firstAttribute="centerY" secondItem="9gz-yn-SNi" secondAttribute="centerY" id="Jti-qG-eyX"/>
+                                                <constraint firstItem="Kei-Vw-B1H" firstAttribute="leading" secondItem="Blc-dd-9Qv" secondAttribute="leading" constant="20" symbolic="YES" id="KRY-s2-g81"/>
                                                 <constraint firstItem="ueg-wa-VAZ" firstAttribute="centerY" secondItem="gVg-BR-NcJ" secondAttribute="centerY" id="PTV-z9-vU7"/>
                                                 <constraint firstItem="9gz-yn-SNi" firstAttribute="leading" secondItem="Blc-dd-9Qv" secondAttribute="leading" constant="20" symbolic="YES" id="Q20-yh-euj"/>
                                                 <constraint firstAttribute="trailing" secondItem="cpE-XY-Cm8" secondAttribute="trailing" constant="20" symbolic="YES" id="Te3-hT-ilx"/>
                                                 <constraint firstItem="jVr-RT-V0O" firstAttribute="height" secondItem="UVz-So-HqI" secondAttribute="height" id="Vso-fw-dlC"/>
                                                 <constraint firstItem="BRS-K5-tS0" firstAttribute="leading" secondItem="UVz-So-HqI" secondAttribute="trailing" id="WE7-wV-Qsy"/>
                                                 <constraint firstItem="9gz-yn-SNi" firstAttribute="top" secondItem="zNI-F1-3zH" secondAttribute="bottom" constant="8" symbolic="YES" id="Zu6-zf-Np0"/>
-                                                <constraint firstAttribute="bottom" secondItem="gVg-BR-NcJ" secondAttribute="bottom" id="aIc-tJ-wb6"/>
+                                                <constraint firstAttribute="bottom" secondItem="Kei-Vw-B1H" secondAttribute="bottom" id="aQh-40-vfO"/>
                                                 <constraint firstItem="GpU-47-1gg" firstAttribute="leading" secondItem="Blc-dd-9Qv" secondAttribute="leading" constant="20" symbolic="YES" id="alr-Si-237"/>
                                                 <constraint firstItem="xbB-Gg-5TD" firstAttribute="leading" secondItem="Blc-dd-9Qv" secondAttribute="leading" constant="20" symbolic="YES" id="cZK-Uh-Yci"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="xbB-Gg-5TD" secondAttribute="trailing" constant="20" symbolic="YES" id="cjw-eH-9lo"/>
@@ -264,6 +276,7 @@
                                                 <constraint firstAttribute="trailing" secondItem="ueg-wa-VAZ" secondAttribute="trailing" constant="20" symbolic="YES" id="f7d-Fr-Xpc"/>
                                                 <constraint firstItem="Z0P-wM-ijd" firstAttribute="leading" secondItem="Blc-dd-9Qv" secondAttribute="leading" constant="20" symbolic="YES" id="g5d-KP-936"/>
                                                 <constraint firstItem="kwg-mE-JId" firstAttribute="leading" secondItem="nq7-TF-yL4" secondAttribute="trailing" constant="5" id="iJT-WO-ahy"/>
+                                                <constraint firstItem="Kei-Vw-B1H" firstAttribute="width" secondItem="gVg-BR-NcJ" secondAttribute="width" id="kw1-bL-IZV"/>
                                                 <constraint firstAttribute="trailing" secondItem="cpE-XY-Cm8" secondAttribute="trailing" constant="20" symbolic="YES" id="oke-SA-KVP"/>
                                                 <constraint firstAttribute="trailing" secondItem="kwg-mE-JId" secondAttribute="trailing" constant="20" symbolic="YES" id="qzf-2H-ZeH"/>
                                                 <constraint firstItem="jVr-RT-V0O" firstAttribute="leading" secondItem="9gz-yn-SNi" secondAttribute="trailing" constant="8" symbolic="YES" id="sfe-IQ-HFX"/>
