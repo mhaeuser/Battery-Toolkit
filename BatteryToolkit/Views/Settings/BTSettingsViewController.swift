@@ -16,7 +16,7 @@ internal final class BTSettingsViewController: NSViewController {
     @IBOutlet private var generalTab: NSTabViewItem!
     @IBOutlet private var backgroundActivityTab: NSTabViewItem!
 
-    @IBOutlet private var autostartButton: NSButton!
+    @IBOutlet private var autostartSwitch: NSSwitch!
 
     @IBOutlet private var minChargeTextField: NSTextField!
     @IBOutlet private var minChargeSlider: NSSlider!
@@ -24,7 +24,7 @@ internal final class BTSettingsViewController: NSViewController {
     @IBOutlet private var maxChargeTextField: NSTextField!
     @IBOutlet private var maxChargeSlider: NSSlider!
 
-    @IBOutlet private var adapterSleepButton: NSButton!
+    @IBOutlet private var adapterSleepSwitch: NSSwitch!
 
     private var minChargeVal = BTSettingsInfo.Defaults.minCharge
     @objc private dynamic var minChargeNum: NSNumber {
@@ -100,7 +100,7 @@ internal final class BTSettingsViewController: NSViewController {
     }
 
     @IBAction private func doneButtonAction(_: NSButton) {
-        let autostart = (self.autostartButton.state == .on)
+        let autostart = (self.autostartSwitch.state == .on)
         let success = autostart ?
             BTLoginItem.enable() :
             BTLoginItem.disable()
@@ -121,7 +121,7 @@ internal final class BTSettingsViewController: NSViewController {
             BTSettingsInfo.Keys.minCharge: self.minChargeNum,
             BTSettingsInfo.Keys.maxCharge: self.maxChargeNum,
             BTSettingsInfo.Keys.adapterSleep: NSNumber(
-                value: self.adapterSleepButton.state == NSControl.StateValue.off
+                value: self.adapterSleepSwitch.state == .off
             ),
         ]
         //
@@ -195,18 +195,14 @@ internal final class BTSettingsViewController: NSViewController {
     }
 
     private func setAdapterSleep(value: Bool) {
-        self.adapterSleepButton.state = value ?
-            NSControl.StateValue.off :
-            NSControl.StateValue.on
+        self.adapterSleepSwitch.state = value ? .off : .on
     }
 
     private func initGeneralState() {
         let autostart = UserDefaults.standard.bool(
             forKey: self.autostartSetting
         )
-        self.autostartButton.state = autostart ?
-            NSControl.StateValue.on :
-            NSControl.StateValue.off
+        self.autostartSwitch.state = autostart ? .on : .off
     }
 
     private func initPowerState() {
