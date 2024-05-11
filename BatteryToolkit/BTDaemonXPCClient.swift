@@ -240,13 +240,13 @@ internal enum BTDaemonXPCClient {
     ) {
         self.executeDaemon(command: command) { error in
             os_log(
-                "XPC client remote error, retrying: \(error.localizedDescription)"
+                "XPC client remote error, retrying: \(error)"
             )
             DispatchQueue.main.async {
                 disconnectDaemon()
                 executeDaemon(command: command) { error in
                     os_log(
-                        "XPC client remote object error: \(error.localizedDescription)"
+                        "XPC client remote object error: \(error)"
                     )
                     errorHandler(BTError.commFailed.rawValue)
                 }

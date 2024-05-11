@@ -48,7 +48,7 @@ private enum AutostartHelper {
             configuration: config
         ) { _, error in
             os_log(
-                "Launch result: \(error?.localizedDescription ?? "success", privacy: .public)"
+                "Launch result: \(error), privacy: .public)"
             )
             exit(0)
         }

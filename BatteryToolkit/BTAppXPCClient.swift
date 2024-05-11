@@ -85,7 +85,7 @@ internal enum BTAppXPCClient {
         let connect = self.connectService()
 
         let service = connect.remoteObjectProxyWithErrorHandler { error in
-            os_log("XPC app remote object error: \(error.localizedDescription)")
+            os_log("XPC app remote object error: \(error)")
             errorHandler()
         } as! BTServiceCommProtocol
 
