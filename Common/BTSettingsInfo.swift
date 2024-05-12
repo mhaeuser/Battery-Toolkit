@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2022 Marvin Häuser. All rights reserved.
+// Copyright (C) 2022 - 2024 Marvin Häuser. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
@@ -10,6 +10,7 @@ internal enum BTSettingsInfo {
         static let minCharge: UInt8 = 70
         static let maxCharge: UInt8 = 80
         static let adapterSleep = false
+        static let magSafeSync = false
     }
 
     enum Bounds {
@@ -21,6 +22,7 @@ internal enum BTSettingsInfo {
         static let minCharge = "MinCharge"
         static let maxCharge = "MaxCharge"
         static let adapterSleep = "AdapterSleep"
+        static let magSafeSync = "MagSafeSync"
     }
 
     static func chargeLimitsValid(

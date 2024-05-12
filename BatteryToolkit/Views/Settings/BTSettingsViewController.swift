@@ -25,6 +25,7 @@ internal final class BTSettingsViewController: NSViewController {
     @IBOutlet private var maxChargeSlider: NSSlider!
 
     @IBOutlet private var adapterSleepSwitch: NSSwitch!
+    @IBOutlet private var magSafeSyncSwitch: NSSwitch!
 
     private var minChargeVal = BTSettingsInfo.Defaults.minCharge
     @objc private dynamic var minChargeNum: NSNumber {
@@ -123,6 +124,9 @@ internal final class BTSettingsViewController: NSViewController {
             BTSettingsInfo.Keys.adapterSleep: NSNumber(
                 value: self.adapterSleepSwitch.state == .off
             ),
+            BTSettingsInfo.Keys.magSafeSync: NSNumber(
+                value: self.magSafeSyncSwitch.state == .on
+            ),
         ]
         //
         // Submit the settings to the daemon only when they changed.
@@ -198,6 +202,10 @@ internal final class BTSettingsViewController: NSViewController {
         self.adapterSleepSwitch.state = value ? .off : .on
     }
 
+    private func setMagSafeSync(value: Bool) {
+        self.magSafeSyncSwitch.state = value ? .on : .off
+    }
+
     private func initGeneralState() {
         let autostart = UserDefaults.standard.bool(
             forKey: self.autostartSetting
@@ -235,6 +243,13 @@ internal final class BTSettingsViewController: NSViewController {
                 self.setMinCharge(value: minCharge)
                 self.setMaxCharge(value: maxCharge)
                 self.setAdapterSleep(value: adapterSleep)
+
+                if let magSafeSync = magSafeSyncNum?.boolValue {
+                    self.magSafeSyncSwitch.isEnabled = true
+                    self.setMagSafeSync(value: magSafeSync)
+                } else {
+                    self.magSafeSyncSwitch.isEnabled = false
+                }
             }
         }
     }

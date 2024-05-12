@@ -63,6 +63,7 @@
 		CE7F623528B95A8200EF58F9 /* BTPreprocessor.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE387BD28A836AA00C2007C /* BTPreprocessor.m */; };
 		CE85D05F28D7B7E6005D1E0C /* BTDaemonManagement+Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE85D05E28D7B7E6005D1E0C /* BTDaemonManagement+Service.swift */; };
 		CE8ED7F428C144EE00398581 /* BTDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8ED7F328C144EE00398581 /* BTDispatcher.swift */; };
+		CE9E6DEC2BF106A10070ABB2 /* SMCComm+MagSafe.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9E6DEB2BF106A10070ABB2 /* SMCComm+MagSafe.swift */; };
 		CEA3909328DFAE1C0023261A /* BTXPCValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE50557028D65B48000E4387 /* BTXPCValidation.swift */; };
 		CEA80FCB285A27CF0064ADEA /* SMCComm.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE37DD0D283F86F90060C43F /* SMCComm.swift */; };
 		CEA80FCC285A27D20064ADEA /* SMCComm+Power.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE37DD0F284164160060C43F /* SMCComm+Power.swift */; };
@@ -211,6 +212,7 @@
 		CE85D05E28D7B7E6005D1E0C /* BTDaemonManagement+Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BTDaemonManagement+Service.swift"; sourceTree = "<group>"; };
 		CE8ED7F328C144EE00398581 /* BTDispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTDispatcher.swift; sourceTree = "<group>"; };
 		CE9BD24628E8908000B6C61D /* AutostartHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AutostartHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE9E6DEB2BF106A10070ABB2 /* SMCComm+MagSafe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SMCComm+MagSafe.swift"; sourceTree = "<group>"; };
 		CEA80FD3285A51600064ADEA /* NSXPCConnection+AuditToken.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSXPCConnection+AuditToken.h"; sourceTree = "<group>"; };
 		CEA80FD5285A565C0064ADEA /* BTDaemonComm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTDaemonComm.swift; sourceTree = "<group>"; };
 		CEA80FD7285A56B50064ADEA /* BTDaemon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTDaemon.swift; sourceTree = "<group>"; };
@@ -363,6 +365,7 @@
 				CE37DD0D283F86F90060C43F /* SMCComm.swift */,
 				CE37DD0F284164160060C43F /* SMCComm+Power.swift */,
 				CEE4A6ED2B9B855100300506 /* IOPSPrivate.swift */,
+				CE9E6DEB2BF106A10070ABB2 /* SMCComm+MagSafe.swift */,
 			);
 			path = Libraries;
 			sourceTree = "<group>";
@@ -673,6 +676,7 @@
 				CE50557128D65B48000E4387 /* BTXPCValidation.swift in Sources */,
 				CE2B96C028A7E2BB00FE3DDB /* GlobalSleep.swift in Sources */,
 				CE3179EC28DB543200E9C121 /* SimpleAuth.swift in Sources */,
+				CE9E6DEC2BF106A10070ABB2 /* SMCComm+MagSafe.swift in Sources */,
 				CEA80FD0285A27FB0064ADEA /* BTPowerEvents.swift in Sources */,
 				CE3C1DA828CA33FD008A0F7D /* BTLegacyHelperInfo.swift in Sources */,
 				CE8ED7F428C144EE00398581 /* BTDispatcher.swift in Sources */,

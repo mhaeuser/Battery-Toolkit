@@ -67,9 +67,14 @@ internal enum BTPowerEvents {
         return self.enableBelowThresholdMode(threshold: BTSettings.maxCharge)
     }
 
-    static func disableCharging() -> Bool {
+    static func disableCharging(percent: UInt8) -> Bool {
         self.chargingMode = .standard
-        return BTPowerState.disableCharging()
+        return BTPowerState.disableCharging(percent: percent)
+    }
+
+    static func disableCharging() -> Bool {
+        let (percent, _, _) = BTPowerState.getPercentRemaining()
+        return self.disableCharging(percent: percent)
     }
 
     static func chargeToFull() -> Bool {
@@ -155,12 +160,12 @@ internal enum BTPowerEvents {
         switch self.chargingMode {
         case .toMaximum:
             if percent < BTSettings.maxCharge {
-                _ = BTPowerState.enableCharging()
+                _ = BTPowerState.enableCharging(percent: percent)
             }
 
         case .toFull:
             if percent < 100 {
-                _ = BTPowerState.enableCharging()
+                _ = BTPowerState.enableCharging(percent: percent)
             }
 
         case .standard:
@@ -200,10 +205,10 @@ internal enum BTPowerEvents {
                 //
                 // Charging modes are reset once we disable charging.
                 //
-                _ = BTPowerEvents.disableCharging()
+                _ = BTPowerEvents.disableCharging(percent: percent)
             }
         } else if percent < BTSettings.minCharge {
-            _ = BTPowerState.enableCharging()
+            _ = BTPowerState.enableCharging(percent: percent)
         }
 
         return percent
@@ -253,9 +258,13 @@ internal enum BTPowerEvents {
         // of development machines.
         //
         #if !DEBUG
-            _ = BTPowerState.enableCharging()
+            let (percent, _, _) = self.getPercentRemaining()
+            _ = BTPowerState.enableCharging(percent: percent)
             _ = BTPowerState.enablePowerAdapter()
         #endif
+        if BTSettings.magSafeSync {
+            _ = SMCComm.MagSafe.setSystem()
+        }
     }
 
     private static func enableBelowThresholdMode(threshold: UInt8) -> Bool {
@@ -274,7 +283,7 @@ internal enum BTPowerEvents {
         }
 
         if percent < threshold {
-            return BTPowerState.enableCharging()
+            return BTPowerState.enableCharging(percent: percent)
         }
 
         return true
