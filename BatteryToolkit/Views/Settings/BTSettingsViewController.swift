@@ -221,13 +221,16 @@ internal final class BTSettingsViewController: NSViewController {
                     settings[BTSettingsInfo.Keys.maxCharge] as? NSNumber
                 let adapterSleepNum =
                     settings[BTSettingsInfo.Keys.adapterSleep] as? NSNumber
+                let magSafeSyncNum =
+                    settings[BTSettingsInfo.Keys.magSafeSync] as? NSNumber
 
-                let minCharge = minChargeNum?.intValue ??
-                    Int(BTSettingsInfo.Defaults.minCharge)
-                let maxCharge = maxChargeNum?.intValue ??
-                    Int(BTSettingsInfo.Defaults.maxCharge)
-                let adapterSleep = adapterSleepNum?.boolValue ??
-                    BTSettingsInfo.Defaults.adapterSleep
+                guard let minCharge = minChargeNum?.intValue,
+                      let maxCharge = maxChargeNum?.intValue,
+                      let adapterSleep = adapterSleepNum?.boolValue
+                else {
+                    BTErrorHandler.errorHandler(error: BTError.commFailed.rawValue)
+                    return
+                }
 
                 self.setMinCharge(value: minCharge)
                 self.setMaxCharge(value: maxCharge)
