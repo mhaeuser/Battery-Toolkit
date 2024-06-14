@@ -1,11 +1,12 @@
 //
-// Copyright (C) 2022 Marvin Häuser. All rights reserved.
+// Copyright (C) 2022 - 2024 Marvin Häuser. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
 import Foundation
 import os.log
 
+@MainActor
 internal enum BTServiceXPCServer {
     private static let delegate = BTServiceXPCServer.Delegate()
     private static let listener = NSXPCListener.service()

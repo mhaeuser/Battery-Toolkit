@@ -128,9 +128,9 @@ internal enum BTPowerEvents {
         //
         BTPowerState.initState()
 
-        let success = BTDispatcher.registerLimitedPowerNotification(
-            self.limitedPowerHandler
-        )
+        let success = BTDispatcher.registerLimitedPowerNotification { token in
+            self.limitedPowerHandler(token: token)
+        }
         guard success else {
             return false
         }
@@ -145,9 +145,9 @@ internal enum BTPowerEvents {
             return true
         }
 
-        self.percentCreated = BTDispatcher.registerPercentChangeNotification(
-            self.percentChangeHandler
-        )
+        self.percentCreated = BTDispatcher.registerPercentChangeNotification  { token in
+            self.percentChangeHandler(token: token)
+        }
         guard self.percentCreated else {
             return false
         }

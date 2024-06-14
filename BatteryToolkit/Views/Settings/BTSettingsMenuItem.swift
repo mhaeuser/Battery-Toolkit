@@ -1,11 +1,10 @@
 //
-// Copyright (C) 2022 Marvin Häuser. All rights reserved.
+// Copyright (C) 2022 - 2024 Marvin Häuser. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
 import AppKit
 
-@MainActor
 internal final class BTSettingsMenuItem: NSMenuItem {
     override var title: String {
         get {

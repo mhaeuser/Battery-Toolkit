@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2022 Marvin Häuser. All rights reserved.
+// Copyright (C) 2022 - 2024 Marvin Häuser. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
@@ -27,14 +27,18 @@ internal extension BTDaemonManagement {
             BTAppXPCClient.getAuthorization { authData in
                 assert(!Thread.isMainThread)
 
-                let simpleAuth = SimpleAuth.fromData(authData: authData)
-                guard let simpleAuth else {
-                    reply(.notRegistered)
-                    return
-                }
-
                 DispatchQueue.main.async {
                     BTDaemonXPCClient.prepareUpdate { _ in
+                        let simpleAuth = SimpleAuth.fromData(authData: authData)
+                        guard let simpleAuth else {
+                            DispatchQueue.main.async {
+                                BTDaemonXPCClient.finishUpdate()
+                            }
+
+                            reply(.notRegistered)
+                            return
+                        }
+
                         var error: Unmanaged<CFError>?
                         let success = SMJobBless(
                             kSMDomainSystemLaunchd,
@@ -112,8 +116,7 @@ internal extension BTDaemonManagement {
             BTAppXPCClient.getDaemonAuthorization { authData in
                 assert(!Thread.isMainThread)
 
-                let simpleAuth = SimpleAuth.fromData(authData: authData)
-                guard let simpleAuth else {
+                guard let authData = authData else {
                     reply(BTError.notAuthorized.rawValue)
                     return
                 }
@@ -122,12 +125,15 @@ internal extension BTDaemonManagement {
                     //
                     // Legacy helpers require manual cleanup for removal.
                     //
-                    // Force-unwrap is safe as simpleAuth would be nil if
-                    // authData was nil.
-                    //
                     BTDaemonXPCClient
-                        .removeLegacyHelperFiles(authData: authData!) { error in
+                        .removeLegacyHelperFiles(authData: authData) { error in
                             if error == BTError.success.rawValue {
+                                let simpleAuth = SimpleAuth.fromData(authData: authData)
+                                guard let simpleAuth else {
+                                    reply(BTError.notAuthorized.rawValue)
+                                    return
+                                }
+
                                 unregister(simpleAuth: simpleAuth)
                             }
 

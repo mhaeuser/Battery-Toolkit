@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2022 Marvin Häuser. All rights reserved.
+// Copyright (C) 2022 - 2024 Marvin Häuser. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
@@ -15,10 +15,8 @@ internal enum BTDaemonXPCServer {
         machServiceName: BT_DAEMON_CONN
     )
 
-    private static let delegate: NSXPCListenerDelegate = Delegate()
+    private static let delegate: Delegate = Delegate()
 
-    private static let daemonInterface =
-        NSXPCInterface(with: BTDaemonCommProtocol.self)
     private static let daemonComm = BTDaemonComm()
 
     @MainActor static func start() {
@@ -28,7 +26,7 @@ internal enum BTDaemonXPCServer {
 }
 
 private extension BTDaemonXPCServer {
-    final class Delegate: NSObject, NSXPCListenerDelegate {
+    final class Delegate: NSObject, NSXPCListenerDelegate, Sendable {
         func listener(
             _: NSXPCListener,
             shouldAcceptNewConnection newConnection: NSXPCConnection
@@ -39,7 +37,7 @@ private extension BTDaemonXPCServer {
                 return false
             }
 
-            newConnection.exportedInterface = BTDaemonXPCServer.daemonInterface
+            newConnection.exportedInterface = NSXPCInterface(with: BTDaemonCommProtocol.self)
             newConnection.exportedObject = BTDaemonXPCServer.daemonComm
 
             newConnection.resume()

@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2022 Marvin Häuser. All rights reserved.
+// Copyright (C) 2022 - 2024 Marvin Häuser. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
@@ -7,7 +7,7 @@ import Foundation
 import os.log
 import ServiceManagement
 
-internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol {
+internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol, Sendable {
     @MainActor func getUniqueId(
         reply: @Sendable @escaping (Data?) -> Void
     ) {
