@@ -62,6 +62,7 @@
 		CE7F623428B95A7E00EF58F9 /* BTPreprocessor.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE387BD28A836AA00C2007C /* BTPreprocessor.m */; };
 		CE7F623528B95A8200EF58F9 /* BTPreprocessor.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE387BD28A836AA00C2007C /* BTPreprocessor.m */; };
 		CE85D05F28D7B7E6005D1E0C /* BTDaemonManagement+Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE85D05E28D7B7E6005D1E0C /* BTDaemonManagement+Service.swift */; };
+		CE8A1ECB2C1C9B73004FB549 /* MachTaskSelf.c in Sources */ = {isa = PBXBuildFile; fileRef = CE8A1EC82C1C9AEE004FB549 /* MachTaskSelf.c */; };
 		CE8ED7F428C144EE00398581 /* BTDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8ED7F328C144EE00398581 /* BTDispatcher.swift */; };
 		CE9E6DEC2BF106A10070ABB2 /* SMCComm+MagSafe.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9E6DEB2BF106A10070ABB2 /* SMCComm+MagSafe.swift */; };
 		CEA3909328DFAE1C0023261A /* BTXPCValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE50557028D65B48000E4387 /* BTXPCValidation.swift */; };
@@ -210,6 +211,9 @@
 		CE6C06A028A8398600D76CC8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		CE6C06A428A84AAB00D76CC8 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		CE85D05E28D7B7E6005D1E0C /* BTDaemonManagement+Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BTDaemonManagement+Service.swift"; sourceTree = "<group>"; };
+		CE8A1EC72C1C9AEE004FB549 /* MachTaskSelf.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MachTaskSelf.h; sourceTree = "<group>"; };
+		CE8A1EC82C1C9AEE004FB549 /* MachTaskSelf.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = MachTaskSelf.c; sourceTree = "<group>"; };
+		CE8A1ECA2C1C9B21004FB549 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		CE8ED7F328C144EE00398581 /* BTDispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTDispatcher.swift; sourceTree = "<group>"; };
 		CE9BD24628E8908000B6C61D /* AutostartHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AutostartHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE9E6DEB2BF106A10070ABB2 /* SMCComm+MagSafe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SMCComm+MagSafe.swift"; sourceTree = "<group>"; };
@@ -403,6 +407,16 @@
 			path = BTPreprocessor;
 			sourceTree = "<group>";
 		};
+		CE8A1EC92C1C9AEE004FB549 /* MachTaskSelf */ = {
+			isa = PBXGroup;
+			children = (
+				CE8A1ECA2C1C9B21004FB549 /* module.modulemap */,
+				CE8A1EC72C1C9AEE004FB549 /* MachTaskSelf.h */,
+				CE8A1EC82C1C9AEE004FB549 /* MachTaskSelf.c */,
+			);
+			path = MachTaskSelf;
+			sourceTree = "<group>";
+		};
 		CE9BD24728E8908000B6C61D /* AutostartHelper */ = {
 			isa = PBXGroup;
 			children = (
@@ -467,6 +481,7 @@
 		CEC74DDB28F0290200488CDC /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				CE8A1EC92C1C9AEE004FB549 /* MachTaskSelf */,
 				CE6C06B828A84C2400D76CC8 /* BTPreprocessor */,
 				CE6C06A328A84A9200D76CC8 /* IOPMPrivate */,
 				CED8DD3628C364D60082C02A /* NSXPCConnection+AuditToken */,
@@ -668,6 +683,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE8A1ECB2C1C9B73004FB549 /* MachTaskSelf.c in Sources */,
 				CE6B75FA28BC1908008DF170 /* BTDaemonCommProtocol.swift in Sources */,
 				CE7F623428B95A7E00EF58F9 /* BTPreprocessor.m in Sources */,
 				CE5E5AF928DF1CB100AF1D07 /* BTError.swift in Sources */,

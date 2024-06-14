@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2022 Marvin Häuser. All rights reserved.
+// Copyright (C) 2022 - 2024 Marvin Häuser. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
@@ -7,6 +7,7 @@ import Foundation
 import IOKit
 import os
 
+import MachTaskSelf
 import SMCParamStruct
 
 public typealias SMCId = FourCharCode
@@ -71,13 +72,11 @@ public enum SMCComm {
         guard smc != IO_OBJECT_NULL else {
             return false
         }
-        //
-        // mach_task_self_ is logically immutable and thus concurrency-safe.
-        //
+
         var connect: io_connect_t = IO_OBJECT_NULL
         let resultOpen = IOServiceOpen(
             smc,
-            mach_task_self_,
+            get_mach_task_self(),
             1,
             &connect
         )
