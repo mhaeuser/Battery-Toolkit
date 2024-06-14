@@ -14,7 +14,8 @@ public extension SMCComm {
             //
             for keyInfo in self.keys {
                 let info = SMCComm.getKeyInfo(key: keyInfo.key)
-                guard keyInfo.info == info else {
+                guard let info = info,
+                      SMCComm.KeyInfoDataEq(data1: keyInfo.info, data2: info) else {
                     self.supported = false
                     return
                 }

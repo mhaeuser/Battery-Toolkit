@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2022 Marvin Häuser. All rights reserved.
+// Copyright (C) 2022 - 2024 Marvin Häuser. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
@@ -12,7 +12,8 @@ public extension SMCComm {
             //
             for keyInfo in self.keys {
                 let info = SMCComm.getKeyInfo(key: keyInfo.key)
-                guard keyInfo.info == info else {
+                guard let info = info,
+                      SMCComm.KeyInfoDataEq(data1: keyInfo.info, data2: info) else {
                     return false
                 }
             }

@@ -45,16 +45,14 @@ public extension SMCComm {
         static let ui8 = SMCComm.KeyType("u", "i", "8", " ")
         static let hex = SMCComm.KeyType("h", "e", "x", "_")
     }
-}
-
-extension SMCComm.KeyInfoData: Equatable {
-    public static func == (
-        lhs: SMCComm.KeyInfoData,
-        rhs: SMCComm.KeyInfoData
+    
+    static func KeyInfoDataEq (
+        data1: SMCComm.KeyInfoData,
+        data2: SMCComm.KeyInfoData
     ) -> Bool {
-        return lhs.dataSize == rhs.dataSize &&
-            lhs.dataType == rhs.dataType &&
-            lhs.dataAttributes == rhs.dataAttributes
+        return data1.dataSize == data2.dataSize &&
+            data1.dataType == data2.dataType &&
+            data1.dataAttributes == data2.dataAttributes
     }
 }
 
