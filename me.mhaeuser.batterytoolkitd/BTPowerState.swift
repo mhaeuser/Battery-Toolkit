@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2022 - 2023 Marvin Häuser. All rights reserved.
+// Copyright (C) 2022 - 2024 Marvin Häuser. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
@@ -169,7 +169,7 @@ internal enum BTPowerState {
 
         if BTSettings.magSafeSync {
             let (percent, _, _) = self.getPercentRemaining()
-            _ = BTPowerState.syncMagSafeStatePowerEnabled(percent: percent)
+            BTPowerState.syncMagSafeStatePowerEnabled(percent: percent)
         }
 
         self.restoreAdapterSleep()
