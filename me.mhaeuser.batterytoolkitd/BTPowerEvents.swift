@@ -258,7 +258,7 @@ internal enum BTPowerEvents {
         // of development machines.
         //
         #if !DEBUG
-            let (percent, _, _) = self.getPercentRemaining()
+            let (percent, _, _) = BTPowerState.getPercentRemaining()
             _ = BTPowerState.enableCharging(percent: percent)
             _ = BTPowerState.enablePowerAdapter()
         #endif
