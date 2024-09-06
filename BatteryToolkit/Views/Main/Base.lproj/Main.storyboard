@@ -216,7 +216,7 @@
                                                 <action selector="chargeToMaximumHandlerWithSender:" target="Q4N-wh-Pcn" id="Baz-8K-3Vk"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Cancel Charging Request" keyEquivalent="d" id="dpS-hD-AaI">
+                                        <menuItem title="Cancel Charging Request" hidden="YES" keyEquivalent="d" id="dpS-hD-AaI">
                                             <connections>
                                                 <action selector="disableChargingHandlerWithSender:" target="Q4N-wh-Pcn" id="Ov9-zG-UwO"/>
                                             </connections>
@@ -359,7 +359,7 @@
                                 <action selector="chargeToMaximumHandlerWithSender:" target="Yoz-Et-jXW" id="kEt-T6-WQS"/>
                             </connections>
                         </menuItem>
-                        <menuItem title="Cancel Charging Request" keyEquivalent="d" id="ULK-Wm-406">
+                        <menuItem title="Cancel Charging Request" hidden="YES" keyEquivalent="d" id="ULK-Wm-406">
                             <connections>
                                 <action selector="disableChargingHandlerWithSender:" target="Yoz-Et-jXW" id="LUb-fi-hvv"/>
                             </connections>
