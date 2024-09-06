@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2022 Marvin Häuser. All rights reserved.
+// Copyright (C) 2022 - 2024 Marvin Häuser. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
@@ -65,8 +65,12 @@ internal final class BTAppDelegate: NSObject, NSApplicationDelegate {
 
                 BTDaemonXPCClient.isSupported { error in
                     DispatchQueue.main.async {
-                        guard error != BTError.unsupported.rawValue else {
-                            BTAppPrompts.promptMachineUnsupported()
+                        guard error == BTError.success.rawValue else {
+                            if (error == BTError.unsupported.rawValue) {
+                                BTAppPrompts.promptMachineUnsupported()
+                            } else {
+                                BTErrorHandler.errorHandler(error: error)
+                            }
                             return
                         }
 
