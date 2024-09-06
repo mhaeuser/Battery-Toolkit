@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2022 Marvin Häuser. All rights reserved.
+// Copyright (C) 2022 - 2024 Marvin Häuser. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
@@ -130,9 +130,7 @@ internal enum BTDaemonXPCClient {
     static func prepareUpdate(
         reply: @Sendable @escaping (BTError.RawValue) -> Void
     ) {
-        self.executeDaemonRetry(
-            errorHandler: reply
-        ) { daemon in
+        self.executeDaemonRetry(errorHandler: reply) { daemon in
             daemon.execute(
                 authData: nil,
                 command: BTDaemonCommCommand.prepareUpdate.rawValue,
@@ -145,9 +143,7 @@ internal enum BTDaemonXPCClient {
         //
         // Deliberately ignore errors as this is an optional notification.
         //
-        self.executeDaemonRetry(
-            errorHandler: { _ in }
-        ) { daemon in
+        self.executeDaemonRetry { _ in } command: { daemon in
             daemon.execute(
                 authData: nil,
                 command: BTDaemonCommCommand.finishUpdate.rawValue,
@@ -160,9 +156,7 @@ internal enum BTDaemonXPCClient {
         authData: Data,
         reply: @Sendable @escaping (BTError.RawValue) -> Void
     ) {
-        self.executeDaemonRetry { error in
-            reply(error)
-        } command: { daemon in
+        self.executeDaemonRetry(errorHandler: reply) { daemon in
             daemon.execute(
                 authData: authData,
                 command: BTDaemonCommCommand.removeLegacyHelperFiles.rawValue,
@@ -175,9 +169,7 @@ internal enum BTDaemonXPCClient {
         authData: Data,
         reply: @Sendable @escaping (BTError.RawValue) -> Void
     ) {
-        self.executeDaemonRetry { error in
-            reply(error)
-        } command: { daemon in
+        self.executeDaemonRetry(errorHandler: reply) { daemon in
             daemon.execute(
                 authData: authData,
                 command: BTDaemonCommCommand.prepareDisable.rawValue,
@@ -189,9 +181,7 @@ internal enum BTDaemonXPCClient {
     static func isSupported(
         reply: @Sendable @escaping (BTError.RawValue) -> Void
     ) {
-        self.executeDaemonRetry { error in
-            reply(error)
-        } command: { daemon in
+        self.executeDaemonRetry(errorHandler: reply) { daemon in
             daemon.execute(
                 authData: nil,
                 command: BTDaemonCommCommand.isSupported.rawValue,
@@ -270,9 +260,7 @@ internal enum BTDaemonXPCClient {
 
             DispatchQueue.main.async {
                 self.executeDaemonRetry(errorHandler: reply) { daemon in
-                    command(daemon, authData) { error in
-                        reply(error)
-                    }
+                    command(daemon, authData, reply)
                 }
             }
         }
