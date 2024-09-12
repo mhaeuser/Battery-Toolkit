@@ -20,16 +20,6 @@ internal enum BTDaemonXPCClient {
         connect.invalidate()
     }
 
-    static func stop() {
-        guard let connect = self.connect else {
-            return
-        }
-
-        self.connect = nil
-
-        connect.invalidate()
-    }
-
     static func getUniqueId(
         reply: @Sendable @escaping (Data?) -> Void
     ) {
@@ -233,8 +223,8 @@ internal enum BTDaemonXPCClient {
                 "XPC client remote error, retrying: \(error)"
             )
             DispatchQueue.main.async {
-                disconnectDaemon()
-                executeDaemon(command: command) { error in
+                self.disconnectDaemon()
+                self.executeDaemon(command: command) { error in
                     os_log(
                         "XPC client remote object error: \(error)"
                     )

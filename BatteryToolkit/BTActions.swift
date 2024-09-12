@@ -28,7 +28,7 @@ internal enum BTActions {
     }
 
     static func stop() {
-        BTDaemonXPCClient.stop()
+        BTDaemonXPCClient.disconnectDaemon()
     }
 
     static func disablePowerAdapter(
