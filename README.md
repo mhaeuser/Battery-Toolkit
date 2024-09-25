@@ -49,6 +49,24 @@ Battery Toolkit currently supports only Apple Silicon Macs.
 * Based on IOPowerManagement events to minimize resource usage, especially when not connected to power
 * Support for macOS Ventura daemons and login items for a more reliable experience
 
+
+# Uninstalling
+
+To uninstall Battery Toolkit:
+
+* Delete the application (usually at /Applications)
+* Run `uninstall.sh` (it will prompt you for your root password)
+
+## Troubleshooting uninstallation
+
+If you notice that BatteryToolkit settings still apply after following the above steps:
+
+* Check if you still have `batterytoolkitd` running using `ps aux | grep 'batterytoolkitd'`
+  - If you do, kill it using `sudo pkill batterytoolkitd` or `sudo kill -9 (PID of batterytoolkitd from the ps commmand above)`
+* Search for and delete any remaining files not removed by the `uninstall.sh` script
+  * `sudo find / -iname '*batterytoolkitd*'`
+  * `sudo rm -rf (each of the files from above)`
+
 ## Security
 * Privileged operations are authenticated by the daemon
 * Privileged daemon exposes only a minimal protocol via XPC
