@@ -22,47 +22,122 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol, Sendable {
         reply: @Sendable @escaping (BTError.RawValue) -> Void
     ) {
         Task { @MainActor in
+            switch command {
             //
             // Report the supported state to the client, so that it can, e.g.,
             // cleanly uninstall itself if it is unsupported.
             //
-            if command == BTDaemonCommCommand.isSupported.rawValue {
+            case BTDaemonCommCommand.isSupported.rawValue:
                 reply(
                     BTDaemon.supported ?
-                    BTError.success.rawValue :
+                        BTError.success.rawValue :
                         BTError.unsupported.rawValue
                 )
                 return
-            }
             //
-            // The update commands are optional notifications that allow to optimise
-            // the process. Usually, the platform power state is reset to its
-            // defaults when the daemon exits. These signals may be used to
-            // temporarily override this behaviour to preserve the state instead.
+            // The update commands are optional notifications that allow to
+            // optimise the process. Usually, the platform power state is reset
+            // to its defaults when the daemon exits. These signals may be used
+            // to temporarily override this behaviour to preserve the state
+            // instead.
             //
-            if command == BTDaemonCommCommand.prepareUpdate.rawValue {
+            case BTDaemonCommCommand.prepareUpdate.rawValue:
                 os_log("Preparing update")
                 BTPowerEvents.updating = true
                 reply(BTError.success.rawValue)
                 return
-            } else if command == BTDaemonCommCommand.finishUpdate.rawValue {
+            case BTDaemonCommCommand.finishUpdate.rawValue:
                 os_log("Update finished")
                 BTPowerEvents.updating = false
                 reply(BTError.success.rawValue)
                 return
-            }
-            
-            let simpleAuth = SimpleAuth.fromData(authData: authData)
-            guard let simpleAuth else {
-                reply(BTError.notAuthorized.rawValue)
+
+            case BTDaemonCommCommand.removeLegacyHelperFiles.rawValue:
+                let authorized = self.checkRight(
+                    authData: authData,
+                    rightName: kSMRightModifySystemDaemons
+                )
+                guard authorized else {
+                    reply(BTError.notAuthorized.rawValue)
+                    return
+                }
+
+                let success = BTDaemonManagement.removeLegacyHelperFiles()
+                reply(BTError(fromBool: success).rawValue)
                 return
+
+            case BTDaemonCommCommand.prepareDisable.rawValue:
+                let authorized = self.checkRight(
+                    authData: authData,
+                    rightName: kSMRightModifySystemDaemons
+                )
+                guard authorized else {
+                    reply(BTError.notAuthorized.rawValue)
+                    return
+                }
+
+                let success = BTDaemonManagement.prepareDisable()
+                reply(BTError(fromBool: success).rawValue)
+                return
+
+            default:
+                //
+                // Power state management functions may only be invoked when
+                // supported.
+                //
+                guard BTDaemon.supported else {
+                    reply(BTError.unsupported.rawValue)
+                    return
+                }
+
+                switch command {
+                case BTDaemonCommCommand.enablePowerAdapter.rawValue:
+                    let success = BTPowerState.enablePowerAdapter()
+                    reply(BTError(fromBool: success).rawValue)
+                    return
+                case BTDaemonCommCommand.chargeToFull.rawValue:
+                    let success = BTPowerEvents.chargeToFull()
+                    reply(BTError(fromBool: success).rawValue)
+                    return
+                case BTDaemonCommCommand.chargeToLimit.rawValue:
+                    let success = BTPowerEvents.chargeToLimit()
+                    reply(BTError(fromBool: success).rawValue)
+                    return
+                    
+                case BTDaemonCommCommand.disablePowerAdapter.rawValue:
+                    let authorized = self.checkRight(
+                        authData: authData,
+                        rightName: BTAuthorizationRights.manage
+                    )
+                    guard authorized else {
+                        reply(BTError.notAuthorized.rawValue)
+                        return
+                    }
+
+                    let success = BTPowerState.disablePowerAdapter()
+                    reply(BTError(fromBool: success).rawValue)
+                    return
+
+                case BTDaemonCommCommand.disableCharging.rawValue:
+                    let authorized = self.checkRight(
+                        authData: authData,
+                        rightName: BTAuthorizationRights.manage
+                    )
+                    guard authorized else {
+                        reply(BTError.notAuthorized.rawValue)
+                        return
+                    }
+
+                    let success = BTPowerEvents.disableCharging()
+                    reply(BTError(fromBool: success).rawValue)
+                    return
+                    
+                default:
+                    os_log("Unknown command: \(command)")
+                    reply(BTError.commFailed.rawValue)
+                    return
+                }
             }
-            
-            self.executeWithAuth(
-                simpleAuth: simpleAuth,
-                command: command,
-                reply: reply
-            )
         }
     }
 
@@ -99,21 +174,16 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol, Sendable {
     ) {
         Task { @MainActor in
             //
-            // Power state management functions may only be invoked when supported.
+            // Power state management functions may only be invoked when
+            // supported.
             //
             guard BTDaemon.supported else {
                 reply(BTError.unsupported.rawValue)
                 return
             }
             
-            let simpleAuth = SimpleAuth.fromData(authData: authData)
-            guard let simpleAuth else {
-                reply(BTError.notAuthorized.rawValue)
-                return
-            }
-            
-            let authorized = SimpleAuth.checkRight(
-                simpleAuth: simpleAuth,
+            let authorized = self.checkRight(
+                authData: authData,
                 rightName: BTAuthorizationRights.manage
             )
             guard authorized else {
@@ -125,82 +195,15 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol, Sendable {
         }
     }
 
-    @MainActor private func executeWithAuth(
-        simpleAuth: SimpleAuthRef,
-        command: UInt8,
-        reply: @Sendable @escaping (BTError.RawValue) -> Void
-    ) {
-        guard command != BTDaemonCommCommand.removeLegacyHelperFiles.rawValue
-        else {
-            let authorized = SimpleAuth.checkRight(
-                simpleAuth: simpleAuth,
-                rightName: kSMRightModifySystemDaemons
-            )
-            guard authorized else {
-                reply(BTError.notAuthorized.rawValue)
-                return
-            }
-
-            let success = BTDaemonManagement.removeLegacyHelperFiles()
-            reply(BTError(fromBool: success).rawValue)
-            return
-        }
-
-        guard command != BTDaemonCommCommand.prepareDisable.rawValue else {
-            let authorized = SimpleAuth.checkRight(
-                simpleAuth: simpleAuth,
-                rightName: kSMRightModifySystemDaemons
-            )
-            guard authorized else {
-                reply(BTError.notAuthorized.rawValue)
-                return
-            }
-
-            let success = BTDaemonManagement.prepareDisable()
-            reply(BTError(fromBool: success).rawValue)
-            return
-        }
-        //
-        // Power state management functions may only be invoked when supported.
-        //
-        guard BTDaemon.supported else {
-            reply(BTError.unsupported.rawValue)
-            return
-        }
-
-        let authorized = SimpleAuth.checkRight(
-            simpleAuth: simpleAuth,
-            rightName: BTAuthorizationRights.manage
-        )
-        guard authorized else {
-            reply(BTError.notAuthorized.rawValue)
-            return
-        }
-
-        let success = self.executeManage(command: command)
-        reply(BTError(fromBool: success).rawValue)
-    }
-
-    @MainActor private func executeManage(command: UInt8) -> Bool {
-        switch command {
-        case BTDaemonCommCommand.disablePowerAdapter.rawValue:
-            return BTPowerState.disablePowerAdapter()
-
-        case BTDaemonCommCommand.enablePowerAdapter.rawValue:
-            return BTPowerState.enablePowerAdapter()
-
-        case BTDaemonCommCommand.chargeToFull.rawValue:
-            return BTPowerEvents.chargeToFull()
-
-        case BTDaemonCommCommand.chargeToLimit.rawValue:
-            return BTPowerEvents.chargeToLimit()
-
-        case BTDaemonCommCommand.disableCharging.rawValue:
-            return BTPowerEvents.disableCharging()
-
-        default:
-            os_log("Unknown command: \(command)")
+    private func checkRight(authData: Data?, rightName: String) -> Bool {
+        let simpleAuth = SimpleAuth.fromData(authData: authData)
+        guard let simpleAuth else {
             return false
         }
+
+        return SimpleAuth.checkRight(
+            simpleAuth: simpleAuth,
+            rightName: rightName
+        )
     }
 }

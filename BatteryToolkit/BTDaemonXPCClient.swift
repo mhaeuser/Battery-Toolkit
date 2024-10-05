@@ -57,33 +57,30 @@ internal enum BTDaemonXPCClient {
     }
 
     static func enablePowerAdapter() async throws {
-        let authData = try await BTAppXPCClient.getManageAuthorization()
         try await withCheckedThrowingContinuation { continuation in
             self.runExecute(
                 continuation: continuation,
-                authData: authData,
+                authData: nil,
                 command: BTDaemonCommCommand.enablePowerAdapter
             )
         }
     }
 
     static func chargeToLimit() async throws {
-        let authData = try await BTAppXPCClient.getManageAuthorization()
         try await withCheckedThrowingContinuation { continuation in
             self.runExecute(
                 continuation: continuation,
-                authData: authData,
+                authData: nil,
                 command: BTDaemonCommCommand.chargeToLimit
             )
         }
     }
 
     static func chargeToFull() async throws {
-        let authData = try await BTAppXPCClient.getManageAuthorization()
         try await withCheckedThrowingContinuation { continuation in
             self.runExecute(
                 continuation: continuation,
-                authData: authData,
+                authData: nil,
                 command: BTDaemonCommCommand.chargeToFull
             )
         }
