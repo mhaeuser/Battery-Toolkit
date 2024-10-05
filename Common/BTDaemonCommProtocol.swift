@@ -19,25 +19,25 @@ internal enum BTDaemonCommCommand: UInt8 {
 }
 
 @objc internal protocol BTDaemonCommProtocol {
-    @MainActor func getUniqueId(
+    func getUniqueId(
         reply: @Sendable @escaping (Data?) -> Void
     )
 
-    @MainActor func execute(
+    func execute(
         authData: Data?,
         command: UInt8,
         reply: @Sendable @escaping (BTError.RawValue) -> Void
     )
 
-    @MainActor func getState(
+    func getState(
         reply: @Sendable @escaping ([String: NSObject & Sendable]) -> Void
     )
 
-    @MainActor func getSettings(
+    func getSettings(
         reply: @Sendable @escaping ([String: NSObject & Sendable]) -> Void
     )
 
-    @MainActor func setSettings(
+    func setSettings(
         authData: Data,
         settings: [String: NSObject & Sendable],
         reply: @Sendable @escaping (BTError.RawValue) -> Void

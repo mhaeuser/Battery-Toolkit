@@ -8,111 +8,121 @@ import os.log
 import ServiceManagement
 
 internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol, Sendable {
-    @MainActor func getUniqueId(
+    func getUniqueId(
         reply: @Sendable @escaping (Data?) -> Void
     ) {
-        reply(BTDaemon.getUniqueId())
+        Task { @MainActor in
+            reply(BTDaemon.getUniqueId())
+        }
     }
 
-    @MainActor func execute(
+    func execute(
         authData: Data?,
         command: UInt8,
         reply: @Sendable @escaping (BTError.RawValue) -> Void
     ) {
-        //
-        // Report the supported state to the client, so that it can, e.g.,
-        // cleanly uninstall itself if it is unsupported.
-        //
-        if command == BTDaemonCommCommand.isSupported.rawValue {
-            reply(
-                BTDaemon.supported ?
+        Task { @MainActor in
+            //
+            // Report the supported state to the client, so that it can, e.g.,
+            // cleanly uninstall itself if it is unsupported.
+            //
+            if command == BTDaemonCommCommand.isSupported.rawValue {
+                reply(
+                    BTDaemon.supported ?
                     BTError.success.rawValue :
-                    BTError.unsupported.rawValue
+                        BTError.unsupported.rawValue
+                )
+                return
+            }
+            //
+            // The update commands are optional notifications that allow to optimise
+            // the process. Usually, the platform power state is reset to its
+            // defaults when the daemon exits. These signals may be used to
+            // temporarily override this behaviour to preserve the state instead.
+            //
+            if command == BTDaemonCommCommand.prepareUpdate.rawValue {
+                os_log("Preparing update")
+                BTPowerEvents.updating = true
+                reply(BTError.success.rawValue)
+                return
+            } else if command == BTDaemonCommCommand.finishUpdate.rawValue {
+                os_log("Update finished")
+                BTPowerEvents.updating = false
+                reply(BTError.success.rawValue)
+                return
+            }
+            
+            let simpleAuth = SimpleAuth.fromData(authData: authData)
+            guard let simpleAuth else {
+                reply(BTError.notAuthorized.rawValue)
+                return
+            }
+            
+            self.executeWithAuth(
+                simpleAuth: simpleAuth,
+                command: command,
+                reply: reply
             )
-            return
         }
-        //
-        // The update commands are optional notifications that allow to optimise
-        // the process. Usually, the platform power state is reset to its
-        // defaults when the daemon exits. These signals may be used to
-        // temporarily override this behaviour to preserve the state instead.
-        //
-        if command == BTDaemonCommCommand.prepareUpdate.rawValue {
-            os_log("Preparing update")
-            BTPowerEvents.updating = true
-            reply(BTError.success.rawValue)
-            return
-        } else if command == BTDaemonCommCommand.finishUpdate.rawValue {
-            os_log("Update finished")
-            BTPowerEvents.updating = false
-            reply(BTError.success.rawValue)
-            return
-        }
-
-        let simpleAuth = SimpleAuth.fromData(authData: authData)
-        guard let simpleAuth else {
-            reply(BTError.notAuthorized.rawValue)
-            return
-        }
-
-        self.executeWithAuth(
-            simpleAuth: simpleAuth,
-            command: command,
-            reply: reply
-        )
     }
 
-    @MainActor func getState(
+    func getState(
         reply: @Sendable @escaping ([String: NSObject & Sendable]) -> Void
     ) {
-        guard BTDaemon.supported else {
-            reply([:])
-            return
+        Task { @MainActor in
+            guard BTDaemon.supported else {
+                reply([:])
+                return
+            }
+            
+            reply(BTDaemon.getState())
         }
-
-        reply(BTDaemon.getState())
     }
 
-    @MainActor func getSettings(
+    func getSettings(
         reply: @Sendable @escaping ([String: NSObject & Sendable]) -> Void
     ) {
-        guard BTDaemon.supported else {
-            reply([:])
-            return
+        Task { @MainActor in
+            guard BTDaemon.supported else {
+                reply([:])
+                return
+            }
+            
+            reply(BTSettings.getSettings())
         }
-
-        reply(BTSettings.getSettings())
     }
 
-    @MainActor func setSettings(
+    func setSettings(
         authData: Data,
         settings: [String: NSObject & Sendable],
         reply: @Sendable @escaping (BTError.RawValue) -> Void
     ) {
-        //
-        // Power state management functions may only be invoked when supported.
-        //
-        guard BTDaemon.supported else {
-            reply(BTError.unsupported.rawValue)
-            return
+        Task { @MainActor in
+            //
+            // Power state management functions may only be invoked when supported.
+            //
+            guard BTDaemon.supported else {
+                reply(BTError.unsupported.rawValue)
+                return
+            }
+            
+            let simpleAuth = SimpleAuth.fromData(authData: authData)
+            guard let simpleAuth else {
+                reply(BTError.notAuthorized.rawValue)
+                return
+            }
+            
+            let authorized = SimpleAuth.checkRight(
+                simpleAuth: simpleAuth,
+                rightName: BTAuthorizationRights.manage
+            )
+            guard authorized else {
+                reply(BTError.notAuthorized.rawValue)
+                return
+            }
+            
+            BTSettings.setSettings(settings: settings, reply: reply)
         }
-
-        let simpleAuth = SimpleAuth.fromData(authData: authData)
-        guard let simpleAuth else {
-            reply(BTError.notAuthorized.rawValue)
-            return
-        }
-
-        let authorized = SimpleAuth.checkRight(
-            simpleAuth: simpleAuth,
-            rightName: BTAuthorizationRights.manage
-        )
-        guard authorized else {
-            reply(BTError.notAuthorized.rawValue)
-            return
-        }
-
-        BTSettings.setSettings(settings: settings, reply: reply)
     }
 
     @MainActor private func executeWithAuth(
