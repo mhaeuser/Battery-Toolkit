@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2022 Marvin Häuser. All rights reserved.
+// Copyright (C) 2022 - 2024 Marvin Häuser. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
@@ -10,16 +10,16 @@ import os.log
 internal enum BTDaemonManagement {
     @MainActor static func start() async -> BTDaemonManagement.Status {
         let daemonId = try? await BTDaemonXPCClient.getUniqueId()
-        if self.daemonUpToDate(daemonId: daemonId) {
-            os_log("Daemon is up-to-date, skip install")
-            return .enabled
+        guard self.daemonUpToDate(daemonId: daemonId) else {
+            if #available(macOS 13.0, *) {
+                return await self.Service.register()
+            } else {
+                return await self.Legacy.register()
+            }
         }
 
-        if #available(macOS 13.0, *) {
-            return await self.Service.register()
-        } else {
-            return await self.Legacy.register()
-        }
+        os_log("Daemon is up-to-date, skip install")
+        return .enabled
     }
 
     @MainActor static func upgrade() async -> BTDaemonManagement.Status {
@@ -50,7 +50,7 @@ internal enum BTDaemonManagement {
 
         _ = try await BTDaemonXPCClient.prepareDisable(authData: authData)
         if #available(macOS 13.0, *) {
-            try self.Service.unregister()
+            try await self.Service.unregister()
         } else {
             let simpleAuth = SimpleAuth.fromData(authData: authData)
             guard let simpleAuth else {

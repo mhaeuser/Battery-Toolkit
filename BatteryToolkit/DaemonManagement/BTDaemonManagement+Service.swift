@@ -60,7 +60,7 @@ internal extension BTDaemonManagement {
             try await self.awaitApproval(timeout: timeout)
         }
 
-        @MainActor static func unregister() throws {
+        @MainActor static func unregister() async throws {
             os_log("Unregistering daemon service")
             //
             // Any other status code makes unregister() loop indefinitely.
@@ -75,7 +75,8 @@ internal extension BTDaemonManagement {
             BTDaemonXPCClient.disconnectDaemon()
             
             do {
-                try appService.unregister()
+                try await appService.unregister()
+                assert(!self.registered(status: appService.status))
             } catch {
                 os_log(
                     "Daemon service unregistering failed, error: \(error), status: \(appService.status.rawValue)"
@@ -129,8 +130,7 @@ internal extension BTDaemonManagement {
             os_log("Updating daemon service")
 
             try? await BTDaemonXPCClient.prepareUpdate()
-            try? self.unregister()
-            try? await self.awaitUnregister()
+            try? await self.unregister()
             return await self.forceRegister()
         }
 
