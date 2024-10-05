@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2022 Marvin Häuser. All rights reserved.
+// Copyright (C) 2022 - 2024 Marvin Häuser. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
@@ -29,58 +29,38 @@ internal extension BTDaemonManagement {
     enum Service {
         private static let daemonServicePlist = "\(BT_DAEMON_ID).plist"
 
-        @MainActor static func register(
-            reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void
-        ) {
+        @MainActor static func register() async -> BTDaemonManagement.Status {
             os_log("Starting daemon service")
 
             let status = SMAppService.statusForLegacyPlist(
                 at: BTLegacyHelperInfo.legacyHelperPlist
             )
             guard self.registered(status: status) else {
-                self.update(reply: reply)
-                return
+                return await self.update()
             }
 
             os_log("Legacy helper registered")
-            reply(.requiresUpgrade)
+            return .requiresUpgrade
         }
 
-        @MainActor static func upgrade(
-            reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void
-        ) {
+        @MainActor static func upgrade() async -> BTDaemonManagement.Status {
             os_log("Upgrading daemon service")
 
-            BTDaemonManagement.Legacy.unregisterCleanup { error in
-                guard error == BTError.success.rawValue else {
-                    reply(.notRegistered)
-                    return
-                }
-
-                self.awaitUnregister(run: 0) { success in
-                    guard success else {
-                        reply(.notRegistered)
-                        return
-                    }
-
-                    DispatchQueue.main.async {
-                        update(reply: reply)
-                    }
-                }
+            do {
+                try await BTDaemonManagement.Legacy.unregisterCleanup()
+                try await self.awaitUnregister()
+                return await self.update()
+            } catch {
+                return .notRegistered
             }
         }
 
-        static func approve(
-            timeout: UInt8,
-            reply: @escaping @Sendable (Bool) -> Void
-        ) {
+        static func approve(timeout: UInt8) async throws {
             SMAppService.openSystemSettingsLoginItems()
-            self.awaitApproval(run: 0, timeout: timeout, reply: reply)
+            try await self.awaitApproval(timeout: timeout)
         }
 
-        static func unregister(
-            reply: @Sendable @escaping (BTError.RawValue) -> Void
-        ) {
+        @MainActor static func unregister() throws {
             os_log("Unregistering daemon service")
             //
             // Any other status code makes unregister() loop indefinitely.
@@ -89,25 +69,19 @@ internal extension BTDaemonManagement {
                 plistName: self.daemonServicePlist
             )
             guard appService.status == .enabled else {
-                DispatchQueue.global(qos: .userInitiated).async {
-                    reply(BTError.success.rawValue)
-                }
-
                 return
             }
 
-            DispatchQueue.main.async {
-                BTDaemonXPCClient.disconnectDaemon()
-            }
-
-            appService.unregister { error in
-                if error != nil {
-                    os_log(
-                        "Daemon service unregistering failed, error: \(error), status: \(appService.status.rawValue)"
-                    )
-                }
-
-                reply(BTError(fromBool: error == nil).rawValue)
+            BTDaemonXPCClient.disconnectDaemon()
+            
+            do {
+                try appService.unregister()
+            } catch {
+                os_log(
+                    "Daemon service unregistering failed, error: \(error), status: \(appService.status.rawValue)"
+                )
+                
+                throw BTError.unknown
             }
         }
 
@@ -118,8 +92,6 @@ internal extension BTDaemonManagement {
         private static func registerSync(appService: SMAppService) {
             os_log("Registering daemon service")
 
-            assert(!Thread.isMainThread)
-
             do {
                 try appService.register()
             } catch {
@@ -129,65 +101,40 @@ internal extension BTDaemonManagement {
             }
         }
 
-        private static func forceRegister(
-            run: UInt8,
-            reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void
-        ) {
+        @MainActor private static func forceRegister() async -> BTDaemonManagement.Status {
             //
             // After unregistering(e.g., to update the daemon), re-registering
             // may fail for a short amount of time.
             //
-            assert(!Thread.isMainThread)
+            for _ in 0...5 {
+                let appService = SMAppService.daemon(
+                    plistName: self.daemonServicePlist
+                )
+                self.registerSync(appService: appService)
+                if self.registered(status: appService.status) {
+                    BTDaemonXPCClient.finishUpdate()
 
-            let appService = SMAppService.daemon(
-                plistName: self.daemonServicePlist
-            )
-            self.registerSync(appService: appService)
-            guard self.registered(status: appService.status) else {
-                guard run < 6 else {
-                    DispatchQueue.main.async {
-                        BTDaemonXPCClient.finishUpdate()
-                    }
-
-                    reply(.notRegistered)
-                    return
+                    return BTDaemonManagement.Status(fromSMStatus: appService.status)
                 }
-
-                DispatchQueue.global(qos: .userInitiated)
-                    .asyncAfter(deadline: .now() + 0.5) {
-                        self.forceRegister(run: run + 1, reply: reply)
-                    }
-
-                return
+                
+                try? await Task.sleep(nanoseconds: 500_000_000)
             }
 
-            DispatchQueue.main.async {
-                BTDaemonXPCClient.finishUpdate()
-            }
-
-            reply(BTDaemonManagement.Status(fromSMStatus: appService.status))
+            BTDaemonXPCClient.finishUpdate()
+            
+            return .notRegistered
         }
 
-        @MainActor private static func update(
-            reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void
-        ) {
+        @MainActor private static func update() async -> BTDaemonManagement.Status {
             os_log("Updating daemon service")
 
-            BTDaemonXPCClient.prepareUpdate { _ in
-                DispatchQueue.main.async {
-                    self.unregister { _ in
-                        self.awaitUnregister(run: 0) { _ in
-                            self.forceRegister(run: 0, reply: reply)
-                        }
-                    }
-                }
-            }
+            try? await BTDaemonXPCClient.prepareUpdate()
+            try? self.unregister()
+            try? await self.awaitUnregister()
+            return await self.forceRegister()
         }
 
-        private static func awaitUnregister(
-            run: UInt8,
-            reply: @Sendable @escaping (Bool) -> Void
-        ) {
+        private static func awaitUnregister() async throws {
             //
             // After unregistering the legacy helper, it may take one to two
             // minutes for the job to actually report as unregistered.
@@ -195,50 +142,32 @@ internal extension BTDaemonManagement {
             let appService = SMAppService.daemon(
                 plistName: self.daemonServicePlist
             )
-            guard !self.registered(status: appService.status) else {
-                guard run < 24 else {
-                    reply(false)
+            for _ in 0...23 {
+                if !self.registered(status: appService.status) {
                     return
                 }
-
-                DispatchQueue.global(qos: .userInitiated)
-                    .asyncAfter(deadline: .now() + 5) {
-                        self.awaitUnregister(run: run + 1, reply: reply)
-                    }
-
-                return
+                
+                
+                try? await Task.sleep(nanoseconds: 5_000_000_000)
             }
 
-            reply(true)
+            throw BTError.unknown
         }
 
-        private static func awaitApproval(
-            run: UInt8,
-            timeout: UInt8,
-            reply: @escaping @Sendable (Bool) -> Void
-        ) {
+        private static func awaitApproval(timeout: UInt8) async throws {
             let appService = SMAppService.daemon(
                 plistName: self.daemonServicePlist
             )
-            guard appService.status == .enabled else {
-                guard run < timeout else {
-                    reply(false)
+            for _ in 0...timeout {
+                if appService.status == .enabled {
                     return
                 }
-
-                DispatchQueue.global(qos: .userInitiated)
-                    .asyncAfter(deadline: .now() + 1) {
-                        self.awaitApproval(
-                            run: run + 1,
-                            timeout: timeout,
-                            reply: reply
-                        )
-                    }
-
-                return
+                
+                
+                try? await Task.sleep(nanoseconds: 5_000_000_000)
             }
-
-            reply(true)
+            
+            throw BTError.unknown
         }
     }
 }

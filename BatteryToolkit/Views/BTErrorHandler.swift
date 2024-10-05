@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2022 Marvin Häuser. All rights reserved.
+// Copyright (C) 2022 - 2024 Marvin Häuser. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
@@ -7,30 +7,26 @@ import Cocoa
 
 internal enum BTErrorHandler {
     @MainActor static func errorHandler(
-        error: BTError.RawValue,
+        error: any Error,
         window: NSWindow? = nil
     ) {
-        assert(error != BTError.success.rawValue)
+        guard let error = error as? BTError else {
+            assert(false)
+            self.errorHandler(error: BTError.unknown, window: window)
+            return
+        }
+
+        assert(error != BTError.success)
 
         switch error {
-        case BTError.notAuthorized.rawValue:
+        case BTError.notAuthorized:
             BTAppPrompts.promptNotAuthorized(window: window)
 
-        case BTError.commFailed.rawValue:
+        case BTError.commFailed:
             BTAppPrompts.promptDaemonCommFailed(window: window)
 
         default:
             BTAppPrompts.promptUnexpectedError(window: window)
-        }
-    }
-
-    @Sendable static func completionHandler(error: BTError.RawValue) {
-        guard error != BTError.success.rawValue else {
-            return
-        }
-
-        DispatchQueue.main.async {
-            self.errorHandler(error: error)
         }
     }
 }

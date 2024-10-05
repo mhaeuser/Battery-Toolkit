@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2022 Marvin Häuser. All rights reserved.
+// Copyright (C) 2022 - 2024 Marvin Häuser. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
@@ -12,34 +12,55 @@ import ServiceManagement
 internal enum BTAppXPCClient {
     private static var connect: NSXPCConnection? = nil
 
-    static func getAuthorization(
-        reply: @Sendable @escaping (Data?) -> Void
-    ) {
-        let service = self.getService {
-            reply(nil)
+    static func getAuthorization() async throws -> Data {
+        try await withCheckedThrowingContinuation { continuation in
+            let service = self.getService {
+                continuation.resume(throwing: BTError.commFailed)
+            }
+            
+            service.getAuthorization { data in
+                guard let data = data else {
+                    continuation.resume(throwing: BTError.notAuthorized)
+                    return
+                }
+                
+                continuation.resume(returning: data)
+            }
         }
-
-        service.getAuthorization(reply: reply)
     }
 
-    static func getDaemonAuthorization(
-        reply: @Sendable @escaping (Data?) -> Void
-    ) {
-        let service = self.getService {
-            reply(nil)
+    static func getDaemonAuthorization() async throws -> Data {
+        try await withCheckedThrowingContinuation { continuation in
+            let service = self.getService {
+                continuation.resume(throwing: BTError.commFailed)
+            }
+            
+            service.getDaemonAuthorization { data in
+                guard let data = data else {
+                    continuation.resume(throwing: BTError.notAuthorized)
+                    return
+                }
+                
+                continuation.resume(returning: data)
+            }
         }
-
-        service.getDaemonAuthorization(reply: reply)
     }
 
-    static func getManageAuthorization(
-        reply: @Sendable @escaping (Data?) -> Void
-    ) {
-        let service = self.getService {
-            reply(nil)
+    static func getManageAuthorization() async throws -> Data {
+        try await withCheckedThrowingContinuation { continuation in
+            let service = self.getService {
+                continuation.resume(throwing: BTError.commFailed)
+            }
+            
+            service.getManageAuthorization { data in
+                guard let data = data else {
+                    continuation.resume(throwing: BTError.notAuthorized)
+                    return
+                }
+                
+                continuation.resume(returning: data)
+            }
         }
-
-        service.getManageAuthorization(reply: reply)
     }
 
     private nonisolated static func interruptionHandler() {
@@ -47,7 +68,7 @@ internal enum BTAppXPCClient {
     }
 
     private nonisolated static func invalidationHandler() {
-        DispatchQueue.main.async {
+        Task { @MainActor in
             BTAppXPCClient.connect = nil
         }
 

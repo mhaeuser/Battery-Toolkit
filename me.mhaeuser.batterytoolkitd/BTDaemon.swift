@@ -50,8 +50,8 @@ internal enum BTDaemon {
         
         GlobalSleep.restoreOnStart()
 
-        let startError = BTPowerEvents.start()
-        if startError == BTError.success {
+        do {
+            try BTPowerEvents.start()
             self.supported = true
 
             let termSource = DispatchSource.makeSignalSource(
@@ -81,15 +81,15 @@ internal enum BTDaemon {
             if status != errSecSuccess {
                 os_log("Error adding manage right: \(status)")
             }
-        } else {
+        } catch BTError.unsupported {
             //
             // Still run the XPC server if the machine is unsupported to cleanly
             // uninstall the daemon, but don't initialize the rest of the stack.
             //
-            guard startError != BTError.unsupported else {
-                os_log("Power events start failed")
-                exit(-1)
-            }
+            self.supported = false
+        } catch {
+            os_log("Power events start failed")
+            exit(-1)
         }
 
         BTDaemonXPCServer.start()

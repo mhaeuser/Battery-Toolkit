@@ -19,72 +19,41 @@ internal extension BTDaemonManagement {
         private static let daemonServicePlist = "\(BT_DAEMON_ID).plist"
 
         @available(macOS, deprecated: 13.0)
-        @MainActor static func register(
-            reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void
-        ) {
+        @MainActor static func register() async -> BTDaemonManagement.Status {
             os_log("Registering legacy helper")
-
-            BTAppXPCClient.getAuthorization { authData in
-                assert(!Thread.isMainThread)
-
-                DispatchQueue.main.async {
-                    BTDaemonXPCClient.prepareUpdate { _ in
-                        let simpleAuth = SimpleAuth.fromData(authData: authData)
-                        guard let simpleAuth else {
-                            DispatchQueue.main.async {
-                                BTDaemonXPCClient.finishUpdate()
-                            }
-
-                            reply(.notRegistered)
-                            return
-                        }
-
-                        var error: Unmanaged<CFError>?
-                        let success = SMJobBless(
-                            kSMDomainSystemLaunchd,
-                            BT_DAEMON_ID as CFString,
-                            simpleAuth.authRef,
-                            &error
-                        )
-
-                        DispatchQueue.main.async {
-                            BTDaemonXPCClient.finishUpdate()
-                        }
-
-                        os_log(
-                            "Legacy helper registering result: \(success), error: \(String(describing: error))"
-                        )
-
-                        reply(
-                            BTDaemonManagement.Status(fromBool: success)
-                        )
-                    }
+            do {
+                let authData = try await BTAppXPCClient.getAuthorization()
+                try? await BTDaemonXPCClient.prepareUpdate()
+                let simpleAuth = SimpleAuth.fromData(authData: authData)
+                guard let simpleAuth else {
+                    throw BTError.malformedData
                 }
+                
+                var error: Unmanaged<CFError>?
+                let success = SMJobBless(
+                    kSMDomainSystemLaunchd,
+                    BT_DAEMON_ID as CFString,
+                    simpleAuth.authRef,
+                    &error
+                )
+
+                BTDaemonXPCClient.finishUpdate()
+
+                os_log(
+                    "Legacy helper registering result: \(success), error: \(String(describing: error))"
+                )
+                
+                return BTDaemonManagement.Status(fromBool: success)
+            } catch {
+                BTDaemonXPCClient.finishUpdate()
+                return .notRegistered
             }
         }
 
-        static func upgrade() {
-            //
-            // There is no upgrade path to legacy daemons.
-            //
-            assertionFailure()
-        }
-
-        static func approve() {
-            //
-            // Approval is exclusive to SMAppService daemons.
-            //
-            assertionFailure()
-        }
-
-        static func unregister(simpleAuth: SimpleAuthRef) {
+        @MainActor static func unregister(simpleAuth: SimpleAuthRef) {
             os_log("Unregistering legacy helper")
 
-            assert(!Thread.isMainThread)
-
-            DispatchQueue.main.async {
-                BTDaemonXPCClient.disconnectDaemon()
-            }
+            BTDaemonXPCClient.disconnectDaemon()
             //
             // The warning about SMJobRemove deprecation is misleading, as there
             // never was a replacement for this API. The only alternative, to
@@ -108,38 +77,24 @@ internal extension BTDaemonManagement {
             //
         }
 
-        @MainActor static func unregisterCleanup(
-            reply: @Sendable @escaping (BTError.RawValue) -> Void
-        ) {
+        @MainActor static func unregisterCleanup() async throws {
             os_log("Unregistering legacy helper")
 
-            BTAppXPCClient.getDaemonAuthorization { authData in
-                assert(!Thread.isMainThread)
-
-                guard let authData = authData else {
-                    reply(BTError.notAuthorized.rawValue)
-                    return
+            do {
+                let authData = try await BTAppXPCClient.getDaemonAuthorization()
+                //
+                // Legacy helpers require manual cleanup for removal.
+                //
+                try? await BTDaemonXPCClient
+                    .removeLegacyHelperFiles(authData: authData)
+                let simpleAuth = SimpleAuth.fromData(authData: authData)
+                guard let simpleAuth else {
+                    throw BTError.notAuthorized
                 }
-
-                DispatchQueue.main.async {
-                    //
-                    // Legacy helpers require manual cleanup for removal.
-                    //
-                    BTDaemonXPCClient
-                        .removeLegacyHelperFiles(authData: authData) { error in
-                            if error == BTError.success.rawValue {
-                                let simpleAuth = SimpleAuth.fromData(authData: authData)
-                                guard let simpleAuth else {
-                                    reply(BTError.notAuthorized.rawValue)
-                                    return
-                                }
-
-                                unregister(simpleAuth: simpleAuth)
-                            }
-
-                            reply(error)
-                        }
-                }
+                
+                self.unregister(simpleAuth: simpleAuth)
+            } catch {
+                throw BTError.notAuthorized
             }
         }
     }

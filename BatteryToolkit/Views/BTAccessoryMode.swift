@@ -41,7 +41,8 @@ internal enum BTAccessoryMode {
         // to interaction.
         //
         self.inactivateApp()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+        Task {
+            try await Task.sleep(nanoseconds: 100_000_000)
             NSApp.activate(ignoringOtherApps: true)
             self.ignoreCall = false
         }

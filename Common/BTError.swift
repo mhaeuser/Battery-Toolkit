@@ -5,7 +5,7 @@
 
 import Foundation
 
-internal enum BTError: UInt8, Sendable {
+internal enum BTError: UInt8, Error {
     case success
     case unknown
     case notAuthorized

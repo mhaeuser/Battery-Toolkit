@@ -17,26 +17,24 @@ internal enum BTPowerEvents {
     private static var powerCreated = false
     private static var percentCreated = false
 
-    static func start() -> BTError {
+    static func start() throws {
         let smcSuccess = SMCComm.start()
         guard smcSuccess else {
-            return BTError.unknown
+            throw BTError.unknown
         }
 
         let supported = SMCComm.Power.supported()
         guard supported else {
             os_log("Machine is unsupported")
             SMCComm.stop()
-            return BTError.unsupported
+            throw BTError.unsupported
         }
 
         let registerSuccess = self.registerLimitedPowerHandler()
         guard registerSuccess else {
             SMCComm.stop()
-            return BTError.unknown
+            throw BTError.unknown
         }
-
-        return BTError.success
     }
 
     static func exit() {

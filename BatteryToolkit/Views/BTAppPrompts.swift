@@ -9,10 +9,7 @@ import Cocoa
 internal enum BTAppPrompts {
     private(set) static var open: UInt8 = 0
 
-    static func promptApproveDaemon(
-        timeout: UInt8,
-        reply: @escaping @Sendable (Bool) -> Void
-    ) {
+    static func promptApproveDaemon(timeout: UInt8) async throws {
         let alert = NSAlert()
         alert.messageText = BTLocalization.Prompts.Daemon.allowMessage
         alert.informativeText = BTLocalization.Prompts.Daemon.requiredInfo +
@@ -23,7 +20,7 @@ internal enum BTAppPrompts {
         let response = self.runPromptStandalone(alert: alert)
         switch response {
         case NSApplication.ModalResponse.alertFirstButtonReturn:
-            BTActions.approveDaemon(timeout: timeout, reply: reply)
+            try await BTActions.approveDaemon(timeout: timeout)
 
         case NSApplication.ModalResponse.alertSecondButtonReturn:
             NSApp.terminate(self)
@@ -33,14 +30,14 @@ internal enum BTAppPrompts {
         }
     }
 
-    static func promptMachineUnsupported() {
+    static func promptMachineUnsupported() async {
         let alert = NSAlert()
         alert.messageText = BTLocalization.Prompts.Daemon.unsupportedMessage
         alert.informativeText = BTLocalization.Prompts.Daemon.unsupportedInfo
         alert.alertStyle = NSAlert.Style.critical
         _ = alert.addButton(withTitle: BTLocalization.Prompts.disableAndQuit)
         _ = self.runPromptStandalone(alert: alert)
-        self.forceRemoveDaemon()
+        await self.forceRemoveDaemon()
     }
 
     static func promptRegisterDaemonError() -> Bool {
@@ -65,7 +62,7 @@ internal enum BTAppPrompts {
         return false
     }
 
-    static func promptRemoveDaemon() {
+    static func promptRemoveDaemon() async {
         let alert = NSAlert()
         alert.messageText = BTLocalization.Prompts.Daemon.disableMessage
         alert.informativeText = BTLocalization.Prompts.Daemon.requiredInfo +
@@ -75,11 +72,11 @@ internal enum BTAppPrompts {
         _ = alert.addButton(withTitle: BTLocalization.Prompts.cancel)
         let response = self.runPromptStandalone(alert: alert)
         if response == NSApplication.ModalResponse.alertFirstButtonReturn {
-            self.tryRemoveDaemon()
+            await self.tryRemoveDaemon()
         }
     }
 
-    static func promptTryRemoveDaemonError() {
+    static func promptTryRemoveDaemonError() async {
         let alert = NSAlert()
         alert.messageText = BTLocalization.Prompts.Daemon.disableFailMessage
         alert.alertStyle = NSAlert.Style.critical
@@ -87,11 +84,11 @@ internal enum BTAppPrompts {
         _ = alert.addButton(withTitle: BTLocalization.Prompts.cancel)
         let response = self.runPromptStandalone(alert: alert)
         if response == NSApplication.ModalResponse.alertFirstButtonReturn {
-            self.tryRemoveDaemon()
+            await self.tryRemoveDaemon()
         }
     }
 
-    static func promptForceRemoveDaemonError() {
+    static func promptForceRemoveDaemonError() async {
         let alert = NSAlert()
         alert.messageText = BTLocalization.Prompts.Daemon.disableFailMessage
         alert.alertStyle = NSAlert.Style.critical
@@ -99,7 +96,7 @@ internal enum BTAppPrompts {
         _ = alert.addButton(withTitle: BTLocalization.Prompts.quit)
         let response = self.runPromptStandalone(alert: alert)
         if response == NSApplication.ModalResponse.alertFirstButtonReturn {
-            self.forceRemoveDaemon()
+            await self.forceRemoveDaemon()
             return
         }
 
@@ -123,14 +120,14 @@ internal enum BTAppPrompts {
     }
 
     static func promptDaemonCommFailed(window: NSWindow? = nil) {
-        let alert = NSAlert()
-        alert.messageText = BTLocalization.Prompts.Daemon.commFailMessage
-        alert.informativeText = BTLocalization.Prompts.Daemon.requiredInfo +
+        Task {
+            let alert = NSAlert()
+            alert.messageText = BTLocalization.Prompts.Daemon.commFailMessage
+            alert.informativeText = BTLocalization.Prompts.Daemon.requiredInfo +
             "\n\n" + BTLocalization.Prompts.Daemon.commFailInfo
-        alert.alertStyle = NSAlert.Style.critical
-        _ = alert.addButton(withTitle: BTLocalization.Prompts.quit)
-        self.runPrompt(alert: alert, window: window) { _ in
-            assert(Thread.isMainThread)
+            alert.alertStyle = NSAlert.Style.critical
+            _ = alert.addButton(withTitle: BTLocalization.Prompts.quit)
+            let _ = await self.runPrompt(alert: alert, window: window)
             NSApp.terminate(self)
         }
     }
@@ -145,29 +142,21 @@ internal enum BTAppPrompts {
         NSApp.terminate(nil)
     }
 
-    private static func tryRemoveDaemon() {
-        BTActions.removeDaemon { error in
-            DispatchQueue.main.async {
-                guard error == BTError.success.rawValue else {
-                    promptTryRemoveDaemonError()
-                    return
-                }
-
-                cleanupAndTerminate()
-            }
+    private static func tryRemoveDaemon() async {
+        do {
+            try await BTActions.removeDaemon()
+            await self.promptTryRemoveDaemonError()
+        } catch {
+            self.cleanupAndTerminate()
         }
     }
 
-    private static func forceRemoveDaemon() {
-        BTActions.removeDaemon { error in
-            DispatchQueue.main.async {
-                guard error == BTError.success.rawValue else {
-                    promptForceRemoveDaemonError()
-                    return
-                }
-
-                cleanupAndTerminate()
-            }
+    private static func forceRemoveDaemon() async {
+        do {
+            try await BTActions.removeDaemon()
+            await self.promptForceRemoveDaemonError()
+        } catch {
+            self.cleanupAndTerminate()
         }
     }
 
@@ -182,25 +171,17 @@ internal enum BTAppPrompts {
         return response
     }
 
-    private static func runPrompt(
-        alert: NSAlert,
-        window: NSWindow? = nil,
-        reply: @MainActor @escaping @Sendable (NSApplication.ModalResponse)
-            -> Void
-    ) {
+    private static func runPrompt(alert: NSAlert, window: NSWindow? = nil) async -> NSApplication.ModalResponse {
         guard let window else {
-            let response = self.runPromptStandalone(alert: alert)
-            reply(response)
-            return
+            return self.runPromptStandalone(alert: alert)
         }
-        //
-        // The warning about losing MainActor is misleading, because
-        // completionHandler is always executed on the main thread.
-        //
-        alert.beginSheetModal(for: window, completionHandler: reply)
+
+        return await alert.beginSheetModal(for: window)
     }
 
     private static func runPrompt(alert: NSAlert, window: NSWindow? = nil) {
-        self.runPrompt(alert: alert, window: window) { _ in }
+        Task {
+            await self.runPrompt(alert: alert, window: window)
+        }
     }
 }

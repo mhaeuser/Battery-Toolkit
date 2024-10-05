@@ -20,166 +20,171 @@ internal enum BTDaemonXPCClient {
         connect.invalidate()
     }
 
-    static func getUniqueId(
-        reply: @Sendable @escaping (Data?) -> Void
-    ) {
-        self.executeDaemonRetry { _ in
-            reply(nil)
-        } command: { daemon in
-            daemon.getUniqueId(reply: reply)
-        }
-    }
+    static func getUniqueId() async throws -> Data {
+        try await withCheckedThrowingContinuation { continuation in
+            self.executeDaemonRetry(continuation: continuation) { daemon in
+                daemon.getUniqueId { data in
+                    guard let data = data else {
+                        continuation.resume(throwing: BTError.malformedData)
+                        return
+                    }
 
-    static func getState(
-        reply: @Sendable @escaping (
-            BTError.RawValue,
-            [String: NSObject & Sendable]
-        )
-            -> Void
-    ) {
-        self.executeDaemonRetry { error in
-            reply(error, [:])
-        } command: { daemon in
-            daemon.getState { state in
-                reply(BTError.success.rawValue, state)
+                    continuation.resume(returning: data)
+                }
             }
         }
     }
 
-    static func disablePowerAdapter(
-        reply: @Sendable @escaping (BTError.RawValue) -> Void
-    ) {
-        self.runExecute(
-            command: BTDaemonCommCommand.disablePowerAdapter,
-            reply: reply
-        )
-    }
-
-    static func enablePowerAdapter(
-        reply: @Sendable @escaping (BTError.RawValue) -> Void
-    ) {
-        self.runExecute(
-            command: BTDaemonCommCommand.enablePowerAdapter,
-            reply: reply
-        )
-    }
-
-    static func chargeToMaximum(
-        reply: @Sendable @escaping (BTError.RawValue) -> Void
-    ) {
-        self.runExecute(
-            command: BTDaemonCommCommand.chargeToMaximum,
-            reply: reply
-        )
-    }
-
-    static func chargeToFull(
-        reply: @Sendable @escaping (BTError.RawValue) -> Void
-    ) {
-        self.runExecute(command: BTDaemonCommCommand.chargeToFull, reply: reply)
-    }
-
-    static func disableCharging(
-        reply: @Sendable @escaping (BTError.RawValue) -> Void
-    ) {
-        self.runExecute(
-            command: BTDaemonCommCommand.disableCharging,
-            reply: reply
-        )
-    }
-
-    static func getSettings(
-        reply: @Sendable @escaping (
-            BTError.RawValue,
-            [String: NSObject & Sendable]
-        )
-            -> Void
-    ) {
-        self.executeDaemonRetry { error in
-            reply(error, [:])
-        } command: { daemon in
-            daemon.getSettings { settings in
-                reply(BTError.success.rawValue, settings)
+    static func getState() async throws -> [String: NSObject & Sendable] {
+        try await withCheckedThrowingContinuation { continuation in
+            self.executeDaemonRetry(continuation: continuation) { daemon in
+                daemon.getState { state in
+                    continuation.resume(returning: state)
+                }
             }
         }
     }
 
-    static func setSettings(
-        settings: [String: NSObject & Sendable],
-        reply: @Sendable @escaping (BTError.RawValue) -> Void
-    ) {
-        self.executeDaemonManageRetry(reply: reply) { daemon, authData, reply in
-            daemon.setSettings(
+    static func disablePowerAdapter() async throws {
+        let authData = try await BTAppXPCClient.getManageAuthorization()
+        try await withCheckedThrowingContinuation { continuation in
+            self.runExecute(
+                continuation: continuation,
                 authData: authData,
-                settings: settings,
-                reply: reply
+                command: BTDaemonCommCommand.disablePowerAdapter
             )
         }
     }
 
-    static func prepareUpdate(
-        reply: @Sendable @escaping (BTError.RawValue) -> Void
-    ) {
-        self.executeDaemonRetry(errorHandler: reply) { daemon in
-            daemon.execute(
-                authData: nil,
-                command: BTDaemonCommCommand.prepareUpdate.rawValue,
-                reply: reply
+    static func enablePowerAdapter() async throws {
+        let authData = try await BTAppXPCClient.getManageAuthorization()
+        try await withCheckedThrowingContinuation { continuation in
+            self.runExecute(
+                continuation: continuation,
+                authData: authData,
+                command: BTDaemonCommCommand.enablePowerAdapter
             )
+        }
+    }
+
+    static func chargeToMaximum() async throws {
+        let authData = try await BTAppXPCClient.getManageAuthorization()
+        try await withCheckedThrowingContinuation { continuation in
+            self.runExecute(
+                continuation: continuation,
+                authData: authData,
+                command: BTDaemonCommCommand.chargeToMaximum
+            )
+        }
+    }
+
+    static func chargeToFull() async throws {
+        let authData = try await BTAppXPCClient.getManageAuthorization()
+        try await withCheckedThrowingContinuation { continuation in
+            self.runExecute(
+                continuation: continuation,
+                authData: authData,
+                command: BTDaemonCommCommand.chargeToFull
+            )
+        }
+    }
+
+    static func disableCharging() async throws {
+        let authData = try await BTAppXPCClient.getManageAuthorization()
+        try await withCheckedThrowingContinuation { continuation in
+            self.runExecute(
+                continuation: continuation,
+                authData: authData,
+                command: BTDaemonCommCommand.disableCharging
+            )
+        }
+    }
+
+    static func getSettings() async throws -> [String: NSObject & Sendable] {
+        try await withCheckedThrowingContinuation { continuation in
+            self.executeDaemonRetry(continuation: continuation) { daemon in
+                daemon.getSettings { settings in
+                    continuation.resume(returning: settings)
+                }
+            }
+        }
+    }
+
+    static func setSettings(settings: [String: NSObject & Sendable]) async throws {
+        let authData = try await BTAppXPCClient.getManageAuthorization()
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Error>) in
+            self.executeDaemonManageRetry(continuation: continuation) { daemon in
+                daemon.setSettings(
+                    authData: authData,
+                    settings: settings,
+                    reply: self.continuationStatusHandler(continuation: continuation)
+                )
+            }
+        }
+    }
+
+    static func prepareUpdate() async throws {
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Error>) in
+            self.executeDaemonRetry(continuation: continuation) { daemon in
+                daemon.execute(
+                    authData: nil,
+                    command: BTDaemonCommCommand.prepareUpdate.rawValue,
+                    reply: self.continuationStatusHandler(continuation: continuation)
+                )
+            }
         }
     }
 
     static func finishUpdate() {
-        //
-        // Deliberately ignore errors as this is an optional notification.
-        //
-        self.executeDaemonRetry { _ in } command: { daemon in
-            daemon.execute(
-                authData: nil,
-                command: BTDaemonCommCommand.finishUpdate.rawValue,
-                reply: { _ in }
-            )
+        Task {
+            do {
+                try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Error>) in
+                    self.runExecute(continuation: continuation, authData: nil, command: BTDaemonCommCommand.finishUpdate)
+                }
+            }
+            catch {
+                //
+                // Deliberately ignore errors as this is an optional notification.
+                //
+            }
         }
     }
 
-    static func removeLegacyHelperFiles(
-        authData: Data,
-        reply: @Sendable @escaping (BTError.RawValue) -> Void
-    ) {
-        self.executeDaemonRetry(errorHandler: reply) { daemon in
-            daemon.execute(
-                authData: authData,
-                command: BTDaemonCommCommand.removeLegacyHelperFiles.rawValue,
-                reply: reply
-            )
+    static func removeLegacyHelperFiles(authData: Data) async throws {
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Error>) in
+            self.executeDaemonRetry(continuation: continuation) { daemon in
+                daemon.execute(
+                    authData: authData,
+                    command: BTDaemonCommCommand.removeLegacyHelperFiles.rawValue,
+                    reply: self.continuationStatusHandler(continuation: continuation)
+                )
+            }
         }
     }
 
-    static func prepareDisable(
-        authData: Data,
-        reply: @Sendable @escaping (BTError.RawValue) -> Void
-    ) {
-        self.executeDaemonRetry(errorHandler: reply) { daemon in
-            daemon.execute(
-                authData: authData,
-                command: BTDaemonCommCommand.prepareDisable.rawValue,
-                reply: reply
-            )
+    static func prepareDisable(authData: Data) async throws {
+        let authData = try await BTAppXPCClient.getManageAuthorization()
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Error>) in
+            self.runExecute(continuation: continuation, authData: authData, command: BTDaemonCommCommand.prepareDisable)
         }
     }
 
-    static func isSupported(
-        reply: @Sendable @escaping (BTError.RawValue) -> Void
-    ) {
-        self.executeDaemonRetry(errorHandler: reply) { daemon in
-            daemon.execute(
-                authData: nil,
-                command: BTDaemonCommCommand.isSupported.rawValue,
-                reply: reply
-            )
+    static func isSupported() async throws {
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Error>) in
+            self.runExecute(continuation: continuation, authData: nil, command: BTDaemonCommCommand.isSupported)
         }
     }
 
+    private static func continuationStatusHandler(continuation: CheckedContinuation<Void, any Error>) -> (@Sendable (BTError.RawValue) -> Void) {
+        return { error in
+            guard error == BTError.success.rawValue else {
+                continuation.resume(throwing: BTError.init(rawValue: error)!)
+                return
+            }
+            continuation.resume()
+        }
+    }
+    
     private static func connectDaemon() -> NSXPCConnection {
         if let connect = self.connect {
             return connect
@@ -204,7 +209,7 @@ internal enum BTDaemonXPCClient {
     }
 
     private static func executeDaemon(
-        command: @MainActor @escaping @Sendable (BTDaemonCommProtocol) -> Void,
+        command: @MainActor @Sendable (BTDaemonCommProtocol) -> Void,
         errorHandler: @escaping @Sendable (any Error) -> Void
     ) {
         let connect = self.connectDaemon()
@@ -214,57 +219,40 @@ internal enum BTDaemonXPCClient {
         command(daemon)
     }
 
-    private static func executeDaemonRetry(
-        errorHandler: @escaping @Sendable (BTError.RawValue) -> Void,
+    private static func executeDaemonRetry<T>(
+        continuation: CheckedContinuation<T, any Error>,
         command: @MainActor @escaping @Sendable (BTDaemonCommProtocol) -> Void
     ) {
         self.executeDaemon(command: command) { error in
-            os_log(
-                "XPC client remote error, retrying: \(error)"
-            )
-            DispatchQueue.main.async {
+            os_log("XPC client remote error: \(error)")
+            os_log("Retrying...")
+            Task { @MainActor in
                 self.disconnectDaemon()
                 self.executeDaemon(command: command) { error in
-                    os_log(
-                        "XPC client remote object error: \(error)"
-                    )
-                    errorHandler(BTError.commFailed.rawValue)
+                    os_log("XPC client remote error: \(error)")
+                    continuation.resume(throwing: BTError.commFailed)
                 }
             }
         }
     }
 
-    private static func executeDaemonManageRetry(
-        reply: @escaping @Sendable (BTError.RawValue) -> Void,
-        command: @MainActor @escaping @Sendable (
-            BTDaemonCommProtocol,
-            Data,
-            @Sendable @escaping (BTError.RawValue) -> Void
-        ) -> Void
+    private static func executeDaemonManageRetry<T>(
+        continuation: CheckedContinuation<T, any Error>,
+        command: @MainActor @escaping @Sendable (BTDaemonCommProtocol) -> Void
     ) {
-        BTAppXPCClient.getManageAuthorization { authData in
-            guard let authData else {
-                reply(BTError.notAuthorized.rawValue)
-                return
-            }
-
-            DispatchQueue.main.async {
-                self.executeDaemonRetry(errorHandler: reply) { daemon in
-                    command(daemon, authData, reply)
-                }
-            }
-        }
+        self.executeDaemonRetry(continuation: continuation, command: command)
     }
 
     private static func runExecute(
-        command: BTDaemonCommCommand,
-        reply: @Sendable @escaping (BTError.RawValue) -> Void
+        continuation: CheckedContinuation<Void, any Error>,
+        authData: Data?,
+        command: BTDaemonCommCommand
     ) {
-        self.executeDaemonManageRetry(reply: reply) { daemon, authData, reply in
+        self.executeDaemonManageRetry(continuation: continuation) { daemon in
             daemon.execute(
                 authData: authData,
                 command: command.rawValue,
-                reply: reply
+                reply: self.continuationStatusHandler(continuation: continuation)
             )
         }
     }

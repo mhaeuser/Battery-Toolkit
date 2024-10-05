@@ -8,76 +8,56 @@ import Foundation
 import os.log
 
 internal enum BTDaemonManagement {
-    @MainActor static func start(
-        reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void
-    ) {
-        BTDaemonXPCClient.getUniqueId { daemonId in
-            guard self.daemonUpToDate(daemonId: daemonId) else {
-                DispatchQueue.main.async {
-                    if #available(macOS 13.0, *) {
-                        self.Service.register(reply: reply)
-                    } else {
-                        self.Legacy.register(reply: reply)
-                    }
-                }
-
-                return
-            }
-
+    @MainActor static func start() async -> BTDaemonManagement.Status {
+        let daemonId = try? await BTDaemonXPCClient.getUniqueId()
+        if self.daemonUpToDate(daemonId: daemonId) {
             os_log("Daemon is up-to-date, skip install")
-            reply(.enabled)
+            return .enabled
         }
-    }
 
-    @MainActor static func upgrade(
-        reply: @Sendable @escaping (BTDaemonManagement.Status) -> Void
-    ) {
         if #available(macOS 13.0, *) {
-            self.Service.upgrade(reply: reply)
+            return await self.Service.register()
         } else {
-            self.Legacy.upgrade()
+            return await self.Legacy.register()
         }
     }
 
-    static func approve(
-        timeout: UInt8,
-        reply: @escaping @Sendable (Bool) -> Void
-    ) {
+    @MainActor static func upgrade() async -> BTDaemonManagement.Status {
         if #available(macOS 13.0, *) {
-            self.Service.approve(timeout: timeout, reply: reply)
+            return await self.Service.upgrade()
         } else {
-            self.Legacy.approve()
+            //
+            // There is no upgrade path to legacy daemons.
+            //
+            assertionFailure()
+            return .notRegistered
         }
     }
 
-    @MainActor static func remove(
-        reply: @Sendable @escaping (BTError.RawValue) -> Void
-    ) {
-        BTAppXPCClient.getDaemonAuthorization { authData in
-            assert(!Thread.isMainThread)
+    static func approve(timeout: UInt8) async throws {
+        if #available(macOS 13.0, *) {
+            try await self.Service.approve(timeout: timeout)
+        } else {
+            //
+            // Approval is exclusive to SMAppService daemons.
+            //
+            assertionFailure()
+        }
+    }
 
-            guard let authData else {
-                reply(BTError.notAuthorized.rawValue)
-                return
+    @MainActor static func remove() async throws {
+        let authData = try await BTAppXPCClient.getDaemonAuthorization()
+
+        _ = try await BTDaemonXPCClient.prepareDisable(authData: authData)
+        if #available(macOS 13.0, *) {
+            try self.Service.unregister()
+        } else {
+            let simpleAuth = SimpleAuth.fromData(authData: authData)
+            guard let simpleAuth else {
+                throw BTError.notAuthorized
             }
 
-            DispatchQueue.main.async {
-                BTDaemonXPCClient.prepareDisable(authData: authData) { _ in
-                    if #available(macOS 13.0, *) {
-                        self.Service.unregister(reply: reply)
-                    } else {
-                        let simpleAuth = SimpleAuth.fromData(authData: authData)
-                        guard let simpleAuth else {
-                            reply(BTError.notAuthorized.rawValue)
-                            return
-                        }
-
-                        self.Legacy.unregister(simpleAuth: simpleAuth)
-
-                        reply(BTError.success.rawValue)
-                    }
-                }
-            }
+            self.Legacy.unregister(simpleAuth: simpleAuth)
         }
     }
 

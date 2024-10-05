@@ -17,7 +17,10 @@ internal final class BTAppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet private var commandsMenuItem: NSMenuItem!
 
     func applicationDidFinishLaunching(_: Notification) {
-        BTActions.startDaemon(reply: self.daemonStatusHandler)
+        Task {
+            let status = await BTActions.startDaemon()
+            await self.daemonStatusHandler(status: status)
+        }
     }
 
     func applicationWillTerminate(_: Notification) {
@@ -45,88 +48,76 @@ internal final class BTAppDelegate: NSObject, NSApplicationDelegate {
     }
 
     @IBAction private func removeDaemonHandler(sender _: NSMenuItem) {
-        BTAppPrompts.promptRemoveDaemon()
+        Task {
+            await BTAppPrompts.promptRemoveDaemon()
+        }
     }
 
-    @Sendable private nonisolated func daemonStatusHandler(
-        status: BTDaemonManagement.Status
-    ) {
-        DispatchQueue.main.async {
-            switch status {
-            case .notRegistered:
-                os_log("Daemon not registered")
+    private func daemonStatusHandler(status: BTDaemonManagement.Status) async {
+        switch status {
+        case .notRegistered:
+            os_log("Daemon not registered")
 
-                if BTAppPrompts.promptRegisterDaemonError() {
-                    BTActions.startDaemon(reply: self.daemonStatusHandler)
-                }
-
-            case .enabled:
-                os_log("Daemon is enabled")
-
-                BTDaemonXPCClient.isSupported { error in
-                    DispatchQueue.main.async {
-                        guard error == BTError.success.rawValue else {
-                            if (error == BTError.unsupported.rawValue) {
-                                BTAppPrompts.promptMachineUnsupported()
-                            } else {
-                                BTErrorHandler.errorHandler(error: error)
-                            }
-                            return
-                        }
-
-                        self.disableBackgroundItem.isEnabled = true
-                        self.settingsItem.isEnabled = true
-                        self.commandsMenuItem.isHidden = false
-
-                        let image = NSImage(
-                            named: NSImage.Name("ExtraItemIcon")
-                        )
-                        image?.isTemplate = true
-
-                        let extraItem = NSStatusBar.system.statusItem(
-                            withLength: NSStatusItem.squareLength
-                        )
-                        extraItem.button?.image = image
-                        extraItem.menu = self.menuBarExtraMenu
-                        self.menuBarExtraItem = extraItem
-
-                        if !NSApp.isActive {
-                            BTAccessoryMode.activate()
-                        }
-                    }
-                }
-
-            case .requiresApproval:
-                os_log("Daemon requires approval")
-
-                BTAppPrompts.promptApproveDaemon(timeout: 20) { success in
-                    guard success else {
-                        self.daemonStatusHandler(status: .requiresApproval)
-                        return
-                    }
-
-                    self.daemonStatusHandler(status: .enabled)
-                }
-
-            case .requiresUpgrade:
-                os_log("Daemon requires upgrade")
-
-                let storyboard = NSStoryboard(
-                    name: "Upgrading",
-                    bundle: nil
-                )
-                let upgradingController = storyboard
-                    .instantiateInitialController() as! NSWindowController
-                upgradingController.window?.center()
-                upgradingController.showWindow(self)
-
-                BTActions.upgradeDaemon { status in
-                    DispatchQueue.main.async {
-                        upgradingController.close()
-                        self.daemonStatusHandler(status: status)
-                    }
-                }
+            if BTAppPrompts.promptRegisterDaemonError() {
+                let status = await BTActions.startDaemon()
+                await self.daemonStatusHandler(status: status)
             }
+
+        case .enabled:
+            os_log("Daemon is enabled")
+
+            do {
+                try await BTDaemonXPCClient.isSupported()
+                self.disableBackgroundItem.isEnabled = true
+                self.settingsItem.isEnabled = true
+                self.commandsMenuItem.isHidden = false
+                
+                let image = NSImage(
+                    named: NSImage.Name("ExtraItemIcon")
+                )
+                image?.isTemplate = true
+                
+                let extraItem = NSStatusBar.system.statusItem(
+                    withLength: NSStatusItem.squareLength
+                )
+                extraItem.button?.image = image
+                extraItem.menu = self.menuBarExtraMenu
+                self.menuBarExtraItem = extraItem
+                
+                if !NSApp.isActive {
+                    BTAccessoryMode.activate()
+                }
+            } catch BTError.unsupported {
+                await BTAppPrompts.promptMachineUnsupported()
+            } catch {
+                BTErrorHandler.errorHandler(error: error)
+            }
+
+        case .requiresApproval:
+            os_log("Daemon requires approval")
+
+            do {
+                try await BTAppPrompts.promptApproveDaemon(timeout: 20)
+                await self.daemonStatusHandler(status: .enabled)
+            } catch {
+                await self.daemonStatusHandler(status: .requiresApproval)
+            }
+
+        case .requiresUpgrade:
+            os_log("Daemon requires upgrade")
+
+            let storyboard = NSStoryboard(
+                name: "Upgrading",
+                bundle: nil
+            )
+            let upgradingController = storyboard
+                .instantiateInitialController() as! NSWindowController
+            upgradingController.window?.center()
+            upgradingController.showWindow(self)
+
+            let status = await BTActions.upgradeDaemon()
+            upgradingController.close()
+            await self.daemonStatusHandler(status: status)
         }
     }
 }
