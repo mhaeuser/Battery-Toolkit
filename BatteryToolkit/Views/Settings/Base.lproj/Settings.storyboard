@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="Svp-Rd-cF3">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="Svp-Rd-cF3">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22689"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23094"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -21,7 +21,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </view>
-                        <toolbar key="toolbar" implicitIdentifier="139CDA02-1562-4BA9-8D5C-8C3CA70163F7" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconAndLabel" sizeMode="regular" id="w28-jh-n04">
+                        <toolbar key="toolbar" implicitIdentifier="139CDA02-1562-4BA9-8D5C-8C3CA70163F7" autosavesConfiguration="NO" allowsUserCustomization="NO" showsBaselineSeparator="NO" displayMode="iconAndLabel" sizeMode="regular" id="w28-jh-n04">
                             <allowedToolbarItems>
                                 <toolbarItem implicitItemIdentifier="77906F38-36A2-4C77-8E44-8C229DD720C5" explicitItemIdentifier="general" label="General" paletteLabel="General" tag="-1" sizingBehavior="auto" selectable="YES" id="iVB-Bu-n4M">
                                     <imageReference key="image" image="person.crop.circle" catalog="system" symbolScale="default"/>
@@ -62,7 +62,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="495" height="272"/>
                         <subviews>
                             <tabView allowsTruncatedLabels="NO" type="noTabsNoBorder" translatesAutoresizingMaskIntoConstraints="NO" id="NXG-fh-uCo">
-                                <rect key="frame" x="0.0" y="69" width="495" height="248"/>
+                                <rect key="frame" x="0.0" y="69" width="495" height="36"/>
                                 <font key="font" metaFont="system"/>
                                 <tabViewItems>
                                     <tabViewItem label="General" identifier="" id="r6x-U7-0zu" userLabel="General">
@@ -116,7 +116,7 @@
                                                         <constraint firstAttribute="height" constant="21" id="Kuf-Hs-zxF"/>
                                                         <constraint firstAttribute="width" constant="35" id="MRL-G0-91Y"/>
                                                     </constraints>
-                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" truncatesLastVisibleLine="YES" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" baseWritingDirection="leftToRight" alignment="center" title="70" drawsBackground="YES" usesSingleLineMode="YES" id="SrC-Z2-byQ">
+                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" truncatesLastVisibleLine="YES" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" baseWritingDirection="leftToRight" alignment="center" title="75" drawsBackground="YES" usesSingleLineMode="YES" id="SrC-Z2-byQ">
                                                         <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="Ufs-Cu-5R1"/>
                                                         <font key="font" metaFont="system"/>
                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
