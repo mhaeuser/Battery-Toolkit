@@ -9,7 +9,7 @@ internal enum BTDaemonCommCommand: UInt8 {
     case disablePowerAdapter
     case enablePowerAdapter
     case chargeToFull
-    case chargeToMaximum
+    case chargeToThreshold
     case disableCharging
     case prepareUpdate
     case finishUpdate

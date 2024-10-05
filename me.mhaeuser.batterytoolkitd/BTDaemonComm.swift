@@ -192,8 +192,8 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol, Sendable {
         case BTDaemonCommCommand.chargeToFull.rawValue:
             return BTPowerEvents.chargeToFull()
 
-        case BTDaemonCommCommand.chargeToMaximum.rawValue:
-            return BTPowerEvents.chargeToMaximum()
+        case BTDaemonCommCommand.chargeToThreshold.rawValue:
+            return BTPowerEvents.chargeToThreshold()
 
         case BTDaemonCommCommand.disableCharging.rawValue:
             return BTPowerEvents.disableCharging()
