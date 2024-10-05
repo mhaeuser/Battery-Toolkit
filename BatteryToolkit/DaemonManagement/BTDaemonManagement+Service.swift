@@ -29,7 +29,7 @@ internal extension BTDaemonManagement {
     enum Service {
         private static let daemonServicePlist = "\(BT_DAEMON_ID).plist"
 
-        @MainActor static func register() async -> BTDaemonManagement.Status {
+        @BTBackgroundActor static func register() async -> BTDaemonManagement.Status {
             os_log("Starting daemon service")
 
             let status = SMAppService.statusForLegacyPlist(
@@ -43,7 +43,7 @@ internal extension BTDaemonManagement {
             return .requiresUpgrade
         }
 
-        @MainActor static func upgrade() async -> BTDaemonManagement.Status {
+        @BTBackgroundActor static func upgrade() async -> BTDaemonManagement.Status {
             os_log("Upgrading daemon service")
 
             do {
@@ -60,7 +60,7 @@ internal extension BTDaemonManagement {
             try await self.awaitApproval(timeout: timeout)
         }
 
-        @MainActor static func unregister() async throws {
+        @BTBackgroundActor static func unregister() async throws {
             os_log("Unregistering daemon service")
             //
             // Any other status code makes unregister() loop indefinitely.
@@ -102,7 +102,7 @@ internal extension BTDaemonManagement {
             }
         }
 
-        @MainActor private static func forceRegister() async -> BTDaemonManagement.Status {
+        @BTBackgroundActor private static func forceRegister() async -> BTDaemonManagement.Status {
             //
             // After unregistering(e.g., to update the daemon), re-registering
             // may fail for a short amount of time.
@@ -126,7 +126,7 @@ internal extension BTDaemonManagement {
             return .notRegistered
         }
 
-        @MainActor private static func update() async -> BTDaemonManagement.Status {
+        @BTBackgroundActor private static func update() async -> BTDaemonManagement.Status {
             os_log("Updating daemon service")
 
             try? await BTDaemonXPCClient.prepareUpdate()

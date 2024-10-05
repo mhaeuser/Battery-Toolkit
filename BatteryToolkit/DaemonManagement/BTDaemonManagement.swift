@@ -8,7 +8,7 @@ import Foundation
 import os.log
 
 internal enum BTDaemonManagement {
-    @MainActor static func start() async -> BTDaemonManagement.Status {
+    @BTBackgroundActor static func start() async -> BTDaemonManagement.Status {
         let daemonId = try? await BTDaemonXPCClient.getUniqueId()
         guard self.daemonUpToDate(daemonId: daemonId) else {
             if #available(macOS 13.0, *) {
@@ -22,7 +22,7 @@ internal enum BTDaemonManagement {
         return .enabled
     }
 
-    @MainActor static func upgrade() async -> BTDaemonManagement.Status {
+    @BTBackgroundActor static func upgrade() async -> BTDaemonManagement.Status {
         if #available(macOS 13.0, *) {
             return await self.Service.upgrade()
         } else {
@@ -45,7 +45,7 @@ internal enum BTDaemonManagement {
         }
     }
 
-    @MainActor static func remove() async throws {
+    @BTBackgroundActor static func remove() async throws {
         let authData = try await BTAppXPCClient.getDaemonAuthorization()
 
         _ = try await BTDaemonXPCClient.prepareDisable(authData: authData)

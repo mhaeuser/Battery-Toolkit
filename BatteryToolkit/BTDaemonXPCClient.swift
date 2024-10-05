@@ -7,7 +7,7 @@ import BTPreprocessor
 import Foundation
 import os.log
 
-@MainActor
+@BTBackgroundActor
 internal enum BTDaemonXPCClient {
     private static var connect: NSXPCConnection? = nil
 
@@ -209,7 +209,7 @@ internal enum BTDaemonXPCClient {
     }
 
     private static func executeDaemon(
-        command: @MainActor @Sendable (BTDaemonCommProtocol) -> Void,
+        command: @BTBackgroundActor @Sendable (BTDaemonCommProtocol) -> Void,
         errorHandler: @escaping @Sendable (any Error) -> Void
     ) {
         let connect = self.connectDaemon()
@@ -221,12 +221,12 @@ internal enum BTDaemonXPCClient {
 
     private static func executeDaemonRetry<T>(
         continuation: CheckedContinuation<T, any Error>,
-        command: @MainActor @escaping @Sendable (BTDaemonCommProtocol) -> Void
+        command: @BTBackgroundActor @escaping @Sendable (BTDaemonCommProtocol) -> Void
     ) {
         self.executeDaemon(command: command) { error in
             os_log("XPC client remote error: \(error)")
             os_log("Retrying...")
-            Task { @MainActor in
+            Task { @BTBackgroundActor in
                 self.disconnectDaemon()
                 self.executeDaemon(command: command) { error in
                     os_log("XPC client remote error: \(error)")
@@ -238,7 +238,7 @@ internal enum BTDaemonXPCClient {
 
     private static func executeDaemonManageRetry<T>(
         continuation: CheckedContinuation<T, any Error>,
-        command: @MainActor @escaping @Sendable (BTDaemonCommProtocol) -> Void
+        command: @BTBackgroundActor @escaping @Sendable (BTDaemonCommProtocol) -> Void
     ) {
         self.executeDaemonRetry(continuation: continuation, command: command)
     }

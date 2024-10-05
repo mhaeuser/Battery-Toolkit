@@ -24,7 +24,9 @@ internal final class BTAppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationWillTerminate(_: Notification) {
-        BTActions.stop()
+        Task { @BTBackgroundActor in
+            BTActions.stop()
+        }
     }
 
     func applicationWillBecomeActive(_: Notification) {

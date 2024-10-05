@@ -89,6 +89,7 @@
 		CEECE33028BB742500821A3B /* BTServiceCommProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEECE32F28BB742500821A3B /* BTServiceCommProtocol.swift */; };
 		CEECE33128BB742500821A3B /* BTServiceCommProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEECE32F28BB742500821A3B /* BTServiceCommProtocol.swift */; };
 		CEECE33328BB745B00821A3B /* BTServiceComm.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEECE33228BB745B00821A3B /* BTServiceComm.swift */; };
+		CEF429882CB1628800E49B67 /* BTBackgroundActor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF429872CB1628600E49B67 /* BTBackgroundActor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -243,6 +244,7 @@
 		CEF3496E28DCD36100A1CECD /* SecCodeEx.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = SecCodeEx.c; sourceTree = "<group>"; };
 		CEF3496F28DCD52400A1CECD /* SecCodeEx.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecCodeEx.h; sourceTree = "<group>"; };
 		CEF3497028DCD55900A1CECD /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
+		CEF429872CB1628600E49B67 /* BTBackgroundActor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTBackgroundActor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -346,6 +348,7 @@
 		CE52867528298B6D00860C7B /* BatteryToolkit */ = {
 			isa = PBXGroup;
 			children = (
+				CEF429872CB1628600E49B67 /* BTBackgroundActor.swift */,
 				CE0DA2BB28D7BFA800C35C45 /* DaemonManagement */,
 				CEA3908928DF95170023261A /* Views */,
 				CE52867A28298B6E00860C7B /* Assets.xcassets */,
@@ -721,6 +724,7 @@
 				CEB4A42428D39ECE004FA277 /* BTDaemonManagement+Status.swift in Sources */,
 				CEB09B7328D7B9A5007FFB37 /* BTDaemonManagement+Legacy.swift in Sources */,
 				CE6B760728BC1ABC008DF170 /* BTAppXPCClient.swift in Sources */,
+				CEF429882CB1628800E49B67 /* BTBackgroundActor.swift in Sources */,
 				CE1F5E3A28D7399D00F61F67 /* CSIdentification.swift in Sources */,
 				CE3C1DA328C9329F008A0F7D /* BTDaemonManagement.swift in Sources */,
 				CE6B75F928BC18EA008DF170 /* BTDaemonCommProtocol.swift in Sources */,

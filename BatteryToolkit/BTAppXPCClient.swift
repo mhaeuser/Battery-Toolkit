@@ -8,7 +8,7 @@ import Foundation
 import os.log
 import ServiceManagement
 
-@MainActor
+@BTBackgroundActor
 internal enum BTAppXPCClient {
     private static var connect: NSXPCConnection? = nil
 
@@ -68,7 +68,7 @@ internal enum BTAppXPCClient {
     }
 
     private nonisolated static func invalidationHandler() {
-        Task { @MainActor in
+        Task { @BTBackgroundActor in
             BTAppXPCClient.connect = nil
         }
 

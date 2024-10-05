@@ -15,11 +15,12 @@ internal extension BTDaemonManagement.Status {
 }
 
 internal extension BTDaemonManagement {
+    @BTBackgroundActor
     enum Legacy {
         private static let daemonServicePlist = "\(BT_DAEMON_ID).plist"
 
         @available(macOS, deprecated: 13.0)
-        @MainActor static func register() async -> BTDaemonManagement.Status {
+        static func register() async -> BTDaemonManagement.Status {
             os_log("Registering legacy helper")
             do {
                 let authData = try await BTAppXPCClient.getAuthorization()
@@ -50,7 +51,7 @@ internal extension BTDaemonManagement {
             }
         }
 
-        @MainActor static func unregister(simpleAuth: SimpleAuthRef) {
+        static func unregister(simpleAuth: SimpleAuthRef) {
             os_log("Unregistering legacy helper")
 
             BTDaemonXPCClient.disconnectDaemon()
@@ -77,7 +78,7 @@ internal extension BTDaemonManagement {
             //
         }
 
-        @MainActor static func unregisterCleanup() async throws {
+        static func unregisterCleanup() async throws {
             os_log("Unregistering legacy helper")
 
             do {

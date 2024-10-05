@@ -6,9 +6,8 @@
 import BTPreprocessor
 import Foundation
 
-@MainActor
 internal enum BTActions {
-    static func startDaemon() async -> BTDaemonManagement.Status {
+    @BTBackgroundActor static func startDaemon() async -> BTDaemonManagement.Status {
         return await BTDaemonManagement.start()
     }
 
@@ -16,47 +15,47 @@ internal enum BTActions {
         try await BTDaemonManagement.approve(timeout: timeout)
     }
 
-    static func upgradeDaemon() async -> BTDaemonManagement.Status {
+    @BTBackgroundActor static func upgradeDaemon() async -> BTDaemonManagement.Status {
         return await BTDaemonManagement.upgrade()
     }
 
-    static func stop() {
+    @BTBackgroundActor static func stop() {
         BTDaemonXPCClient.disconnectDaemon()
     }
 
-    static func disablePowerAdapter() async throws {
+    @BTBackgroundActor static func disablePowerAdapter() async throws {
         try await BTDaemonXPCClient.disablePowerAdapter()
     }
 
-    static func enablePowerAdapter() async throws {
+    @BTBackgroundActor static func enablePowerAdapter() async throws {
         try await BTDaemonXPCClient.enablePowerAdapter()
     }
 
-    static func chargeToMaximum() async throws {
+    @BTBackgroundActor static func chargeToMaximum() async throws {
         try await BTDaemonXPCClient.chargeToMaximum()
     }
 
-    static func chargeToFull() async throws {
+    @BTBackgroundActor static func chargeToFull() async throws {
         try await BTDaemonXPCClient.chargeToFull()
     }
 
-    static func disableCharging() async throws {
+    @BTBackgroundActor static func disableCharging() async throws {
         try await BTDaemonXPCClient.disableCharging()
     }
 
-    static func getState() async throws -> [String: NSObject & Sendable] {
+    @BTBackgroundActor static func getState() async throws -> [String: NSObject & Sendable] {
         return try await BTDaemonXPCClient.getState()
     }
 
-    static func getSettings() async throws -> [String: NSObject & Sendable] {
+    @BTBackgroundActor static func getSettings() async throws -> [String: NSObject & Sendable] {
         return try await BTDaemonXPCClient.getSettings()
     }
 
-    static func setSettings(settings: [String: NSObject & Sendable]) async throws {
+    @BTBackgroundActor static func setSettings(settings: [String: NSObject & Sendable]) async throws {
         try await BTDaemonXPCClient.setSettings(settings: settings)
     }
 
-    static func removeDaemon() async throws {
+    @BTBackgroundActor static func removeDaemon() async throws {
         try await BTDaemonManagement.remove()
     }
 }
