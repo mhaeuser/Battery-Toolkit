@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="21506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23094"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -158,7 +158,7 @@
                                         <menuItem title="Power Adapter: Disabled" hidden="YES" enabled="NO" id="sMO-Ij-34k">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
-                                        <menuItem title="Charging to Maximum" hidden="YES" enabled="NO" id="lbk-yR-YAv">
+                                        <menuItem title="Charging to Limit" hidden="YES" enabled="NO" id="lbk-yR-YAv">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
                                         <menuItem title="Charging to Full" hidden="YES" enabled="NO" id="lac-Zb-b2m">
@@ -170,7 +170,7 @@
                                         <menuItem title="Charging On Hold" hidden="YES" enabled="NO" id="jSw-yh-dVi">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
-                                        <menuItem title="Requested Charging to Maximum" hidden="YES" enabled="NO" id="gt7-Wq-hIQ">
+                                        <menuItem title="Requested Charging to Limit" hidden="YES" enabled="NO" id="gt7-Wq-hIQ">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
                                         <menuItem title="Requested Charging to Full" hidden="YES" enabled="NO" id="ok6-b9-12l">
@@ -196,9 +196,9 @@
                                                 <action selector="chargeToFullHandlerWithSender:" target="Q4N-wh-Pcn" id="GIW-CD-LNk"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Charge to Maximum Now" hidden="YES" keyEquivalent="m" id="E3R-Fa-W18">
+                                        <menuItem title="Charge to Limit Now" hidden="YES" keyEquivalent="t" id="E3R-Fa-W18">
                                             <connections>
-                                                <action selector="chargeToMaximumHandlerWithSender:" target="Q4N-wh-Pcn" id="Wkk-3p-fZa"/>
+                                                <action selector="chargeToLimitHandlerWithSender:" target="Q4N-wh-Pcn" id="Wkk-3p-fZa"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Disable Charging" hidden="YES" keyEquivalent="d" id="LEy-Sb-Iyb">
@@ -211,9 +211,9 @@
                                                 <action selector="chargeToFullHandlerWithSender:" target="Q4N-wh-Pcn" id="GCg-U0-wy3"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Request Charging to Maximum" hidden="YES" keyEquivalent="m" id="xbN-4R-0nt">
+                                        <menuItem title="Request Charging to Limit" hidden="YES" keyEquivalent="t" id="xbN-4R-0nt">
                                             <connections>
-                                                <action selector="chargeToMaximumHandlerWithSender:" target="Q4N-wh-Pcn" id="Baz-8K-3Vk"/>
+                                                <action selector="chargeToLimitHandlerWithSender:" target="Q4N-wh-Pcn" id="Baz-8K-3Vk"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Cancel Charging Request" hidden="YES" keyEquivalent="d" id="dpS-hD-AaI">
@@ -248,44 +248,44 @@
                     <connections>
                         <outlet property="cancelChargingRequestItem" destination="ULK-Wm-406" id="gUt-eR-btZ"/>
                         <outlet property="chargeToFullNowItem" destination="llC-Rh-DUh" id="RH6-GM-Smb"/>
-                        <outlet property="chargeToMaximumNowItem" destination="TNZ-j8-gVs" id="I8W-3Z-1gX"/>
+                        <outlet property="chargeToLimitNowItem" destination="TNZ-j8-gVs" id="I8W-3Z-1gX"/>
                         <outlet property="disableChargingItem" destination="GjO-6u-KWc" id="u36-Wg-O3Z"/>
                         <outlet property="disablePowerAdapterItem" destination="ter-ZE-C7E" id="RBo-oQ-INi"/>
                         <outlet property="enablePowerAdapterItem" destination="aEW-fU-9yN" id="ifY-rB-Dv7"/>
                         <outlet property="infoChargingToFullItem" destination="F8E-0n-LBJ" id="mor-ef-cIF"/>
-                        <outlet property="infoChargingToMaximumItem" destination="nWm-0d-xw6" id="8gP-z0-yth"/>
+                        <outlet property="infoChargingToLimitItem" destination="nWm-0d-xw6" id="8gP-z0-yth"/>
                         <outlet property="infoChargingUnknownModeItem" destination="tXk-Dr-ZCO" id="993-kf-WOn"/>
                         <outlet property="infoNotChargingItem" destination="QRX-If-BNP" id="pws-tg-vIR"/>
                         <outlet property="infoNotChargingUnknownModeItem" destination="K5N-g3-QcY" id="W5T-N2-cV8"/>
                         <outlet property="infoPowerAdapterDisabledItem" destination="PTV-ys-cbR" id="x1b-VP-jsO"/>
                         <outlet property="infoPowerAdapterEnabledItem" destination="SUV-eg-AcA" id="aF7-Cc-TXn"/>
                         <outlet property="infoRequestedChargingToFullItem" destination="A7t-cy-HPp" id="QO7-Nx-W0k"/>
-                        <outlet property="infoRequestedChargingToMaximumItem" destination="dq4-4h-B2m" id="6B1-31-zzF"/>
+                        <outlet property="infoRequestedChargingToLimitItem" destination="dq4-4h-B2m" id="6B1-31-zzF"/>
                         <outlet property="infoUnknownStateItem" destination="ASg-q2-OT9" id="xwu-6H-eMl"/>
                         <outlet property="requestChargingToFullItem" destination="FYa-Xe-gc8" id="36X-kO-f71"/>
-                        <outlet property="requestChargingToMaximumItem" destination="07e-WI-TcK" id="GWU-xi-eZ7"/>
+                        <outlet property="requestChargingToLimitItem" destination="07e-WI-TcK" id="GWU-xi-eZ7"/>
                     </connections>
                 </customObject>
                 <customObject id="Q4N-wh-Pcn" customClass="BTCommandsMenuDelegate" customModule="Battery_Toolkit" customModuleProvider="target">
                     <connections>
                         <outlet property="cancelChargingRequestItem" destination="dpS-hD-AaI" id="3r0-bc-xg2"/>
                         <outlet property="chargeToFullNowItem" destination="Aqi-xb-CLH" id="1yr-6e-odu"/>
-                        <outlet property="chargeToMaximumNowItem" destination="E3R-Fa-W18" id="5up-gX-xzR"/>
+                        <outlet property="chargeToLimitNowItem" destination="E3R-Fa-W18" id="5up-gX-xzR"/>
                         <outlet property="disableChargingItem" destination="LEy-Sb-Iyb" id="2uI-eV-6Al"/>
                         <outlet property="disablePowerAdapterItem" destination="wQc-iH-a0U" id="3eY-4w-1Ds"/>
                         <outlet property="enablePowerAdapterItem" destination="v10-VJ-vXg" id="c43-I0-FFd"/>
                         <outlet property="infoChargingToFullItem" destination="lac-Zb-b2m" id="O54-37-b26"/>
-                        <outlet property="infoChargingToMaximumItem" destination="lbk-yR-YAv" id="SHM-JV-1t7"/>
+                        <outlet property="infoChargingToLimitItem" destination="lbk-yR-YAv" id="SHM-JV-1t7"/>
                         <outlet property="infoChargingUnknownModeItem" destination="4Kg-1R-KWJ" id="mnc-pc-oBy"/>
                         <outlet property="infoNotChargingItem" destination="jSw-yh-dVi" id="uMz-ij-r7A"/>
                         <outlet property="infoNotChargingUnknownModeItem" destination="ptj-AT-ybP" id="4bQ-Ri-CwK"/>
                         <outlet property="infoPowerAdapterDisabledItem" destination="sMO-Ij-34k" id="Nky-lF-DNE"/>
                         <outlet property="infoPowerAdapterEnabledItem" destination="zEi-td-Phh" id="cLu-YI-nde"/>
                         <outlet property="infoRequestedChargingToFullItem" destination="ok6-b9-12l" id="J5L-oW-GDk"/>
-                        <outlet property="infoRequestedChargingToMaximumItem" destination="gt7-Wq-hIQ" id="fAQ-NS-TMm"/>
+                        <outlet property="infoRequestedChargingToLimitItem" destination="gt7-Wq-hIQ" id="fAQ-NS-TMm"/>
                         <outlet property="infoUnknownStateItem" destination="IN2-5L-mDF" id="zrl-EZ-u7q"/>
                         <outlet property="requestChargingToFullItem" destination="u4J-Rf-19m" id="I4W-ry-O0v"/>
-                        <outlet property="requestChargingToMaximumItem" destination="xbN-4R-0nt" id="VI9-Tc-WQp"/>
+                        <outlet property="requestChargingToLimitItem" destination="xbN-4R-0nt" id="VI9-Tc-WQp"/>
                     </connections>
                 </customObject>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
@@ -301,7 +301,7 @@
                         <menuItem title="Power Adapter: Disabled" hidden="YES" enabled="NO" id="PTV-ys-cbR">
                             <modifierMask key="keyEquivalentModifierMask"/>
                         </menuItem>
-                        <menuItem title="Charging to Maximum" hidden="YES" enabled="NO" id="nWm-0d-xw6">
+                        <menuItem title="Charging to Limit" hidden="YES" enabled="NO" id="nWm-0d-xw6">
                             <modifierMask key="keyEquivalentModifierMask"/>
                         </menuItem>
                         <menuItem title="Charging to Full" hidden="YES" enabled="NO" id="F8E-0n-LBJ">
@@ -313,7 +313,7 @@
                         <menuItem title="Charging On Hold" hidden="YES" enabled="NO" id="QRX-If-BNP">
                             <modifierMask key="keyEquivalentModifierMask"/>
                         </menuItem>
-                        <menuItem title="Requested Charging to Maximum" hidden="YES" enabled="NO" id="dq4-4h-B2m">
+                        <menuItem title="Requested Charging to Limit" hidden="YES" enabled="NO" id="dq4-4h-B2m">
                             <modifierMask key="keyEquivalentModifierMask"/>
                         </menuItem>
                         <menuItem title="Requested Charging to Full" hidden="YES" enabled="NO" id="A7t-cy-HPp">
@@ -339,9 +339,9 @@
                                 <action selector="chargeToFullHandlerWithSender:" target="Yoz-Et-jXW" id="i2a-gy-Hp6"/>
                             </connections>
                         </menuItem>
-                        <menuItem title="Charge to Maximum Now" hidden="YES" keyEquivalent="m" id="TNZ-j8-gVs">
+                        <menuItem title="Charge to Limit Now" hidden="YES" keyEquivalent="t" id="TNZ-j8-gVs">
                             <connections>
-                                <action selector="chargeToMaximumHandlerWithSender:" target="Yoz-Et-jXW" id="ySg-yc-sEK"/>
+                                <action selector="chargeToLimitHandlerWithSender:" target="Yoz-Et-jXW" id="ySg-yc-sEK"/>
                             </connections>
                         </menuItem>
                         <menuItem title="Disable Charging" hidden="YES" keyEquivalent="d" id="GjO-6u-KWc">
@@ -354,9 +354,9 @@
                                 <action selector="chargeToFullHandlerWithSender:" target="Yoz-Et-jXW" id="bj7-c6-lty"/>
                             </connections>
                         </menuItem>
-                        <menuItem title="Request Charging to Maximum" hidden="YES" keyEquivalent="m" id="07e-WI-TcK">
+                        <menuItem title="Request Charging to Limit" hidden="YES" keyEquivalent="t" id="07e-WI-TcK">
                             <connections>
-                                <action selector="chargeToMaximumHandlerWithSender:" target="Yoz-Et-jXW" id="kEt-T6-WQS"/>
+                                <action selector="chargeToLimitHandlerWithSender:" target="Yoz-Et-jXW" id="kEt-T6-WQS"/>
                             </connections>
                         </menuItem>
                         <menuItem title="Cancel Charging Request" hidden="YES" keyEquivalent="d" id="ULK-Wm-406">

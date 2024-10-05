@@ -31,8 +31,8 @@ internal enum BTActions {
         try await BTDaemonXPCClient.enablePowerAdapter()
     }
 
-    @BTBackgroundActor static func chargeToMaximum() async throws {
-        try await BTDaemonXPCClient.chargeToMaximum()
+    @BTBackgroundActor static func chargeToLimit() async throws {
+        try await BTDaemonXPCClient.chargeToLimit()
     }
 
     @BTBackgroundActor static func chargeToFull() async throws {

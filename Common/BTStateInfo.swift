@@ -8,7 +8,7 @@ import Foundation
 internal enum BTStateInfo {
     enum ChargingMode: UInt8 {
         case standard = 0
-        case toMaximum = 1
+        case toLimit = 1
         case toFull = 2
     }
 

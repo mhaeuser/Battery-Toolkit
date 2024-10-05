@@ -60,9 +60,9 @@ internal enum BTPowerEvents {
         _ = self.handleChargeHysteresis()
     }
 
-    static func chargeToMaximum() -> Bool {
-        self.chargingMode = .toMaximum
-        return self.enableBelowThresholdMode(threshold: BTSettings.maxCharge)
+    static func chargeToLimit() -> Bool {
+        self.chargingMode = .toLimit
+        return self.enableBelowLimitMode(limit: BTSettings.maxCharge)
     }
 
     static func disableCharging(percent: UInt8) -> Bool {
@@ -77,7 +77,7 @@ internal enum BTPowerEvents {
 
     static func chargeToFull() -> Bool {
         self.chargingMode = .toFull
-        return self.enableBelowThresholdMode(threshold: 100)
+        return self.enableBelowLimitMode(limit: 100)
     }
 
     static func getChargingProgress() -> BTStateInfo.ChargingProgress {
@@ -152,11 +152,11 @@ internal enum BTPowerEvents {
 
         let percent = self.handleChargeHysteresis()
         //
-        // In case charging to maximum or full were requested while the device
+        // In case charging to limit or full were requested while the device
         // was on battery, enable it now if appropriate.
         //
         switch self.chargingMode {
-        case .toMaximum:
+        case .toLimit:
             if percent < BTSettings.maxCharge {
                 _ = BTPowerState.enableCharging(percent: percent)
             }
@@ -191,12 +191,12 @@ internal enum BTPowerEvents {
         //
         // The hysteresis does not apply when starting the daemon, as
         // micro-charges will already happen pre-boot and there is no point to
-        // not just charge all the way to the maximum then.
+        // not just charge all the way to the limit then.
         //
         if percent >= BTSettings.maxCharge {
             //
             // Do not disable charging till 100 percent are reached when
-            // charging to full was requested. Charging to maximum is handled
+            // charging to full was requested. Charging to limit is handled
             // implicitly, as it only forces charging in [min, max).
             //
             if self.chargingMode != .toFull || percent >= 100 {
@@ -265,7 +265,7 @@ internal enum BTPowerEvents {
         }
     }
 
-    private static func enableBelowThresholdMode(threshold: UInt8) -> Bool {
+    private static func enableBelowLimitMode(limit: UInt8) -> Bool {
         //
         // When the percent loop is inactive, this currently means that the
         // device is not connected to power. In this case, do not enable
@@ -280,7 +280,7 @@ internal enum BTPowerEvents {
             return false
         }
 
-        if percent < threshold {
+        if percent < limit {
             return BTPowerState.enableCharging(percent: percent)
         }
 
