@@ -9,7 +9,7 @@ internal enum BTLocalization {
     enum Prompts {
         static let ok = NSLocalizedString(
             "OK",
-            comment: "Prompt button to acknowledge an situation"
+            comment: "Prompt button to acknowledge a situation"
         )
 
         static let approve = NSLocalizedString(
@@ -35,6 +35,26 @@ internal enum BTLocalization {
         static let disableAndQuit = NSLocalizedString(
             "Disable and Quit",
             comment: "Prompt button to disable a core function and quit the app"
+        )
+
+        static let openSystemSettings = NSLocalizedString(
+            "Open System Settings",
+            comment: "Prompt button to open System Settings"
+        )
+
+        static let quitMessage = NSLocalizedString(
+            "Quit Battery Toolkit?",
+            comment: "Prompt caption asking whether to quit the app"
+        )
+
+        static let quitInfo = NSLocalizedString(
+            "Battery Toolkit will continue to run in the background. To permanently suspend it, disable the background activity from the Battery Toolkit menu.",
+            comment: "Prompt caption asking whether to quit the app"
+        )
+
+        static let quitInfoMacOS13 = NSLocalizedString(
+            "To temporarily suspend it, disable the background activity in System Settings.",
+            comment: "Prompt caption asking whether to quit the app"
         )
 
         static let unexpectedErrorMessage = NSLocalizedString(

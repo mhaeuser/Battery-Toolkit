@@ -59,7 +59,7 @@
                                         <menuItem isSeparatorItem="YES" id="kCx-OE-vgT"/>
                                         <menuItem title="Quit Battery Toolkit" keyEquivalent="q" id="4sb-4s-VLi">
                                             <connections>
-                                                <action selector="terminate:" target="Ady-hI-5gd" id="Te7-pn-YzF"/>
+                                                <action selector="quitHandlerWithSender:" target="Yoz-Et-jXW" id="XwH-9q-S0c"/>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -373,7 +373,7 @@
                         <menuItem isSeparatorItem="YES" id="9fM-fx-Sxj"/>
                         <menuItem title="Quit Battery Toolkit" keyEquivalent="q" id="Smu-3d-BCn">
                             <connections>
-                                <action selector="terminate:" target="Ady-hI-5gd" id="lXW-g6-h5X"/>
+                                <action selector="quitHandlerWithSender:" target="Yoz-Et-jXW" id="WbX-gg-kmB"/>
                             </connections>
                         </menuItem>
                     </items>

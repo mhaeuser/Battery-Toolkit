@@ -1,13 +1,49 @@
 //
-// Copyright (C) 2022 Marvin Häuser. All rights reserved.
+// Copyright (C) 2022 - 2024 Marvin Häuser. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
 import Cocoa
+import ServiceManagement
 
 @MainActor
 internal enum BTAppPrompts {
     private(set) static var open: UInt8 = 0
+
+    static func promptQuit() {
+        let alert = NSAlert()
+        alert.messageText = BTLocalization.Prompts.quitMessage
+        if #available(macOS 13.0, *) {
+            alert.informativeText = BTLocalization.Prompts.quitInfo + " " + BTLocalization.Prompts.quitInfoMacOS13
+        } else {
+            alert.informativeText = BTLocalization.Prompts.quitInfo
+        }
+        alert.alertStyle = NSAlert.Style.informational
+        _ = alert.addButton(withTitle: BTLocalization.Prompts.quit)
+        _ = alert.addButton(withTitle: BTLocalization.Prompts.cancel)
+        if #available(macOS 13.0, *) {
+            _ = alert.addButton(withTitle: BTLocalization.Prompts.openSystemSettings)
+        }
+        let response = self.runPromptStandalone(alert: alert)
+        switch response {
+        case NSApplication.ModalResponse.alertFirstButtonReturn:
+            NSApp.terminate(self)
+            
+        case NSApplication.ModalResponse.alertSecondButtonReturn:
+            break
+            
+        case NSApplication.ModalResponse.alertThirdButtonReturn:
+            if #available(macOS 13.0, *) {
+                SMAppService.openSystemSettingsLoginItems()
+            } else {
+                assertionFailure()
+            }
+            break
+
+        default:
+            assertionFailure()
+        }
+    }
 
     static func promptApproveDaemon(timeout: UInt8) async throws {
         let alert = NSAlert()

@@ -240,6 +240,10 @@ internal final class BTCommandsMenuDelegate: NSObject, NSMenuDelegate {
         self.refreshTimer = nil
     }
 
+    @IBAction private func quitHandler(sender _: NSMenuItem) {
+        BTAppPrompts.promptQuit()
+    }
+
     @IBAction private func disablePowerAdapterHandler(sender _: NSMenuItem) {
         Task {
             do {
