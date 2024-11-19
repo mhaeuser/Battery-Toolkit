@@ -44,6 +44,16 @@ The Battery Toolkit “Commands“ menu and its menu bar extra allow you to issu
 
 Battery Toolkit currently supports only Apple Silicon Macs.
 
+# How to Install
+
+1. Go to [releases](https://github.com/mhaeuser/Battery-Toolkit/releases)
+2. Download the newest non-dSYM build (e.g. Battery-Toolkit-1.5.zip)
+3. Unzip it (double click)
+4. Drag it into your applications folder
+5. Right click the Battery Toolkit app, then click "open"
+6. If that's not an option go to system settings -> privacy and security and you should see a prompt at the bottom of the screen allow opening Battery Toolkit. Allow it.
+7. Try opening Battery Toolkit again. It should open now.
+
 # Technical details
 
 * Based on IOPowerManagement events to minimize resource usage, especially when not connected to power
