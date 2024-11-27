@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="Svp-Rd-cF3">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="Svp-Rd-cF3">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23094"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23504"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -58,35 +58,47 @@
         <scene sceneID="vWP-bX-OzO">
             <objects>
                 <viewController storyboardIdentifier="SettingsViewController" showSeguePresentationStyle="single" id="qK6-EM-YZH" userLabel="SettingsViewController" customClass="BTSettingsViewController" customModule="Battery_Toolkit" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IvC-q3-fvl" userLabel="Settings View">
-                        <rect key="frame" x="0.0" y="0.0" width="495" height="272"/>
+                    <view key="view" translatesAutoresizingMaskIntoConstraints="NO" id="IvC-q3-fvl" userLabel="Settings View">
+                        <rect key="frame" x="0.0" y="0.0" width="495" height="317"/>
                         <subviews>
                             <tabView allowsTruncatedLabels="NO" type="noTabsNoBorder" translatesAutoresizingMaskIntoConstraints="NO" id="NXG-fh-uCo">
-                                <rect key="frame" x="0.0" y="69" width="495" height="36"/>
+                                <rect key="frame" x="0.0" y="69" width="495" height="248"/>
                                 <font key="font" metaFont="system"/>
                                 <tabViewItems>
                                     <tabViewItem label="General" identifier="" id="r6x-U7-0zu" userLabel="General">
                                         <view key="view" id="j3z-8d-YbE">
-                                            <rect key="frame" x="0.0" y="0.0" width="495" height="36"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="495" height="107"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WLE-5m-DuI" userLabel="Autostart Label">
-                                                    <rect key="frame" x="18" y="0.0" width="415" height="16"/>
+                                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WLE-5m-DuI" userLabel="Autostart Label">
+                                                    <rect key="frame" x="18" y="71" width="415" height="16"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Open Battery Toolkit automatically when you log in to your Mac" id="23Z-ec-mgU">
                                                         <font key="font" usesAppearanceFont="YES"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
+                                                <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="cMq-jp-fNI" userLabel="Autostart Secondary Label">
+                                                    <rect key="frame" x="18" y="20" width="415" height="48"/>
+                                                    <textFieldCell key="cell" selectable="YES" id="5XS-zv-zfd">
+                                                        <font key="font" metaFont="system"/>
+                                                        <string key="title">Display a menu bar extra to easily control the power state of your Mac. The background activity is independent from the application and is unaffected by this setting.</string>
+                                                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
                                                 <switch horizontalHuggingPriority="750" verticalHuggingPriority="750" controlSize="mini" baseWritingDirection="leftToRight" alignment="left" translatesAutoresizingMaskIntoConstraints="NO" id="Wvm-DK-CLx">
-                                                    <rect key="frame" x="448" y="-1" width="28" height="17"/>
+                                                    <rect key="frame" x="448" y="70" width="28" height="17"/>
                                                 </switch>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="cMq-jp-fNI" firstAttribute="leading" secondItem="WLE-5m-DuI" secondAttribute="leading" id="G3u-eb-rUg"/>
                                                 <constraint firstAttribute="trailing" secondItem="Wvm-DK-CLx" secondAttribute="trailing" constant="20" symbolic="YES" id="JrM-8x-6j0"/>
+                                                <constraint firstItem="cMq-jp-fNI" firstAttribute="width" secondItem="WLE-5m-DuI" secondAttribute="width" id="OvW-Z0-w88"/>
                                                 <constraint firstItem="WLE-5m-DuI" firstAttribute="leading" secondItem="j3z-8d-YbE" secondAttribute="leading" constant="20" symbolic="YES" id="QsY-z4-Z1J"/>
+                                                <constraint firstItem="cMq-jp-fNI" firstAttribute="top" secondItem="WLE-5m-DuI" secondAttribute="bottom" constant="3" id="RLJ-WU-wkn"/>
+                                                <constraint firstAttribute="bottom" secondItem="cMq-jp-fNI" secondAttribute="bottom" constant="20" symbolic="YES" id="SpW-aD-EEi"/>
                                                 <constraint firstItem="Wvm-DK-CLx" firstAttribute="centerY" secondItem="WLE-5m-DuI" secondAttribute="centerY" id="X2r-vp-eIG"/>
-                                                <constraint firstAttribute="bottom" secondItem="WLE-5m-DuI" secondAttribute="bottom" id="coe-xl-VG0"/>
                                                 <constraint firstItem="WLE-5m-DuI" firstAttribute="top" secondItem="j3z-8d-YbE" secondAttribute="top" constant="20" symbolic="YES" id="ik4-AR-JeR"/>
                                                 <constraint firstAttribute="trailing" secondItem="Wvm-DK-CLx" secondAttribute="trailing" constant="20" symbolic="YES" id="is0-kH-dIf"/>
                                                 <constraint firstItem="Wvm-DK-CLx" firstAttribute="top" secondItem="j3z-8d-YbE" secondAttribute="top" constant="20" symbolic="YES" id="q46-Mu-zAe"/>
@@ -110,7 +122,7 @@
                                                         <binding destination="qK6-EM-YZH" name="value" keyPath="self.maxChargeNum" id="cm5-lb-m9T"/>
                                                     </connections>
                                                 </stepper>
-                                                <textField verticalHuggingPriority="750" mirrorLayoutDirectionWhenInternationalizing="never" preferredMaxLayoutWidth="30" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UVz-So-HqI" userLabel="Min Charge ">
+                                                <textField focusRingType="none" verticalHuggingPriority="750" mirrorLayoutDirectionWhenInternationalizing="never" preferredMaxLayoutWidth="30" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UVz-So-HqI" userLabel="Min Charge ">
                                                     <rect key="frame" x="410" y="184" width="35" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="Kuf-Hs-zxF"/>
@@ -126,7 +138,7 @@
                                                         <binding destination="qK6-EM-YZH" name="value" keyPath="self.minChargeNum" id="nnI-Ek-gCl"/>
                                                     </connections>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zNI-F1-3zH" userLabel="Max Text">
+                                                <textField focusRingType="none" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zNI-F1-3zH" userLabel="Max Text">
                                                     <rect key="frame" x="18" y="160" width="199" height="16"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="16" id="EuL-L8-25Q"/>
@@ -138,7 +150,7 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" preferredMaxLayoutWidth="16" translatesAutoresizingMaskIntoConstraints="NO" id="kwg-mE-JId" userLabel="Max %">
+                                                <textField focusRingType="none" horizontalHuggingPriority="750" verticalHuggingPriority="750" preferredMaxLayoutWidth="16" translatesAutoresizingMaskIntoConstraints="NO" id="kwg-mE-JId" userLabel="Max %">
                                                     <rect key="frame" x="461" y="134" width="16" height="16"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="12" id="PgQ-Jv-j8D"/>
@@ -161,7 +173,7 @@
                                                         <binding destination="qK6-EM-YZH" name="value" keyPath="self.minChargeNum" id="3y9-Yj-f6y"/>
                                                     </connections>
                                                 </stepper>
-                                                <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" preferredMaxLayoutWidth="16" translatesAutoresizingMaskIntoConstraints="NO" id="cpE-XY-Cm8" userLabel="Min %">
+                                                <textField focusRingType="none" horizontalHuggingPriority="750" verticalHuggingPriority="750" preferredMaxLayoutWidth="16" translatesAutoresizingMaskIntoConstraints="NO" id="cpE-XY-Cm8" userLabel="Min %">
                                                     <rect key="frame" x="461" y="186" width="16" height="16"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="16" id="YOG-qc-MNm"/>
@@ -183,7 +195,7 @@
                                                         <binding destination="qK6-EM-YZH" name="value" keyPath="self.maxChargeNum" id="D0u-LQ-jVe"/>
                                                     </connections>
                                                 </slider>
-                                                <textField verticalHuggingPriority="750" mirrorLayoutDirectionWhenInternationalizing="never" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jVr-RT-V0O" userLabel="Max Charge">
+                                                <textField focusRingType="none" verticalHuggingPriority="750" mirrorLayoutDirectionWhenInternationalizing="never" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jVr-RT-V0O" userLabel="Max Charge">
                                                     <rect key="frame" x="410" y="132" width="35" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="35" id="hfS-3E-kvP"/>
@@ -209,7 +221,7 @@
                                                         <binding destination="qK6-EM-YZH" name="value" keyPath="self.minChargeNum" id="zJb-gs-jH2"/>
                                                     </connections>
                                                 </slider>
-                                                <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xbB-Gg-5TD" userLabel="Min Text">
+                                                <textField focusRingType="none" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xbB-Gg-5TD" userLabel="Min Text">
                                                     <rect key="frame" x="18" y="212" width="197" height="16"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="16" id="CJk-Zk-wNS"/>
@@ -223,7 +235,7 @@
                                                 <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="Z0P-wM-ijd">
                                                     <rect key="frame" x="20" y="121" width="455" height="5"/>
                                                 </box>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gVg-BR-NcJ" userLabel="Adapter Sleep Label">
+                                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gVg-BR-NcJ" userLabel="Adapter Sleep Label">
                                                     <rect key="frame" x="18" y="100" width="415" height="15"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Prevent your Mac from sleeping when the power adapter is disabled" id="fIe-Jy-1ot">
                                                         <font key="font" metaFont="system"/>
@@ -234,7 +246,7 @@
                                                 <switch horizontalHuggingPriority="750" verticalHuggingPriority="750" controlSize="mini" baseWritingDirection="leftToRight" alignment="left" state="on" translatesAutoresizingMaskIntoConstraints="NO" id="ueg-wa-VAZ">
                                                     <rect key="frame" x="448" y="99" width="28" height="16"/>
                                                 </switch>
-                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Kei-Vw-B1H" userLabel="Adapter Sleep Secondary Label">
+                                                <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Kei-Vw-B1H" userLabel="Adapter Sleep Secondary Label">
                                                     <rect key="frame" x="18" y="69" width="415" height="28"/>
                                                     <textFieldCell key="cell" controlSize="small" selectable="YES" id="BOx-qm-k90">
                                                         <font key="font" metaFont="smallSystem"/>
@@ -243,7 +255,7 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4VU-bn-waD" userLabel="MagSafe Sync Label">
+                                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4VU-bn-waD" userLabel="MagSafe Sync Label">
                                                     <rect key="frame" x="18" y="45" width="415" height="16"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Sync MagSafe indicator light" id="47S-lH-kMQ">
                                                         <font key="font" metaFont="system"/>
@@ -251,7 +263,7 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Ghe-cF-C3L" userLabel="MagSafe Sync Secondary Label">
+                                                <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Ghe-cF-C3L" userLabel="MagSafe Sync Secondary Label">
                                                     <rect key="frame" x="18" y="0.0" width="415" height="42"/>
                                                     <textFieldCell key="cell" controlSize="small" selectable="YES" id="3Kk-Vy-Cgc">
                                                         <font key="font" metaFont="smallSystem"/>
@@ -382,7 +394,7 @@ Gw
                 </viewController>
                 <customObject id="a1t-lO-i7f" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="82.5" y="803"/>
+            <point key="canvasLocation" x="82.5" y="802.5"/>
         </scene>
     </scenes>
     <resources>
