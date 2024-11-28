@@ -23,22 +23,22 @@
                         </view>
                         <toolbar key="toolbar" implicitIdentifier="139CDA02-1562-4BA9-8D5C-8C3CA70163F7" autosavesConfiguration="NO" allowsUserCustomization="NO" showsBaselineSeparator="NO" displayMode="iconAndLabel" sizeMode="regular" id="w28-jh-n04">
                             <allowedToolbarItems>
-                                <toolbarItem implicitItemIdentifier="77906F38-36A2-4C77-8E44-8C229DD720C5" explicitItemIdentifier="general" label="General" paletteLabel="General" tag="-1" sizingBehavior="auto" selectable="YES" id="iVB-Bu-n4M">
+                                <toolbarItem implicitItemIdentifier="77906F38-36A2-4C77-8E44-8C229DD720C5" explicitItemIdentifier="user" label="User" paletteLabel="User" tag="-1" sizingBehavior="auto" selectable="YES" id="iVB-Bu-n4M" userLabel="User">
                                     <imageReference key="image" image="person.crop.circle" catalog="system" symbolScale="default"/>
                                     <connections>
-                                        <action selector="generalAction:" target="Svp-Rd-cF3" id="0NC-hc-TZn"/>
+                                        <action selector="userAction:" target="Svp-Rd-cF3" id="0NC-hc-TZn"/>
                                     </connections>
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="F161A659-3DEF-459F-B2F6-302E483C07F5" explicitItemIdentifier="power" label="Power" paletteLabel="Power" tag="-1" sizingBehavior="auto" selectable="YES" id="ZWd-cD-Dlp">
                                     <imageReference key="image" image="bolt.circle" catalog="system" symbolScale="default"/>
                                     <connections>
-                                        <action selector="backgroundActivityAction:" target="Svp-Rd-cF3" id="nfZ-sf-9mx"/>
+                                        <action selector="powerAction:" target="Svp-Rd-cF3" id="nfZ-sf-9mx"/>
                                     </connections>
                                 </toolbarItem>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
-                                <toolbarItem reference="iVB-Bu-n4M"/>
                                 <toolbarItem reference="ZWd-cD-Dlp"/>
+                                <toolbarItem reference="iVB-Bu-n4M"/>
                             </defaultToolbarItems>
                         </toolbar>
                         <connections>
@@ -65,47 +65,6 @@
                                 <rect key="frame" x="0.0" y="69" width="495" height="248"/>
                                 <font key="font" metaFont="system"/>
                                 <tabViewItems>
-                                    <tabViewItem label="General" identifier="" id="r6x-U7-0zu" userLabel="General">
-                                        <view key="view" id="j3z-8d-YbE">
-                                            <rect key="frame" x="0.0" y="0.0" width="495" height="107"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                            <subviews>
-                                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WLE-5m-DuI" userLabel="Autostart Label">
-                                                    <rect key="frame" x="18" y="71" width="415" height="16"/>
-                                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Open Battery Toolkit automatically when you log in to your Mac" id="23Z-ec-mgU">
-                                                        <font key="font" usesAppearanceFont="YES"/>
-                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                    </textFieldCell>
-                                                </textField>
-                                                <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="cMq-jp-fNI" userLabel="Autostart Secondary Label">
-                                                    <rect key="frame" x="18" y="20" width="415" height="48"/>
-                                                    <textFieldCell key="cell" selectable="YES" id="5XS-zv-zfd">
-                                                        <font key="font" metaFont="system"/>
-                                                        <string key="title">Display a menu bar extra to easily control the power state of your Mac. The background activity is independent from the application and is unaffected by this setting.</string>
-                                                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
-                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                    </textFieldCell>
-                                                </textField>
-                                                <switch horizontalHuggingPriority="750" verticalHuggingPriority="750" controlSize="mini" baseWritingDirection="leftToRight" alignment="left" translatesAutoresizingMaskIntoConstraints="NO" id="Wvm-DK-CLx">
-                                                    <rect key="frame" x="448" y="70" width="28" height="17"/>
-                                                </switch>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="cMq-jp-fNI" firstAttribute="leading" secondItem="WLE-5m-DuI" secondAttribute="leading" id="G3u-eb-rUg"/>
-                                                <constraint firstAttribute="trailing" secondItem="Wvm-DK-CLx" secondAttribute="trailing" constant="20" symbolic="YES" id="JrM-8x-6j0"/>
-                                                <constraint firstItem="cMq-jp-fNI" firstAttribute="width" secondItem="WLE-5m-DuI" secondAttribute="width" id="OvW-Z0-w88"/>
-                                                <constraint firstItem="WLE-5m-DuI" firstAttribute="leading" secondItem="j3z-8d-YbE" secondAttribute="leading" constant="20" symbolic="YES" id="QsY-z4-Z1J"/>
-                                                <constraint firstItem="cMq-jp-fNI" firstAttribute="top" secondItem="WLE-5m-DuI" secondAttribute="bottom" constant="3" id="RLJ-WU-wkn"/>
-                                                <constraint firstAttribute="bottom" secondItem="cMq-jp-fNI" secondAttribute="bottom" constant="20" symbolic="YES" id="SpW-aD-EEi"/>
-                                                <constraint firstItem="Wvm-DK-CLx" firstAttribute="centerY" secondItem="WLE-5m-DuI" secondAttribute="centerY" id="X2r-vp-eIG"/>
-                                                <constraint firstItem="WLE-5m-DuI" firstAttribute="top" secondItem="j3z-8d-YbE" secondAttribute="top" constant="20" symbolic="YES" id="ik4-AR-JeR"/>
-                                                <constraint firstAttribute="trailing" secondItem="Wvm-DK-CLx" secondAttribute="trailing" constant="20" symbolic="YES" id="is0-kH-dIf"/>
-                                                <constraint firstItem="Wvm-DK-CLx" firstAttribute="top" secondItem="j3z-8d-YbE" secondAttribute="top" constant="20" symbolic="YES" id="q46-Mu-zAe"/>
-                                                <constraint firstItem="Wvm-DK-CLx" firstAttribute="leading" secondItem="WLE-5m-DuI" secondAttribute="trailing" constant="18" id="qfh-XJ-WgY"/>
-                                            </constraints>
-                                        </view>
-                                    </tabViewItem>
                                     <tabViewItem label="Power" identifier="" id="IMi-pw-cwy" userLabel="Power">
                                         <view key="view" id="Blc-dd-9Qv">
                                             <rect key="frame" x="0.0" y="0.0" width="495" height="248"/>
@@ -330,6 +289,47 @@
                                             </constraints>
                                         </view>
                                     </tabViewItem>
+                                    <tabViewItem label="User" identifier="" id="r6x-U7-0zu" userLabel="User">
+                                        <view key="view" id="j3z-8d-YbE">
+                                            <rect key="frame" x="0.0" y="0.0" width="495" height="107"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WLE-5m-DuI" userLabel="Autostart Label">
+                                                    <rect key="frame" x="18" y="71" width="415" height="16"/>
+                                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Open Battery Toolkit automatically when you log in to your Mac" id="23Z-ec-mgU">
+                                                        <font key="font" usesAppearanceFont="YES"/>
+                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                                <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="cMq-jp-fNI" userLabel="Autostart Secondary Label">
+                                                    <rect key="frame" x="18" y="20" width="415" height="48"/>
+                                                    <textFieldCell key="cell" selectable="YES" id="5XS-zv-zfd">
+                                                        <font key="font" metaFont="system"/>
+                                                        <string key="title">Display a menu bar extra to easily control the power state of your Mac. The background activity is independent from the application and is unaffected by this setting.</string>
+                                                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                                <switch horizontalHuggingPriority="750" verticalHuggingPriority="750" controlSize="mini" baseWritingDirection="leftToRight" alignment="left" translatesAutoresizingMaskIntoConstraints="NO" id="Wvm-DK-CLx">
+                                                    <rect key="frame" x="448" y="70" width="28" height="17"/>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="cMq-jp-fNI" firstAttribute="leading" secondItem="WLE-5m-DuI" secondAttribute="leading" id="G3u-eb-rUg"/>
+                                                <constraint firstAttribute="trailing" secondItem="Wvm-DK-CLx" secondAttribute="trailing" constant="20" symbolic="YES" id="JrM-8x-6j0"/>
+                                                <constraint firstItem="cMq-jp-fNI" firstAttribute="width" secondItem="WLE-5m-DuI" secondAttribute="width" id="OvW-Z0-w88"/>
+                                                <constraint firstItem="WLE-5m-DuI" firstAttribute="leading" secondItem="j3z-8d-YbE" secondAttribute="leading" constant="20" symbolic="YES" id="QsY-z4-Z1J"/>
+                                                <constraint firstItem="cMq-jp-fNI" firstAttribute="top" secondItem="WLE-5m-DuI" secondAttribute="bottom" constant="3" id="RLJ-WU-wkn"/>
+                                                <constraint firstAttribute="bottom" secondItem="cMq-jp-fNI" secondAttribute="bottom" constant="20" symbolic="YES" id="SpW-aD-EEi"/>
+                                                <constraint firstItem="Wvm-DK-CLx" firstAttribute="centerY" secondItem="WLE-5m-DuI" secondAttribute="centerY" id="X2r-vp-eIG"/>
+                                                <constraint firstItem="WLE-5m-DuI" firstAttribute="top" secondItem="j3z-8d-YbE" secondAttribute="top" constant="20" symbolic="YES" id="ik4-AR-JeR"/>
+                                                <constraint firstAttribute="trailing" secondItem="Wvm-DK-CLx" secondAttribute="trailing" constant="20" symbolic="YES" id="is0-kH-dIf"/>
+                                                <constraint firstItem="Wvm-DK-CLx" firstAttribute="top" secondItem="j3z-8d-YbE" secondAttribute="top" constant="20" symbolic="YES" id="q46-Mu-zAe"/>
+                                                <constraint firstItem="Wvm-DK-CLx" firstAttribute="leading" secondItem="WLE-5m-DuI" secondAttribute="trailing" constant="18" id="qfh-XJ-WgY"/>
+                                            </constraints>
+                                        </view>
+                                    </tabViewItem>
                                 </tabViewItems>
                             </tabView>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tMo-Nt-MJE">
@@ -386,10 +386,10 @@ Gw
                     <connections>
                         <outlet property="adapterSleepSwitch" destination="ueg-wa-VAZ" id="3Lx-ht-YnK"/>
                         <outlet property="autostartSwitch" destination="Wvm-DK-CLx" id="76Y-hQ-vd0"/>
-                        <outlet property="backgroundActivityTab" destination="IMi-pw-cwy" id="9fR-1S-DaG"/>
-                        <outlet property="generalTab" destination="r6x-U7-0zu" id="6f2-AH-ze8"/>
                         <outlet property="magSafeSyncSwitch" destination="Sq5-KE-c3T" id="csD-RV-ou4"/>
+                        <outlet property="powerTab" destination="IMi-pw-cwy" id="9fR-1S-DaG"/>
                         <outlet property="tabView" destination="NXG-fh-uCo" id="DNX-YP-mN9"/>
+                        <outlet property="userTab" destination="r6x-U7-0zu" id="6f2-AH-ze8"/>
                     </connections>
                 </viewController>
                 <customObject id="a1t-lO-i7f" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>

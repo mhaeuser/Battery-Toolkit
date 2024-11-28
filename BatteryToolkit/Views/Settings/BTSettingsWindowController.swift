@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2022 Marvin Häuser. All rights reserved.
+// Copyright (C) 2022 - 2024 Marvin Häuser. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
@@ -8,7 +8,7 @@ import Foundation
 
 @MainActor
 internal final class BTSettingsWindowController: NSWindowController {
-    private static var currentTab = NSToolbarItem.Identifier("general")
+    private static var currentTab = NSToolbarItem.Identifier("power")
 
     @IBOutlet private var toolbar: NSToolbar!
 
@@ -45,7 +45,7 @@ internal final class BTSettingsWindowController: NSWindowController {
         super.close()
     }
 
-    @IBAction private func generalAction(_ sender: NSToolbarItem) {
+    @IBAction private func userAction(_ sender: NSToolbarItem) {
         guard
             let settingsViewControler =
             self.contentViewController as? BTSettingsViewController
@@ -53,11 +53,11 @@ internal final class BTSettingsWindowController: NSWindowController {
             return
         }
 
-        settingsViewControler.selectGeneralTab()
+        settingsViewControler.selectUserTab()
         self.window?.title = sender.label
     }
 
-    @IBAction private func backgroundActivityAction(_ sender: NSToolbarItem) {
+    @IBAction private func powerAction(_ sender: NSToolbarItem) {
         guard
             let settingsViewControler =
             self.contentViewController as? BTSettingsViewController
@@ -65,7 +65,7 @@ internal final class BTSettingsWindowController: NSWindowController {
             return
         }
 
-        settingsViewControler.selectBackgroundActivityTab()
+        settingsViewControler.selectPowerTab()
         self.window?.title = sender.label
     }
 }

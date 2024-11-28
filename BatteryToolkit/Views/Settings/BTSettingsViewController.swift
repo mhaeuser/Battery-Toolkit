@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2022 - 2023 Marvin Häuser. All rights reserved.
+// Copyright (C) 2022 - 2024 Marvin Häuser. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
@@ -13,8 +13,8 @@ internal final class BTSettingsViewController: NSViewController {
     private var currentSettings: [String: NSObject & Sendable]? = nil
     
     @IBOutlet private var tabView: NSTabView!
-    @IBOutlet private var generalTab: NSTabViewItem!
-    @IBOutlet private var backgroundActivityTab: NSTabViewItem!
+    @IBOutlet private var userTab: NSTabViewItem!
+    @IBOutlet private var powerTab: NSTabViewItem!
     
     @IBOutlet private var autostartSwitch: NSSwitch!
     
@@ -169,7 +169,7 @@ internal final class BTSettingsViewController: NSViewController {
     override func viewWillAppear() {
         super.viewWillAppear()
         
-        self.initGeneralState()
+        self.initUserState()
         
         Task {
             await self.initPowerState()
@@ -182,12 +182,12 @@ internal final class BTSettingsViewController: NSViewController {
         }
     }
     
-    func selectGeneralTab() {
-        self.tabView.selectTabViewItem(self.generalTab)
+    func selectUserTab() {
+        self.tabView.selectTabViewItem(self.userTab)
     }
     
-    func selectBackgroundActivityTab() {
-        self.tabView.selectTabViewItem(self.backgroundActivityTab)
+    func selectPowerTab() {
+        self.tabView.selectTabViewItem(self.powerTab)
     }
     
     private func setMinCharge(value: Int) {
@@ -206,7 +206,7 @@ internal final class BTSettingsViewController: NSViewController {
         self.magSafeSyncSwitch.state = value ? .on : .off
     }
     
-    private func initGeneralState() {
+    private func initUserState() {
         let autostart = UserDefaults.standard.bool(
             forKey: self.autostartSetting
         )
