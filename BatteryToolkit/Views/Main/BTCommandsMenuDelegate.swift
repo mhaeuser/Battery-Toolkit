@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2022 Marvin Häuser. All rights reserved.
+// Copyright (C) 2022 - 2025 Marvin Häuser. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
@@ -9,6 +9,7 @@ import os.log
 @MainActor
 internal final class BTCommandsMenuDelegate: NSObject, NSMenuDelegate {
     @IBOutlet private var infoUnknownStateItem: NSMenuItem!
+    @IBOutlet private var infoPausedItem: NSMenuItem!
 
     @IBOutlet private var infoPowerAdapterEnabledItem: NSMenuItem!
     @IBOutlet private var infoPowerAdapterDisabledItem: NSMenuItem!
@@ -33,11 +34,58 @@ internal final class BTCommandsMenuDelegate: NSObject, NSMenuDelegate {
     @IBOutlet private var requestChargingToLimitItem: NSMenuItem!
     @IBOutlet private var cancelChargingRequestItem: NSMenuItem!
 
+    @IBOutlet private var pauseActivityItem: NSMenuItem!
+    @IBOutlet private var resumeActivityItem: NSMenuItem!
+
     private var refreshTimer: DispatchSourceTimer? = nil
+
+    private func hidePowerItems() {
+        self.disablePowerAdapterItem.isHidden = true
+        self.enablePowerAdapterItem.isHidden = true
+        self.chargeToFullNowItem.isHidden = true
+        self.chargeToLimitNowItem.isHidden = true
+        self.disableChargingItem.isHidden = true
+        self.requestChargingToFullItem.isHidden = true
+        self.requestChargingToLimitItem.isHidden = true
+        self.cancelChargingRequestItem.isHidden = true
+    }
 
     private func refresh() async {
         do {
             let state = try await BTActions.getState()
+
+            let enabledNum = state[BTStateInfo.Keys.enabled] as? NSNumber
+            guard let enabled = enabledNum?.boolValue else {
+                throw BTError.commFailed
+            }
+
+            guard enabled else {
+                self.infoUnknownStateItem.isHidden = true
+                self.infoPowerAdapterEnabledItem.isHidden = true
+                self.infoPowerAdapterDisabledItem.isHidden = true
+                self.infoChargingToLimitItem.isHidden = true
+                self.infoChargingToFullItem.isHidden = true
+                self.infoChargingUnknownModeItem.isHidden = true
+                self.infoNotChargingItem.isHidden = true
+                self.infoRequestedChargingToLimitItem.isHidden = true
+                self.infoRequestedChargingToFullItem.isHidden = true
+                self.infoNotChargingUnknownModeItem.isHidden = true
+
+                self.hidePowerItems()
+
+                self.pauseActivityItem.isHidden = true
+                self.resumeActivityItem.isHidden = false
+
+                self.infoPausedItem.isHidden = false
+
+                return
+            }
+
+            self.infoPausedItem.isHidden = true
+
+            self.resumeActivityItem.isHidden = true
+            self.pauseActivityItem.isHidden = false
+
             let powerDisabledNum =
             state[BTStateInfo.Keys.powerDisabled] as? NSNumber
             let connectedNum =
@@ -47,7 +95,7 @@ internal final class BTCommandsMenuDelegate: NSObject, NSMenuDelegate {
             let progressNum = state[BTStateInfo.Keys.progress] as? NSNumber
             let chargingModeNum =
             state[BTStateInfo.Keys.chargingMode] as? NSNumber
-            
+
             guard
                 let powerDisabled = powerDisabledNum?.boolValue,
                 let connected = connectedNum?.boolValue,
@@ -204,14 +252,7 @@ internal final class BTCommandsMenuDelegate: NSObject, NSMenuDelegate {
             self.infoRequestedChargingToFullItem.isHidden = true
             self.infoNotChargingUnknownModeItem.isHidden = true
 
-            self.disablePowerAdapterItem.isHidden = true
-            self.enablePowerAdapterItem.isHidden = true
-            self.chargeToFullNowItem.isHidden = true
-            self.chargeToLimitNowItem.isHidden = true
-            self.disableChargingItem.isHidden = true
-            self.requestChargingToFullItem.isHidden = true
-            self.requestChargingToLimitItem.isHidden = true
-            self.cancelChargingRequestItem.isHidden = true
+            self.hidePowerItems()
 
             self.infoUnknownStateItem.isHidden = false
 
@@ -288,6 +329,26 @@ internal final class BTCommandsMenuDelegate: NSObject, NSMenuDelegate {
         Task {
             do {
                 try await BTActions.disableCharging()
+            } catch {
+                BTErrorHandler.errorHandler(error: error)
+            }
+        }
+    }
+
+    @IBAction private func pauseActivityHandler(sender _: NSMenuItem) {
+        Task {
+            do {
+                try await BTActions.pauseActivity()
+            } catch {
+                BTErrorHandler.errorHandler(error: error)
+            }
+        }
+    }
+
+    @IBAction private func resumeActivityHandler(sender _: NSMenuItem) {
+        Task {
+            do {
+                try await BTActions.resumeActiivty()
             } catch {
                 BTErrorHandler.errorHandler(error: error)
             }

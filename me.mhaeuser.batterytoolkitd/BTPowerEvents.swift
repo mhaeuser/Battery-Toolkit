@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2022 - 2024 Marvin Häuser. All rights reserved.
+// Copyright (C) 2022 - 2025 Marvin Häuser. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
@@ -37,7 +37,7 @@ internal enum BTPowerEvents {
         }
     }
 
-    static func exit() {
+    private static func restoreState() {
         //
         // If the daemon is being updated, don't restore the default platform
         // power state.
@@ -50,6 +50,23 @@ internal enum BTPowerEvents {
         //
         // Don't free remaining resources, as we will exit anyway.
         //
+    }
+    
+    static func exit() {
+        guard self.powerCreated else {
+            return
+        }
+
+        self.restoreState()
+    }
+    
+    static func stop() {
+        assert(self.powerCreated)
+
+        self.unregisterLimitedPowerHandler()
+        self.unregisterPercentChangedHandler()
+        self.restoreState()
+        SMCComm.stop()
     }
 
     static func settingsChanged() {
@@ -97,6 +114,14 @@ internal enum BTPowerEvents {
     }
 
     private static func limitedPowerHandler(token _: Int32) {
+        //
+        // An unlucky dispatching order of LimitedPower and PercentChanged
+        // events may cause this constraint to actually be violated.
+        //
+        guard self.powerCreated else {
+            return
+        }
+
         self.handleLimitedPower()
     }
 
@@ -113,6 +138,9 @@ internal enum BTPowerEvents {
     }
 
     private static func registerLimitedPowerHandler() -> Bool {
+        guard !self.powerCreated else {
+            return true
+        }
         //
         // The charging state has no default value when starting the daemon.
         // We do not want to default to enabled, because this may cause many
@@ -126,16 +154,21 @@ internal enum BTPowerEvents {
         //
         BTPowerState.initState()
 
-        let success = BTDispatcher.registerLimitedPowerNotification { token in
+        self.powerCreated = BTDispatcher.registerLimitedPowerNotification { token in
             self.limitedPowerHandler(token: token)
         }
-        guard success else {
+        guard self.powerCreated else {
             return false
         }
 
         self.handleLimitedPower()
 
         return true
+    }
+
+    private static func unregisterLimitedPowerHandler() {
+        BTDispatcher.unregisterLimitedPowerNotification()
+        self.powerCreated = false
     }
 
     private static func registerPercentChangedHandler() -> Bool {
@@ -222,6 +255,7 @@ internal enum BTPowerEvents {
     }
 
     private static func handleLimitedPower() {
+        assert(self.powerCreated)
         //
         // Immediately disable sleep to not interrupt the setup phase.
         //

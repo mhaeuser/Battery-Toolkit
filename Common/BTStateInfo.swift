@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2022 Marvin Häuser. All rights reserved.
+// Copyright (C) 2022 - 2025 Marvin Häuser. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
@@ -19,6 +19,7 @@ internal enum BTStateInfo {
     }
 
     enum Keys {
+        static let enabled = "Enabled"
         static let powerDisabled = "PowerDisabled"
         static let connected = "Connected"
         static let chargingDisabled = "ChargingDisabled"

@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2022 - 2024 Marvin Häuser. All rights reserved.
+// Copyright (C) 2022 - 2025 Marvin Häuser. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
@@ -131,7 +131,35 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol, Sendable {
                     let success = BTPowerEvents.disableCharging()
                     reply(BTError(fromBool: success).rawValue)
                     return
-                    
+
+                case BTDaemonCommCommand.pauseActivity.rawValue:
+                    let authorized = self.checkRight(
+                        authData: authData,
+                        rightName: BTAuthorizationRights.manage
+                    )
+                    guard authorized else {
+                        reply(BTError.notAuthorized.rawValue)
+                        return
+                    }
+
+                    BTDaemon.pause()
+                    reply(BTError.success.rawValue)
+                    return
+
+                case BTDaemonCommCommand.resumeActivity.rawValue:
+                    let authorized = self.checkRight(
+                        authData: authData,
+                        rightName: BTAuthorizationRights.manage
+                    )
+                    guard authorized else {
+                        reply(BTError.notAuthorized.rawValue)
+                        return
+                    }
+
+                    BTDaemon.resume()
+                    reply(BTError.success.rawValue)
+                    return
+
                 default:
                     os_log("Unknown command: \(command)")
                     reply(BTError.commFailed.rawValue)

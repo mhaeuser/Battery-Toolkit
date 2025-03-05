@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2022 - 2024 Marvin Häuser. All rights reserved.
+// Copyright (C) 2022 - 2025 Marvin Häuser. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
@@ -57,5 +57,13 @@ internal enum BTActions {
 
     @BTBackgroundActor static func removeDaemon() async throws {
         try await BTDaemonManagement.remove()
+    }
+
+    @BTBackgroundActor static func pauseActivity() async throws {
+        try await BTDaemonXPCClient.pauseActivity()
+    }
+
+    @BTBackgroundActor static func resumeActiivty() async throws {
+        try await BTDaemonXPCClient.resumeActivity()
     }
 }

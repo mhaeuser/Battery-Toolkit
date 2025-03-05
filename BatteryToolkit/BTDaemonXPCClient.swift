@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2022 - 2024 Marvin Häuser. All rights reserved.
+// Copyright (C) 2022 - 2025 Marvin Häuser. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
@@ -93,6 +93,28 @@ internal enum BTDaemonXPCClient {
                 continuation: continuation,
                 authData: authData,
                 command: BTDaemonCommCommand.disableCharging
+            )
+        }
+    }
+
+    static func pauseActivity() async throws {
+        let authData = try await BTAppXPCClient.getManageAuthorization()
+        try await withCheckedThrowingContinuation { continuation in
+            self.runExecute(
+                continuation: continuation,
+                authData: authData,
+                command: BTDaemonCommCommand.pauseActivity
+            )
+        }
+    }
+
+    static func resumeActivity() async throws {
+        let authData = try await BTAppXPCClient.getManageAuthorization()
+        try await withCheckedThrowingContinuation { continuation in
+            self.runExecute(
+                continuation: continuation,
+                authData: authData,
+                command: BTDaemonCommCommand.resumeActivity
             )
         }
     }

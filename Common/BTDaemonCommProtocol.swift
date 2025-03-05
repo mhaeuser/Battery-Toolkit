@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2022 Marvin Häuser. All rights reserved.
+// Copyright (C) 2022 - 2025 Marvin Häuser. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
@@ -16,6 +16,8 @@ internal enum BTDaemonCommCommand: UInt8 {
     case removeLegacyHelperFiles
     case prepareDisable
     case isSupported
+    case pauseActivity
+    case resumeActivity
 }
 
 @objc internal protocol BTDaemonCommProtocol {

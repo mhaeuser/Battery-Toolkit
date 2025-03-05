@@ -152,6 +152,9 @@
                                         <menuItem title="Unknown State" enabled="NO" id="IN2-5L-mDF">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
+                                        <menuItem title="Background Acitivity Paused" hidden="YES" enabled="NO" id="Vgl-Kg-Sv3" userLabel="Background Activity Paused">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
                                         <menuItem title="Power Adapter: Enabled" hidden="YES" enabled="NO" id="zEi-td-Phh">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
@@ -221,6 +224,18 @@
                                                 <action selector="disableChargingHandlerWithSender:" target="Q4N-wh-Pcn" id="Ov9-zG-UwO"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="fJj-9A-Bqz"/>
+                                        <menuItem title="Pause Background Activity" hidden="YES" keyEquivalent="b" id="SF3-Mb-O2s">
+                                            <connections>
+                                                <action selector="pauseActivityHandlerWithSender:" target="Q4N-wh-Pcn" id="wQx-4l-2u4"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Resume Background Activity" hidden="YES" keyEquivalent="b" id="4ER-ok-uTQ">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="resumeActivityHandlerWithSender:" target="Q4N-wh-Pcn" id="oc9-qg-hF7"/>
+                                            </connections>
+                                        </menuItem>
                                     </items>
                                     <connections>
                                         <outlet property="delegate" destination="Q4N-wh-Pcn" id="dj2-3s-jcT"/>
@@ -257,13 +272,16 @@
                         <outlet property="infoChargingUnknownModeItem" destination="tXk-Dr-ZCO" id="993-kf-WOn"/>
                         <outlet property="infoNotChargingItem" destination="QRX-If-BNP" id="pws-tg-vIR"/>
                         <outlet property="infoNotChargingUnknownModeItem" destination="K5N-g3-QcY" id="W5T-N2-cV8"/>
+                        <outlet property="infoPausedItem" destination="oBQ-be-xxD" id="10R-0m-Y74"/>
                         <outlet property="infoPowerAdapterDisabledItem" destination="PTV-ys-cbR" id="x1b-VP-jsO"/>
                         <outlet property="infoPowerAdapterEnabledItem" destination="SUV-eg-AcA" id="aF7-Cc-TXn"/>
                         <outlet property="infoRequestedChargingToFullItem" destination="A7t-cy-HPp" id="QO7-Nx-W0k"/>
                         <outlet property="infoRequestedChargingToLimitItem" destination="dq4-4h-B2m" id="6B1-31-zzF"/>
                         <outlet property="infoUnknownStateItem" destination="ASg-q2-OT9" id="xwu-6H-eMl"/>
+                        <outlet property="pauseActivityItem" destination="R8X-od-FcL" id="cmQ-DQ-CcT"/>
                         <outlet property="requestChargingToFullItem" destination="FYa-Xe-gc8" id="36X-kO-f71"/>
                         <outlet property="requestChargingToLimitItem" destination="07e-WI-TcK" id="GWU-xi-eZ7"/>
+                        <outlet property="resumeActivityItem" destination="oa7-84-urH" id="TUN-f9-BQ0"/>
                     </connections>
                 </customObject>
                 <customObject id="Q4N-wh-Pcn" customClass="BTCommandsMenuDelegate" customModule="Battery_Toolkit" customModuleProvider="target">
@@ -279,13 +297,16 @@
                         <outlet property="infoChargingUnknownModeItem" destination="4Kg-1R-KWJ" id="mnc-pc-oBy"/>
                         <outlet property="infoNotChargingItem" destination="jSw-yh-dVi" id="uMz-ij-r7A"/>
                         <outlet property="infoNotChargingUnknownModeItem" destination="ptj-AT-ybP" id="4bQ-Ri-CwK"/>
+                        <outlet property="infoPausedItem" destination="Vgl-Kg-Sv3" id="GvS-oi-RNg"/>
                         <outlet property="infoPowerAdapterDisabledItem" destination="sMO-Ij-34k" id="Nky-lF-DNE"/>
                         <outlet property="infoPowerAdapterEnabledItem" destination="zEi-td-Phh" id="cLu-YI-nde"/>
                         <outlet property="infoRequestedChargingToFullItem" destination="ok6-b9-12l" id="J5L-oW-GDk"/>
                         <outlet property="infoRequestedChargingToLimitItem" destination="gt7-Wq-hIQ" id="fAQ-NS-TMm"/>
                         <outlet property="infoUnknownStateItem" destination="IN2-5L-mDF" id="zrl-EZ-u7q"/>
+                        <outlet property="pauseActivityItem" destination="SF3-Mb-O2s" id="0xH-qc-BnL"/>
                         <outlet property="requestChargingToFullItem" destination="u4J-Rf-19m" id="I4W-ry-O0v"/>
                         <outlet property="requestChargingToLimitItem" destination="xbN-4R-0nt" id="VI9-Tc-WQp"/>
+                        <outlet property="resumeActivityItem" destination="4ER-ok-uTQ" id="ndC-9s-vra"/>
                     </connections>
                 </customObject>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
@@ -293,6 +314,9 @@
                 <menu id="95L-Hg-MpQ" userLabel="MenuBarMenu">
                     <items>
                         <menuItem title="Unknown State" enabled="NO" id="ASg-q2-OT9">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                        </menuItem>
+                        <menuItem title="Background Acitivity Paused" hidden="YES" enabled="NO" id="oBQ-be-xxD" userLabel="Background Activity Paused">
                             <modifierMask key="keyEquivalentModifierMask"/>
                         </menuItem>
                         <menuItem title="Power Adapter: Enabled" hidden="YES" enabled="NO" id="SUV-eg-AcA">
@@ -365,6 +389,17 @@
                             </connections>
                         </menuItem>
                         <menuItem isSeparatorItem="YES" id="sGg-wU-dOW"/>
+                        <menuItem title="Pause Background Activity" hidden="YES" keyEquivalent="b" id="R8X-od-FcL">
+                            <connections>
+                                <action selector="pauseActivityHandlerWithSender:" target="Yoz-Et-jXW" id="zzP-KW-Rg5"/>
+                            </connections>
+                        </menuItem>
+                        <menuItem title="Resume Background Activity" hidden="YES" keyEquivalent="b" id="oa7-84-urH">
+                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                            <connections>
+                                <action selector="resumeActivityHandlerWithSender:" target="Yoz-Et-jXW" id="nqU-EF-SJw"/>
+                            </connections>
+                        </menuItem>
                         <menuItem title="Settings…" keyEquivalent="," id="78l-zk-UHb" customClass="BTSettingsMenuItem" customModule="Battery_Toolkit" customModuleProvider="target">
                             <connections>
                                 <segue destination="Lf9-ud-Dh4" kind="show" id="UU8-oN-xdh"/>

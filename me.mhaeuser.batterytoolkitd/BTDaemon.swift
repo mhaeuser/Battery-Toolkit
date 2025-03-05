@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2022 Marvin Häuser. All rights reserved.
+// Copyright (C) 2022 - 2025 Marvin Häuser. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
@@ -11,6 +11,7 @@ import os.log
 @MainActor
 internal enum BTDaemon {
     private(set) static var supported = false
+    private static var enabled = false
 
     private static var uniqueId: Data? = nil
 
@@ -22,6 +23,10 @@ internal enum BTDaemon {
     }
 
     static func getState() -> [String: NSObject & Sendable] {
+        guard enabled else {
+            return [BTStateInfo.Keys.enabled: NSNumber(value: 0)]
+        }
+
         let chargingDisabled = BTPowerState.isChargingDisabled()
         let connected = BTPowerEvents.unlimitedPower
         let powerDisabled = BTPowerState.isPowerAdapterDisabled()
@@ -29,6 +34,7 @@ internal enum BTDaemon {
         let mode = BTPowerEvents.chargingMode
 
         return [
+            BTStateInfo.Keys.enabled: NSNumber(value: 1),
             BTStateInfo.Keys.powerDisabled: NSNumber(value: powerDisabled),
             BTStateInfo.Keys.connected: NSNumber(value: connected),
             BTStateInfo.Keys
@@ -36,6 +42,37 @@ internal enum BTDaemon {
             BTStateInfo.Keys.progress: NSNumber(value: progress.rawValue),
             BTStateInfo.Keys.chargingMode: NSNumber(value: mode.rawValue),
         ]
+    }
+    
+    private static func start() throws {
+        try BTPowerEvents.start()
+    }
+
+    static func resume() {
+        guard !self.enabled else {
+            return
+        }
+
+        do {
+            try self.start()
+            self.enabled = true
+        } catch {
+            //
+            // If we got unsupported here, this would contradict earlier
+            // success. Force a restart just in case.
+            //
+            os_log("Power events start failed")
+            exit(-1)
+        }
+    }
+    
+    static func pause() {
+        guard self.enabled else {
+            return
+        }
+
+        self.enabled = false
+        BTPowerEvents.stop()
     }
 
     private static func main() {
@@ -51,7 +88,8 @@ internal enum BTDaemon {
         GlobalSleep.restoreOnStart()
 
         do {
-            try BTPowerEvents.start()
+            try self.start()
+            self.enabled = true
             self.supported = true
 
             let termSource = DispatchSource.makeSignalSource(
