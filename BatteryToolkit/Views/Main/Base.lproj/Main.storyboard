@@ -199,7 +199,7 @@
                                                 <action selector="chargeToFullHandlerWithSender:" target="Q4N-wh-Pcn" id="GIW-CD-LNk"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Charge to Limit Now" hidden="YES" keyEquivalent="t" id="E3R-Fa-W18">
+                                        <menuItem title="Charge to Limit Now" hidden="YES" keyEquivalent="l" id="E3R-Fa-W18">
                                             <connections>
                                                 <action selector="chargeToLimitHandlerWithSender:" target="Q4N-wh-Pcn" id="Wkk-3p-fZa"/>
                                             </connections>
@@ -214,7 +214,7 @@
                                                 <action selector="chargeToFullHandlerWithSender:" target="Q4N-wh-Pcn" id="GCg-U0-wy3"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Request Charging to Limit" hidden="YES" keyEquivalent="t" id="xbN-4R-0nt">
+                                        <menuItem title="Request Charging to Limit" hidden="YES" keyEquivalent="l" id="xbN-4R-0nt">
                                             <connections>
                                                 <action selector="chargeToLimitHandlerWithSender:" target="Q4N-wh-Pcn" id="Baz-8K-3Vk"/>
                                             </connections>
@@ -363,7 +363,7 @@
                                 <action selector="chargeToFullHandlerWithSender:" target="Yoz-Et-jXW" id="i2a-gy-Hp6"/>
                             </connections>
                         </menuItem>
-                        <menuItem title="Charge to Limit Now" hidden="YES" keyEquivalent="t" id="TNZ-j8-gVs">
+                        <menuItem title="Charge to Limit Now" hidden="YES" keyEquivalent="l" id="TNZ-j8-gVs">
                             <connections>
                                 <action selector="chargeToLimitHandlerWithSender:" target="Yoz-Et-jXW" id="ySg-yc-sEK"/>
                             </connections>
@@ -378,7 +378,7 @@
                                 <action selector="chargeToFullHandlerWithSender:" target="Yoz-Et-jXW" id="bj7-c6-lty"/>
                             </connections>
                         </menuItem>
-                        <menuItem title="Request Charging to Limit" hidden="YES" keyEquivalent="t" id="07e-WI-TcK">
+                        <menuItem title="Request Charging to Limit" hidden="YES" keyEquivalent="l" id="07e-WI-TcK">
                             <connections>
                                 <action selector="chargeToLimitHandlerWithSender:" target="Yoz-Et-jXW" id="kEt-T6-WQS"/>
                             </connections>
