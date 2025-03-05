@@ -154,9 +154,6 @@ internal final class BTCommandsMenuDelegate: NSObject, NSMenuDelegate {
                 self.infoChargingToFullItem.isHidden = true
                 self.infoChargingUnknownModeItem.isHidden = true
                 
-                self.chargeToFullNowItem.isHidden = true
-                self.chargeToLimitNowItem.isHidden = true
-                
                 switch chargingMode {
                 case Int(BTStateInfo.ChargingMode.standard.rawValue):
                     self.infoRequestedChargingToLimitItem.isHidden = true
