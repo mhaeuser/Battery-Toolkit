@@ -25,5 +25,6 @@ internal enum BTStateInfo {
         static let chargingDisabled = "ChargingDisabled"
         static let progress = "Progress"
         static let chargingMode = "Mode"
+        static let maxCharge = "MaxCharge"
     }
 }

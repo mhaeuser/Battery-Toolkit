@@ -95,13 +95,16 @@ internal final class BTCommandsMenuDelegate: NSObject, NSMenuDelegate {
             let progressNum = state[BTStateInfo.Keys.progress] as? NSNumber
             let chargingModeNum =
             state[BTStateInfo.Keys.chargingMode] as? NSNumber
+            let maxChargeNum =
+            state[BTStateInfo.Keys.maxCharge] as? NSNumber
 
             guard
                 let powerDisabled = powerDisabledNum?.boolValue,
                 let connected = connectedNum?.boolValue,
                 let chargingDisabled = chargingDisabledNum?.boolValue,
                 let progress = progressNum?.intValue,
-                let chargingMode = chargingModeNum?.intValue
+                let chargingMode = chargingModeNum?.intValue,
+                let maxCharge = maxChargeNum?.intValue
             else {
                 throw BTError.commFailed
             }
@@ -186,7 +189,13 @@ internal final class BTCommandsMenuDelegate: NSObject, NSMenuDelegate {
                 .belowMax.rawValue
             let chargeBelowFull = progress <= BTStateInfo.ChargingProgress
                 .belowFull.rawValue
-            
+
+            self.infoChargingToLimitItem.title = "Charging to \(maxCharge) %"
+            self.infoRequestedChargingToLimitItem.title = "Requested Charging to \(maxCharge) %"
+
+            self.chargeToLimitNowItem.title = "Charge to \(maxCharge) % Now"
+            self.requestChargingToLimitItem.title = "Request Charging to \(maxCharge) % Now"
+
             if connected {
                 self.requestChargingToFullItem.isHidden = true
                 self.requestChargingToLimitItem.isHidden = true
