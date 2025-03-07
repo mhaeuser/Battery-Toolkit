@@ -77,6 +77,7 @@
 		CEB4A42828D3B184004FA277 /* BTStateInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4A42728D3B184004FA277 /* BTStateInfo.swift */; };
 		CEB4A42928D3B184004FA277 /* BTStateInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4A42728D3B184004FA277 /* BTStateInfo.swift */; };
 		CEB4A42F28D4D4D0004FA277 /* BTSettingsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4A42E28D4D4D0004FA277 /* BTSettingsWindowController.swift */; };
+		CED1AB262D7B61470049981E /* PowerEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED1AB252D7B61400049981E /* PowerEvents.swift */; };
 		CED8DD3928C365790082C02A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CED8DD3828C365790082C02A /* Security.framework */; };
 		CEE1655328E58D9100DC2443 /* SecCodeEx.c in Sources */ = {isa = PBXBuildFile; fileRef = CEF3496E28DCD36100A1CECD /* SecCodeEx.c */; };
 		CEE1655528E58DAF00DC2443 /* libSecCodeEx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CEE1654F28E4B65B00DC2443 /* libSecCodeEx.a */; };
@@ -229,6 +230,7 @@
 		CEB4A42728D3B184004FA277 /* BTStateInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTStateInfo.swift; sourceTree = "<group>"; };
 		CEB4A42E28D4D4D0004FA277 /* BTSettingsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTSettingsWindowController.swift; sourceTree = "<group>"; };
 		CEC321AF284BAA2B009B9A30 /* BTPowerEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTPowerEvents.swift; sourceTree = "<group>"; };
+		CED1AB252D7B61400049981E /* PowerEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerEvents.swift; sourceTree = "<group>"; };
 		CED8DD3728C364FA0082C02A /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		CED8DD3828C365790082C02A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		CEE1654F28E4B65B00DC2443 /* libSecCodeEx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSecCodeEx.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -366,6 +368,7 @@
 		CE555D89285D2A0B0031A6F9 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				CED1AB252D7B61400049981E /* PowerEvents.swift */,
 				CE3179E928DB540600E9C121 /* SimpleAuth.swift */,
 				CE1F5E3528D7339D00F61F67 /* CSIdentification.swift */,
 				CE2B96BF28A7E2BB00FE3DDB /* GlobalSleep.swift */,
@@ -693,6 +696,7 @@
 				CEA80FD2285A28230064ADEA /* BTSettings.swift in Sources */,
 				CEB4A42928D3B184004FA277 /* BTStateInfo.swift in Sources */,
 				CE50557128D65B48000E4387 /* BTXPCValidation.swift in Sources */,
+				CED1AB262D7B61470049981E /* PowerEvents.swift in Sources */,
 				CE2B96C028A7E2BB00FE3DDB /* GlobalSleep.swift in Sources */,
 				CE3179EC28DB543200E9C121 /* SimpleAuth.swift in Sources */,
 				CE9E6DEC2BF106A10070ABB2 /* SMCComm+MagSafe.swift in Sources */,

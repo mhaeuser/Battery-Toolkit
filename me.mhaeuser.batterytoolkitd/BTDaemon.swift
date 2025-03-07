@@ -6,6 +6,7 @@
 import BTPreprocessor
 import Foundation
 import os.log
+import IOKit.pwr_mgt
 
 @main
 @MainActor
@@ -48,6 +49,24 @@ internal enum BTDaemon {
     
     private static func start() throws {
         try BTPowerEvents.start()
+
+        let callback: IOServiceInterestCallback = { refCon, service, messageType, messageArgument in
+            if messageType == PowerEvents.kIOMessageCanSystemSleep ||
+               messageType == PowerEvents.kIOMessageSystemWillSleep {
+                IOAllowPowerChange(
+                    PowerEvents.root_port,
+                    Int(bitPattern: messageArgument)
+                )
+            } else if messageType == PowerEvents.kIOMessageSystemHasPoweredOn {
+                BTPowerEvents.wakeFromSleep()
+            }
+        }
+
+        let success = PowerEvents.register(callback: callback)
+        guard success else {
+            os_log("Error registering system power event")
+            exit(-1)
+        }
     }
 
     static func resume() {
@@ -72,6 +91,8 @@ internal enum BTDaemon {
         guard self.enabled else {
             return
         }
+
+        PowerEvents.deregister()
 
         self.enabled = false
         BTPowerEvents.stop()

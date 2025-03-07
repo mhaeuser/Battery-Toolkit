@@ -37,6 +37,38 @@ internal enum BTPowerState {
         }
     }
 
+    static func refreshState() {
+        //
+        // Refresh platform stated when waking from sleep, as events might not
+        // fire.
+        //
+        let chargingDisabled = SMCComm.Power.isChargingDisabled()
+        if chargingDisabled != self.chargingDisabled {
+            self.chargingDisabled = chargingDisabled
+
+            if chargingDisabled {
+                GlobalSleep.restore()
+            } else {
+                GlobalSleep.disable()
+            }
+        }
+
+        let powerDisabled = SMCComm.Power.isPowerAdapterDisabled()
+        if powerDisabled != self.powerDisabled {
+            self.powerDisabled = powerDisabled
+
+            if powerDisabled {
+                self.disableAdapterSleep()
+            } else {
+                self.restoreAdapterSleep()
+            }
+        }
+
+        if BTSettings.magSafeSync {
+            self.syncMagSafeState()
+        }
+    }
+
     static func getPercentRemaining() -> (UInt8, Bool, Bool) {
         return IOPSPrivate.GetPercentRemaining() ?? (100, false, false)
     }

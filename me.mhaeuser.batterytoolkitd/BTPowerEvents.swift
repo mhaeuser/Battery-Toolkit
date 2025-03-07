@@ -69,6 +69,27 @@ internal enum BTPowerEvents {
         SMCComm.stop()
     }
 
+    static func wakeFromSleep() {
+        //
+        // Immediately disable sleep to not interrupt the setup phase.
+        //
+        GlobalSleep.disable()
+        
+        assert(self.powerCreated)
+
+        BTPowerState.refreshState()
+
+        if self.percentCreated {
+            _ = self.handleChargeHysteresis()
+        }
+
+        self.handleLimitedPowerGuarded()
+        //
+        // Restore sleep from the setup phase.
+        //
+        GlobalSleep.restore()
+    }
+
     static func settingsChanged() {
         guard self.percentCreated else {
             return
@@ -254,12 +275,8 @@ internal enum BTPowerEvents {
             IOPSPrivate.DrawingUnlimitedPower()
     }
 
-    private static func handleLimitedPower() {
+    private static func handleLimitedPowerGuarded() {
         assert(self.powerCreated)
-        //
-        // Immediately disable sleep to not interrupt the setup phase.
-        //
-        GlobalSleep.disable()
 
         let unlimitedPower = self.drawingUnlimitedPower()
         self.unlimitedPower = unlimitedPower
@@ -278,6 +295,15 @@ internal enum BTPowerEvents {
             //
             _ = BTPowerEvents.disableCharging()
         }
+    }
+
+    private static func handleLimitedPower() {
+        //
+        // Immediately disable sleep to not interrupt the setup phase.
+        //
+        GlobalSleep.disable()
+
+        self.handleLimitedPowerGuarded()
         //
         // Restore sleep from the setup phase.
         //
