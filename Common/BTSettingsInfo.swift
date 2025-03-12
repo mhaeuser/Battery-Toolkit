@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2022 - 2024 Marvin Häuser. All rights reserved.
+// Copyright (C) 2022 - 2025 Marvin Häuser. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
@@ -14,8 +14,8 @@ internal enum BTSettingsInfo {
     }
 
     enum Bounds {
-        static let minChargeMin: UInt8 = 50
-        static let maxChargeMin: UInt8 = 55
+        static let minChargeMin: UInt8 = 20
+        static let maxChargeMin: UInt8 = 50
     }
 
     enum Keys {
