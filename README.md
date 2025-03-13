@@ -58,7 +58,7 @@ The Battery Toolkit “Commands“ menu and its menu bar extra allow you to issu
 2. Open Terminal and run `brew tap mhaeuser/mhaeuser`
 3. Then run `brew install battery-toolkit`
 
-You may want to add the `--no-quarantine` flag onto the end of the install command to bypass GateKeeper, but beware the potential security risks of doing so.
+You may want to add the `--no-quarantine` flag onto the end of the install command to bypass Gatekeeper more conveniently, but beware the potential security risks of doing so.
 
 Otherwise, follow the steps mentioned below.
 
@@ -84,8 +84,8 @@ On macOS 15 Sequoia or above:
 >  Go to macOS System Settings > Battery > the (i) next to Battery Health > Optimized Battery Charging > toggle off
 
 1. Open Battery Toolkit from your Applications folder
-2. The menu bar will change to show the application menus. There is also a menu bar Extra.
-3. Configure the settings through the menus as desired.
+2. The menu bar will change to show the application menus, and a menu bar extra will should be visible
+3. Configure the settings through either method shown below
 
 |![Menu Bar Main](Resources/menubarMain.png)|![Menu Bar Commands](Resources/menubarCommands.png)|![Menu Bar Extra](Resources/menuExtra.png)|
 |:----------|:----------|:----------|
@@ -97,10 +97,13 @@ If you want to change any settings, simply re-open the app.
 # Uninstall
 
 1. Focus Battery Toolkit
-2. Open the Battery Toolkit menu bar extra
-3. Toggle on "Pause Background Activity"
-4. Move the app to the Trash
-5. Empty the Trash (else the daemon may continue running from the Trash)
+2. Open the main Battery Toolkit menu in the menu bar
+3. Turn on "Disable Background Activity"
+4. Move the app to the Trash and empty it
+
+|<img alt="Disable Background Activity" src="/Resources/menubarUninstallStep.png" width=350>|
+|:--:| 
+| *Disable Background Activity from Menu Bar* |
 
 # Limitations
 
