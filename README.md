@@ -1,10 +1,10 @@
 <p align="center">
- <img alt="Battery Toolkit logo" src="/Resources/LogoCaption.png" width=400 align="center">
+ <img alt="Battery Toolkit logo" src="/Resources/LogoCaption.png" width=500 align="center">
 </p>
 
 <p align="center">Control the platform power state of your Apple Silicon Mac.</p>
 
-<p align="center"><a href="#features">Features</a> &bull; <a href="#install">Install</a> &bull; <a href="#usage">Usage</a> &bull; <a href="#uninstall"> Uninstall </a> &bull; <a href="#compatibility"> Compatibility </a> &bull; <a href="#known-issues--caveats"> Known Issues / Caveats </a> &bull; <a href="#technical-details"> Technical Details </a></p>
+<p align="center"><a href="#features">Features</a> &bull; <a href="#install">Install</a> &bull; <a href="#usage">Usage</a> &bull; <a href="#uninstall"> Uninstall </a> &bull;<a href="#limitations"> Limitations </a> &bull; <a href="#technical-details"> Technical Details </a></p>
 
 -----
 
@@ -30,7 +30,7 @@ If you want to discharge the battery of your Mac, e.g., to recalibrate it, you c
 |:--:| 
 | *Battery Toolkit Power Settings* |
 
-# Grants you manual control
+## Grants you manual control
 
 The Battery Toolkit “Commands“ menu and its menu bar extra allow you to issue various commands related to the power state of your Mac. These include:
 * Enabling and disabling the power adapter
@@ -44,47 +44,77 @@ The Battery Toolkit “Commands“ menu and its menu bar extra allow you to issu
 
 # Install
 
+> [!IMPORTANT]
+> Battery Toolkit currently only supports Apple Silicon Macs [#15](https://github.com/mhaeuser/Battery-Toolkit/issues/15)
+
 ### Manual Install
 1. Go to the [releases](https://github.com/mhaeuser/Battery-Toolkit/releases/latest)
-2. Download the newest non-dSYM build (e.g. `Battery-Toolkit-1.6.zip`)
-3. Unzip it (double click)
-4. Drag it into your Applications folder
-5. Right click the `Battery Toolkit.app`, then click "Open", then allow in the dialog box
-6. If that doesn't work, go to `System Settings -> Privacy & Security` and you should see a prompt at the bottom of the screen allow opening Battery Toolkit. Allow it.
-7. Open Battery Toolkit again from Applications folder.
+2. Download the latest non-dSYM build (e.g. `Battery-Toolkit-1.6.zip`)
+3. Unzip the archive
+4. Drag `Battery Toolkit.app` into your Applications folder
 
-### Install via Homebrew
-1. Install [Homebrew](https://brew.sh) if you haven't already.
+### Install via Homebrew :beer:
+1. Install [Homebrew](https://brew.sh) if you haven't already
 2. Open Terminal and run `brew tap mhaeuser/mhaeuser`
-2. Then run `brew install battery-toolkit --no-quarantine`
-4. Type password if prompted.
-5. Open Battery Toolkit from your Applications folder
+3. Then run `brew install battery-toolkit`
 
-> [!CAUTION]
-> To ensure there is no chance of interference, please turn “Optimized Charging” **off** when Battery Toolkit is in use.
+You may want to add the `--no-quarantine` flag onto the end of the install command to bypass GateKeeper, but beware the potential security risks of doing so.
+
+Otherwise, follow the steps mentioned below.
+
+### Opening the App
+Because Battery Toolkit is not notarized, you will have to manually allow it to open.
+
+On macOS 14 Sonoma or below:
+1. Right click the `Battery Toolkit.app`
+2. Click "Open"
+3. Click allow in the dialog box
+
+On macOS 15 Sequoia or above:
+1. Try to open the app, it will tell you it's blocked
+2. Go to `System Settings > Privacy & Security` and scroll to the bottom
+3. Click the prompt to allow Battery Toolkit to open
+4. Click allow on the next dialog box and authenticate
+5. Open Battery Toolkit again from Applications folder
 
 # Usage
-1. Open Battery Toolkit
-2. Click the menu bar icon
-3. Configure your desired setting through the menu options
 
-If you prefer, you can quit the GUI through the menu bar extra. Battery Toolkit will keep running in the background.
+> [!CAUTION]
+> To ensure there is no chance of interference, please turn “Optimized Charging” **off** when Battery Toolkit is in use. <br>
+>  Go to macOS System Settings > Battery > the (i) next to Battery Health > Optimized Battery Charging > toggle off
+
+1. Open Battery Toolkit from your Applications folder
+2. The menu bar will change to show the application menus. There is also a menu bar Extra.
+3. Configure the settings through the menus as desired.
+
+|![Menu Bar Main](Resources/menubarMain.png)|![Menu Bar Commands](Resources/menubarCommands.png)|![Menu Bar Extra](Resources/menuExtra.png)|
+|:----------|:----------|:----------|
+| *Battery Toolkit in Menu Bar* | *Commands in Menu Bar* |  *Menu Bar Extra*  |
+
+If you prefer, you can quit the GUI to hide the menu bar extra and Battery Toolkit will keep running in the background.
 If you want to change any settings, simply re-open the app.
 
 # Uninstall
 
-1. Enable "Pause Background Activity" from the Battery Toolkit menu bar item
-2. Move the app to the trash.
+1. Focus Battery Toolkit
+2. Open the Battery Toolkit menu bar extra
+3. Toggle on "Pause Background Activity"
+4. Move the app to the Trash
+5. Empty the Trash (else the daemon may continue running from the Trash)
 
-# Compatibility
+# Limitations
 
-* **Battery Toolkit currently only supports Apple Silicon Macs.**
-* M4 series MacBooks may have some small issues [#55](https://github.com/mhaeuser/Battery-Toolkit/issues/55)
+Battery Toolkit disables sleep while it is charging, because it has to actively disable charging once reaching the maximum. [#83](https://github.com/mhaeuser/Battery-Toolkit/issues/83)
 
-# Known Issues / Caveats
+Sleep is re-enabled once charging is stopped for any reason, e.g., reaching the maximum charge level, manual cancellation, or unplugging the MacBook.
 
-* Battery Toolkit disables sleep while it is charging, because it has to actively disable charging once reaching the maximum. [#83](https://github.com/mhaeuser/Battery-Toolkit/issues/83)
-* Battery Toolkit cannot control the charge state when the machine is shut down. If charger remains plugged in while the Mac is off, battery will charge to 100% as normal.
+<br>
+
+No apps, including Battery Toolkit, can control the charge state when the machine is shut down. If the charger remains plugged in while the Mac is off, the battery will charge to 100%.
+
+Note that sleep should usually be disabled when the power adapter is disabled, as this will exit Clamshell mode and the machine will sleep immediately if the lid is closed.
+
+See the toggle in the Battery Toolkit menu extra, in the Settings dialog.
 
 # Technical Details
 
