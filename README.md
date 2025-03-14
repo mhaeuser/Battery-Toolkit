@@ -39,7 +39,7 @@ The Battery Toolkit "Commands" menu and its menu bar extra allow you to issue va
 * Stopping charging immediately
 * Pausing all background activity
 
-|<img alt="Menu Bar Extra" src="Resources/MenuBarExtra.png">|
+|<img alt="Menu Bar Extra" src="Resources/MenuBarExtra.png" width=283>|
 |:----------|
 | **Fig. 2**. *Menu Bar Extra* |
 
@@ -88,7 +88,7 @@ On macOS 15 Sequoia or above:
 2. The menu bar will change to show the app menus, and a menu bar extra will should be visible
 3. Configure the settings through either method (see **Fig. 2, 3, 4**)
 
-|<img alt="Menu Bar Main" src="Resources/MenuBarMain.png" width=350>|<img alt="Menu Bar Extra" src="Resources/MenuBarCommands.png" width=275>|
+|<img alt="Menu Bar Main" src="Resources/MenuBarMain.png" width=316>|<img alt="Menu Bar Extra" src="Resources/MenuBarCommands.png" width=248>|
 |:----------|:----------|
 | **Fig. 3**. *Main Menu* | **Fig. 4**. *Menu Bar Commands* |
 
