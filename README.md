@@ -26,7 +26,7 @@ If you want to discharge the battery of your Mac, e.g., to recalibrate it, you c
 
 **Note:** Your Mac may go to sleep immediately after enabling the power adapter again. This is a software bug in macOS and cannot easily be worked around.
 
-|![Power Settings](Resources/PowerSettings.png)|
+|<img alt="Power Settings" src="Resources/PowerSettings.png" width=607>|
 |:--:| 
 | **Fig. 1**. *Power Settings* |
 
