@@ -122,3 +122,4 @@ Note that sleep should usually be disabled when the power adapter is disabled, a
 
 # Credits
 * Icon based on [reference icon by Streamline](https://seekicon.com/free-icon/rechargable-battery_1)
+* README overhauled by [rogue](https://github.com/realrogue)
