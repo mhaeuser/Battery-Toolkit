@@ -59,19 +59,19 @@
             <objects>
                 <viewController storyboardIdentifier="SettingsViewController" showSeguePresentationStyle="single" id="qK6-EM-YZH" userLabel="SettingsViewController" customClass="BTSettingsViewController" customModule="Battery_Toolkit" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" translatesAutoresizingMaskIntoConstraints="NO" id="IvC-q3-fvl" userLabel="Settings View">
-                        <rect key="frame" x="0.0" y="0.0" width="495" height="317"/>
+                        <rect key="frame" x="0.0" y="0.0" width="495" height="353"/>
                         <subviews>
                             <tabView allowsTruncatedLabels="NO" type="noTabsNoBorder" translatesAutoresizingMaskIntoConstraints="NO" id="NXG-fh-uCo">
-                                <rect key="frame" x="0.0" y="69" width="495" height="248"/>
+                                <rect key="frame" x="0.0" y="69" width="495" height="284"/>
                                 <font key="font" metaFont="system"/>
                                 <tabViewItems>
                                     <tabViewItem label="Power" identifier="" id="IMi-pw-cwy" userLabel="Power">
                                         <view key="view" id="Blc-dd-9Qv">
-                                            <rect key="frame" x="0.0" y="0.0" width="495" height="248"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="495" height="284"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nq7-TF-yL4" userLabel="Max Stepper">
-                                                    <rect key="frame" x="442" y="128" width="19" height="28"/>
+                                                    <rect key="frame" x="442" y="164" width="19" height="28"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="CgW-fv-xEB"/>
                                                         <constraint firstAttribute="width" constant="13" id="LgR-Wb-JpC"/>
@@ -81,8 +81,8 @@
                                                         <binding destination="qK6-EM-YZH" name="value" keyPath="self.maxChargeNum" id="cm5-lb-m9T"/>
                                                     </connections>
                                                 </stepper>
-                                                <textField verticalHuggingPriority="750" mirrorLayoutDirectionWhenInternationalizing="never" preferredMaxLayoutWidth="30" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UVz-So-HqI" userLabel="Min Charge ">
-                                                    <rect key="frame" x="410" y="184" width="35" height="21"/>
+                                                <textField focusRingType="none" verticalHuggingPriority="750" mirrorLayoutDirectionWhenInternationalizing="never" preferredMaxLayoutWidth="30" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UVz-So-HqI" userLabel="Min Charge ">
+                                                    <rect key="frame" x="410" y="220" width="35" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="Kuf-Hs-zxF"/>
                                                         <constraint firstAttribute="width" constant="35" id="MRL-G0-91Y"/>
@@ -97,8 +97,8 @@
                                                         <binding destination="qK6-EM-YZH" name="value" keyPath="self.minChargeNum" id="nnI-Ek-gCl"/>
                                                     </connections>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zNI-F1-3zH" userLabel="Max Text">
-                                                    <rect key="frame" x="18" y="160" width="199" height="16"/>
+                                                <textField focusRingType="none" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zNI-F1-3zH" userLabel="Max Text">
+                                                    <rect key="frame" x="18" y="196" width="199" height="16"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="16" id="EuL-L8-25Q"/>
                                                         <constraint firstAttribute="height" constant="16" id="gnV-QU-pzo"/>
@@ -109,8 +109,8 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" preferredMaxLayoutWidth="16" translatesAutoresizingMaskIntoConstraints="NO" id="kwg-mE-JId" userLabel="Max %">
-                                                    <rect key="frame" x="461" y="134" width="16" height="16"/>
+                                                <textField focusRingType="none" horizontalHuggingPriority="750" verticalHuggingPriority="750" preferredMaxLayoutWidth="16" translatesAutoresizingMaskIntoConstraints="NO" id="kwg-mE-JId" userLabel="Max %">
+                                                    <rect key="frame" x="461" y="170" width="16" height="16"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="12" id="PgQ-Jv-j8D"/>
                                                         <constraint firstAttribute="height" constant="16" id="y7M-IN-ZLF"/>
@@ -122,7 +122,7 @@
                                                     </textFieldCell>
                                                 </textField>
                                                 <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BRS-K5-tS0" userLabel="Min Stepper">
-                                                    <rect key="frame" x="442" y="180" width="19" height="28"/>
+                                                    <rect key="frame" x="442" y="216" width="19" height="28"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="1ax-0q-HUH"/>
                                                         <constraint firstAttribute="width" constant="13" id="G5f-Ks-aX5"/>
@@ -132,8 +132,8 @@
                                                         <binding destination="qK6-EM-YZH" name="value" keyPath="self.minChargeNum" id="3y9-Yj-f6y"/>
                                                     </connections>
                                                 </stepper>
-                                                <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" preferredMaxLayoutWidth="16" translatesAutoresizingMaskIntoConstraints="NO" id="cpE-XY-Cm8" userLabel="Min %">
-                                                    <rect key="frame" x="461" y="186" width="16" height="16"/>
+                                                <textField focusRingType="none" horizontalHuggingPriority="750" verticalHuggingPriority="750" preferredMaxLayoutWidth="16" translatesAutoresizingMaskIntoConstraints="NO" id="cpE-XY-Cm8" userLabel="Min %">
+                                                    <rect key="frame" x="461" y="222" width="16" height="16"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="16" id="YOG-qc-MNm"/>
                                                         <constraint firstAttribute="width" constant="12" id="fxa-jc-NFy"/>
@@ -145,7 +145,7 @@
                                                     </textFieldCell>
                                                 </textField>
                                                 <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9gz-yn-SNi" userLabel="Max Slider">
-                                                    <rect key="frame" x="18" y="126" width="386" height="28"/>
+                                                    <rect key="frame" x="18" y="162" width="386" height="28"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="1lj-SG-3et"/>
                                                     </constraints>
@@ -154,8 +154,8 @@
                                                         <binding destination="qK6-EM-YZH" name="value" keyPath="self.maxChargeNum" id="D0u-LQ-jVe"/>
                                                     </connections>
                                                 </slider>
-                                                <textField verticalHuggingPriority="750" mirrorLayoutDirectionWhenInternationalizing="never" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jVr-RT-V0O" userLabel="Max Charge">
-                                                    <rect key="frame" x="410" y="132" width="35" height="21"/>
+                                                <textField focusRingType="none" verticalHuggingPriority="750" mirrorLayoutDirectionWhenInternationalizing="never" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jVr-RT-V0O" userLabel="Max Charge">
+                                                    <rect key="frame" x="410" y="168" width="35" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="35" id="hfS-3E-kvP"/>
                                                         <constraint firstAttribute="height" constant="21" id="inl-id-yxn"/>
@@ -171,7 +171,7 @@
                                                     </connections>
                                                 </textField>
                                                 <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GpU-47-1gg" userLabel="Min Slider">
-                                                    <rect key="frame" x="18" y="178" width="386" height="28"/>
+                                                    <rect key="frame" x="18" y="214" width="386" height="28"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="8u8-ge-GfV"/>
                                                     </constraints>
@@ -180,8 +180,8 @@
                                                         <binding destination="qK6-EM-YZH" name="value" keyPath="self.minChargeNum" id="zJb-gs-jH2"/>
                                                     </connections>
                                                 </slider>
-                                                <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xbB-Gg-5TD" userLabel="Min Text">
-                                                    <rect key="frame" x="18" y="212" width="197" height="16"/>
+                                                <textField focusRingType="none" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xbB-Gg-5TD" userLabel="Min Text">
+                                                    <rect key="frame" x="18" y="248" width="197" height="16"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="16" id="CJk-Zk-wNS"/>
                                                     </constraints>
@@ -194,8 +194,11 @@
                                                 <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="Z0P-wM-ijd">
                                                     <rect key="frame" x="20" y="121" width="455" height="5"/>
                                                 </box>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gVg-BR-NcJ" userLabel="Adapter Sleep Label">
+                                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gVg-BR-NcJ" userLabel="Adapter Sleep Label">
                                                     <rect key="frame" x="18" y="100" width="415" height="15"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="411" id="4kI-hg-lpd"/>
+                                                    </constraints>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Prevent your Mac from sleeping when the power adapter is disabled" id="fIe-Jy-1ot">
                                                         <font key="font" metaFont="system"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -205,7 +208,7 @@
                                                 <switch horizontalHuggingPriority="750" verticalHuggingPriority="750" controlSize="mini" baseWritingDirection="leftToRight" alignment="left" state="on" translatesAutoresizingMaskIntoConstraints="NO" id="ueg-wa-VAZ">
                                                     <rect key="frame" x="448" y="99" width="28" height="16"/>
                                                 </switch>
-                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Kei-Vw-B1H" userLabel="Adapter Sleep Secondary Label">
+                                                <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Kei-Vw-B1H" userLabel="Adapter Sleep Secondary Label">
                                                     <rect key="frame" x="18" y="69" width="415" height="28"/>
                                                     <textFieldCell key="cell" controlSize="small" selectable="YES" id="BOx-qm-k90">
                                                         <font key="font" metaFont="smallSystem"/>
@@ -214,15 +217,18 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4VU-bn-waD" userLabel="MagSafe Sync Label">
+                                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4VU-bn-waD" userLabel="MagSafe Sync Label">
                                                     <rect key="frame" x="18" y="45" width="415" height="16"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="411" id="VFA-XY-kKI"/>
+                                                    </constraints>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Sync MagSafe indicator light" id="47S-lH-kMQ">
                                                         <font key="font" metaFont="system"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Ghe-cF-C3L" userLabel="MagSafe Sync Secondary Label">
+                                                <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Ghe-cF-C3L" userLabel="MagSafe Sync Secondary Label">
                                                     <rect key="frame" x="18" y="0.0" width="415" height="42"/>
                                                     <textFieldCell key="cell" controlSize="small" selectable="YES" id="3Kk-Vy-Cgc">
                                                         <font key="font" metaFont="smallSystem"/>
@@ -234,6 +240,15 @@
                                                 <switch horizontalHuggingPriority="750" verticalHuggingPriority="750" controlSize="mini" baseWritingDirection="leftToRight" alignment="left" translatesAutoresizingMaskIntoConstraints="NO" id="Sq5-KE-c3T">
                                                     <rect key="frame" x="448" y="45" width="28" height="16"/>
                                                 </switch>
+                                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eKL-lO-rZG" userLabel="Charging Sleep">
+                                                    <rect key="frame" x="18" y="132" width="459" height="28"/>
+                                                    <textFieldCell key="cell" controlSize="small" id="1HE-SM-FyJ">
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                        <string key="title">Your Mac will be prevented from sleeping while charging to monitor its battery level. Sleep is enabled again once your Mac stops charging for any reason.</string>
+                                                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="cpE-XY-Cm8" firstAttribute="centerY" secondItem="GpU-47-1gg" secondAttribute="centerY" id="1dl-YS-6Zu"/>
@@ -243,9 +258,9 @@
                                                 <constraint firstItem="gVg-BR-NcJ" firstAttribute="top" secondItem="Z0P-wM-ijd" secondAttribute="bottom" constant="8" symbolic="YES" id="6JY-Uc-bCv"/>
                                                 <constraint firstItem="jVr-RT-V0O" firstAttribute="centerY" secondItem="9gz-yn-SNi" secondAttribute="centerY" id="7Rl-Gj-COU"/>
                                                 <constraint firstItem="nq7-TF-yL4" firstAttribute="centerY" secondItem="9gz-yn-SNi" secondAttribute="centerY" id="8ev-xd-I2H"/>
-                                                <constraint firstItem="Z0P-wM-ijd" firstAttribute="top" secondItem="nq7-TF-yL4" secondAttribute="bottom" constant="8" symbolic="YES" id="AOB-F8-qtX"/>
                                                 <constraint firstItem="BRS-K5-tS0" firstAttribute="centerY" secondItem="GpU-47-1gg" secondAttribute="centerY" id="B0V-0o-CzJ"/>
                                                 <constraint firstItem="Kei-Vw-B1H" firstAttribute="leading" secondItem="gVg-BR-NcJ" secondAttribute="leading" id="BIy-17-5GJ"/>
+                                                <constraint firstItem="eKL-lO-rZG" firstAttribute="leading" secondItem="9gz-yn-SNi" secondAttribute="leading" id="BY0-uc-RVE"/>
                                                 <constraint firstAttribute="trailing" secondItem="Sq5-KE-c3T" secondAttribute="trailing" constant="20" symbolic="YES" id="Cto-Ja-rGl"/>
                                                 <constraint firstItem="UVz-So-HqI" firstAttribute="leading" secondItem="GpU-47-1gg" secondAttribute="trailing" constant="8" symbolic="YES" id="GGc-ca-f1c"/>
                                                 <constraint firstItem="xbB-Gg-5TD" firstAttribute="top" secondItem="Blc-dd-9Qv" secondAttribute="top" constant="20" symbolic="YES" id="GUv-KX-cgU"/>
@@ -255,6 +270,7 @@
                                                 <constraint firstItem="jVr-RT-V0O" firstAttribute="width" secondItem="UVz-So-HqI" secondAttribute="width" id="Jhg-b8-0QC"/>
                                                 <constraint firstItem="kwg-mE-JId" firstAttribute="centerY" secondItem="9gz-yn-SNi" secondAttribute="centerY" id="Jti-qG-eyX"/>
                                                 <constraint firstItem="Kei-Vw-B1H" firstAttribute="leading" secondItem="Blc-dd-9Qv" secondAttribute="leading" constant="20" symbolic="YES" id="KRY-s2-g81"/>
+                                                <constraint firstItem="eKL-lO-rZG" firstAttribute="top" secondItem="nq7-TF-yL4" secondAttribute="bottom" constant="8" symbolic="YES" id="LGz-F9-lWX"/>
                                                 <constraint firstItem="Sq5-KE-c3T" firstAttribute="centerY" secondItem="4VU-bn-waD" secondAttribute="centerY" id="LTy-1O-IYQ"/>
                                                 <constraint firstItem="4VU-bn-waD" firstAttribute="top" secondItem="Kei-Vw-B1H" secondAttribute="bottom" constant="8" symbolic="YES" id="Mnj-hi-FzQ"/>
                                                 <constraint firstItem="ueg-wa-VAZ" firstAttribute="centerY" secondItem="gVg-BR-NcJ" secondAttribute="centerY" id="PTV-z9-vU7"/>
@@ -264,6 +280,7 @@
                                                 <constraint firstItem="jVr-RT-V0O" firstAttribute="height" secondItem="UVz-So-HqI" secondAttribute="height" id="Vso-fw-dlC"/>
                                                 <constraint firstItem="BRS-K5-tS0" firstAttribute="leading" secondItem="UVz-So-HqI" secondAttribute="trailing" id="WE7-wV-Qsy"/>
                                                 <constraint firstItem="4VU-bn-waD" firstAttribute="leading" secondItem="Blc-dd-9Qv" secondAttribute="leading" constant="20" symbolic="YES" id="XDG-Oy-TLS"/>
+                                                <constraint firstItem="eKL-lO-rZG" firstAttribute="leading" secondItem="Blc-dd-9Qv" secondAttribute="leading" constant="20" symbolic="YES" id="XOK-Vw-w9X"/>
                                                 <constraint firstItem="9gz-yn-SNi" firstAttribute="top" secondItem="zNI-F1-3zH" secondAttribute="bottom" constant="8" symbolic="YES" id="Zu6-zf-Np0"/>
                                                 <constraint firstItem="GpU-47-1gg" firstAttribute="leading" secondItem="Blc-dd-9Qv" secondAttribute="leading" constant="20" symbolic="YES" id="alr-Si-237"/>
                                                 <constraint firstItem="xbB-Gg-5TD" firstAttribute="leading" secondItem="Blc-dd-9Qv" secondAttribute="leading" constant="20" symbolic="YES" id="cZK-Uh-Yci"/>
@@ -275,6 +292,7 @@
                                                 <constraint firstItem="Sq5-KE-c3T" firstAttribute="leading" secondItem="4VU-bn-waD" secondAttribute="trailing" constant="18" id="hDN-ZH-CZF"/>
                                                 <constraint firstItem="kwg-mE-JId" firstAttribute="leading" secondItem="nq7-TF-yL4" secondAttribute="trailing" constant="5" id="iJT-WO-ahy"/>
                                                 <constraint firstItem="Kei-Vw-B1H" firstAttribute="width" secondItem="gVg-BR-NcJ" secondAttribute="width" id="kw1-bL-IZV"/>
+                                                <constraint firstItem="kwg-mE-JId" firstAttribute="trailing" secondItem="eKL-lO-rZG" secondAttribute="trailing" id="l71-gL-9vs"/>
                                                 <constraint firstItem="Ghe-cF-C3L" firstAttribute="leading" secondItem="Blc-dd-9Qv" secondAttribute="leading" constant="20" symbolic="YES" id="las-Hj-6YJ"/>
                                                 <constraint firstAttribute="trailing" secondItem="cpE-XY-Cm8" secondAttribute="trailing" constant="20" symbolic="YES" id="oke-SA-KVP"/>
                                                 <constraint firstAttribute="trailing" secondItem="kwg-mE-JId" secondAttribute="trailing" constant="20" symbolic="YES" id="qzf-2H-ZeH"/>
@@ -284,6 +302,7 @@
                                                 <constraint firstItem="Ghe-cF-C3L" firstAttribute="top" secondItem="4VU-bn-waD" secondAttribute="bottom" constant="3" id="uey-Nz-udH"/>
                                                 <constraint firstItem="ueg-wa-VAZ" firstAttribute="top" secondItem="Z0P-wM-ijd" secondAttribute="bottom" constant="8" symbolic="YES" id="x5Q-Ss-5ia"/>
                                                 <constraint firstItem="UVz-So-HqI" firstAttribute="centerY" secondItem="GpU-47-1gg" secondAttribute="centerY" id="yDc-YR-IUQ"/>
+                                                <constraint firstItem="Z0P-wM-ijd" firstAttribute="top" secondItem="eKL-lO-rZG" secondAttribute="bottom" constant="8" symbolic="YES" id="zIq-cq-EHv"/>
                                                 <constraint firstItem="zNI-F1-3zH" firstAttribute="leading" secondItem="Blc-dd-9Qv" secondAttribute="leading" constant="20" symbolic="YES" id="zPY-hG-OHc"/>
                                                 <constraint firstItem="ueg-wa-VAZ" firstAttribute="leading" secondItem="gVg-BR-NcJ" secondAttribute="trailing" constant="18" id="zPl-ny-cvl"/>
                                             </constraints>
@@ -294,7 +313,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="495" height="107"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WLE-5m-DuI" userLabel="Autostart Label">
+                                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WLE-5m-DuI" userLabel="Autostart Label">
                                                     <rect key="frame" x="18" y="71" width="415" height="16"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Open Battery Toolkit automatically when you log in to your Mac" id="23Z-ec-mgU">
                                                         <font key="font" usesAppearanceFont="YES"/>
@@ -302,7 +321,7 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="cMq-jp-fNI" userLabel="Autostart Secondary Label">
+                                                <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="cMq-jp-fNI" userLabel="Autostart Secondary Label">
                                                     <rect key="frame" x="18" y="20" width="415" height="48"/>
                                                     <textFieldCell key="cell" selectable="YES" id="5XS-zv-zfd">
                                                         <font key="font" metaFont="system"/>
