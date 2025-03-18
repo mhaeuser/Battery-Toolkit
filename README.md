@@ -78,11 +78,8 @@ On macOS 15 Sequoia or above:
 4. Click "Open Anyway" on the next dialog box and authenticate
 5. Open Battery Toolkit again from Applications folder
 
-### Verification Warning Explained :warning:
-This app is not certified by Apple because I don't have an Apple Developer Account subscription. 
-
-When you try to open the App, macOS may show a warning that "this App could not be verified by Apple". That doesn't mean it's malware, just that Apple hasn't reviewed it. 
-If you trust me, you can simply ignore this warning. If not, you can always take a look at the source code (feel free to contribute) or switch to a different solution.
+> [!IMPORTANT]
+> This step is necessary, because the app is not notarized by Apple due to the Apple Developer Program membership fees. "Apple could not verify 'Battery Toolkit.app' is free of malware" refers to [lack of notarizaion](https://support.apple.com/en-us/102445), not to having detected abnormalities.
 
 # Usage
 
