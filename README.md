@@ -64,7 +64,9 @@ You may want to add the `--no-quarantine` flag onto the end of the install comma
 Otherwise, follow the steps mentioned below.
 
 ### Opening the App
-Because Battery Toolkit is not notarized, you will have to manually allow it to open.
+
+> [!IMPORTANT]
+> This step is necessary, because the app has not been notarized by Apple due to the membership fees of the Apple Developer Program. "Apple could not verify 'Battery Toolkit.app' is free of malware" refers to the [lack of notarizaion](https://support.apple.com/en-us/102445), not to any anomalies detected.
 
 On macOS 14 Sonoma or below:
 1. Right click `Battery Toolkit.app`
@@ -77,9 +79,6 @@ On macOS 15 Sequoia or above:
 3. Click "Open Anyway" to allow Battery Toolkit to open
 4. Click "Open Anyway" on the next dialog box and authenticate
 5. Open Battery Toolkit again from Applications folder
-
-> [!IMPORTANT]
-> This step is necessary, because the app has not been notarized by Apple due to the membership fees of the Apple Developer Program. "Apple could not verify 'Battery Toolkit.app' is free of malware" refers to the [lack of notarizaion](https://support.apple.com/en-us/102445), not to any anomalies detected.
 
 # Usage
 
