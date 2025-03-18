@@ -79,7 +79,7 @@ On macOS 15 Sequoia or above:
 5. Open Battery Toolkit again from Applications folder
 
 > [!IMPORTANT]
-> This step is necessary, because the app is not notarized by Apple due to the Apple Developer Program membership fees. "Apple could not verify 'Battery Toolkit.app' is free of malware" refers to [lack of notarizaion](https://support.apple.com/en-us/102445), not to having detected abnormalities.
+> This step is necessary, because the app has not been notarized by Apple due to the membership fees of the Apple Developer Program. "Apple could not verify 'Battery Toolkit.app' is free of malware" refers to the [lack of notarizaion](https://support.apple.com/en-us/102445), not to any anomalies detected.
 
 # Usage
 
