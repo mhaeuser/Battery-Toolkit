@@ -43,7 +43,7 @@ internal enum BTLoginItem {
             try SMAppService.mainApp.register()
             return true
         } catch {
-            os_log("Failed to register login item: \(error)")
+            os_log("Failed to register login item: \(error, privacy: .public))")
             return false
         }
     }
@@ -67,7 +67,7 @@ internal enum BTLoginItem {
             try SMAppService.mainApp.unregister()
             return true
         } catch {
-            os_log("Failed to unregister login item: \(error)")
+            os_log("Failed to unregister login item: \(error, privacy: .public))")
             return false
         }
     }

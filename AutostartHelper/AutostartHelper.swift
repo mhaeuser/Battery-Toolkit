@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2022 Marvin Häuser. All rights reserved.
+// Copyright (C) 2022 - 2025 Marvin Häuser. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
@@ -48,7 +48,7 @@ private enum AutostartHelper {
             configuration: config
         ) { _, error in
             os_log(
-                "Launch result: \(error), privacy: .public)"
+                "Launch result: \(error, privacy: .public))"
             )
             exit(0)
         }

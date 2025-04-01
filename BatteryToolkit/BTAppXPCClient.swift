@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2022 - 2024 Marvin Häuser. All rights reserved.
+// Copyright (C) 2022 - 2025 Marvin Häuser. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
@@ -106,7 +106,7 @@ internal enum BTAppXPCClient {
         let connect = self.connectService()
 
         let service = connect.remoteObjectProxyWithErrorHandler { error in
-            os_log("XPC app remote object error: \(error)")
+            os_log("XPC app remote object error: \(error, privacy: .public))")
             errorHandler()
         } as! BTServiceCommProtocol
 

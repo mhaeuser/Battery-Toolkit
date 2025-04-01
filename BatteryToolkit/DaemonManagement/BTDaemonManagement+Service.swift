@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2022 - 2024 Marvin Häuser. All rights reserved.
+// Copyright (C) 2022 - 2025 Marvin Häuser. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
@@ -79,7 +79,7 @@ internal extension BTDaemonManagement {
                 assert(!self.registered(status: appService.status))
             } catch {
                 os_log(
-                    "Daemon service unregistering failed, error: \(error), status: \(appService.status.rawValue)"
+                    "Daemon service unregistering failed, error: \(error, privacy: .public)), status: \(appService.status.rawValue)"
                 )
                 
                 throw BTError.unknown
@@ -97,7 +97,7 @@ internal extension BTDaemonManagement {
                 try appService.register()
             } catch {
                 os_log(
-                    "Daemon service registering failed, error: \(error), status: \(appService.status.rawValue)"
+                    "Daemon service registering failed, error: \(error, privacy: .public)), status: \(appService.status.rawValue)"
                 )
             }
         }

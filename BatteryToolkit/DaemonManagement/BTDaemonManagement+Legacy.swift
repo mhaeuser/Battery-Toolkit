@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2022 - 2024 Marvin Häuser. All rights reserved.
+// Copyright (C) 2022 - 2025 Marvin Häuser. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
@@ -41,7 +41,7 @@ internal extension BTDaemonManagement {
                 BTDaemonXPCClient.finishUpdate()
 
                 os_log(
-                    "Legacy helper registering result: \(success), error: \(String(describing: error))"
+                    "Legacy helper registering result: \(success), error: \(String(describing: error), privacy: .public))"
                 )
                 
                 return BTDaemonManagement.Status(fromBool: success)
@@ -70,7 +70,7 @@ internal extension BTDaemonManagement {
             )
 
             os_log(
-                "Legacy helper unregistering result: \(success), error: \(String(describing: error))"
+                "Legacy helper unregistering result: \(success), error: \(String(describing: error), privacy: .public))"
             )
             //
             // Errors are not returned because the legacy helper PLIST has

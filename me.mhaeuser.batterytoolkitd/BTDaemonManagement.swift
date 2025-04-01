@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2022 Marvin Häuser. All rights reserved.
+// Copyright (C) 2022 - 2025 Marvin Häuser. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
@@ -41,7 +41,7 @@ internal enum BTDaemonManagement {
         } catch CocoaError.fileNoSuchFile {
             return true
         } catch {
-            os_log("Error deleting file \(path): \(error)")
+            os_log("Error deleting file \(path): \(error, privacy: .public))")
             return false
         }
     }
