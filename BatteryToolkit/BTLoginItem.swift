@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2022 Marvin Häuser. All rights reserved.
+// Copyright (C) 2022 - 2025 Marvin Häuser. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
@@ -41,7 +41,6 @@ internal enum BTLoginItem {
 
         do {
             try SMAppService.mainApp.register()
-            os_log("Registered login item")
             return true
         } catch {
             os_log("Failed to register login item: \(error)")
@@ -58,6 +57,9 @@ internal enum BTLoginItem {
         _ = self.disableLegacy()
 
         guard self.registered(status: SMAppService.mainApp.status) else {
+            os_log(
+                "Login item is not registered: \(SMAppService.mainApp.status.rawValue)"
+            )
             return true
         }
 
@@ -65,6 +67,7 @@ internal enum BTLoginItem {
             try SMAppService.mainApp.unregister()
             return true
         } catch {
+            os_log("Failed to unregister login item: \(error)")
             return false
         }
     }
