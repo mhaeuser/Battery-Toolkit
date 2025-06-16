@@ -4,7 +4,7 @@
 
 <p align="center">Control the platform power state of your Apple Silicon Mac.</p>
 
-<p align="center"><a href="#features">Features</a> &bull; <a href="#install">Install</a> &bull; <a href="#usage">Usage</a> &bull; <a href="#uninstall"> Uninstall </a> &bull;<a href="#limitations"> Limitations </a> &bull; <a href="#technical-details"> Technical Details </a></p>
+<p align="center"><a href="#features">Features</a> &bull; <a href="#install">Install</a> &bull; <a href="#usage">Usage</a> &bull; <a href="#uninstall"> Uninstall </a> &bull;<a href="#limitations"> Limitations </a> &bull; <a href="#technical-details"> Technical Details </a> &bull; <a href="#donate"> Donate </a></p>
 
 -----
 
@@ -125,3 +125,6 @@ Note that sleep should usually be disabled when the power adapter is disabled, a
 # Credits
 * Icon based on [reference icon by Streamline](https://seekicon.com/free-icon/rechargable-battery_1)
 * README overhauled by [rogue](https://github.com/realrogue)
+
+# Donate
+For various reasons, I will not accept personal donations. However, if you would like to support my work with the [Kinderschutzbund Kaiserslautern-Kusel](https://www.kinderschutzbund-kaiserslautern.de/) child protection association, you may donate [here](https://www.kinderschutzbund-kaiserslautern.de/helfen-sie-mit/spenden/).
