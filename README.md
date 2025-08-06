@@ -50,7 +50,7 @@ The Battery Toolkit "Commands" menu and its menu bar extra allow you to issue va
 
 ### Manual Install
 1. Go to the GitHub [releases](https://github.com/mhaeuser/Battery-Toolkit/releases/latest) page
-2. Download the latest non-dSYM build (e.g., `Battery-Toolkit-1.6.zip`)
+2. Download the latest non-dSYM build (i.e., `Battery-Toolkit-X.Y.zip`)
 3. Unzip the archive
 4. Drag `Battery Toolkit.app` into your Applications folder
 
