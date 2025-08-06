@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2022 - 2024 Marvin Häuser. All rights reserved.
+// Copyright (C) 2022 - 2025 Marvin Häuser. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
@@ -181,18 +181,18 @@ internal enum BTAppPrompts {
     private static func tryRemoveDaemon() async {
         do {
             try await BTActions.removeDaemon()
-            await self.promptTryRemoveDaemonError()
-        } catch {
             self.cleanupAndTerminate()
+        } catch {
+            await self.promptTryRemoveDaemonError()
         }
     }
 
     private static func forceRemoveDaemon() async {
         do {
             try await BTActions.removeDaemon()
-            await self.promptForceRemoveDaemonError()
-        } catch {
             self.cleanupAndTerminate()
+        } catch {
+            await self.promptForceRemoveDaemonError()
         }
     }
 
