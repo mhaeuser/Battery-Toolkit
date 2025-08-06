@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2022 - 2024 Marvin Häuser. All rights reserved.
+// Copyright (C) 2022 - 2025 Marvin Häuser. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
@@ -9,6 +9,29 @@ import os
 
 import MachTaskSelf
 import SMCParamStruct
+
+private func UInt32FromBytes(
+    _ byte0: UInt8,
+    _ byte1: UInt8,
+    _ byte2: UInt8,
+    _ byte3: UInt8
+) -> UInt32 {
+    let comp0 = UInt32(byte0) << 24
+    let comp1 = UInt32(byte1) << 16
+    let comp2 = UInt32(byte2) << 8
+    let comp3 = UInt32(byte3)
+
+    return comp0 | comp1 | comp2 | comp3
+}
+
+private func BytesFromUInt32(_ value: UInt32) -> (UInt8, UInt8, UInt8, UInt8) {
+    return (
+        UInt8((value & 0xFF000000) >> 24),
+        UInt8((value & 0x00FF0000) >> 16),
+        UInt8((value & 0x0000FF00) >> 8),
+        UInt8(value & 0x000000FF)
+    )
+}
 
 public typealias SMCId = FourCharCode
 
@@ -20,13 +43,12 @@ public extension SMCId {
         _ char3: Character
     ) {
         assert(char0.isASCII && char1.isASCII && char2.isASCII && char3.isASCII)
-
-        let comp0 = UInt32(char0.asciiValue!) << 24
-        let comp1 = UInt32(char1.asciiValue!) << 16
-        let comp2 = UInt32(char2.asciiValue!) << 8
-        let comp3 = UInt32(char3.asciiValue!)
-
-        self = comp0 | comp1 | comp2 | comp3
+        self = UInt32FromBytes(
+            char0.asciiValue!,
+            char1.asciiValue!,
+            char2.asciiValue!,
+            char3.asciiValue!
+        )
     }
 }
 
@@ -36,14 +58,15 @@ public extension SMCComm {
 
     typealias KeyInfoData = SMCKeyInfoData
 
-    struct KeyInfo {
+    struct KeyInfo : Sendable {
         let key: SMCComm.Key
         let info: SMCComm.KeyInfoData
     }
 
     enum KeyTypes {
-        static let ui8 = SMCComm.KeyType("u", "i", "8", " ")
-        static let hex = SMCComm.KeyType("h", "e", "x", "_")
+        static let ui8  = SMCComm.KeyType("u", "i", "8", " ")
+        static let ui32 = SMCComm.KeyType("u", "i", "3", "2")
+        static let hex  = SMCComm.KeyType("h", "e", "x", "_")
     }
     
     static func KeyInfoDataEq (
@@ -130,19 +153,31 @@ public enum SMCComm {
         return outputStruct.keyInfo
     }
 
-    static func readKeyUI8(key: SMCComm.Key) -> UInt8? {
-        var inputStruct = SMCParamStruct.readUI8(key: key)
+    static func keySupported(keyInfo: SMCComm.KeyInfo) -> Bool {
+        let info = SMCComm.getKeyInfo(key: keyInfo.key)
+        guard let info = info,
+              SMCComm.KeyInfoDataEq(data1: keyInfo.info, data2: info) else {
+            return false
+        }
+        
+        return true
+    }
+
+    static func readKey(key: SMCComm.Key, dataSize: Int) -> [UInt8]? {
+        var inputStruct = SMCParamStruct.readKey(key: key, dataSize: UInt32(dataSize))
 
         let outputStruct = self.callSMCFunctionYPC(params: &inputStruct)
         guard let outputStruct else {
             return nil
         }
-
-        return outputStruct.bytes.0
+        
+        let mirror = Mirror(reflecting: outputStruct.bytes)
+        let data = mirror.children.prefix(dataSize)
+        return data.map { byte in byte.value as! UInt8 }
     }
 
-    static func writeKeyUI8(key: SMCComm.Key, value: UInt8) -> Bool {
-        var inputStruct = SMCParamStruct.writeUI8(key: key, value: value)
+    static func writeKey(key: SMCComm.Key, bytes: [UInt8]) -> Bool {
+        var inputStruct = SMCParamStruct.writeKey(key: key, bytes: bytes)
 
         let outputStruct = self.callSMCFunctionYPC(params: &inputStruct)
         //
@@ -151,7 +186,7 @@ public enum SMCComm {
         // far. What has been identified so far were SMC keys reporting values
         // different from both the previous value and what has been written.
         //
-        let readValue = self.readKeyUI8(key: key)
+        let readValue = self.readKey(key: key, dataSize: bytes.count)
         guard let readValue else {
             //
             // If the read fails, return the write result.
@@ -161,7 +196,7 @@ public enum SMCComm {
         //
         // If the read succeeds, compare the current to the written value.
         //
-        return readValue == value
+        return readValue == bytes
     }
 
     private static func callSMCFunctionYPC(
@@ -202,23 +237,23 @@ private extension SMCParamStruct {
         return paramStruct
     }
 
-    static func readUI8(key: SMCComm.Key) -> SMCParamStruct {
+    static func readKey(key: SMCComm.Key, dataSize: UInt32) -> SMCParamStruct {
         var paramStruct = SMCParamStruct()
         paramStruct.key = key
-        paramStruct.keyInfo.dataSize = 1
+        paramStruct.keyInfo.dataSize = dataSize
         paramStruct.data8 = UInt8(kSMCReadKey)
         return paramStruct
     }
 
-    static func writeUI8(
-        key: SMCComm.Key,
-        value: UInt8
-    ) -> SMCParamStruct {
+    static func writeKey(key: SMCComm.Key, bytes: [UInt8]) -> SMCParamStruct {
         var paramStruct = SMCParamStruct()
+        precondition(bytes.count < Mirror(reflecting: paramStruct.bytes).children.count);
         paramStruct.key = key
-        paramStruct.keyInfo.dataSize = 1
+        paramStruct.keyInfo.dataSize = UInt32(bytes.count)
         paramStruct.data8 = UInt8(kSMCWriteKey)
-        paramStruct.bytes.0 = value
+        _ = withUnsafeMutablePointer(to: &paramStruct.bytes) { pointer in
+            memcpy(pointer, bytes, bytes.count)
+        }
         return paramStruct
     }
 

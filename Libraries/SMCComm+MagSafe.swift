@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2024 Marvin Häuser. All rights reserved.
+// Copyright (C) 2024 - 2025 Marvin Häuser. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
@@ -12,16 +12,7 @@ public extension SMCComm {
             //
             // Ensure all required SMC keys are present and well-formed.
             //
-            for keyInfo in self.keys {
-                let info = SMCComm.getKeyInfo(key: keyInfo.key)
-                guard let info = info,
-                      SMCComm.KeyInfoDataEq(data1: keyInfo.info, data2: info) else {
-                    self.supported = false
-                    return
-                }
-            }
-
-            self.supported = true
+            self.supported = SMCComm.keySupported(keyInfo: self.Keys.ACLC)
         }
 
         static func setSystem() -> Bool {
@@ -56,26 +47,21 @@ public extension SMCComm {
 
 private extension SMCComm.MagSafe {
     private enum Keys {
-        static let ACLC = SMCComm.Key("A", "C", "L", "C")
+        static let ACLC = SMCComm.KeyInfo(
+            key: SMCComm.Key("A", "C", "L", "C"),
+            info: SMCComm.KeyInfoData(
+                dataSize: 1,
+                dataType: SMCComm.KeyTypes.ui8,
+                dataAttributes: 0xD4
+            )
+        )
     }
-
-    private static let keys =
-        [
-            SMCComm.KeyInfo(
-                key: SMCComm.MagSafe.Keys.ACLC,
-                info: SMCComm.KeyInfoData(
-                    dataSize: 1,
-                    dataType: SMCComm.KeyTypes.ui8,
-                    dataAttributes: 0xD4
-                )
-            ),
-        ]
 
     private static func setColor(color: UInt8) -> Bool {
         guard self.supported else {
             return false
         }
 
-        return SMCComm.writeKeyUI8(key: self.Keys.ACLC, value: color)
+        return SMCComm.writeKey(key: self.Keys.ACLC.key, bytes: [color])
     }
 }
