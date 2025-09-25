@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2022 - 2024 Marvin Häuser. All rights reserved.
+// Copyright (C) 2022 - 2025 Marvin Häuser. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
@@ -10,59 +10,84 @@ import os.log
 
 @MainActor
 internal enum BTDispatcher {
-    private static var percentRegistration = Registration()
-    private static var powerRegistration = Registration()
+    private static var percentToken: Int32 = 0
+    private static var percentRegistered = false
+
+    private static var powerToken: Int32 = 0
+    private static var powerRegistered = false
 
     static func registerLimitedPowerNotification(
         _ handler: @MainActor @escaping (Int32) -> Void
     ) -> Bool {
-        assert(!self.powerRegistration.valid)
+        guard !self.powerRegistered else {
+            return true
+        }
 
-        self.powerRegistration = self.registerDispatch(
+        guard let powerToken = self.registerDispatch(
             kIOPSNotifyPowerSource,
             handler
-        )
-        return self.powerRegistration.valid
+        ) else {
+            return false
+        }
+
+        self.powerToken = powerToken
+        self.powerRegistered = true
+        return true
     }
 
     static func registerPercentChangeNotification(
         _ handler: @MainActor @escaping (Int32) -> Void
     ) -> Bool {
-        assert(!self.percentRegistration.valid)
+        guard !self.percentRegistered else {
+            return true
+        }
 
-        self.percentRegistration = self.registerDispatch(
+        guard let percentToken = self.registerDispatch(
             IOPSPrivate.kIOPSNotifyPercentChange,
             handler
-        )
-        return self.percentRegistration.valid
+        ) else {
+            return false
+        }
+
+        self.percentToken = percentToken
+        self.percentRegistered = true
+        return true
     }
 
     static func unregisterPercentChangeNotification() {
-        let success = self.unregisterDispatch(
-            registration: self.percentRegistration
-        )
-        if !success {
-            os_log("Failed to unregister percent change notification")
+        guard self.percentRegistered else {
+            return
         }
 
-        self.percentRegistration = BTDispatcher.Registration()
+        let status = notify_cancel(self.percentToken)
+        guard status == NOTIFY_STATUS_OK else {
+            os_log("Failed to unregister percent change notification")
+            return
+        }
+
+        self.percentRegistered = false
+        self.percentToken = 0
     }
 
     static func unregisterLimitedPowerNotification() {
-        let success = self.unregisterDispatch(
-            registration: self.powerRegistration
-        )
-        if !success {
-            os_log("Failed to unregister limited power notification")
+        guard self.powerRegistered else {
+            return
         }
 
-        self.powerRegistration = BTDispatcher.Registration()
+        let status = notify_cancel(self.powerToken)
+        guard status == NOTIFY_STATUS_OK else {
+            os_log("Failed to unregister limited power notification")
+            return
+        }
+
+        self.powerRegistered = false
+        self.powerToken = 0
     }
 
     private static func registerDispatch(
         _ notify_type: String,
         _ handler: @MainActor @escaping (Int32) -> Void
-    ) -> BTDispatcher.Registration {
+    ) -> Int32? {
         //
         // The warning about losing MainActor is misleading as notifications are
         // always posted to DispatchQueue.main as per the registration.
@@ -74,31 +99,10 @@ internal enum BTDispatcher {
             DispatchQueue.main,
             handler
         )
-        return Registration(valid: status == NOTIFY_STATUS_OK, token: token)
-    }
-
-    private static func unregisterDispatch(
-        registration: BTDispatcher.Registration
-    ) -> Bool {
-        assert(registration.valid)
-
-        return notify_cancel(registration.token) == NOTIFY_STATUS_OK
-    }
-}
-
-private extension BTDispatcher {
-    struct Registration {
-        let valid: Bool
-        let token: Int32
-
-        init() {
-            self.valid = false
-            self.token = 0
+        guard status == NOTIFY_STATUS_OK else {
+            return nil
         }
 
-        init(valid: Bool, token: Int32) {
-            self.valid = valid
-            self.token = token
-        }
+        return token
     }
 }

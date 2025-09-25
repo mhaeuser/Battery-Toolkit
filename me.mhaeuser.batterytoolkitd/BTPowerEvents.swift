@@ -193,15 +193,13 @@ internal enum BTPowerEvents {
     }
 
     private static func registerPercentChangedHandler() -> Bool {
-        guard !self.percentCreated else {
-            return true
-        }
-
-        self.percentCreated = BTDispatcher.registerPercentChangeNotification  { token in
-            self.percentChangeHandler(token: token)
-        }
-        guard self.percentCreated else {
-            return false
+        if !self.percentCreated {
+            self.percentCreated = BTDispatcher.registerPercentChangeNotification { token in
+                self.percentChangeHandler(token: token)
+            }
+            guard self.percentCreated else {
+                return false
+            }
         }
 
         let percent = self.handleChargeHysteresis()
